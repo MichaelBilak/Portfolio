@@ -43,6 +43,10 @@ export default async function WorkPage({ params }: PageProps) {
       <main className="relative pt-32">
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bgPrimary to-transparent"
+          />
           <div className="container-lux relative max-w-4xl">
             <Link
               href="/"
