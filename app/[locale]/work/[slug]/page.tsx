@@ -28,14 +28,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = translations[safeLocale];
   const index = projectsMeta.findIndex((p) => p.slug === slug);
   if (index === -1) return {};
-  const project = t.projects[index];
+  const meta = projectsMeta[index];
+  const project = t.projects.find((p) => p.id === meta.id);
+  if (!project) return {};
   return {
     title: `${project.name} · Bilak Michael Studio`,
     description: project.subtitle,
     openGraph: {
       title: project.name,
       description: project.subtitle,
-      images: [projectsMeta[index].image],
+      images: [meta.image],
     },
   };
 }
@@ -52,10 +54,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   if (index === -1) notFound();
 
   const meta = projectsMeta[index];
-  const project = t.projects[index];
+  const project = t.projects.find((p) => p.id === meta.id)!;
   const hasLiveSite = meta.isLive === true && meta.url.startsWith("http");
   const otherProjects = projectsMeta
-    .map((m, i) => ({ meta: m, copy: t.projects[i] }))
+    .map((m) => ({ meta: m, copy: t.projects.find((p) => p.id === m.id)! }))
     .filter((p) => p.meta.slug !== slug)
     .slice(0, 3);
 

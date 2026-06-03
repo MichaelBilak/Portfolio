@@ -56,11 +56,11 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
               : "grid gap-8 lg:grid-cols-2"
           }
         >
-          {visibleProjects.map((meta, index) => (
+          {visibleProjects.map((meta) => (
             <ProjectCard
               key={meta.id}
               meta={meta}
-              copy={t.projects[index]}
+              copy={t.projects.find((p) => p.id === meta.id)!}
               viewCta={t.caseStudies.viewCaseStudy}
               liveStatus={t.workPage.liveStatus}
             />
