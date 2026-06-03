@@ -47,7 +47,7 @@ function buildHtml(p: Required<ContactPayload>): string {
               <p style="margin:0;font-size:22px;font-weight:300;letter-spacing:-0.01em;color:#f8fafc;">
                 Dorm<span style="color:#fcd34d;">Up</span>
                 <span style="margin-left:10px;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,250,252,0.7);vertical-align:middle;">GROUP</span>
-                <span style="margin-left:6px;font-size:8px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.6);vertical-align:middle;">Digital Agency</span>
+                <span style="margin-left:6px;font-size:8px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.6);vertical-align:middle;">Digital Studio</span>
               </p>
               <p style="margin:4px 0 0;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(148,163,184,0.6);">
                 New audit request

@@ -52,7 +52,7 @@ export function BrandLogo({
           <span className={separatorClassName} aria-hidden />
           <span className={`flex flex-col gap-[3px] ${taglineClassName}`}>
             <span className={groupClassName}>Group</span>
-            <span className={agencyClassName}>Digital Agency</span>
+            <span className={agencyClassName}>Digital Studio</span>
           </span>
         </>
       ) : null}

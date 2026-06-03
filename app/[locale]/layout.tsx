@@ -38,9 +38,9 @@ const localeMetaContent: Record<
     ogLocale: "it_IT",
   },
   en: {
-    title: "DormUp Group · Digital Agency Rimini — Websites for Restaurants & Hotels",
+    title: "DormUp Group · Digital Studio Rimini — Websites for Restaurants & Hotels",
     description:
-      "Digital agency in Rimini. We build premium websites for restaurants, hotels and local businesses. Design that converts, clean development.",
+      "Digital studio in Rimini. We build premium websites for restaurants, hotels and local businesses. Design that converts, clean development.",
     ogLocale: "en_US",
   },
   fr: {
@@ -142,7 +142,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "DormUp Group Digital Agency",
+    name: "DormUp Group Digital Studio",
     email: "dormup.it@gmail.com",
     image: `${siteUrl}/images/og-cover.svg`,
     url: `${siteUrl}${localePath(locale as Locale)}`,
