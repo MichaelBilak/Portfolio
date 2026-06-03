@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import path from "node:path";
 
 interface ContactPayload {
   fullName?: string;
@@ -44,11 +45,25 @@ function buildHtml(p: Required<ContactPayload>): string {
           <!-- Header -->
           <tr>
             <td style="padding-bottom:32px;">
-              <p style="margin:0;font-size:22px;font-weight:300;letter-spacing:-0.01em;color:#f8fafc;">
-                Dorm<span style="color:#fcd34d;">Up</span>
-                <span style="margin-left:10px;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,250,252,0.7);vertical-align:middle;">GROUP</span>
-                <span style="margin-left:6px;font-size:8px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.6);vertical-align:middle;">Digital Studio</span>
-              </p>
+              <table cellpadding="0" cellspacing="0" role="presentation">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <img src="cid:dormup-logo" width="34" height="34" alt="DormUp" style="display:block;border:0;outline:none;text-decoration:none;" />
+                  </td>
+                  <td style="vertical-align:middle;padding-left:0;">
+                    <p style="margin:0 0 0 -8px;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:300;letter-spacing:-0.01em;color:#f8fafc;line-height:1;">
+                      orm<span style="color:#fcd34d;">Up</span>
+                    </p>
+                  </td>
+                  <td style="vertical-align:middle;padding:0 10px;">
+                    <div style="width:1px;height:28px;background:rgba(148,163,184,0.28);"></div>
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <p style="margin:0 0 4px;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,250,252,0.7);line-height:1;">GROUP</p>
+                    <p style="margin:0;font-size:8px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.6);line-height:1;">Digital Studio</p>
+                  </td>
+                </tr>
+              </table>
               <p style="margin:4px 0 0;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(148,163,184,0.6);">
                 New audit request
               </p>
@@ -154,12 +169,20 @@ export async function POST(request: NextRequest) {
       service: "gmail",
       auth: { user: gmailUser, pass: gmailPass },
     });
+    const logoPath = path.join(process.cwd(), "public", "images", "logo-dm-group.png");
 
     await transporter.sendMail({
       from: `"DormUp Group" <${gmailUser}>`,
       to: toEmail,
       subject: `✦ New audit request — ${p.businessName}`,
       html: buildHtml(p),
+      attachments: [
+        {
+          filename: "logo-dm-group.png",
+          path: logoPath,
+          cid: "dormup-logo",
+        },
+      ],
     });
   } else {
     console.log("[contact] Email env vars not set — logging payload:", p);

@@ -26,39 +26,40 @@ const mono = DM_Mono({
 });
 
 const siteUrl = "https://bilakstudio.it";
+const logoUrl = "/images/logo-dm-group.png";
 
 const localeMetaContent: Record<
   Locale,
   { title: string; description: string; ogLocale: string }
 > = {
   it: {
-    title: "DormUp Group · Agenzia Digitale Rimini — Siti Web per Ristoranti e Hotel",
+    title: "DormUp Group · Studio Digitale Rimini - Posizionamento Digitale Esclusivo per il Tuo Brand.",
     description:
-      "Agenzia digitale a Rimini. Realizziamo siti web premium per ristoranti, hotel e imprese locali. Design che converte, sviluppo pulito.",
+      "Studio digitale a Rimini. Usiamo un approccio unico per valorizzare il tuo brand. Design che converte, sviluppo pulito, risultati rapidi.",
     ogLocale: "it_IT",
   },
   en: {
-    title: "DormUp Group · Digital Studio Rimini — Websites for Restaurants & Hotels",
+    title: "DormUp Group · Digital Studio Rimini - Exclusive Digital Positioning for Your Brand.",
     description:
-      "Digital studio in Rimini. We build premium websites for restaurants, hotels and local businesses. Design that converts, clean development.",
+      "Digital studio in Rimini. We use a unique approach to enhance your brand. Design that converts, clean development, quick results.",
     ogLocale: "en_US",
   },
   fr: {
-    title: "DormUp Group · Agence Digitale Rimini — Sites Web pour Restaurants et Hôtels",
+    title: "DormUp Group · Studio Digital Rimini - Positionnement Digital Exclusif pour Votre Marque.",
     description:
-      "Agence digitale à Rimini. Nous créons des sites premium pour restaurants, hôtels et entreprises locales. Design qui convertit, code propre.",
+      "Studio digital à Rimini. Nous utilisons une approche unique pour valoriser votre marque. Design qui convertit, développement propre, résultats rapides.",
     ogLocale: "fr_FR",
   },
   ru: {
-    title: "DormUp Group · Диджитал Агентство Римини — Сайты для ресторанов и отелей",
+    title: "DormUp Group · Диджитал Студия Римини - Эксклюзивное цифровое позиционирование вашего бренда.",
     description:
-      "Диджитал агентство в Римини. Создаём премиум-сайты для ресторанов, отелей и локального бизнеса. Дизайн под конверсию, чистый код.",
+      "Диджитал студия в Римини. Мы используем уникальный подход, чтобы усилить ваш бренд. Дизайн, который конвертирует, чистая разработка, быстрые результаты.",
     ogLocale: "ru_RU",
   },
   de: {
-    title: "DormUp Group · Digitalagentur Rimini — Websites für Restaurants und Hotels",
+    title: "DormUp Group · Digitalstudio Rimini - Exklusive Digitale Positionierung für Ihre Marke.",
     description:
-      "Digitalagentur in Rimini. Wir erstellen Premium-Websites für Restaurants, Hotels und lokale Unternehmen. Design das konvertiert, sauberer Code.",
+      "Digitalstudio in Rimini. Wir nutzen einen einzigartigen Ansatz, um Ihre Marke zu stärken. Design, das konvertiert, saubere Entwicklung, schnelle Ergebnisse.",
     ogLocale: "de_DE",
   },
 };
@@ -94,6 +95,11 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl),
     title: meta.title,
     description: meta.description,
+    icons: {
+      icon: [{ url: "/icon.png", type: "image/png" }],
+      shortcut: [{ url: "/icon.png", type: "image/png" }],
+      apple: [{ url: "/icon.png", type: "image/png" }],
+    },
     alternates: {
       canonical: `${siteUrl}${localePath(safeLocale)}`,
       languages: {
@@ -144,7 +150,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     "@type": "LocalBusiness",
     name: "DormUp Group Digital Studio",
     email: "dormup.it@gmail.com",
-    image: `${siteUrl}/images/og-cover.svg`,
+    image: `${siteUrl}${logoUrl}`,
+    logo: `${siteUrl}${logoUrl}`,
     url: `${siteUrl}${localePath(locale as Locale)}`,
     address: {
       "@type": "PostalAddress",
