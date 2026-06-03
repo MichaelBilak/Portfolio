@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Link } from "@/i18n/navigation";
 import { useScrollDirection } from "@/lib/hooks/use-scroll-direction";
@@ -60,14 +61,12 @@ export function Navigation({ locale, t }: NavigationProps) {
           href="/"
           className="interactive focus-outline flex items-center gap-3"
         >
-          <span className="font-display text-2xl leading-none tracking-tight">
-            Dorm<span className="text-accentGold">Up</span>
-          </span>
-          <span className="hidden h-7 w-px bg-borderSubtle md:block" aria-hidden />
-          <span className="hidden flex-col gap-[3px] md:flex">
-            <span className="text-[10px] font-semibold leading-none tracking-[0.18em] text-textPrimary/90 uppercase">Group</span>
-            <span className="text-[8px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase">Digital Agency</span>
-          </span>
+          <BrandLogo
+            imageSize={40}
+            priority
+            taglineClassName="hidden md:flex"
+            separatorClassName="hidden h-7 w-px bg-borderSubtle md:block"
+          />
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">

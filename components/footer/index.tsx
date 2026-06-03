@@ -1,4 +1,5 @@
 import { AtSign, Globe, MessageCircle } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { TranslationSet } from "@/lib/translations";
 
 interface FooterProps {
@@ -22,14 +23,13 @@ export function Footer({ t }: FooterProps) {
       <div className="container-lux relative grid gap-8 pb-10 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-3">
-            <p className="font-display text-3xl leading-none tracking-tight">
-              Dorm<span className="text-accentGold">Up</span>
-            </p>
-            <span className="h-8 w-px bg-borderSubtle" aria-hidden />
-            <div className="flex flex-col gap-1">
-              <span className="text-[11px] font-semibold leading-none tracking-[0.18em] text-textPrimary/90 uppercase">Group</span>
-              <span className="text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase">Digital Agency</span>
-            </div>
+            <BrandLogo
+              imageSize={48}
+              separatorClassName="h-8 w-px bg-borderSubtle"
+              groupClassName="text-[11px] font-semibold leading-none tracking-[0.18em] text-textPrimary/90 uppercase"
+              agencyClassName="text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase"
+              taglineClassName="gap-1"
+            />
           </div>
           <p className="mt-3 max-w-sm text-sm text-textSecondary">{t.footer.description}</p>
           <div className="mt-4 flex gap-3">
