@@ -143,6 +143,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "DormUp Group Digital Agency",
+    email: "dormup.it@gmail.com",
     image: `${siteUrl}/images/og-cover.svg`,
     url: `${siteUrl}${localePath(locale as Locale)}`,
     address: {

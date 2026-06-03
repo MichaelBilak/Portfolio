@@ -32,8 +32,8 @@ export function Contact({ t }: ContactProps) {
           <div className="mt-8 space-y-4 text-sm">
             <p className="flex items-center gap-3">
               <Mail size={16} className="text-accentGold" /> {t.contact.emailLabel}:{" "}
-              <a className="text-textPrimary underline-offset-2 hover:underline" href="mailto:hello@bilakstudio.com">
-                hello@bilakstudio.com
+              <a className="text-textPrimary underline-offset-2 hover:underline" href="mailto:dormup.it@gmail.com">
+                dormup.it@gmail.com
               </a>
             </p>
             <p className="flex items-center gap-3">

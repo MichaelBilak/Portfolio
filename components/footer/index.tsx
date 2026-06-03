@@ -33,16 +33,27 @@ export function Footer({ t }: FooterProps) {
           </div>
           <p className="mt-3 max-w-sm text-sm text-textSecondary">{t.footer.description}</p>
           <div className="mt-4 flex gap-3">
-            {[Globe, AtSign, MessageCircle].map((Icon, index) => (
-              <a
-                key={index}
-                href="#"
-                className="focus-outline inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold"
-                aria-label="Social link"
-              >
-                <Icon size={16} />
-              </a>
-            ))}
+            <a
+              href="#"
+              className="focus-outline inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold"
+              aria-label="Website"
+            >
+              <Globe size={16} />
+            </a>
+            <a
+              href="mailto:dormup.it@gmail.com"
+              className="focus-outline inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold"
+              aria-label="Email: dormup.it@gmail.com"
+            >
+              <AtSign size={16} />
+            </a>
+            <a
+              href="https://wa.me/393333333333"
+              className="focus-outline inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle size={16} />
+            </a>
           </div>
         </div>
 
