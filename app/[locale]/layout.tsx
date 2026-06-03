@@ -32,33 +32,33 @@ const localeMetaContent: Record<
   { title: string; description: string; ogLocale: string }
 > = {
   it: {
-    title: "Bilak Michael · Web Designer Rimini — Siti per Ristoranti e Hotel",
+    title: "DormUp Group · Agenzia Digitale Rimini — Siti Web per Ristoranti e Hotel",
     description:
-      "Studio digitale a Rimini. Creo siti web premium per ristoranti, hotel e business locali. Design che converte, sviluppo pulito.",
+      "Agenzia digitale a Rimini. Realizziamo siti web premium per ristoranti, hotel e imprese locali. Design che converte, sviluppo pulito.",
     ogLocale: "it_IT",
   },
   en: {
-    title: "Bilak Michael · Web Designer Rimini — Websites for Restaurants and Hotels",
+    title: "DormUp Group · Digital Agency Rimini — Websites for Restaurants & Hotels",
     description:
-      "Digital studio in Rimini. I build premium websites for restaurants, hotels and local businesses. Design that converts, clean development.",
+      "Digital agency in Rimini. We build premium websites for restaurants, hotels and local businesses. Design that converts, clean development.",
     ogLocale: "en_US",
   },
   fr: {
-    title: "Bilak Michael · Web Designer Rimini — Sites pour Restaurants et Hotels",
+    title: "DormUp Group · Agence Digitale Rimini — Sites Web pour Restaurants et Hôtels",
     description:
-      "Studio digital a Rimini. Je cree des sites premium pour restaurants, hotels et business locaux. Design qui convertit, code propre.",
+      "Agence digitale à Rimini. Nous créons des sites premium pour restaurants, hôtels et entreprises locales. Design qui convertit, code propre.",
     ogLocale: "fr_FR",
   },
   ru: {
-    title: "Bilak Michael · Web Designer Rimini — Сайты для ресторанов и отелей",
+    title: "DormUp Group · Диджитал Агентство Римини — Сайты для ресторанов и отелей",
     description:
-      "Цифровая студия в Римини. Создаём премиум-сайты для ресторанов, отелей и локальных бизнесов. Дизайн под конверсию, чистый код.",
+      "Диджитал агентство в Римини. Создаём премиум-сайты для ресторанов, отелей и локального бизнеса. Дизайн под конверсию, чистый код.",
     ogLocale: "ru_RU",
   },
   de: {
-    title: "Bilak Michael · Web Designer Rimini — Websites fur Restaurants und Hotels",
+    title: "DormUp Group · Digitalagentur Rimini — Websites für Restaurants und Hotels",
     description:
-      "Digitales Studio in Rimini. Ich baue Premium-Websites fur Restaurants, Hotels und lokale Unternehmen. Design das konvertiert, sauberer Code.",
+      "Digitalagentur in Rimini. Wir erstellen Premium-Websites für Restaurants, Hotels und lokale Unternehmen. Design das konvertiert, sauberer Code.",
     ogLocale: "de_DE",
   },
 };
@@ -142,7 +142,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Bilak Michael Digital Studio",
+    name: "DormUp Group Digital Agency",
     image: `${siteUrl}/images/og-cover.svg`,
     url: `${siteUrl}${localePath(locale as Locale)}`,
     address: {
