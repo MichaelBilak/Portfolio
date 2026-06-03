@@ -1,0 +1,7 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="900" fill="#181818"/>
+  <rect x="90" y="90" width="720" height="720" rx="28" fill="#1F1B16" stroke="#C9A96E" stroke-opacity="0.35"/>
+  <circle cx="450" cy="350" r="140" fill="#2B241A"/>
+  <rect x="290" y="520" width="320" height="180" rx="90" fill="#2B241A"/>
+  <text x="450" y="780" text-anchor="middle" fill="#E8DCC8" fill-opacity="0.78" font-family="Arial, sans-serif" font-size="34">Bilak Michael</text>
+</svg>

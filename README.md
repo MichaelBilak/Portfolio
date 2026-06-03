@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bilak Studio — Portfolio
 
-## Getting Started
+Многоязычный сайт-портфолио на **Next.js 14 (App Router)** с поддержкой русского, английского и итальянского языков через `next-intl`. Анимации — `framer-motion`, стили — TailwindCSS.
 
-First, run the development server:
+## Стек
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 14** (App Router, RSC)
+- **TypeScript**
+- **TailwindCSS**
+- **next-intl** — локализация (`ru` / `en` / `it`)
+- **framer-motion** — анимации и интеракции
+- **lucide-react** — иконки
+- **Resend** (опционально) — отправка писем из контактной формы
+
+## Структура
+
+```
+app/[locale]/          # локализованные страницы (главная, услуги, работы)
+app/api/contact/       # API-роут контактной формы
+components/            # UI-блоки (hero, services, contact, footer и т.д.)
+data/                  # контент: проекты, услуги, кейсы before/after, процесс
+i18n/                  # конфигурация next-intl (routing, request, navigation)
+lib/                   # хелперы, кастомные хуки, анимации, переводы
+public/images/         # SVG/PNG-иллюстрации и мокапы
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Запуск локально
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Открой [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Переменные окружения
 
-To learn more about Next.js, take a look at the following resources:
+Скопируй `.env.local.example` в `.env.local` и заполни значения, если нужна отправка контактных форм:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cp .env.local.example .env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| Переменная         | Назначение                                   |
+| ------------------ | -------------------------------------------- |
+| `RESEND_API_KEY`   | API-ключ [Resend](https://resend.com)        |
+| `CONTACT_TO_EMAIL` | Email, куда будут приходить заявки с сайта   |
 
-## Deploy on Vercel
+Без этих переменных форма работает в режиме "fallback" (запрос принимается, но письмо не отправляется).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Скрипты
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Команда         | Что делает                  |
+| --------------- | --------------------------- |
+| `npm run dev`   | Запуск дев-сервера          |
+| `npm run build` | Production-сборка           |
+| `npm run start` | Запуск production-сборки    |
+| `npm run lint`  | Линт через `eslint`         |
+
+## Локализация
+
+Поддерживаемые локали определены в `i18n/routing.ts`. Все строки лежат в `lib/translations.ts`. Чтобы добавить язык — расширь массив `locales` и добавь словарь.
+
+## Лицензия
+
+Private — все права защищены.

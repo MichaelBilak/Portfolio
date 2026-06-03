@@ -1,0 +1,49 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badHero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="50%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#e5e7eb"/>
+  <!-- browser chrome -->
+  <rect x="48" y="36" width="1504" height="828" rx="12" fill="#fff" stroke="#d1d5db"/>
+  <rect x="48" y="36" width="1504" height="44" rx="12" fill="#f3f4f6"/>
+  <rect x="68" y="52" width="12" height="12" rx="6" fill="#ef4444"/>
+  <rect x="88" y="52" width="12" height="12" rx="6" fill="#eab308"/>
+  <rect x="108" y="52" width="12" height="12" rx="6" fill="#22c55e"/>
+  <rect x="140" y="54" width="200" height="8" rx="4" fill="#d1d5db"/>
+  <!-- page -->
+  <rect x="80" y="100" width="1440" height="748" fill="#fafafa"/>
+  <!-- cluttered nav -->
+  <rect x="120" y="130" width="64" height="20" rx="4" fill="#9ca3af"/>
+  <rect x="220" y="134" width="56" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="300" y="134" width="72" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="392" y="134" width="48" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="460" y="134" width="88" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="568" y="134" width="64" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="652" y="134" width="80" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="752" y="134" width="56" height="12" rx="2" fill="#cbd5e1"/>
+  <!-- stock gradient strip -->
+  <rect x="120" y="190" width="1360" height="140" rx="8" fill="url(#badHero)"/>
+  <rect x="120" y="200" width="1360" height="120" rx="8" fill="#fff" fill-opacity="0.15"/>
+  <!-- centered weak hero -->
+  <rect x="520" y="360" width="560" height="18" rx="4" fill="#d1d5db"/>
+  <rect x="440" y="392" width="720" height="14" rx="3" fill="#e5e7eb"/>
+  <rect x="500" y="418" width="600" height="14" rx="3" fill="#e5e7eb"/>
+  <!-- flat hero image block -->
+  <rect x="280" y="460" width="1040" height="200" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <rect x="320" y="500" width="960" height="120" rx="4" fill="#f3f4f6"/>
+  <!-- two equal small CTAs -->
+  <rect x="580" y="690" width="160" height="40" rx="4" fill="#cbd5e1"/>
+  <rect x="760" y="690" width="160" height="40" rx="4" fill="#cbd5e1"/>
+  <rect x="620" y="704" width="80" height="10" rx="2" fill="#94a3b8"/>
+  <rect x="800" y="704" width="80" height="10" rx="2" fill="#94a3b8"/>
+  <!-- 4 equal boxes -->
+  <rect x="120" y="760" width="300" height="72" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <rect x="440" y="760" width="300" height="72" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <rect x="760" y="760" width="300" height="72" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <rect x="1080" y="760" width="300" height="72" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <text x="120" y="118" fill="#64748b" font-family="system-ui,sans-serif" font-size="22" font-weight="600">Hotel · homepage (template)</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="gR" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fb923c"/><stop offset="100%" stop-color="#f472b6"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="#e5e7eb"/>
+  <rect x="48" y="36" width="1504" height="828" rx="12" fill="#fff" stroke="#d1d5db"/>
+  <rect x="80" y="100" width="1440" height="748" fill="#fafafa"/>
+  <rect x="120" y="130" width="64" height="20" rx="4" fill="#9ca3af"/>
+  <rect x="200" y="134" width="600" height="12" rx="2" fill="#cbd5e1"/>
+  <rect x="120" y="190" width="1360" height="160" rx="8" fill="url(#gR)"/>
+  <rect x="400" y="400" width="800" height="20" rx="4" fill="#d1d5db"/>
+  <rect x="500" y="440" width="600" height="14" rx="3" fill="#e5e7eb"/>
+  <rect x="360" y="520" width="880" height="180" rx="6" fill="#e5e7eb" stroke="#d1d5db"/>
+  <rect x="620" y="720" width="140" height="36" rx="4" fill="#cbd5e1"/>
+  <rect x="780" y="720" width="140" height="36" rx="4" fill="#cbd5e1"/>
+</svg>

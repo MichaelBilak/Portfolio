@@ -1,0 +1,14 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#121212"/>
+  <rect x="60" y="90" width="1080" height="620" rx="28" fill="#1D1A16" stroke="#C9A96E" stroke-opacity="0.28"/>
+  <rect x="120" y="160" width="420" height="40" rx="8" fill="#C9A96E" fill-opacity="0.22"/>
+  <rect x="120" y="220" width="500" height="20" rx="6" fill="#E8DCC8" fill-opacity="0.25"/>
+  <rect x="120" y="255" width="430" height="20" rx="6" fill="#E8DCC8" fill-opacity="0.18"/>
+  <rect x="120" y="340" width="220" height="52" rx="26" fill="#C9A96E"/>
+  <rect x="360" y="340" width="280" height="52" rx="26" stroke="#C9A96E" stroke-width="2"/>
+  <rect x="710" y="150" width="360" height="470" rx="16" fill="#0F0F0F" stroke="#C9A96E" stroke-opacity="0.3"/>
+  <rect x="750" y="194" width="280" height="180" rx="12" fill="#2A2218"/>
+  <rect x="750" y="400" width="170" height="20" rx="6" fill="#E8DCC8" fill-opacity="0.3"/>
+  <rect x="750" y="433" width="220" height="16" rx="6" fill="#E8DCC8" fill-opacity="0.2"/>
+  <text x="120" y="140" fill="#E8DCC8" fill-opacity="0.75" font-family="Arial, sans-serif" font-size="28">Ristorante sul mare</text>
+</svg>
