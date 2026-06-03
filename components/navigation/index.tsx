@@ -58,9 +58,16 @@ export function Navigation({ locale, t }: NavigationProps) {
       >
         <Link
           href="/"
-          className="interactive focus-outline flex items-center text-3xl font-display"
+          className="interactive focus-outline flex items-center gap-3"
         >
-          BM<span className="ml-1 text-accentGold">.</span>
+          <span className="font-display text-2xl leading-none tracking-tight">
+            Dorm<span className="text-accentGold">Up</span>
+          </span>
+          <span className="hidden h-7 w-px bg-borderSubtle md:block" aria-hidden />
+          <span className="hidden flex-col gap-[3px] md:flex">
+            <span className="text-[10px] font-semibold leading-none tracking-[0.18em] text-textPrimary/90 uppercase">Group</span>
+            <span className="text-[8px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase">Digital Agency</span>
+          </span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
