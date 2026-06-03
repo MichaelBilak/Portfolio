@@ -80,7 +80,7 @@ export function Footer({ t }: FooterProps) {
       <div className="relative border-t border-borderCool">
         <div className="container-lux flex flex-col items-start justify-between gap-3 py-4 text-sm text-textMuted md:flex-row md:items-center">
           <p>
-            {new Date().getFullYear()} © Bilak Michael · {t.footer.location} · {t.footer.built}
+            2025 © DormUp Group · {t.footer.location} · {t.footer.built}
           </p>
           <a href="#" className="hover:text-accentGold">
             {t.footer.privacy}
