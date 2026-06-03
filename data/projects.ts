@@ -11,6 +11,8 @@ export interface ProjectMeta {
   displayUrl: string;
   /** When true the project gets an internal detail page and the card hides the description rows. */
   isLive?: boolean;
+  /** Focal point for the mockup screenshot crop. Defaults to top. */
+  imagePosition?: "top" | "center";
 }
 
 export const projectsMeta: ProjectMeta[] = [
@@ -19,10 +21,11 @@ export const projectsMeta: ProjectMeta[] = [
     slug: "rockisland-rimini",
     index: "01",
     tag: "Concept Redesign",
-    image: "/images/project-rockisland.svg",
+    image: "/images/project-porto-sole.png",
+    imagePosition: "center",
     tech: ["Next.js", "TypeScript", "Framer Motion", "Figma Prototype"],
-    url: "#",
-    displayUrl: "rockisland-rimini.it",
+    url: "https://porto-sole.vercel.app/",
+    displayUrl: "porto-sole.vercel.app",
   },
   {
     id: "hotel-direct-booking",

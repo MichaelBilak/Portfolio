@@ -3,6 +3,8 @@ export type Locale = "it" | "en" | "fr" | "ru" | "de";
 export interface LocalizedProject {
   id: string;
   name: string;
+  /** Optional second line under the project name (smaller type). */
+  nameTagline?: string;
   subtitle: string;
   problem: string;
   solution: string;
@@ -52,6 +54,8 @@ export interface TranslationSet {
     primaryCta: string;
     secondaryCta: string;
     socialProof: string;
+    mockupCaption: string;
+    mockupCaptionSm?: true;
   };
   trust: string[];
   problem: {
@@ -178,14 +182,14 @@ const it: TranslationSet = {
   projects: [
     {
       id: "rockisland-rimini",
-      name: "RockIsland Rimini",
-      subtitle: "Concept cinematografico per ristorante / bar",
+      name: "Porto Sole",
+      subtitle: "Ristorante sul molo · Bar · Eventi · Dal 1993",
       problem:
-        "Il sito non comunicava l'atmosfera al tramonto, il flusso a cena e le prenotazioni eventi con sufficiente chiarezza.",
+        "Il sito non comunicava l'esperienza unica di cenare a 400 metri nel mare, l'atmosfera al tramonto e il calendario eventi con sufficiente chiarezza.",
       solution:
-        "Storytelling cinematografico, gerarchia menu raffinata e percorso di prenotazione chiaro, ottimizzato per mobile.",
+        "Storytelling cinematografico che guida il visitatore dal tramonto alla notte, con percorso di prenotazione chiaro e ottimizzato per mobile.",
       businessImpact:
-        "Concept client-ready che allinea identita visiva e intenzione di prenotazione, con piu fiducia al primo sguardo.",
+        "Sito live che trasmette l'identita visiva di Porto Sole e converte i visitatori in prenotazioni dirette al primo sguardo.",
     },
     {
       id: "hotel-direct-booking",
@@ -222,7 +226,8 @@ const it: TranslationSet = {
     },
     {
       id: "podlopuhom-jewelry",
-      name: "Pod Lopuhom — Gioielli artigianali",
+      name: "Pod Lopuhom",
+      nameTagline: "Gioielli artigianali",
       subtitle: "E-commerce per gioielli botanici in resina",
       problem:
         "L'artigiana riceveva ordini solo via DM, senza una vetrina chiara per presentare collezioni, prezzi e disponibilita a un pubblico internazionale.",
@@ -375,6 +380,7 @@ const it: TranslationSet = {
     primaryCta: "Vedi i progetti",
     secondaryCta: "Richiedi audit gratuito",
     socialProof: "4 progetti · Rimini & Italia · Disponibile per nuovi clienti",
+    mockupCaption: "Il tuo miglior biglietto da visita",
   },
   trust: [
     "Design che converte",
@@ -582,14 +588,14 @@ const en: TranslationSet = {
   projects: [
     {
       id: "rockisland-rimini",
-      name: "RockIsland Rimini",
-      subtitle: "Restaurant / Bar cinematic concept",
+      name: "Porto Sole",
+      subtitle: "Seaside restaurant & bar on the pier · Since 1993",
       problem:
-        "The website was not communicating sunset atmosphere, dinner flow and event bookings with enough clarity.",
+        "The website failed to convey the unique experience of dining 400 metres into the Adriatic, the sunset atmosphere and event bookings with enough clarity.",
       solution:
-        "Cinematic storytelling, refined menu hierarchy and a clear booking path optimized for mobile users.",
+        "Cinematic storytelling leading visitors from sunset to midnight, with a clear mobile-optimised booking journey.",
       businessImpact:
-        "Client-ready concept that aligns visual identity with booking intent and stronger trust at first glance.",
+        "Live website that communicates Porto Sole's visual identity and converts visitors into direct reservations at first glance.",
     },
     {
       id: "hotel-direct-booking",
@@ -626,7 +632,8 @@ const en: TranslationSet = {
     },
     {
       id: "podlopuhom-jewelry",
-      name: "Pod Lopuhom — Handmade Jewelry",
+      name: "Pod Lopuhom",
+      nameTagline: "Handmade Jewelry",
       subtitle: "Botanical resin jewelry e-commerce",
       problem:
         "The artisan was taking orders only via DMs, with no proper showroom to present collections, pricing and availability to an international audience.",
@@ -779,6 +786,7 @@ const en: TranslationSet = {
     primaryCta: "View projects",
     secondaryCta: "Request free audit",
     socialProof: "4 projects · Rimini & Italy · Available for new clients",
+    mockupCaption: "Your best business card",
   },
   trust: [
     "Design that converts",
@@ -986,14 +994,14 @@ const fr: TranslationSet = {
   projects: [
     {
       id: "rockisland-rimini",
-      name: "RockIsland Rimini",
-      subtitle: "Concept cinematographique restaurant / bar",
+      name: "Porto Sole",
+      subtitle: "Restaurant & bar sur la jetee · Depuis 1993",
       problem:
-        "Le site ne transmettait pas l'atmosphere du coucher de soleil, le flux du diner et les reservations evenements avec assez de clarte.",
+        "Le site ne communiquait pas l'experience unique de diner a 400 metres en mer, l'ambiance du coucher de soleil et la reservation d'evenements avec assez de clarte.",
       solution:
-        "Storytelling cinematographique, hierarchie de menu raffinee et parcours de reservation clair optimise pour mobile.",
+        "Storytelling cinematographique guidant les visiteurs du coucher de soleil a la nuit, avec un parcours de reservation clair optimise pour mobile.",
       businessImpact:
-        "Concept pret pour le client qui aligne identite visuelle et intention de reservation, avec plus de confiance au premier regard.",
+        "Site live qui transmet l'identite visuelle de Porto Sole et convertit les visiteurs en reservations directes des le premier coup d'oeil.",
     },
     {
       id: "hotel-direct-booking",
@@ -1030,7 +1038,8 @@ const fr: TranslationSet = {
     },
     {
       id: "podlopuhom-jewelry",
-      name: "Pod Lopuhom — Bijoux faits main",
+      name: "Pod Lopuhom",
+      nameTagline: "Bijoux faits main",
       subtitle: "E-commerce de bijoux botaniques en resine",
       problem:
         "L'artisane prenait les commandes uniquement par messages, sans vitrine claire pour presenter collections, prix et disponibilites a un public international.",
@@ -1183,6 +1192,7 @@ const fr: TranslationSet = {
     primaryCta: "Voir les projets",
     secondaryCta: "Demander un audit",
     socialProof: "4 projets · Rimini & Italie · Disponible pour nouveaux clients",
+    mockupCaption: "Votre meilleure carte de visite",
   },
   trust: [
     "Design qui convertit",
@@ -1390,14 +1400,14 @@ const ru: TranslationSet = {
   projects: [
     {
       id: "rockisland-rimini",
-      name: "RockIsland Rimini",
-      subtitle: "Кинематографичный концепт ресторан / бар",
+      name: "Porto Sole",
+      subtitle: "Ресторан и бар на причале · 400м в море · С 1993",
       problem:
-        "Сайт не передавал атмосферу заката, вечерний flow и бронирование событий достаточно чётко.",
+        "Сайт не передавал уникальность ужина в 400 метрах от берега в Адриатическом море, атмосферу заката и бронирование мероприятий достаточно чётко.",
       solution:
-        "Кинематографичный сторителлинг, аккуратная иерархия меню и понятный путь бронирования под мобильные.",
+        "Кинематографичный сторителлинг, ведущий посетителя от заката до ночи, с понятным мобильным путём бронирования.",
       businessImpact:
-        "Client-ready концепт, который выравнивает визуальную идентичность и намерение забронировать уже на первом экране.",
+        "Живой сайт, транслирующий визуальную идентичность Porto Sole и конвертирующий посетителей в прямые бронирования с первого взгляда.",
     },
     {
       id: "hotel-direct-booking",
@@ -1434,7 +1444,8 @@ const ru: TranslationSet = {
     },
     {
       id: "podlopuhom-jewelry",
-      name: "Pod Lopuhom — украшения ручной работы",
+      name: "Pod Lopuhom",
+      nameTagline: "украшения ручной работы",
       subtitle: "E-commerce ботанических украшений в смоле",
       problem:
         "Мастерица принимала заказы только в личных сообщениях, без чёткой витрины для коллекций, цен и наличия — особенно для международной аудитории.",
@@ -1580,13 +1591,15 @@ const ru: TranslationSet = {
     audit: "Бесплатный аудит",
   },
   hero: {
-    eyebrow: "Цифровая студия · Римини, Италия",
+    eyebrow: "Digital Studio · Rimini, Italia",
     headline: "Первое впечатление\nо вашем бизнесе\nначинается здесь.",
     subtitle: "Цифровое первое впечатление для hospitality-брендов",
     lead: "Создаём премиум цифровые опыты для ресторанов, отелей и hospitality-брендов, которые хотят выглядеть как лучшие и получать бронирования напрямую.",
     primaryCta: "Смотреть проекты",
     secondaryCta: "Запросить бесплатный аудит",
     socialProof: "4 проекта · Римини и Италия · Открыты для новых клиентов",
+    mockupCaption: "Ваша лучшая визитная карточка",
+    mockupCaptionSm: true,
   },
   trust: [
     "Дизайн, который конвертирует",
@@ -1794,14 +1807,14 @@ const de: TranslationSet = {
   projects: [
     {
       id: "rockisland-rimini",
-      name: "RockIsland Rimini",
-      subtitle: "Kinematografisches Konzept Restaurant / Bar",
+      name: "Porto Sole",
+      subtitle: "Restaurant & Bar auf dem Pier · Seit 1993",
       problem:
-        "Die Website transportierte Sunset-Atmosphare, Dinner-Flow und Event-Buchungen nicht klar genug.",
+        "Die Website vermittelte das einzigartige Erlebnis, 400 Meter im Meer zu speisen, die Sonnenuntergangsatmosphare und Event-Buchungen nicht klar genug.",
       solution:
-        "Kinematografisches Storytelling, fein abgestufte Menu-Hierarchie und klarer Buchungspfad fur Mobile.",
+        "Kinematografisches Storytelling, das Besucher vom Sonnenuntergang bis zur Nacht fuhrt, mit klarem mobiloptimierten Buchungspfad.",
       businessImpact:
-        "Client-ready Konzept, das visuelle Identitat und Buchungsabsicht auf den ersten Blick verbindet.",
+        "Live-Website, die Porto Soles visuelle Identitat transportiert und Besucher beim ersten Blick in direkte Buchungen verwandelt.",
     },
     {
       id: "hotel-direct-booking",
@@ -1838,7 +1851,8 @@ const de: TranslationSet = {
     },
     {
       id: "podlopuhom-jewelry",
-      name: "Pod Lopuhom — Handgefertigter Schmuck",
+      name: "Pod Lopuhom",
+      nameTagline: "Handgefertigter Schmuck",
       subtitle: "Botanischer Resin-Schmuck-Onlineshop",
       problem:
         "Die Kunsthandwerkerin nahm Bestellungen nur uber DMs entgegen, ohne klaren Showroom fur Kollektionen, Preise und Verfugbarkeit fur ein internationales Publikum.",
@@ -1991,6 +2005,7 @@ const de: TranslationSet = {
     primaryCta: "Projekte ansehen",
     secondaryCta: "Audit anfragen",
     socialProof: "4 Projekte · Rimini & Italien · Verfugbar fur neue Kunden",
+    mockupCaption: "Ihre beste Visitenkarte",
   },
   trust: [
     "Design, das konvertiert",

@@ -118,14 +118,26 @@ export function Hero({ t }: HeroProps) {
               <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             </div>
-            <Image
-              src="/images/hero-mockup.svg"
-              alt={t.hero.subtitle}
-              width={900}
-              height={680}
-              className="h-auto w-full rounded-2xl"
-              priority
-            />
+            <div className="relative">
+              <Image
+                src="/images/hero-mockup.svg"
+                alt={t.hero.subtitle}
+                width={900}
+                height={680}
+                className="h-auto w-full rounded-2xl"
+                priority
+              />
+              <p
+                aria-hidden
+                className={`pointer-events-none absolute left-[8%] top-[14%] whitespace-nowrap font-mono font-normal uppercase tracking-[0.14em] text-[#E8DCC8]/65 ${
+                  t.hero.mockupCaptionSm
+                    ? "text-[clamp(0.3rem,0.6vw,0.4rem)]"
+                    : "text-[clamp(0.4rem,0.85vw,0.55rem)]"
+                }`}
+              >
+                {t.hero.mockupCaption}
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </div>

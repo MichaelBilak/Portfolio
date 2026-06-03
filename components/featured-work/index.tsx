@@ -184,13 +184,19 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
         image={meta.image}
         alt={`${copy.name} — ${copy.subtitle}`}
         displayUrl={meta.displayUrl}
+        imagePosition={meta.imagePosition ?? "top"}
         loaded={loaded}
         onLoad={() => setLoaded(true)}
       />
 
       <div className="relative space-y-2">
-        <h3 className="font-display text-3xl font-light leading-tight text-textPrimary md:text-4xl">
-          {copy.name}
+        <h3 className="font-display font-light leading-tight text-textPrimary">
+          <span className="block text-3xl md:text-4xl">{copy.name}</span>
+          {copy.nameTagline ? (
+            <span className="mt-1 block text-lg font-light text-textSecondary md:text-xl">
+              {copy.nameTagline}
+            </span>
+          ) : null}
         </h3>
         <p className="text-sm text-textSecondary">{copy.subtitle}</p>
       </div>
@@ -215,11 +221,19 @@ interface BrowserMockupProps {
   image: string;
   alt: string;
   displayUrl: string;
+  imagePosition: "top" | "center";
   loaded: boolean;
   onLoad: () => void;
 }
 
-function BrowserMockup({ image, alt, displayUrl, loaded, onLoad }: BrowserMockupProps) {
+function BrowserMockup({
+  image,
+  alt,
+  displayUrl,
+  imagePosition,
+  loaded,
+  onLoad,
+}: BrowserMockupProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-borderCool bg-bgElevated shadow-[0_24px_60px_-32px_rgba(0,0,0,0.7)]">
       <div className="flex items-center gap-2 border-b border-borderCool bg-white/[0.025] px-3 py-2">
@@ -239,7 +253,9 @@ function BrowserMockup({ image, alt, displayUrl, loaded, onLoad }: BrowserMockup
           alt={alt}
           fill
           sizes="(min-width: 1024px) 560px, 100vw"
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+          className={`object-cover transition-transform duration-500 group-hover:scale-[1.04] ${
+            imagePosition === "center" ? "object-center" : "object-top"
+          }`}
           onLoad={onLoad}
         />
       </div>

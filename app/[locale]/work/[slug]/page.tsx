@@ -55,7 +55,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   const meta = projectsMeta[index];
   const project = t.projects.find((p) => p.id === meta.id)!;
-  const hasLiveSite = meta.isLive === true && meta.url.startsWith("http");
+  const hasLiveSite = meta.url.startsWith("http");
   const otherProjects = projectsMeta
     .map((m) => ({ meta: m, copy: t.projects.find((p) => p.id === m.id)! }))
     .filter((p) => p.meta.slug !== slug)
@@ -96,8 +96,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                   <span className="font-mono text-xs text-textMuted/70">{meta.index}</span>
                 </div>
 
-                <h1 className="text-fluid-hero font-display font-light text-textPrimary">
-                  {project.name}
+                <h1 className="font-display font-light text-textPrimary">
+                  <span className="block text-fluid-hero">{project.name}</span>
+                  {project.nameTagline ? (
+                    <span className="mt-2 block text-xl font-light text-textSecondary md:text-2xl">
+                      {project.nameTagline}
+                    </span>
+                  ) : null}
                 </h1>
                 <p className="max-w-xl text-lg text-textSecondary">{project.subtitle}</p>
 
@@ -123,23 +128,44 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 ) : null}
               </div>
 
-              <div className="relative overflow-hidden rounded-2xl border border-borderCool bg-bgElevated shadow-[0_36px_80px_-32px_rgba(0,0,0,0.7)]">
-                <div className="flex items-center gap-2 border-b border-borderCool bg-white/[0.025] px-3 py-2">
+              <div className="group relative overflow-hidden rounded-2xl border border-borderCool bg-bgElevated shadow-[0_36px_80px_-32px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accentGold/40 hover:shadow-[0_48px_96px_-32px_rgba(201,169,110,0.25)]">
+                <div className="flex items-center gap-2 border-b border-borderCool bg-white/[0.025] px-3 py-2 transition-colors duration-500 group-hover:bg-white/[0.04]">
                   <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-                  <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
+                  <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted transition-colors duration-500 group-hover:text-accentGold/80">
                     {meta.displayUrl}
                   </span>
                 </div>
-                <div className="relative aspect-[16/10]">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  {meta.url.startsWith("http") ? (
+                    <a
+                      href={meta.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 z-20"
+                      aria-label={`Открыть ${meta.displayUrl}`}
+                    />
+                  ) : null}
+                  {/* gold shimmer sweep */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                  />
+                  {/* subtle dark vignette that lifts on hover */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 z-10 bg-black/20 transition-opacity duration-500 group-hover:opacity-0"
+                  />
                   <Image
                     src={meta.image}
                     alt={`${project.name} — ${project.subtitle}`}
                     fill
                     priority
                     sizes="(min-width: 1024px) 620px, 100vw"
-                    className="object-cover object-top"
+                    className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
+                      meta.imagePosition === "center" ? "object-center" : "object-top"
+                    }`}
                   />
                 </div>
               </div>
