@@ -24,7 +24,7 @@ interface FormState {
 
 export function Contact({ t }: ContactProps) {
   return (
-    <section id="contact" className="py-24 md:py-32">
+    <section id="contact" className="py-16 md:py-32">
       <div className="container-lux grid gap-10 lg:grid-cols-2">
         <div>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accentGold">{t.contact.label}</p>
@@ -141,7 +141,7 @@ function ContactForm({ t }: ContactProps) {
   };
 
   const inputClass = (key: keyof FormState) =>
-    `focus-outline w-full rounded-xl border bg-white/[0.02] px-4 py-3 text-sm text-textPrimary placeholder:text-textMuted transition-colors hover:bg-white/[0.04] ${
+    `focus-outline w-full rounded-xl border bg-white/[0.02] px-4 py-3 text-base text-textPrimary placeholder:text-textMuted transition-colors hover:bg-white/[0.04] sm:text-sm ${
       errors[key] ? "border-[var(--error)]" : "border-borderCool"
     }`;
 

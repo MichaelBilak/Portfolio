@@ -12,7 +12,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-32">
       <motion.div
         initial={shouldReduceMotion ? false : "hidden"}
         whileInView={shouldReduceMotion ? undefined : "visible"}

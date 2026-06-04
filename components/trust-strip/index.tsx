@@ -10,7 +10,7 @@ interface TrustStripProps {
 export function TrustStrip({ t }: TrustStripProps) {
   return (
     <section className="relative border-y border-borderCool bg-bgSecondary/60 py-10 backdrop-blur-sm">
-      <div className="container-lux grid gap-8 md:grid-cols-4">
+      <div className="container-lux grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-4 md:gap-8">
         {t.trust.map((item, index) => {
           const Icon = icons[index];
           return (

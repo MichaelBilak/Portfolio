@@ -28,7 +28,7 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
   const hasMore = isHome && totalCount > HOME_LIMIT;
 
   return (
-    <section id="work" className="relative py-24 md:py-32">
+    <section id="work" className="relative py-16 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/4 top-32 h-72 w-72 rounded-full bg-violet-glow opacity-25 blur-3xl"

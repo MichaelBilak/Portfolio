@@ -6,7 +6,7 @@ interface AboutProps {
 
 export function About({ t }: AboutProps) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-32">
       <div className="container-lux">
         <div className="max-w-3xl">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accentGold">{t.about.eyebrow}</p>

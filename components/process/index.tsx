@@ -14,7 +14,7 @@ export function Process({ t }: ProcessProps) {
   const reduce = Boolean(shouldReduceMotion);
 
   return (
-    <section id="process" className="relative py-24 md:py-32">
+    <section id="process" className="relative py-16 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-violet-glow opacity-20 blur-3xl"

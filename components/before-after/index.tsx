@@ -31,7 +31,7 @@ export function BeforeAfter({ t }: BeforeAfterProps) {
   };
 
   return (
-    <section id="before-after" className="py-24 md:py-32">
+    <section id="before-after" className="py-16 md:py-32">
       <div className="container-lux">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

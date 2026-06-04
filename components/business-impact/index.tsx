@@ -6,7 +6,7 @@ interface BusinessImpactProps {
 
 export function BusinessImpact({ t }: BusinessImpactProps) {
   return (
-    <section className="relative overflow-hidden bg-bgSecondary py-24 md:py-32">
+    <section className="relative overflow-hidden bg-bgSecondary py-16 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-violet-glow opacity-50 blur-3xl"

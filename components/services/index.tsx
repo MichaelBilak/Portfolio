@@ -15,7 +15,7 @@ export function Services({ t }: ServicesProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="services" className="py-24 md:py-32">
+    <section id="services" className="py-16 md:py-32">
       <div className="container-lux">
         <h2 className="text-fluid-title mb-10 font-display font-light">{t.servicesLabel}</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

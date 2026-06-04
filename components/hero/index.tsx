@@ -15,17 +15,17 @@ export function Hero({ t }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="top" className="relative min-h-screen overflow-hidden pt-24">
+    <section id="top" className="relative min-h-screen-dvh overflow-hidden pt-24">
       <div className="ambient-glow" aria-hidden />
       <div className="grain-overlay absolute inset-0" aria-hidden />
 
-      <div className="container-lux relative grid min-h-[calc(100vh-96px)] items-center gap-16 py-16 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="container-lux relative grid min-h-hero items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <motion.div
           variants={sectionStagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="space-y-8"
+          className="space-y-6 sm:space-y-8"
         >
           <motion.p
             variants={fadeUp}

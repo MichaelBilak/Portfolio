@@ -7,9 +7,9 @@ interface AuditCtaProps {
 
 export function AuditCta({ t }: AuditCtaProps) {
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-32">
       <div className="container-lux">
-        <div className="relative overflow-hidden rounded-3xl border border-borderStrong bg-bgSecondary px-8 py-16 text-center">
+        <div className="relative overflow-hidden rounded-3xl border border-borderStrong bg-bgSecondary px-6 py-12 text-center sm:px-8 sm:py-16">
           <div
             aria-hidden
             className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-violet-glow opacity-60 blur-3xl"
