@@ -193,14 +193,15 @@ const it: TranslationSet = {
     },
     {
       id: "hotel-direct-booking",
-      name: "Hotel Direct Booking System",
-      subtitle: "Concept di booking diretto per hotel",
+      name: "Aurelia del Mar",
+      nameTagline: "Hotel Direct Booking System",
+      subtitle: "Hotel fronte mare a Benidorm con offerte di booking diretto",
       problem:
-        "Dipendenza dalle OTA e informazioni frammentate riducevano la fiducia nella prenotazione diretta.",
+        "L'hotel aveva bisogno di un'esperienza di prenotazione diretta capace di comunicare posizione, camere, servizi e offerte senza rimandare gli ospiti alle OTA.",
       solution:
-        "Presentazione delle camere trust-first, CTA di booking dirette e flusso di pagina orientato alla conversione.",
+        "Sito hotel orientato alla conversione con hero immersiva, camere in evidenza, servizi, recensioni, pacchetti speciali e flusso di booking guidato.",
       businessImpact:
-        "Il prototipo mostra come ridurre la dipendenza da commissioni rafforzando l'UX di booking diretto.",
+        "Prototipo live che posiziona Aurelia del Mar come soggiorno premium sul mare e offre agli ospiti un motivo chiaro per prenotare direttamente.",
     },
     {
       id: "premium-restaurant-local-concept",
@@ -599,14 +600,15 @@ const en: TranslationSet = {
     },
     {
       id: "hotel-direct-booking",
-      name: "Hotel Direct Booking System",
-      subtitle: "Hotel direct-booking concept",
+      name: "Aurelia del Mar",
+      nameTagline: "Hotel Direct Booking System",
+      subtitle: "Seafront hotel in Benidorm with direct-booking offers",
       problem:
-        "Reliance on OTA platforms and fragmented information caused low direct booking confidence.",
+        "The hotel needed a polished direct-booking experience that could communicate location, rooms, services and exclusive offers without sending guests back to OTA platforms.",
       solution:
-        "Trust-centric room presentation with direct booking CTA, policy clarity and conversion-focused page flow.",
+        "A conversion-focused hotel website with immersive hero, room highlights, service sections, guest reviews, packages and a guided booking flow.",
       businessImpact:
-        "Prototype shows how hotels can reduce commission dependency through stronger direct booking UX.",
+        "Live prototype positions Aurelia del Mar as a premium seafront stay and gives guests a clear reason to book direct.",
     },
     {
       id: "premium-restaurant-local-concept",
@@ -1005,14 +1007,15 @@ const fr: TranslationSet = {
     },
     {
       id: "hotel-direct-booking",
-      name: "Hotel Direct Booking System",
-      subtitle: "Concept de booking direct pour hotel",
+      name: "Aurelia del Mar",
+      nameTagline: "Hotel Direct Booking System",
+      subtitle: "Hotel en bord de mer a Benidorm avec offres de reservation directe",
       problem:
-        "La dependance aux OTA et l'information fragmentee reduisaient la confiance dans la reservation directe.",
+        "L'hotel avait besoin d'une experience de reservation directe capable de presenter emplacement, chambres, services et offres exclusives sans renvoyer les clients vers les OTA.",
       solution:
-        "Presentation des chambres centree confiance, CTA de booking direct et flux de page oriente conversion.",
+        "Site hotelier oriente conversion avec hero immersive, chambres mises en avant, services, avis clients, forfaits et parcours de booking guide.",
       businessImpact:
-        "Le prototype montre comment reduire la dependance aux commissions en renforcant l'UX de booking direct.",
+        "Prototype live qui positionne Aurelia del Mar comme sejour premium en bord de mer et donne aux clients une raison claire de reserver en direct.",
     },
     {
       id: "premium-restaurant-local-concept",
@@ -1411,14 +1414,15 @@ const ru: TranslationSet = {
     },
     {
       id: "hotel-direct-booking",
-      name: "Hotel Direct Booking System",
-      subtitle: "Концепт прямого букинга для отеля",
+      name: "Aurelia del Mar",
+      nameTagline: "Hotel Direct Booking System",
+      subtitle: "Отель у моря в Бенидорме с предложениями для прямого бронирования",
       problem:
-        "Зависимость от OTA и фрагментированная информация снижали доверие к прямому бронированию.",
+        "Отелю нужен был убедительный сценарий прямого бронирования, который показывает локацию, номера, сервисы и специальные предложения без возврата гостя на OTA-платформы.",
       solution:
-        "Презентация номеров вокруг доверия, прямые booking-CTA и flow страницы под конверсию.",
+        "Конверсионный сайт отеля с атмосферным первым экраном, витриной номеров, блоками сервисов, отзывами, пакетами и понятным booking-flow.",
       businessImpact:
-        "Прототип показывает, как отелям снижать зависимость от комиссий через сильную UX прямого бронирования.",
+        "Живой прототип позиционирует Aurelia del Mar как премиальный отдых у моря и дает гостям понятную причину бронировать напрямую.",
     },
     {
       id: "premium-restaurant-local-concept",
@@ -1818,14 +1822,15 @@ const de: TranslationSet = {
     },
     {
       id: "hotel-direct-booking",
-      name: "Hotel Direct Booking System",
-      subtitle: "Direkt-Buchungskonzept fur Hotels",
+      name: "Aurelia del Mar",
+      nameTagline: "Hotel Direct Booking System",
+      subtitle: "Strandhotel in Benidorm mit Direktbuchungsangeboten",
       problem:
-        "Hohe OTA-Abhangigkeit und fragmentierte Informationen senkten das Vertrauen in die Direktbuchung.",
+        "Das Hotel brauchte ein hochwertiges Direktbuchungserlebnis, das Lage, Zimmer, Services und exklusive Angebote vermittelt, ohne Gaste zuruck zu OTA-Plattformen zu schicken.",
       solution:
-        "Vertrauensbasierte Zimmerprasentation, direkte Buchungs-CTAs und Conversion-fokussierter Seitenfluss.",
+        "Conversion-fokussierte Hotelwebsite mit immersiver Hero-Section, Zimmer-Highlights, Services, Gastebewertungen, Paketen und gefuhrtem Buchungsflow.",
       businessImpact:
-        "Prototyp zeigt, wie Hotels Provisionsabhangigkeit durch starkere Direktbuchungs-UX reduzieren konnen.",
+        "Live-Prototyp, der Aurelia del Mar als premium Aufenthalt am Meer positioniert und Gasten einen klaren Grund gibt, direkt zu buchen.",
     },
     {
       id: "premium-restaurant-local-concept",
