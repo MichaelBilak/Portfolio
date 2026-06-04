@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "@/i18n/navigation";
 import { fadeUp, sectionStagger, slideFromRight } from "@/lib/animations";
 import { TranslationSet } from "@/lib/translations";
 
@@ -63,20 +65,20 @@ export function Hero({ t }: HeroProps) {
 
           <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row">
             <a
-              href="#work"
+              href="#contact"
               className="focus-outline interactive group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-accentGold px-6 py-3.5 text-center text-sm font-medium text-bgPrimary shadow-[0_18px_40px_-18px_rgba(252,211,77,0.55)] hover:shadow-[0_22px_50px_-18px_rgba(252,211,77,0.75)] sm:w-auto"
             >
-              <span className="relative z-10">{t.hero.primaryCta}</span>
+              <span className="relative z-10">{t.hero.secondaryCta}</span>
               <span
                 aria-hidden
                 className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full"
               />
             </a>
             <a
-              href="#contact"
+              href="#work"
               className="focus-outline interactive inline-flex w-full items-center justify-center rounded-full border border-borderStrong bg-white/[0.02] px-6 py-3.5 text-center text-sm font-medium text-accentGold hover:bg-white/[0.05] sm:w-auto"
             >
-              {t.hero.secondaryCta}
+              {t.hero.primaryCta}
             </a>
           </motion.div>
 
@@ -111,33 +113,54 @@ export function Hero({ t }: HeroProps) {
               repeat: shouldReduceMotion ? 0 : Infinity,
               ease: "easeInOut",
             }}
-            className="glass-card-strong overflow-hidden rounded-3xl p-3"
           >
-            <div className="mb-3 flex items-center gap-1.5 px-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-            </div>
-            <div className="relative">
-              <Image
-                src="/images/hero-mockup.svg"
-                alt={t.hero.subtitle}
-                width={900}
-                height={680}
-                className="h-auto w-full rounded-2xl"
-                priority
-              />
-              <p
+            <Link
+              href="/#contact"
+              aria-label={t.hero.secondaryCta}
+              className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-3xl p-3 transition-all duration-300 hover:-translate-y-1 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
+            >
+              <span
                 aria-hidden
-                className={`pointer-events-none absolute left-[8%] top-[14%] whitespace-nowrap font-mono font-normal uppercase tracking-[0.14em] text-[#E8DCC8]/65 ${
-                  t.hero.mockupCaptionSm
-                    ? "text-[clamp(0.3rem,0.6vw,0.4rem)]"
-                    : "text-[clamp(0.4rem,0.85vw,0.55rem)]"
-                }`}
-              >
-                {t.hero.mockupCaption}
-              </p>
-            </div>
+                className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-gradient opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+              />
+              <span className="pointer-events-none absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-accentGold/40 bg-bgPrimary/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accentGold opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
+                {t.nav.audit}
+                <ArrowUpRight
+                  size={12}
+                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </span>
+              <div className="relative mb-3 flex items-center gap-1.5 px-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+              </div>
+              <div className="relative">
+                <Image
+                  src="/images/hero-mockup.svg"
+                  alt=""
+                  aria-hidden
+                  width={900}
+                  height={680}
+                  className="h-auto w-full rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]"
+                  priority
+                />
+                <p
+                  aria-hidden
+                  className={`pointer-events-none absolute left-[8%] top-[14%] whitespace-nowrap font-mono font-normal uppercase tracking-[0.14em] text-[#E8DCC8]/65 ${
+                    t.hero.mockupCaptionSm
+                      ? "text-[clamp(0.3rem,0.6vw,0.4rem)]"
+                      : "text-[clamp(0.4rem,0.85vw,0.55rem)]"
+                  }`}
+                >
+                  {t.hero.mockupCaption}
+                </p>
+              </div>
+            </Link>
           </motion.div>
         </motion.div>
       </div>
