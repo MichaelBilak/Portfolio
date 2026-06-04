@@ -96,40 +96,41 @@ export function Navigation({ locale, t }: NavigationProps) {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: shouldReduceMotion ? 0 : 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col bg-bgPrimary/95 px-8 pt-28 md:hidden"
-          >
-            <div className="flex flex-col gap-7 text-3xl font-display">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: shouldReduceMotion ? 0 : index * 0.08,
-                    duration: shouldReduceMotion ? 0 : 0.45,
-                  }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="interactive text-textPrimary hover:text-accentGold"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </motion.header>
+
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.25 }}
+          className="fixed inset-0 z-[45] flex flex-col bg-bgPrimary/95 px-8 pt-28 md:hidden"
+        >
+          <div className="flex flex-col gap-7 text-3xl font-display">
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={link.href}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: shouldReduceMotion ? 0 : index * 0.08,
+                  duration: shouldReduceMotion ? 0 : 0.45,
+                }}
+              >
+                <Link
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="interactive text-textPrimary hover:text-accentGold"
+                >
+                  {link.label}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
 
     {!open ? (
       <Link
