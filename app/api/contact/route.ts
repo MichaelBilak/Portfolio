@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import path from "node:path";
+import { google } from "googleapis";
 
 interface ContactPayload {
   fullName?: string;
+  email?: string;
   businessName?: string;
   businessType?: string;
   brief?: string;
@@ -24,169 +25,174 @@ const SOURCE_LABELS: Record<string, string> = {
   other: "Other",
 };
 
-function buildHtml(p: Required<ContactPayload>): string {
+function buildPlainText(p: Required<ContactPayload>, timestamp: string): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
   const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
 
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Audit Request</title>
-</head>
-<body style="margin:0;padding:0;background:#07090f;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#f8fafc;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#07090f;padding:40px 16px;">
-    <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
-
-          <!-- Header -->
-          <tr>
-            <td style="padding-bottom:32px;">
-              <table cellpadding="0" cellspacing="0" role="presentation">
-                <tr>
-                  <td style="vertical-align:middle;">
-                    <img src="cid:dormup-logo" width="34" height="34" alt="DormUp" style="display:block;border:0;outline:none;text-decoration:none;" />
-                  </td>
-                  <td style="vertical-align:middle;padding-left:0;">
-                    <p style="margin:0 0 0 -8px;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:300;letter-spacing:-0.01em;color:#f8fafc;line-height:1;">
-                      orm<span style="color:#fcd34d;">Up</span>
-                    </p>
-                  </td>
-                  <td style="vertical-align:middle;padding:0 10px;">
-                    <div style="width:1px;height:28px;background:rgba(148,163,184,0.28);"></div>
-                  </td>
-                  <td style="vertical-align:middle;">
-                    <p style="margin:0 0 4px;font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,250,252,0.7);line-height:1;">GROUP</p>
-                    <p style="margin:0;font-size:8px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.6);line-height:1;">Digital Studio</p>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin:4px 0 0;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(148,163,184,0.6);">
-                New audit request
-              </p>
-            </td>
-          </tr>
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding-bottom:28px;">
-              <div style="height:1px;background:linear-gradient(to right,rgba(252,211,77,0.35),transparent);"></div>
-            </td>
-          </tr>
-
-          <!-- Fields -->
-          <tr>
-            <td>
-              <table width="100%" cellpadding="0" cellspacing="0">
-
-                ${field("Full Name", p.fullName)}
-                ${field("Business Name", p.businessName)}
-                ${field("Business Type", businessTypeLabel)}
-                ${field("How did they find us", sourceLabel)}
-
-                <!-- Brief -->
-                <tr>
-                  <td style="padding-bottom:20px;">
-                    <p style="margin:0 0 6px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.75);">
-                      Brief / Project description
-                    </p>
-                    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px;">
-                      <p style="margin:0;font-size:14px;line-height:1.65;color:#e2e8f0;white-space:pre-wrap;">${escapeHtml(p.brief)}</p>
-                    </div>
-                  </td>
-                </tr>
-
-              </table>
-            </td>
-          </tr>
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding:4px 0 24px;">
-              <div style="height:1px;background:rgba(148,163,184,0.12);"></div>
-            </td>
-          </tr>
-
-          <!-- Footer note -->
-          <tr>
-            <td>
-              <p style="margin:0;font-size:11px;color:rgba(148,163,184,0.5);letter-spacing:0.04em;">
-                Sent automatically from the website contact form · dormup-it.com
-              </p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+  return [
+    "================================================",
+    "  NEW AUDIT REQUEST  —  DormUp Group",
+    "================================================",
+    "",
+    `Date / Time:     ${timestamp}`,
+    `Full Name:       ${p.fullName}`,
+    `Email:           ${p.email}`,
+    `Business Name:   ${p.businessName}`,
+    `Business Type:   ${businessTypeLabel}`,
+    `How found us:    ${sourceLabel}`,
+    "",
+    "Brief / Project Description",
+    "------------------------------------------------",
+    p.brief,
+    "",
+    "------------------------------------------------",
+    "Sent automatically from dormup-it.com",
+  ].join("\n");
 }
 
-function field(label: string, value: string): string {
-  return `
-    <tr>
-      <td style="padding-bottom:16px;">
-        <p style="margin:0 0 4px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(252,211,77,0.75);">${label}</p>
-        <p style="margin:0;font-size:14px;color:#f8fafc;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid rgba(255,255,255,0.06);">${escapeHtml(value)}</p>
-      </td>
-    </tr>`;
-}
+async function appendToGoogleSheets(
+  p: Required<ContactPayload>,
+  timestamp: string,
+): Promise<void> {
+  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
+  const credentialsJson = process.env.GOOGLE_SHEETS_CREDENTIALS_JSON;
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  if (!spreadsheetId || !credentialsJson) return;
+
+  const credentials = JSON.parse(credentialsJson) as object;
+
+  const auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
+
+  const sheets = google.sheets({ version: "v4", auth });
+
+  const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
+  const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
+
+  // Get the current number of rows to calculate the next ID
+  const meta = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: "Sheet1!A:A",
+  });
+  const existingRows = meta.data.values?.length ?? 1;
+  const nextId = existingRows; // row 1 = header, so row 2 = ID #1, etc.
+
+  // Append the new row
+  const appendResult = await sheets.spreadsheets.values.append({
+    spreadsheetId,
+    range: "Sheet1!A:H",
+    valueInputOption: "USER_ENTERED",
+    includeValuesInResponse: true,
+    requestBody: {
+      values: [
+        [
+          nextId,
+          timestamp,
+          p.fullName,
+          p.email,
+          p.businessName,
+          businessTypeLabel,
+          sourceLabel,
+          p.brief,
+        ],
+      ],
+    },
+  });
+
+  // Highlight the new row in light yellow to mark it as "new"
+  const updatedRange = appendResult.data.updates?.updatedRange;
+  if (!updatedRange) return;
+
+  // Parse the row index from the updated range (e.g. "Sheet1!A5:H5" → row 5 → index 4)
+  const rowMatch = updatedRange.match(/(\d+)(?::\w+\d+)?$/);
+  if (!rowMatch) return;
+  const rowIndex = parseInt(rowMatch[1], 10) - 1; // 0-based
+
+  // Get sheet ID
+  const spreadsheet = await sheets.spreadsheets.get({ spreadsheetId });
+  const sheetId = spreadsheet.data.sheets?.[0]?.properties?.sheetId ?? 0;
+
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    requestBody: {
+      requests: [
+        {
+          repeatCell: {
+            range: {
+              sheetId,
+              startRowIndex: rowIndex,
+              endRowIndex: rowIndex + 1,
+              startColumnIndex: 0,
+              endColumnIndex: 8,
+            },
+            cell: {
+              userEnteredFormat: {
+                backgroundColor: { red: 1, green: 0.976, blue: 0.773 }, // #FFF8C5 yellow
+                textFormat: { bold: false },
+              },
+            },
+            fields: "userEnteredFormat(backgroundColor,textFormat)",
+          },
+        },
+      ],
+    },
+  });
 }
 
 export async function POST(request: NextRequest) {
   const payload = (await request.json()) as ContactPayload;
 
-  if (!payload.fullName || !payload.businessName || !payload.brief) {
+  if (!payload.fullName || !payload.email || !payload.businessName || !payload.brief) {
     return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
   }
 
   const p: Required<ContactPayload> = {
     fullName: payload.fullName,
+    email: payload.email,
     businessName: payload.businessName,
     businessType: payload.businessType ?? "other",
     brief: payload.brief,
     source: payload.source ?? "other",
   };
 
+  const now = new Date();
+  const timestamp = now.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/Rome",
+  });
+
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;
   const toEmail = process.env.CONTACT_TO_EMAIL ?? "dormup.it@gmail.com";
 
-  if (gmailUser && gmailPass) {
+  const emailPromise = (async () => {
+    if (!gmailUser || !gmailPass) {
+      console.log("[contact] Email env vars not set — logging payload:", p);
+      return;
+    }
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: { user: gmailUser, pass: gmailPass },
     });
-    const logoPath = path.join(process.cwd(), "public", "images", "logo-dm-group.png");
-
     await transporter.sendMail({
       from: `"DormUp Group" <${gmailUser}>`,
       to: toEmail,
-      subject: `✦ New audit request — ${p.businessName}`,
-      html: buildHtml(p),
-      attachments: [
-        {
-          filename: "logo-dm-group.png",
-          path: logoPath,
-          cid: "dormup-logo",
-        },
-      ],
+      subject: `New audit request — ${p.businessName}`,
+      text: buildPlainText(p, timestamp),
     });
-  } else {
-    console.log("[contact] Email env vars not set — logging payload:", p);
-  }
+  })();
+
+  const sheetsPromise = appendToGoogleSheets(p, timestamp).catch((err) => {
+    console.error("[contact] Google Sheets error:", err);
+  });
+
+  await Promise.all([emailPromise, sheetsPromise]);
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }

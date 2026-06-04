@@ -121,6 +121,7 @@ export interface TranslationSet {
     availability: string;
     form: {
       name: string;
+      email: string;
       business: string;
       businessType: string;
       brief: string;
@@ -139,6 +140,7 @@ export interface TranslationSet {
       };
       errors: {
         required: string;
+        invalidEmail: string;
       };
     };
   };
@@ -528,6 +530,7 @@ const it: TranslationSet = {
     availability: "Attualmente disponibile per nuovi clienti",
     form: {
       name: "Nome e cognome",
+      email: "Email",
       business: "Nome del business",
       businessType: "Tipo di business",
       brief: "Descrivi brevemente cosa cerchi",
@@ -546,6 +549,7 @@ const it: TranslationSet = {
       },
       errors: {
         required: "Campo obbligatorio",
+        invalidEmail: "Inserisci un'email valida",
       },
     },
   },
@@ -935,6 +939,7 @@ const en: TranslationSet = {
     availability: "Currently available for new clients",
     form: {
       name: "Full name",
+      email: "Email",
       business: "Business name",
       businessType: "Business type",
       brief: "Briefly describe what you're looking for",
@@ -953,6 +958,7 @@ const en: TranslationSet = {
       },
       errors: {
         required: "Required field",
+        invalidEmail: "Enter a valid email address",
       },
     },
   },
@@ -1342,6 +1348,7 @@ const fr: TranslationSet = {
     availability: "Actuellement disponible pour nouveaux clients",
     form: {
       name: "Nom et prenom",
+      email: "E-mail",
       business: "Nom du business",
       businessType: "Type de business",
       brief: "Decrivez brievement ce que vous cherchez",
@@ -1360,6 +1367,7 @@ const fr: TranslationSet = {
       },
       errors: {
         required: "Champ obligatoire",
+        invalidEmail: "Entrez une adresse e-mail valide",
       },
     },
   },
@@ -1750,6 +1758,7 @@ const ru: TranslationSet = {
     availability: "Сейчас открыты для новых клиентов",
     form: {
       name: "Имя и фамилия",
+      email: "Email",
       business: "Название бизнеса",
       businessType: "Тип бизнеса",
       brief: "Коротко опишите, что ищете",
@@ -1768,6 +1777,7 @@ const ru: TranslationSet = {
       },
       errors: {
         required: "Обязательное поле",
+        invalidEmail: "Введите корректный email",
       },
     },
   },
@@ -2157,6 +2167,7 @@ const de: TranslationSet = {
     availability: "Derzeit verfugbar fur neue Kunden",
     form: {
       name: "Vor- und Nachname",
+      email: "E-Mail",
       business: "Name des Business",
       businessType: "Art des Business",
       brief: "Beschreiben Sie kurz, was Sie suchen",
@@ -2175,6 +2186,7 @@ const de: TranslationSet = {
       },
       errors: {
         required: "Pflichtfeld",
+        invalidEmail: "Gültige E-Mail-Adresse eingeben",
       },
     },
   },

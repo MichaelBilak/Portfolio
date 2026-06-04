@@ -15,6 +15,7 @@ type SourceType = "google" | "referral" | "social" | "other";
 
 interface FormState {
   fullName: string;
+  email: string;
   businessName: string;
   businessType: BusinessType;
   brief: string;
@@ -59,6 +60,7 @@ export function Contact({ t }: ContactProps) {
 function ContactForm({ t }: ContactProps) {
   const [form, setForm] = useState<FormState>({
     fullName: "",
+    email: "",
     businessName: "",
     businessType: "restaurant",
     brief: "",
@@ -66,6 +68,7 @@ function ContactForm({ t }: ContactProps) {
   });
   const [errors, setErrors] = useState<Record<keyof FormState, string>>({
     fullName: "",
+    email: "",
     businessName: "",
     businessType: "",
     brief: "",
@@ -81,15 +84,23 @@ function ContactForm({ t }: ContactProps) {
 
   const validate = (state: FormState) => {
     const requiredError = t.contact.form.errors.required;
+    const invalidEmailError = t.contact.form.errors.invalidEmail;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const next: Record<keyof FormState, string> = {
       fullName: state.fullName.trim() ? "" : requiredError,
+      email: !state.email.trim()
+        ? requiredError
+        : !emailRegex.test(state.email.trim())
+          ? invalidEmailError
+          : "",
       businessName: state.businessName.trim() ? "" : requiredError,
-      businessType: "",
+      businessType: state.businessType ? "" : requiredError,
       brief: state.brief.trim() ? "" : requiredError,
-      source: "",
+      source: state.source ? "" : requiredError,
     };
     setErrors(next);
-    return !next.fullName && !next.businessName && !next.brief;
+    return Object.values(next).every((e) => e === "");
   };
 
   const onChange =
@@ -120,6 +131,7 @@ function ContactForm({ t }: ContactProps) {
       setSent(true);
       setForm({
         fullName: "",
+        email: "",
         businessName: "",
         businessType: "restaurant",
         brief: "",
@@ -140,6 +152,15 @@ function ContactForm({ t }: ContactProps) {
           <input className={inputClass("fullName")} value={form.fullName} onChange={onChange("fullName")} />
         </Field>
 
+        <Field label={t.contact.form.email} error={errors.email}>
+          <input
+            type="email"
+            className={inputClass("email")}
+            value={form.email}
+            onChange={onChange("email")}
+          />
+        </Field>
+
         <Field label={t.contact.form.business} error={errors.businessName}>
           <input
             className={inputClass("businessName")}
@@ -148,7 +169,7 @@ function ContactForm({ t }: ContactProps) {
           />
         </Field>
 
-        <Field label={t.contact.form.businessType}>
+        <Field label={t.contact.form.businessType} error={errors.businessType}>
           <select className={inputClass("businessType")} value={form.businessType} onChange={onChange("businessType")}>
             <option value="restaurant">{t.contact.form.options.restaurant}</option>
             <option value="hotel">{t.contact.form.options.hotel}</option>
@@ -161,7 +182,7 @@ function ContactForm({ t }: ContactProps) {
           <textarea className={inputClass("brief")} rows={4} value={form.brief} onChange={onChange("brief")} />
         </Field>
 
-        <Field label={t.contact.form.source}>
+        <Field label={t.contact.form.source} error={errors.source}>
           <select className={inputClass("source")} value={form.source} onChange={onChange("source")}>
             <option value="google">{t.contact.form.options.google}</option>
             <option value="referral">{t.contact.form.options.referral}</option>
