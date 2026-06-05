@@ -133,46 +133,58 @@ export function LoadingScreen() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "2rem",
+              gap: "0.75rem",
               position: "relative",
               zIndex: 1,
             }}
           >
-            {/* logo mark with glow */}
-            <motion.div
-              animate={{
-                filter: [
-                  "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
-                  "drop-shadow(0 0 28px rgba(252,211,77,0.65))",
-                  "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
-                ],
-              }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Image
-                src={LOGO_SRC}
-                alt="DormUp Group"
-                width={72}
-                height={72}
-                priority
-                style={{ objectFit: "contain" }}
-              />
-            </motion.div>
-
             {/* wordmark */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-              <span
+              <motion.div
+                aria-label="DormUp Group"
+                animate={{
+                  filter: [
+                    "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
+                    "drop-shadow(0 0 28px rgba(252,211,77,0.65))",
+                    "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
+                  ],
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 style={{
-                  fontFamily: "var(--font-brand)",
-                  fontWeight: 300,
-                  fontSize: "clamp(2rem, 6vw, 3.5rem)",
-                  lineHeight: 1,
-                  letterSpacing: "-0.02em",
-                  color: "#f6f5f1",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  whiteSpace: "nowrap",
                 }}
               >
-                orm<span style={{ color: "#fcd34d" }}>Up</span>
-              </span>
+                <Image
+                  src={LOGO_SRC}
+                  alt=""
+                  aria-hidden
+                  width={96}
+                  height={96}
+                  priority
+                  style={{
+                    width: "clamp(3rem, 8vw, 5.25rem)",
+                    height: "auto",
+                    objectFit: "contain",
+                    marginRight: "-0.85rem",
+                  }}
+                />
+                <span
+                  aria-hidden
+                  style={{
+                    fontFamily: "var(--font-brand)",
+                    fontWeight: 300,
+                    fontSize: "clamp(2.75rem, 8vw, 5rem)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.03em",
+                    color: "#f6f5f1",
+                  }}
+                >
+                  orm<span style={{ color: "#fcd34d" }}>Up</span>
+                </span>
+              </motion.div>
 
               <div
                 style={{
