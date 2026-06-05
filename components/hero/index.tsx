@@ -1,88 +1,121 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, MapPin, TrendingUp } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type Variants,
+} from "framer-motion";
+import { type MouseEvent, useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
-import { fadeUp, sectionStagger, slideFromRight } from "@/lib/animations";
 import { TranslationSet } from "@/lib/translations";
+import { btn } from "@/lib/ui";
 
 interface HeroProps {
   t: TranslationSet;
 }
 
+const container: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 0.61, 0.36, 1] } },
+};
+
 export function Hero({ t }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
+  const headlineLines = t.hero.headline.split("\n");
 
   return (
-    <section id="top" className="relative min-h-screen-dvh overflow-hidden pt-24">
-      <div className="ambient-glow" aria-hidden />
+    <section
+      id="top"
+      className="relative min-h-screen-dvh overflow-hidden pt-28 md:pt-32"
+    >
+      {/* Calm aurora backdrop — slow drifting orbs, no busy grid */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden">
+        <span className="hero-orb hero-orb-gold -left-[14%] -top-[20%] h-[42rem] w-[42rem] max-w-[130vw]" />
+        <span className="hero-orb hero-orb-emerald -bottom-[24%] -right-[12%] h-[40rem] w-[40rem] max-w-[130vw]" />
+      </div>
+      {/* Soft spotlight that lifts the headline area for readability */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(58%_50%_at_28%_38%,rgba(252,211,77,0.07),transparent_70%)]"
+      />
       <div className="grain-overlay absolute inset-0" aria-hidden />
 
-      <div className="container-lux relative grid min-h-hero items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+      <div className="container-wide relative grid min-h-hero items-center gap-12 py-10 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         <motion.div
-          variants={sectionStagger}
+          variants={container}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="space-y-6 sm:space-y-8"
+          animate="visible"
+          className="space-y-7 sm:space-y-9"
         >
-          <motion.p
-            variants={fadeUp}
-            className="inline-flex items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-accentGold backdrop-blur"
-          >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accentGold" />
-            {t.hero.eyebrow}
-          </motion.p>
+          <motion.div variants={item}>
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-borderSubtle bg-white/[0.03] px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-accentGold backdrop-blur sm:text-[11px]">
+              <span className="relative inline-flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accentGold opacity-70" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accentGold" />
+              </span>
+              {t.hero.eyebrow}
+            </span>
+          </motion.div>
 
-          <motion.h1
-            variants={fadeUp}
-            className="text-fluid-hero font-display font-light text-textPrimary"
-          >
-            {t.hero.headline.split("\n").map((line, index, arr) => (
-              <span key={line} className="block">
-                {index === arr.length - 1 ? (
-                  <span className="bg-gradient-to-br from-accentGold via-accentWarm to-accentGold bg-clip-text text-transparent">
-                    {line}
-                  </span>
+          <h1 className="text-fluid-hero font-display font-semibold text-textPrimary text-balance">
+            {headlineLines.map((line, index) => (
+              <motion.span key={line} variants={item} className="block">
+                {index === headlineLines.length - 1 ? (
+                  <span className="text-gradient-sheen">{line}</span>
                 ) : (
                   line
                 )}
-              </span>
+              </motion.span>
             ))}
-          </motion.h1>
+          </h1>
 
           <motion.p
-            variants={fadeUp}
-            className="font-mono text-[11px] uppercase tracking-[0.22em] text-textMuted"
+            variants={item}
+            className="font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted"
           >
             {t.hero.subtitle}
           </motion.p>
 
-          <motion.p variants={fadeUp} className="max-w-2xl text-lg leading-relaxed text-textSecondary">
+          <motion.p
+            variants={item}
+            className="max-w-xl text-lg leading-relaxed text-textSecondary text-pretty"
+          >
             {t.hero.lead}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#contact"
-              className="focus-outline interactive group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-accentGold px-6 py-3.5 text-center text-sm font-medium text-bgPrimary shadow-[0_18px_40px_-18px_rgba(252,211,77,0.55)] hover:shadow-[0_22px_50px_-18px_rgba(252,211,77,0.75)] sm:w-auto"
-            >
+          <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Link href="/#contact" className={btn("primary", "lg", "w-full sm:w-auto")}>
               <span className="relative z-10">{t.hero.secondaryCta}</span>
+              <ArrowUpRight
+                size={18}
+                className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                className="pointer-events-none absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 group-hover:translate-x-full"
               />
-            </a>
-            <a
-              href="#work"
-              className="focus-outline interactive inline-flex w-full items-center justify-center rounded-full border border-borderStrong bg-white/[0.02] px-6 py-3.5 text-center text-sm font-medium text-accentGold hover:bg-white/[0.05] sm:w-auto"
-            >
+            </Link>
+            <Link href="/#work" className={btn("ghost", "lg", "w-full sm:w-auto")}>
               {t.hero.primaryCta}
-            </a>
+            </Link>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="flex items-center gap-3 text-sm text-textSecondary">
+          <motion.div
+            variants={item}
+            className="flex items-center gap-3 text-sm text-textSecondary"
+          >
             <span className="relative inline-flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-60" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
@@ -91,79 +124,211 @@ export function Hero({ t }: HeroProps) {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          variants={slideFromRight}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-120px" }}
-          className="relative mx-auto w-full max-w-xl"
-        >
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 translate-y-6 rounded-full bg-[radial-gradient(circle,rgba(252,211,77,0.22)_0%,rgba(252,211,77,0)_70%)] blur-3xl"
-          />
-          <motion.div
-            animate={
-              shouldReduceMotion
-                ? {}
-                : { y: [0, -10, 0], rotate: [0, 0.6, 0] }
-            }
-            transition={{
-              duration: 8,
-              repeat: shouldReduceMotion ? 0 : Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <Link
-              href="/#contact"
-              aria-label={t.hero.secondaryCta}
-              className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-3xl p-3 transition-all duration-300 hover:-translate-y-1 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-gradient opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
-              />
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-              />
-              <span className="pointer-events-none absolute right-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-accentGold/40 bg-bgPrimary/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accentGold opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
-                {t.nav.audit}
-                <ArrowUpRight
-                  size={12}
-                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
-              </span>
-              <div className="relative mb-3 flex items-center gap-1.5 px-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-              </div>
-              <div className="relative">
-                <Image
-                  src="/images/hero-mockup.svg"
-                  alt=""
-                  aria-hidden
-                  width={900}
-                  height={680}
-                  className="h-auto w-full rounded-2xl transition-transform duration-500 group-hover:scale-[1.02]"
-                  priority
-                />
-                <p
-                  aria-hidden
-                  className={`pointer-events-none absolute left-[8%] top-[14%] whitespace-nowrap font-mono font-normal uppercase tracking-[0.14em] text-[#E8DCC8]/65 ${
-                    t.hero.mockupCaptionSm
-                      ? "text-[clamp(0.3rem,0.6vw,0.4rem)]"
-                      : "text-[clamp(0.4rem,0.85vw,0.55rem)]"
-                  }`}
-                >
-                  {t.hero.mockupCaption}
-                </p>
-              </div>
-            </Link>
-          </motion.div>
-        </motion.div>
+        <HeroVisual t={t} reduce={!!shouldReduceMotion} />
       </div>
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-bgPrimary to-transparent"
+      />
     </section>
+  );
+}
+
+interface HeroVisualProps {
+  t: TranslationSet;
+  reduce: boolean;
+}
+
+function HeroVisual({ t, reduce }: HeroVisualProps) {
+  const { scrollY } = useScroll();
+  const parallax = useTransform(scrollY, [0, 700], [0, -70]);
+
+  // Pointer-driven tilt on the product card
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const rotateX = useSpring(rx, { stiffness: 150, damping: 16 });
+  const rotateY = useSpring(ry, { stiffness: 150, damping: 16 });
+
+  const onMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (reduce) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    ry.set(px * 10);
+    rx.set(py * -10);
+  };
+
+  const onLeave = () => {
+    rx.set(0);
+    ry.set(0);
+  };
+
+  const float = (delay: number, distance = 12): Variants => ({
+    hidden: { opacity: 0, scale: 0.92, y: 16 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: reduce ? 0 : [0, -distance, 0],
+      transition: {
+        opacity: { duration: 0.6, delay },
+        scale: { duration: 0.6, delay },
+        y: reduce
+          ? { duration: 0 }
+          : { duration: 6 + distance / 4, repeat: Infinity, ease: "easeInOut", delay },
+      },
+    },
+  });
+
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, x: 32 }}
+      animate={reduce ? undefined : { opacity: 1, x: 0 }}
+      transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1], delay: 0.15 }}
+      style={reduce ? undefined : { y: parallax }}
+      className="relative mx-auto w-full max-w-xl"
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accentGold/15"
+        style={reduce ? undefined : { animation: "spinSlow 60s linear infinite" }}
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 translate-y-6 rounded-full bg-gold-radial opacity-30 blur-3xl"
+      />
+
+      <motion.div
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
+      >
+        <Link
+          href="/#contact"
+          aria-label={t.hero.secondaryCta}
+          className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-[1.75rem] p-3 transition-all duration-300 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-gradient opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+          />
+
+          <div className="relative mb-3 flex items-center gap-1.5 px-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+            <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
+              your.perfect.business.card.it
+            </span>
+          </div>
+
+          <HeroSiteCarousel reduce={reduce} />
+        </Link>
+      </motion.div>
+
+      {/* Floating UI chips — product-dashboard feel */}
+      <motion.div
+        variants={float(0.4, 10)}
+        initial="hidden"
+        animate="visible"
+        className="glass-card-strong absolute -left-3 top-[22%] hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex"
+      >
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300">
+          <TrendingUp size={16} />
+        </span>
+        <span className="leading-tight">
+          <span className="block font-display text-xl font-medium text-textPrimary">+32%</span>
+          <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
+            direct bookings
+          </span>
+        </span>
+      </motion.div>
+
+      <motion.div
+        variants={float(0.7, 14)}
+        initial="hidden"
+        animate="visible"
+        className="glass-card-strong absolute -right-2 bottom-[16%] hidden items-center gap-2.5 rounded-2xl px-4 py-3 sm:flex"
+      >
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold">
+          <MapPin size={16} />
+        </span>
+        <span className="leading-tight">
+          <span className="block text-sm font-medium text-textPrimary">Rimini, IT</span>
+          <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
+            digital studio
+          </span>
+        </span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Possible website directions, shown blurred and slowly cross-fading —
+// "your site could look like any of these; the direction is yours."
+const SITE_IMAGES = [
+  "/images/site-restaurant.png",
+  "/images/site-hotel.png",
+  "/images/site-bar.png",
+  "/images/site-cafe.png",
+];
+
+function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (reduce) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % SITE_IMAGES.length);
+    }, 3800);
+    return () => clearInterval(id);
+  }, [reduce]);
+
+  return (
+    <div className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.1, ease: "easeInOut" }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={SITE_IMAGES[index]}
+            alt=""
+            aria-hidden
+            fill
+            sizes="(max-width: 1024px) 90vw, 40vw"
+            className="scale-[1.12] object-cover blur-[8px] transition-transform duration-700 group-hover:scale-[1.18]"
+            priority={index === 0}
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Tint + vignette: premium depth and keeps the content intentionally unreadable */}
+      <span aria-hidden className="pointer-events-none absolute inset-0 bg-[#06080c]/35" />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06080c]/75 via-transparent to-[#06080c]/15"
+      />
+
+      {/* Progress dots */}
+      <div className="pointer-events-none absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+        {SITE_IMAGES.map((src, i) => (
+          <span
+            key={src}
+            className={`h-1 rounded-full transition-all duration-500 ${
+              i === index ? "w-5 bg-accentGold" : "w-1.5 bg-white/35"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

@@ -120,9 +120,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                         className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                       />
                     </a>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-5 py-2.5 font-mono text-xs text-textSecondary">
-                      <ExternalLink size={12} className="text-accentGold" aria-hidden />
-                      {meta.displayUrl}
+                    <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-5 py-2.5 font-mono text-xs text-textSecondary">
+                      <ExternalLink size={12} className="shrink-0 text-accentGold" aria-hidden />
+                      <span className="min-w-0 break-all">{meta.displayUrl}</span>
                     </span>
                   </div>
                 ) : null}
@@ -247,7 +247,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                           className="text-textMuted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accentGold"
                         />
                       </div>
-                      <h3 className="font-display text-2xl font-light text-textPrimary">
+                      <h3 className="text-2xl font-semibold tracking-tight text-textPrimary">
                         {copy.name}
                       </h3>
                       <p className="text-sm text-textSecondary">{copy.subtitle}</p>

@@ -10,6 +10,7 @@ import { Hero } from "@/components/hero";
 import { Navigation } from "@/components/navigation";
 import { ProblemStatement } from "@/components/problem-statement";
 import { Process } from "@/components/process";
+import { Proof } from "@/components/proof";
 import { Services } from "@/components/services";
 import { TrustStrip } from "@/components/trust-strip";
 import { Locale, translations } from "@/lib/translations";
@@ -28,10 +29,11 @@ export function SiteShell({ locale }: SiteShellProps) {
       <main>
         <Hero t={t} />
         <TrustStrip t={t} />
+        <Proof t={t} />
         <ProblemStatement t={t} />
+        <Services t={t} />
         <FeaturedWork t={t} />
         <BeforeAfter t={t} />
-        <Services t={t} />
         <Process t={t} />
         <BusinessImpact t={t} />
         <AuditCta t={t} />

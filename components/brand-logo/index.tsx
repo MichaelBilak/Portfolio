@@ -41,7 +41,7 @@ export function BrandLogo({
           className="shrink-0 object-contain"
         />
         <span
-          className={`font-display font-light leading-none tracking-tight text-textPrimary ${wordmarkOffsetClassName} ${wordmarkClassName}`}
+          className={`font-brand font-light leading-none tracking-tight text-textPrimary ${wordmarkOffsetClassName} ${wordmarkClassName}`}
           aria-hidden
         >
           orm<span className="text-accentGold">Up</span>

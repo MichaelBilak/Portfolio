@@ -188,8 +188,9 @@ export async function POST(request: NextRequest) {
     });
   })();
 
-  const sheetsPromise = appendToGoogleSheets(p, timestamp).catch((err) => {
-    console.error("[contact] Google Sheets error:", err);
+  const sheetsPromise = appendToGoogleSheets(p, timestamp).catch((err: unknown) => {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[contact] Google Sheets error:", msg);
   });
 
   await Promise.all([emailPromise, sheetsPromise]);

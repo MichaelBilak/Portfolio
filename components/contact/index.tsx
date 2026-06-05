@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Mail, MessageCircle, Signal } from "lucide-react";
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
 import { ContactErrorBoundary } from "./contact-error-boundary";
 
@@ -23,30 +24,64 @@ interface FormState {
 }
 
 export function Contact({ t }: ContactProps) {
+  const onMove = useSpotlight();
   return (
-    <section id="contact" className="py-16 md:py-32">
-      <div className="container-lux grid gap-10 lg:grid-cols-2">
+    <section id="contact" className="relative overflow-hidden py-20 md:py-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 top-1/3 h-80 w-80 rounded-full bg-gold-radial opacity-15 blur-3xl"
+      />
+      <div className="container-lux relative grid gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accentGold">{t.contact.label}</p>
-          <h2 className="mt-3 text-fluid-title font-display font-light">{t.contact.title}</h2>
-          <p className="mt-6 max-w-xl text-lg text-textSecondary">{t.contact.body}</p>
-          <div className="mt-8 space-y-4 text-sm">
-            <p className="flex items-center gap-3">
-              <Mail size={16} className="text-accentGold" /> {t.contact.emailLabel}:{" "}
-              <a className="text-textPrimary underline-offset-2 hover:underline" href="mailto:dormup.it@gmail.com">
-                dormup.it@gmail.com
+          <Reveal>
+            <Eyebrow>{t.contact.label}</Eyebrow>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+              {t.contact.title}
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-xl text-lg text-textSecondary text-pretty">{t.contact.body}</p>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <div className="mt-9 space-y-3">
+              <a
+                href="mailto:dormup.it@gmail.com"
+                onMouseMove={onMove}
+                className="glass-card spotlight-card interactive group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-borderSubtle bg-white/[0.03] text-accentGold">
+                  <Mail size={16} />
+                </span>
+                <span className="leading-tight">
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
+                    {t.contact.emailLabel}
+                  </span>
+                  <span className="block text-sm text-textPrimary">dormup.it@gmail.com</span>
+                </span>
               </a>
-            </p>
-            <p className="flex items-center gap-3">
-              <MessageCircle size={16} className="text-accentGold" /> {t.contact.whatsappLabel}:{" "}
-              <a className="text-textPrimary underline-offset-2 hover:underline" href="https://wa.me/393333333333">
-                +39 333 333 3333
+              <a
+                href="https://wa.me/393333333333"
+                onMouseMove={onMove}
+                className="glass-card spotlight-card interactive group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-borderSubtle bg-white/[0.03] text-accentGold">
+                  <MessageCircle size={16} />
+                </span>
+                <span className="leading-tight">
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
+                    {t.contact.whatsappLabel}
+                  </span>
+                  <span className="block text-sm text-textPrimary">+39 333 333 3333</span>
+                </span>
               </a>
-            </p>
-            <p className="flex items-center gap-3">
-              <Signal size={16} className="text-accentGold" /> {t.contact.availability}
-            </p>
-          </div>
+              <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">
+                <Signal size={16} className="text-accentGold" /> {t.contact.availability}
+              </p>
+            </div>
+          </Reveal>
         </div>
 
         <ContactErrorBoundary>

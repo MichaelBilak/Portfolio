@@ -86,7 +86,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={current.langSelector.label}
-        className="focus-outline interactive group inline-flex items-center gap-2 rounded-full border border-borderSubtle bg-bgSecondary/60 px-3.5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-textPrimary backdrop-blur hover:border-borderStrong"
+        className="focus-outline interactive group inline-flex min-h-11 items-center gap-2 rounded-full border border-borderSubtle bg-bgSecondary/60 px-3.5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-textPrimary backdrop-blur hover:border-borderStrong md:min-h-0"
       >
         <Globe size={14} className="text-accentGold" />
         <span className="text-accentGold">{current.langCode}</span>
@@ -130,7 +130,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
                     role="option"
                     aria-selected={active}
                     onClick={() => switchTo(code)}
-                    className={`interactive flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm ${
+                    className={`interactive flex min-h-11 w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm ${
                       active
                         ? "bg-[rgba(201,169,110,0.1)] text-accentGold"
                         : "text-textPrimary hover:bg-[rgba(255,255,255,0.04)] hover:text-accentGold"

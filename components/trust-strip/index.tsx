@@ -1,37 +1,26 @@
-import { BadgeCheck, Building2, Smartphone, Ticket } from "lucide-react";
+import { Marquee } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
-
-const icons = [BadgeCheck, Building2, Ticket, Smartphone];
 
 interface TrustStripProps {
   t: TranslationSet;
 }
 
 export function TrustStrip({ t }: TrustStripProps) {
+  const items = t.trust.map((label, index) => (
+    <span key={`${label}-${index}`} className="flex items-center">
+      <span className="font-display text-2xl font-light tracking-tight text-textPrimary/90 sm:text-3xl md:text-4xl">
+        {label}
+      </span>
+      <span
+        aria-hidden
+        className="mx-7 inline-block h-2 w-2 rotate-45 bg-accentGold/70 md:mx-10"
+      />
+    </span>
+  ));
+
   return (
-    <section className="relative border-y border-borderCool bg-bgSecondary/60 py-10 backdrop-blur-sm">
-      <div className="container-lux grid grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-4 md:gap-8">
-        {t.trust.map((item, index) => {
-          const Icon = icons[index];
-          return (
-            <div
-              key={item}
-              className="relative flex items-center gap-3 md:flex-col md:items-start"
-            >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-borderSubtle bg-white/[0.03]">
-                <Icon size={16} className="text-accentGold" />
-              </span>
-              <p className="text-sm leading-snug text-textPrimary">{item}</p>
-              {index < t.trust.length - 1 ? (
-                <span
-                  aria-hidden
-                  className="absolute right-0 top-1/2 hidden h-10 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-borderStrong to-transparent md:block"
-                />
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
+    <section className="relative border-y border-borderCool bg-bgSecondary/50 py-7 backdrop-blur-sm md:py-9">
+      <Marquee items={items} itemClassName="text-textPrimary" />
     </section>
   );
 }

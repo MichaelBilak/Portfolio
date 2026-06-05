@@ -20,6 +20,8 @@ export interface LocalizedService {
   /** External portfolio (operator’s reel / Instagram / Vimeo, etc.) */
   portfolioUrl?: string;
   portfolioLinkLabel?: string;
+  portfolioUrl2?: string;
+  portfolioLinkLabel2?: string;
   pricingSectionTitle?: string;
   pricingFootnote?: string;
   pricingTiers?: { name: string; detail: string }[];
@@ -58,6 +60,10 @@ export interface TranslationSet {
     mockupCaptionSm?: true;
   };
   trust: string[];
+  proof: {
+    eyebrow: string;
+    items: { value: string; label: string }[];
+  };
   problem: {
     title: string;
     body: string;
@@ -164,6 +170,13 @@ export interface TranslationSet {
     sectionEyebrow: string;
     pricingEyebrow: string;
   };
+  servicesPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    viewAll: string;
+    categories: { title: string; items: { label: string; info: string }[] }[];
+  };
   workPage: {
     eyebrow: string;
     title: string;
@@ -185,7 +198,7 @@ const it: TranslationSet = {
     {
       id: "rockisland-rimini",
       name: "Porto Sole",
-      subtitle: "Ristorante sul molo · Bar · Eventi · Dal 1993",
+      subtitle: "Ristorante sul molo · Dal 1993",
       problem:
         "Il sito non comunicava l'esperienza unica di cenare a 400 metri nel mare, l'atmosfera al tramonto e il calendario eventi con sufficiente chiarezza.",
       solution:
@@ -197,7 +210,7 @@ const it: TranslationSet = {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
-      subtitle: "Hotel fronte mare a Benidorm con offerte di booking diretto",
+      subtitle: "Hotel fronte mare · booking diretto",
       problem:
         "L'hotel aveva bisogno di un'esperienza di prenotazione diretta capace di comunicare posizione, camere, servizi e offerte senza rimandare gli ospiti alle OTA.",
       solution:
@@ -208,7 +221,7 @@ const it: TranslationSet = {
     {
       id: "premium-restaurant-local-concept",
       name: "Premium Restaurant Website",
-      subtitle: "Pagina di conversione per ristorante locale",
+      subtitle: "Conversione per ristorante locale",
       problem:
         "Un layout datato non valorizzava atmosfera, qualita del menu e percorso di prenotazione su mobile.",
       solution:
@@ -231,7 +244,7 @@ const it: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Gioielli artigianali",
-      subtitle: "E-commerce per gioielli botanici in resina",
+      subtitle: "Gioielli botanici � e-commerce",
       problem:
         "L'artigiana riceveva ordini solo via DM, senza una vetrina chiara per presentare collezioni, prezzi e disponibilita a un pubblico internazionale.",
       solution:
@@ -243,7 +256,7 @@ const it: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Sito Web Premium",
+      title: "Custom Website Dev",
       description:
         "Design e sviluppo completo per ristoranti, hotel, bar. Mobile-first, veloce, ottimizzato per convertire.",
       details: "Da wireframe a produzione · CMS opzionale · SEO base incluso",
@@ -310,8 +323,10 @@ const it: TranslationSet = {
         "Consegna file pronti per hero, menu digitali e campagne",
         "Licenza d'uso per marketing online (come da contratto)",
       ],
-      portfolioUrl: "https://www.instagram.com/",
-      portfolioLinkLabel: "Vedi i lavori dell'operatore",
+      portfolioUrl: "https://www.instagram.com/lev__k12?igsh=MWFrY2dxemE3eDhvMg==",
+      portfolioLinkLabel: "Instagram dell'operatore",
+      portfolioUrl2: "https://levkaplan-video.framer.website",
+      portfolioLinkLabel2: "Portfolio operatore",
       pricingSectionTitle: "Piani tariffari (servizio dedicato)",
       pricingFootnote:
         "Importi indicativi: si definiscono in preventivo in base a location, durata e diritti di utilizzo.",
@@ -391,6 +406,15 @@ const it: TranslationSet = {
     "Nessuna dipendenza da OTA",
     "Mobile-first & veloce",
   ],
+  proof: {
+    eyebrow: "In numeri",
+    items: [
+      { value: "24h", label: "Tempo di risposta medio" },
+      { value: "100%", label: "Mobile-first e veloce" },
+      { value: "5", label: "Lingue gestite in produzione" },
+      { value: "20%", label: "Commissioni OTA che puoi evitare" },
+    ],
+  },
   problem: {
     title:
       "Quasi tutti i business locali hanno un sito. Quasi nessuno ha una vera prima impressione digitale.",
@@ -510,7 +534,7 @@ const it: TranslationSet = {
     ],
   },
   audit: {
-    title: "Vuoi sapere cosa frena il tuo sito?",
+    title: "Vuoi sapere\ncosa frena il tuo sito?",
     body: "Analizziamo il tuo sito attuale e ti diciamo esattamente cosa migliorare. Gratuitamente, senza impegno.",
     cta: "Richiedi il tuo audit gratuito",
     meta: "Rispondiamo entro 24 ore · Nessun costo · Nessun impegno",
@@ -573,6 +597,55 @@ const it: TranslationSet = {
     sectionEyebrow: "Servizio",
     pricingEyebrow: "Tariffe",
   },
+  servicesPage: {
+    eyebrow: "Servizi",
+    title: "Cosa costruiamo",
+    subtitle: "Dal sito di presentazione alla piattaforma digitale completa.",
+    viewAll: "Tutti i servizi",
+    categories: [
+      {
+        title: "Siti web",
+        items: [
+          { label: "Siti aziendali", info: "Sito istituzionale multi-pagina con team, servizi e SEO ottimizzato." },
+          { label: "Promo", info: "Sito a breve termine per lanciare un'offerta, evento o campagna." },
+          { label: "Landing page", info: "Pagina singola ad alta conversione con un obiettivo e una CTA chiara." },
+          { label: "Media e blog", info: "Sito editoriale con articoli, categorie, tag e feed RSS." },
+          { label: "No/Low-code", info: "Consegna rapida tramite Webflow, Framer o Tilda — senza dev pesante." },
+        ],
+      },
+      {
+        title: "Prodotti digitali",
+        items: [
+          { label: "Web service", info: "Tool web interattivi: dashboard, prenotazioni, marketplace." },
+          { label: "App mobile", info: "App iOS e Android native con React Native o Flutter." },
+          { label: "Intranet", info: "Portali interni per team: wiki, documenti, comunicazioni." },
+          { label: "Area riservata", info: "Spazio clienti protetto per ordini, progetti e documenti." },
+          { label: "Chatbot", info: "Flussi automatizzati per assistenza, lead capture e onboarding." },
+          { label: "E-commerce", info: "Shop online con carrello, pagamenti e gestione inventario." },
+        ],
+      },
+      {
+        title: "Design",
+        items: [
+          { label: "UX & UI", info: "Wireframe e design d'interfaccia pixel-perfect basati su ricerca utente." },
+          { label: "Motion & Sound", info: "Animazioni, micro-interazioni e identità sonora del brand." },
+          { label: "Branding", info: "Logo, palette, tipografia e sistema di identità visiva completo." },
+          { label: "UX Research", info: "Interviste, test di usabilità e decisioni basate sui dati." },
+        ],
+      },
+      {
+        title: "Sviluppo",
+        items: [
+          { label: "Analisi di sistema", info: "Requisiti, specifiche tecniche e pianificazione dell'architettura." },
+          { label: "Frontend", info: "Interfacce React/Next.js — veloci, accessibili, pronte per la produzione." },
+          { label: "Backend", info: "API, database, autenticazione e logica server scalabile." },
+          { label: "Sviluppo mobile", info: "App cross-platform con performance fluide su iOS e Android." },
+          { label: "Quality Assurance", info: "Test manuali e automatizzati su dispositivi, browser e scenari reali." },
+          { label: "DevOps", info: "CI/CD, hosting cloud, monitoraggio e deploy senza downtime." },
+        ],
+      },
+    ],
+  },
   workPage: {
     eyebrow: "Lavori",
     title: "Tutti i progetti",
@@ -594,7 +667,7 @@ const en: TranslationSet = {
     {
       id: "rockisland-rimini",
       name: "Porto Sole",
-      subtitle: "Seaside restaurant & bar on the pier · Since 1993",
+      subtitle: "Restaurant & bar on the pier",
       problem:
         "The website failed to convey the unique experience of dining 400 metres into the Adriatic, the sunset atmosphere and event bookings with enough clarity.",
       solution:
@@ -606,7 +679,7 @@ const en: TranslationSet = {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
-      subtitle: "Seafront hotel in Benidorm with direct-booking offers",
+      subtitle: "Seafront hotel · direct booking",
       problem:
         "The hotel needed a polished direct-booking experience that could communicate location, rooms, services and exclusive offers without sending guests back to OTA platforms.",
       solution:
@@ -617,7 +690,7 @@ const en: TranslationSet = {
     {
       id: "premium-restaurant-local-concept",
       name: "Premium Restaurant Website",
-      subtitle: "Local restaurant conversion page",
+      subtitle: "Restaurant conversion page",
       problem:
         "Outdated layout failed to showcase atmosphere, menu value and the reservation path on mobile.",
       solution:
@@ -640,7 +713,7 @@ const en: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Handmade Jewelry",
-      subtitle: "Botanical resin jewelry e-commerce",
+      subtitle: "Botanical jewelry � e-commerce",
       problem:
         "The artisan was taking orders only via DMs, with no proper showroom to present collections, pricing and availability to an international audience.",
       solution:
@@ -652,7 +725,7 @@ const en: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Premium Website",
+      title: "Custom Website Dev",
       description:
         "Full design and development for restaurants, hotels and bars. Mobile-first, fast, optimized to convert.",
       details: "From wireframe to launch · Optional CMS · Base SEO included",
@@ -719,8 +792,10 @@ const en: TranslationSet = {
         "Files ready for hero sections, digital menus, and campaigns",
         "Usage rights for digital marketing (per agreement)",
       ],
-      portfolioUrl: "https://www.instagram.com/",
-      portfolioLinkLabel: "View the operator’s portfolio",
+      portfolioUrl: "https://www.instagram.com/lev__k12?igsh=MWFrY2dxemE3eDhvMg==",
+      portfolioLinkLabel: "Operator’s Instagram",
+      portfolioUrl2: "https://levkaplan-video.framer.website",
+      portfolioLinkLabel2: "Operator portfolio",
       pricingSectionTitle: "Pricing tiers (standalone service)",
       pricingFootnote:
         "Figures are quoted per brief depending on location, duration, and usage rights.",
@@ -800,6 +875,15 @@ const en: TranslationSet = {
     "Less OTA dependency",
     "Mobile-first & fast",
   ],
+  proof: {
+    eyebrow: "By the numbers",
+    items: [
+      { value: "24h", label: "Average response time" },
+      { value: "100%", label: "Mobile-first & fast" },
+      { value: "5", label: "Languages shipped in production" },
+      { value: "20%", label: "OTA commissions you can avoid" },
+    ],
+  },
   problem: {
     title:
       "Most local businesses have a website. Almost none of them have a digital first impression.",
@@ -919,7 +1003,7 @@ const en: TranslationSet = {
     ],
   },
   audit: {
-    title: "Want to know what's holding your site back?",
+    title: "Want to know\nwhat's holding your site back?",
     body: "We analyze your current website and tell you exactly what to improve. Free of charge, no commitment.",
     cta: "Request your free audit",
     meta: "Reply within 24 hours · Free · No commitment",
@@ -982,6 +1066,55 @@ const en: TranslationSet = {
     sectionEyebrow: "Service",
     pricingEyebrow: "Pricing",
   },
+  servicesPage: {
+    eyebrow: "Services",
+    title: "What we build",
+    subtitle: "From a presentation site to a full digital platform.",
+    viewAll: "All services",
+    categories: [
+      {
+        title: "Websites",
+        items: [
+          { label: "Corporate sites", info: "Multi-page brand site with team, services, contacts and SEO." },
+          { label: "Promo", info: "Short-term campaign site to push a launch, event or offer." },
+          { label: "Landing pages", info: "Single-focus conversion page — one goal, one clear CTA." },
+          { label: "Media & blogs", info: "Content-driven site with articles, categories, tags and RSS." },
+          { label: "No/Low-code", info: "Fast delivery via Webflow, Framer or Tilda — no heavy dev needed." },
+        ],
+      },
+      {
+        title: "Digital products",
+        items: [
+          { label: "Web services", info: "Browser-based tools: dashboards, booking engines, marketplaces." },
+          { label: "Mobile apps", info: "iOS & Android apps built with React Native or Flutter." },
+          { label: "Intranets", info: "Internal portals for teams: wikis, docs and announcements." },
+          { label: "Client portals", info: "Password-protected spaces for clients to track orders or projects." },
+          { label: "Chatbots", info: "Automated chat flows for support, lead capture or onboarding." },
+          { label: "E-commerce", info: "Online stores with cart, checkout, payments and inventory." },
+        ],
+      },
+      {
+        title: "Design",
+        items: [
+          { label: "UX & UI", info: "Research-backed wireframes and pixel-perfect interface design." },
+          { label: "Motion & Sound", info: "Animated transitions, micro-interactions and sonic branding." },
+          { label: "Branding", info: "Logo, color palette, typography and full brand identity system." },
+          { label: "UX Research", info: "User interviews, usability tests and data-driven design decisions." },
+        ],
+      },
+      {
+        title: "Development",
+        items: [
+          { label: "Systems analysis", info: "Requirements mapping, technical specs and architecture planning." },
+          { label: "Frontend dev", info: "React/Next.js interfaces — fast, accessible, production-ready." },
+          { label: "Backend dev", info: "APIs, databases, auth and server logic built to scale." },
+          { label: "Mobile dev", info: "Cross-platform native apps with smooth performance." },
+          { label: "Quality Assurance", info: "Manual and automated testing across devices and browsers." },
+          { label: "DevOps", info: "CI/CD pipelines, cloud hosting, monitoring and zero-downtime deploys." },
+        ],
+      },
+    ],
+  },
   workPage: {
     eyebrow: "Work",
     title: "All projects",
@@ -1003,7 +1136,7 @@ const fr: TranslationSet = {
     {
       id: "rockisland-rimini",
       name: "Porto Sole",
-      subtitle: "Restaurant & bar sur la jetee · Depuis 1993",
+      subtitle: "Restaurant & bar sur la jetée",
       problem:
         "Le site ne communiquait pas l'experience unique de diner a 400 metres en mer, l'ambiance du coucher de soleil et la reservation d'evenements avec assez de clarte.",
       solution:
@@ -1015,7 +1148,7 @@ const fr: TranslationSet = {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
-      subtitle: "Hotel en bord de mer a Benidorm avec offres de reservation directe",
+      subtitle: "Hotel en bord de mer · reservation directe",
       problem:
         "L'hotel avait besoin d'une experience de reservation directe capable de presenter emplacement, chambres, services et offres exclusives sans renvoyer les clients vers les OTA.",
       solution:
@@ -1026,7 +1159,7 @@ const fr: TranslationSet = {
     {
       id: "premium-restaurant-local-concept",
       name: "Premium Restaurant Website",
-      subtitle: "Page de conversion pour restaurant local",
+      subtitle: "Conversion pour restaurant local",
       problem:
         "Un layout depasse ne mettait pas en valeur atmosphere, qualite du menu et parcours de reservation sur mobile.",
       solution:
@@ -1049,7 +1182,7 @@ const fr: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Bijoux faits main",
-      subtitle: "E-commerce de bijoux botaniques en resine",
+      subtitle: "Bijoux botaniques � e-commerce",
       problem:
         "L'artisane prenait les commandes uniquement par messages, sans vitrine claire pour presenter collections, prix et disponibilites a un public international.",
       solution:
@@ -1061,7 +1194,7 @@ const fr: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Site Web Premium",
+      title: "Custom Website Dev",
       description:
         "Design et developpement complets pour restaurants, hotels, bars. Mobile-first, rapide, optimise pour la conversion.",
       details: "Du wireframe a la production · CMS optionnel · SEO de base inclus",
@@ -1128,8 +1261,10 @@ const fr: TranslationSet = {
         "Fichiers prets pour hero, menus digitaux et campagnes",
         "Droits d utilisation marketing digital (selon contrat)",
       ],
-      portfolioUrl: "https://www.instagram.com/",
-      portfolioLinkLabel: "Voir les travaux de l'operateur",
+      portfolioUrl: "https://www.instagram.com/lev__k12?igsh=MWFrY2dxemE3eDhvMg==",
+      portfolioLinkLabel: "Instagram de l'operateur",
+      portfolioUrl2: "https://levkaplan-video.framer.website",
+      portfolioLinkLabel2: "Portfolio operateur",
       pricingSectionTitle: "Grilles tarifaires (service autonome)",
       pricingFootnote:
         "Montants indicatifs : devis selon lieu, duree et droits d exploitation.",
@@ -1209,6 +1344,15 @@ const fr: TranslationSet = {
     "Moins de dependance aux OTA",
     "Mobile-first et rapide",
   ],
+  proof: {
+    eyebrow: "En chiffres",
+    items: [
+      { value: "24h", label: "Temps de reponse moyen" },
+      { value: "100%", label: "Mobile-first et rapide" },
+      { value: "5", label: "Langues livrees en production" },
+      { value: "20%", label: "Commissions OTA evitables" },
+    ],
+  },
   problem: {
     title:
       "Presque tous les business locaux ont un site. Presque aucun n'a une vraie premiere impression digitale.",
@@ -1328,7 +1472,7 @@ const fr: TranslationSet = {
     ],
   },
   audit: {
-    title: "Vous voulez savoir ce qui freine votre site?",
+    title: "Vous voulez savoir\nce qui freine votre site?",
     body: "Nous analysons votre site actuel et nous vous disons exactement ce qu'il faut ameliorer. Gratuitement, sans engagement.",
     cta: "Demander votre audit gratuit",
     meta: "Reponse sous 24h · Gratuit · Sans engagement",
@@ -1391,6 +1535,55 @@ const fr: TranslationSet = {
     sectionEyebrow: "Service",
     pricingEyebrow: "Tarifs",
   },
+  servicesPage: {
+    eyebrow: "Services",
+    title: "Ce que nous créons",
+    subtitle: "Du site vitrine à la plateforme numérique complète.",
+    viewAll: "Tous les services",
+    categories: [
+      {
+        title: "Sites web",
+        items: [
+          { label: "Sites d'entreprise", info: "Site institutionnel multi-pages avec équipe, services et SEO." },
+          { label: "Promo", info: "Site de courte durée pour lancer une offre, un événement ou une campagne." },
+          { label: "Landing pages", info: "Page unique à fort taux de conversion avec un seul objectif." },
+          { label: "Médias et blogs", info: "Site éditorial avec articles, catégories, tags et flux RSS." },
+          { label: "No/Low-code", info: "Livraison rapide via Webflow, Framer ou Tilda — sans dev lourd." },
+        ],
+      },
+      {
+        title: "Produits numériques",
+        items: [
+          { label: "Services web", info: "Outils web interactifs : tableaux de bord, réservations, marketplaces." },
+          { label: "Applications mobiles", info: "Apps iOS et Android natives avec React Native ou Flutter." },
+          { label: "Intranets", info: "Portails internes pour équipes : wikis, docs, annonces." },
+          { label: "Espaces clients", info: "Espace sécurisé pour suivre commandes, projets et documents." },
+          { label: "Chatbots", info: "Flux automatisés pour support, capture de leads et onboarding." },
+          { label: "E-commerce", info: "Boutiques en ligne avec panier, paiements et gestion de stock." },
+        ],
+      },
+      {
+        title: "Design",
+        items: [
+          { label: "UX & UI", info: "Wireframes et design d'interface pixel-perfect basés sur la recherche." },
+          { label: "Motion & Sound", info: "Animations, micro-interactions et identité sonore de marque." },
+          { label: "Branding", info: "Logo, palette, typographie et système d'identité visuelle complet." },
+          { label: "UX Research", info: "Interviews, tests d'utilisabilité et décisions basées sur les données." },
+        ],
+      },
+      {
+        title: "Développement",
+        items: [
+          { label: "Analyse système", info: "Cahier des charges, specs techniques et planification d'architecture." },
+          { label: "Développement frontend", info: "Interfaces React/Next.js — rapides, accessibles, prêtes pour la prod." },
+          { label: "Développement backend", info: "APIs, bases de données, auth et logique serveur scalable." },
+          { label: "Dev mobile", info: "Apps cross-platform natives avec performances fluides." },
+          { label: "Quality Assurance", info: "Tests manuels et automatisés sur appareils et navigateurs." },
+          { label: "DevOps", info: "CI/CD, hébergement cloud, monitoring et déploiement sans interruption." },
+        ],
+      },
+    ],
+  },
   workPage: {
     eyebrow: "Projets",
     title: "Tous les projets",
@@ -1412,7 +1605,7 @@ const ru: TranslationSet = {
     {
       id: "rockisland-rimini",
       name: "Porto Sole",
-      subtitle: "Ресторан и бар на причале · 400м в море · С 1993",
+      subtitle: "Ресторан и бар на причале",
       problem:
         "Сайт не передавал уникальность ужина в 400 метрах от берега в Адриатическом море, атмосферу заката и бронирование мероприятий достаточно чётко.",
       solution:
@@ -1424,7 +1617,7 @@ const ru: TranslationSet = {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
-      subtitle: "Отель у моря в Бенидорме с предложениями для прямого бронирования",
+      subtitle: "Отель у моря · прямое бронирование",
       problem:
         "Отелю нужен был убедительный сценарий прямого бронирования, который показывает локацию, номера, сервисы и специальные предложения без возврата гостя на OTA-платформы.",
       solution:
@@ -1470,7 +1663,7 @@ const ru: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Премиум-сайт",
+      title: "Custom Website Dev",
       description:
         "Полный дизайн и разработка для ресторанов, отелей, баров. Mobile-first, быстрый, заточенный под конверсию.",
       details: "От wireframe до продукта · Опциональный CMS · Базовый SEO включён",
@@ -1537,8 +1730,10 @@ const ru: TranslationSet = {
         "Готовые материалы для hero, меню и кампаний",
         "Права использования для digital-маркетинга (по договору)",
       ],
-      portfolioUrl: "https://www.instagram.com/",
-      portfolioLinkLabel: "Работы оператора",
+      portfolioUrl: "https://www.instagram.com/lev__k12?igsh=MWFrY2dxemE3eDhvMg==",
+      portfolioLinkLabel: "Instagram оператора",
+      portfolioUrl2: "https://levkaplan-video.framer.website",
+      portfolioLinkLabel2: "Работы оператора",
       pricingSectionTitle: "Тарифы (отдельная услуга)",
       pricingFootnote:
         "Итоговая стоимость — в смете: зависит от локации, времени съёмки и прав использования.",
@@ -1619,6 +1814,15 @@ const ru: TranslationSet = {
     "Меньше зависимости от OTA",
     "Mobile-first и быстрый",
   ],
+  proof: {
+    eyebrow: "В цифрах",
+    items: [
+      { value: "24h", label: "Среднее время ответа" },
+      { value: "100%", label: "Mobile-first и быстро" },
+      { value: "5", label: "Языков в продакшене" },
+      { value: "20%", label: "Комиссий OTA можно избежать" },
+    ],
+  },
   problem: {
     title:
       "Почти у всех локальных бизнесов есть сайт. Почти ни у кого нет настоящего цифрового первого впечатления.",
@@ -1738,7 +1942,7 @@ const ru: TranslationSet = {
     ],
   },
   audit: {
-    title: "Хотите узнать, что мешает вашему сайту?",
+    title: "Хотите узнать,\nчто мешает вашему сайту?",
     body: "Мы проанализируем ваш текущий сайт и скажем точно, что улучшить. Бесплатно, без обязательств.",
     cta: "Запросить свой бесплатный аудит",
     meta: "Отвечаем в течение 24 часов · Бесплатно · Без обязательств",
@@ -1801,6 +2005,55 @@ const ru: TranslationSet = {
     sectionEyebrow: "Услуга",
     pricingEyebrow: "Тарифы",
   },
+  servicesPage: {
+    eyebrow: "Услуги",
+    title: "Что мы создаём",
+    subtitle: "От сайта-визитки до полноценной цифровой платформы.",
+    viewAll: "Все услуги",
+    categories: [
+      {
+        title: "Сайты",
+        items: [
+          { label: "Корпоративные", info: "Многостраничный сайт компании с командой, услугами и SEO." },
+          { label: "Промо", info: "Краткосрочный сайт под запуск, акцию или мероприятие." },
+          { label: "Лендинги", info: "Одностраничник под конверсию — одна цель, один призыв к действию." },
+          { label: "Медиа и блоги", info: "Редакционный сайт со статьями, категориями и RSS-лентой." },
+          { label: "No/Low-code", info: "Быстрая разработка на Webflow, Framer или Tilda." },
+        ],
+      },
+      {
+        title: "Продукты",
+        items: [
+          { label: "Веб-сервисы", info: "Браузерные инструменты: дашборды, движки бронирования, маркетплейсы." },
+          { label: "Мобильные приложения", info: "iOS и Android приложения на React Native или Flutter." },
+          { label: "Интранеты", info: "Внутренние порталы для команд: вики, документы, объявления." },
+          { label: "Личные кабинеты", info: "Защищённые зоны для клиентов — заказы, проекты, документы." },
+          { label: "Чат-боты", info: "Автоматизированные сценарии для поддержки, лидов и онбординга." },
+          { label: "Интернет-магазины", info: "Магазины с корзиной, оплатой и управлением товарами." },
+        ],
+      },
+      {
+        title: "Дизайн",
+        items: [
+          { label: "UX & UI", info: "Вайрфреймы и пиксельный дизайн интерфейсов на основе исследований." },
+          { label: "Motion & Sound", info: "Анимации, микро-взаимодействия и звуковой брендинг." },
+          { label: "Брендинг", info: "Логотип, палитра, типографика и полная система визуальной идентичности." },
+          { label: "UX-исследования", info: "Интервью, тесты юзабилити и решения на основе данных." },
+        ],
+      },
+      {
+        title: "Разработка",
+        items: [
+          { label: "Системный анализ", info: "Требования, технические спецификации и планирование архитектуры." },
+          { label: "Frontend-разработка", info: "React/Next.js интерфейсы — быстрые, доступные, готовые к продакшену." },
+          { label: "Backend-разработка", info: "API, базы данных, авторизация и серверная логика с масштабируемостью." },
+          { label: "Мобильная разработка", info: "Кросс-платформенные нативные приложения с плавной работой." },
+          { label: "Quality Assurance", info: "Ручное и автоматическое тестирование на устройствах и браузерах." },
+          { label: "DevOps", info: "CI/CD, облачный хостинг, мониторинг и деплой без простоев." },
+        ],
+      },
+    ],
+  },
   workPage: {
     eyebrow: "Работы",
     title: "Все проекты",
@@ -1822,7 +2075,7 @@ const de: TranslationSet = {
     {
       id: "rockisland-rimini",
       name: "Porto Sole",
-      subtitle: "Restaurant & Bar auf dem Pier · Seit 1993",
+      subtitle: "Restaurant & Bar auf dem Pier",
       problem:
         "Die Website vermittelte das einzigartige Erlebnis, 400 Meter im Meer zu speisen, die Sonnenuntergangsatmosphare und Event-Buchungen nicht klar genug.",
       solution:
@@ -1834,7 +2087,7 @@ const de: TranslationSet = {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
-      subtitle: "Strandhotel in Benidorm mit Direktbuchungsangeboten",
+      subtitle: "Strandhotel · Direktbuchung",
       problem:
         "Das Hotel brauchte ein hochwertiges Direktbuchungserlebnis, das Lage, Zimmer, Services und exklusive Angebote vermittelt, ohne Gaste zuruck zu OTA-Plattformen zu schicken.",
       solution:
@@ -1845,7 +2098,7 @@ const de: TranslationSet = {
     {
       id: "premium-restaurant-local-concept",
       name: "Premium Restaurant Website",
-      subtitle: "Conversion-Seite fur lokales Restaurant",
+      subtitle: "Conversion-Seite � lokales Restaurant",
       problem:
         "Veraltetes Layout zeigte Atmosphare, Menu-Wert und Reservierungspfad auf Mobile nicht ausreichend.",
       solution:
@@ -1868,7 +2121,7 @@ const de: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Handgefertigter Schmuck",
-      subtitle: "Botanischer Resin-Schmuck-Onlineshop",
+      subtitle: "Botanischer Schmuck � e-commerce",
       problem:
         "Die Kunsthandwerkerin nahm Bestellungen nur uber DMs entgegen, ohne klaren Showroom fur Kollektionen, Preise und Verfugbarkeit fur ein internationales Publikum.",
       solution:
@@ -1880,7 +2133,7 @@ const de: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Premium-Website",
+      title: "Custom Website Dev",
       description:
         "Komplettes Design und Entwicklung fur Restaurants, Hotels und Bars. Mobile-first, schnell, conversion-orientiert.",
       details: "Vom Wireframe bis zum Launch · Optionales CMS · Basis-SEO inklusive",
@@ -1947,8 +2200,10 @@ const de: TranslationSet = {
         "Lieferung fur Hero, digitale Speisekarten und Kampagnen",
         "Nutzungsrechte fur Digital-Marketing (vertraglich)",
       ],
-      portfolioUrl: "https://www.instagram.com/",
-      portfolioLinkLabel: "Arbeiten des Operators ansehen",
+      portfolioUrl: "https://www.instagram.com/lev__k12?igsh=MWFrY2dxemE3eDhvMg==",
+      portfolioLinkLabel: "Instagram des Operators",
+      portfolioUrl2: "https://levkaplan-video.framer.website",
+      portfolioLinkLabel2: "Operator-Portfolio",
       pricingSectionTitle: "Tarife (separate Leistung)",
       pricingFootnote:
         "Preise werden je nach Location, Dauer und Nutzungsrechten im Angebot festgelegt.",
@@ -2028,6 +2283,15 @@ const de: TranslationSet = {
     "Weniger Abhangigkeit von OTAs",
     "Mobile-first und schnell",
   ],
+  proof: {
+    eyebrow: "In Zahlen",
+    items: [
+      { value: "24h", label: "Durchschnittliche Reaktionszeit" },
+      { value: "100%", label: "Mobile-first und schnell" },
+      { value: "5", label: "Sprachen in Produktion" },
+      { value: "20%", label: "OTA-Provisionen vermeidbar" },
+    ],
+  },
   problem: {
     title:
       "Fast jedes lokale Unternehmen hat eine Website. Fast keines hat einen echten digitalen ersten Eindruck.",
@@ -2147,7 +2411,7 @@ const de: TranslationSet = {
     ],
   },
   audit: {
-    title: "Wollen Sie wissen, was Ihre Website bremst?",
+    title: "Wollen Sie wissen,\nwas Ihre Website bremst?",
     body: "Wir analysieren Ihre aktuelle Website und sagen Ihnen genau, was zu verbessern ist. Kostenlos und unverbindlich.",
     cta: "Ihr kostenloses Audit anfragen",
     meta: "Antwort innerhalb von 24 Stunden · Kostenlos · Unverbindlich",
@@ -2210,6 +2474,55 @@ const de: TranslationSet = {
     sectionEyebrow: "Leistung",
     pricingEyebrow: "Preise",
   },
+  servicesPage: {
+    eyebrow: "Leistungen",
+    title: "Was wir bauen",
+    subtitle: "Vom Präsentationssite bis zur vollständigen digitalen Plattform.",
+    viewAll: "Alle Leistungen",
+    categories: [
+      {
+        title: "Websites",
+        items: [
+          { label: "Unternehmenswebsites", info: "Mehrseitige Unternehmenssite mit Team, Leistungen und SEO." },
+          { label: "Promo", info: "Kurzfristige Kampagnensite für Launches, Events oder Angebote." },
+          { label: "Landingpages", info: "Einzelseite mit hoher Conversion — ein Ziel, ein klarer CTA." },
+          { label: "Medien & Blogs", info: "Redaktionelle Site mit Artikeln, Kategorien und RSS-Feed." },
+          { label: "No/Low-code", info: "Schnelle Umsetzung mit Webflow, Framer oder Tilda." },
+        ],
+      },
+      {
+        title: "Digitale Produkte",
+        items: [
+          { label: "Web-Services", info: "Browserbasierte Tools: Dashboards, Buchungstools, Marktplätze." },
+          { label: "Mobile Apps", info: "iOS- und Android-Apps mit React Native oder Flutter." },
+          { label: "Intranets", info: "Interne Portale für Teams: Wikis, Dokumente, Ankündigungen." },
+          { label: "Kundenportale", info: "Passwortgeschützte Bereiche für Aufträge, Projekte und Dokumente." },
+          { label: "Chatbots", info: "Automatisierte Chat-Flows für Support, Lead-Erfassung und Onboarding." },
+          { label: "E-Commerce", info: "Online-Shops mit Warenkorb, Zahlung und Bestandsverwaltung." },
+        ],
+      },
+      {
+        title: "Design",
+        items: [
+          { label: "UX & UI", info: "Forschungsbasierte Wireframes und pixelgenaues Interface-Design." },
+          { label: "Motion & Sound", info: "Animationen, Micro-Interactions und Sonic Branding." },
+          { label: "Branding", info: "Logo, Farbpalette, Typografie und vollständiges Corporate Design." },
+          { label: "UX-Forschung", info: "Nutzerinterviews, Usability-Tests und datengetriebene Entscheidungen." },
+        ],
+      },
+      {
+        title: "Entwicklung",
+        items: [
+          { label: "Systemanalyse", info: "Anforderungen, technische Spezifikationen und Architekturplanung." },
+          { label: "Frontend-Entwicklung", info: "React/Next.js-Interfaces — schnell, barrierefrei, produktionsreif." },
+          { label: "Backend-Entwicklung", info: "APIs, Datenbanken, Auth und skalierbare Serverlogik." },
+          { label: "Mobile-Entwicklung", info: "Cross-Platform-Apps mit flüssiger Performance auf iOS und Android." },
+          { label: "Quality Assurance", info: "Manuelle und automatisierte Tests auf Geräten und Browsern." },
+          { label: "DevOps", info: "CI/CD, Cloud-Hosting, Monitoring und Zero-Downtime-Deployments." },
+        ],
+      },
+    ],
+  },
   workPage: {
     eyebrow: "Arbeiten",
     title: "Alle Projekte",
@@ -2233,3 +2546,4 @@ export const translations: Record<Locale, TranslationSet> = {
 };
 
 export const localeOrder: Locale[] = ["it", "en", "fr", "ru", "de"];
+

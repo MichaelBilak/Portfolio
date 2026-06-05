@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Mono, DM_Sans } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  IBM_Plex_Mono,
+  Manrope,
+  Unbounded,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -7,22 +12,38 @@ import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
 import "../globals.css";
 
-const display = Cormorant_Garamond({
+// Expressive display (hero + section accents + big numbers) — bold, modern,
+// Red Collar-style impact. Used sparingly. Supports Cyrillic.
+const display = Unbounded({
   subsets: ["latin", "cyrillic"],
-  weight: ["300", "400", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
+  display: "swap",
 });
 
-const sans = DM_Sans({
+// Brand wordmark keeps its original serif so the logo lockup never changes.
+// (Not part of the 3-font UI system — it's a locked brand asset.)
+const brand = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "600"],
+  variable: "--font-brand",
+  display: "swap",
+});
+
+// Body — premium geometric grotesque with Cyrillic coverage.
+const sans = Manrope({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
+  display: "swap",
 });
 
-const mono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+// Mono labels / eyebrows — refined, Cyrillic-aware.
+const mono = IBM_Plex_Mono({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500"],
   variable: "--font-mono",
+  display: "swap",
 });
 
 const siteUrl = "https://bilakstudio.it";
@@ -169,7 +190,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale}>
-      <body className={`${display.variable} ${sans.variable} ${mono.variable} bg-bgPrimary antialiased`}>
+      <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
