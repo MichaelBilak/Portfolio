@@ -63,7 +63,7 @@ export function About({ t }: AboutProps) {
               <Eyebrow>{t.about.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+              <h2 className="mt-5 whitespace-nowrap font-display font-light text-textPrimary [font-size:clamp(1.2rem,6vw,2rem)] md:whitespace-normal md:text-fluid-title">
                 {t.about.title}
               </h2>
             </Reveal>
