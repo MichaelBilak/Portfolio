@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
+const LOGO_SRC = "/images/logo-dm-group.png";
 const MIN_DISPLAY_MS = 1800;
 
 export function LoadingScreen() {
@@ -138,7 +140,7 @@ export function LoadingScreen() {
           >
             {/* wordmark */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-              <motion.span
+              <motion.div
                 aria-label="DormUp Group"
                 animate={{
                   filter: [
@@ -149,18 +151,41 @@ export function LoadingScreen() {
                 }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 style={{
-                  display: "inline-block",
-                  fontFamily: "var(--font-brand)",
-                  fontWeight: 300,
-                  fontSize: "clamp(3rem, 9vw, 5.35rem)",
-                  lineHeight: 1,
-                  letterSpacing: "-0.035em",
-                  color: "#f6f5f1",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   whiteSpace: "nowrap",
                 }}
               >
-                Dorm<span style={{ color: "#fcd34d" }}>Up</span>
-              </motion.span>
+                <Image
+                  src={LOGO_SRC}
+                  alt=""
+                  aria-hidden
+                  width={108}
+                  height={108}
+                  priority
+                  style={{
+                    width: "clamp(3.35rem, 9.2vw, 5.7rem)",
+                    height: "auto",
+                    objectFit: "contain",
+                    marginRight: "-1.42rem",
+                    transform: "translateY(0.03em)",
+                  }}
+                />
+                <span
+                  aria-hidden
+                  style={{
+                    fontFamily: "var(--font-brand)",
+                    fontWeight: 300,
+                    fontSize: "clamp(3rem, 9vw, 5.35rem)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.035em",
+                    color: "#f6f5f1",
+                  }}
+                >
+                  orm<span style={{ color: "#fcd34d" }}>Up</span>
+                </span>
+              </motion.div>
 
               <div
                 style={{
