@@ -12,6 +12,7 @@ import { type MouseEvent } from "react";
 import { servicesMeta, type ServiceMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
 import { TranslationSet } from "@/lib/translations";
 
 interface ServicesProps {
@@ -32,25 +33,7 @@ interface CrystalItemProps {
 
 function CrystalItem({ meta, index, copy, viewServiceLabel }: CrystalItemProps) {
   const reduce = useReducedMotion();
-
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const rotateX = useSpring(rx, { stiffness: 220, damping: 12 });
-  const rotateY = useSpring(ry, { stiffness: 220, damping: 12 });
-
-  function onMove(e: MouseEvent<HTMLDivElement>) {
-    if (reduce) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    ry.set(px * 42);
-    rx.set(py * -34);
-  }
-
-  function onLeave() {
-    rx.set(0);
-    ry.set(0);
-  }
+  const { rotateX, rotateY, tiltHandlers } = useCrystalTilt();
 
   return (
     <Link
@@ -58,11 +41,10 @@ function CrystalItem({ meta, index, copy, viewServiceLabel }: CrystalItemProps) 
       aria-label={copy.title}
       className="group focus-outline flex flex-col items-center rounded-3xl px-3 py-2 text-center"
     >
-      {/* Tilt wrapper — driven by mouse position springs */}
+      {/* Tilt wrapper — springs driven by pointer (mouse/finger) + gyroscope */}
       <motion.div
-        className="crystal-stage relative flex h-48 w-48 items-center justify-center sm:h-56 sm:w-56"
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
+        {...tiltHandlers}
+        className="crystal-stage relative flex h-48 w-48 touch-pan-y items-center justify-center sm:h-56 sm:w-56"
         style={
           reduce
             ? undefined

@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { type MouseEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
+import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
 
 interface ServiceItem {
   id: string;
@@ -28,22 +28,7 @@ function CrystalCard({
   viewServiceLabel: string;
 }) {
   const reduce = useReducedMotion();
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const rotateX = useSpring(rx, { stiffness: 220, damping: 12 });
-  const rotateY = useSpring(ry, { stiffness: 220, damping: 12 });
-
-  function onMove(e: MouseEvent<HTMLDivElement>) {
-    if (reduce) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    ry.set(((e.clientX - rect.left) / rect.width - 0.5) * 42);
-    rx.set(-((e.clientY - rect.top) / rect.height - 0.5) * 34);
-  }
-
-  function onLeave() {
-    rx.set(0);
-    ry.set(0);
-  }
+  const { rotateX, rotateY, tiltHandlers } = useCrystalTilt();
 
   return (
     <Link
@@ -51,11 +36,10 @@ function CrystalCard({
       className="group focus-outline flex flex-col items-center text-center"
       aria-label={title}
     >
-      {/* Tilt stage */}
+      {/* Tilt stage — pointer (mouse/finger) + gyroscope driven */}
       <motion.div
-        className="crystal-stage relative flex h-28 w-full items-center justify-center sm:h-36 md:h-44"
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
+        {...tiltHandlers}
+        className="crystal-stage relative flex h-28 w-full touch-pan-y items-center justify-center sm:h-36 md:h-44"
         style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 260 }}
       >
         <span
