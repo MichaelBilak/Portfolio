@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
-const LOGO_SRC = "/images/logo-dm-group.png";
 const MIN_DISPLAY_MS = 1800;
 
 export function LoadingScreen() {
@@ -140,7 +138,7 @@ export function LoadingScreen() {
           >
             {/* wordmark */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-              <motion.div
+              <motion.span
                 aria-label="DormUp Group"
                 animate={{
                   filter: [
@@ -151,40 +149,18 @@ export function LoadingScreen() {
                 }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: "inline-block",
+                  fontFamily: "var(--font-brand)",
+                  fontWeight: 300,
+                  fontSize: "clamp(3rem, 9vw, 5.35rem)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.035em",
+                  color: "#f6f5f1",
                   whiteSpace: "nowrap",
                 }}
               >
-                <Image
-                  src={LOGO_SRC}
-                  alt=""
-                  aria-hidden
-                  width={96}
-                  height={96}
-                  priority
-                  style={{
-                    width: "clamp(3rem, 8vw, 5.25rem)",
-                    height: "auto",
-                    objectFit: "contain",
-                    marginRight: "-0.85rem",
-                  }}
-                />
-                <span
-                  aria-hidden
-                  style={{
-                    fontFamily: "var(--font-brand)",
-                    fontWeight: 300,
-                    fontSize: "clamp(2.75rem, 8vw, 5rem)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.03em",
-                    color: "#f6f5f1",
-                  }}
-                >
-                  orm<span style={{ color: "#fcd34d" }}>Up</span>
-                </span>
-              </motion.div>
+                Dorm<span style={{ color: "#fcd34d" }}>Up</span>
+              </motion.span>
 
               <div
                 style={{
