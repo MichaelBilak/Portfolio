@@ -5,14 +5,13 @@ import { ArrowUpRight, MapPin, TrendingUp } from "lucide-react";
 import {
   AnimatePresence,
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
   type Variants,
 } from "framer-motion";
-import { type MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
@@ -144,25 +143,15 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
   const { scrollY } = useScroll();
   const parallax = useTransform(scrollY, [0, 700], [0, -70]);
 
-  // Pointer-driven tilt on the product card
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const rotateX = useSpring(rx, { stiffness: 150, damping: 16 });
-  const rotateY = useSpring(ry, { stiffness: 150, damping: 16 });
-
-  const onMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (reduce) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const px = (event.clientX - rect.left) / rect.width - 0.5;
-    const py = (event.clientY - rect.top) / rect.height - 0.5;
-    ry.set(px * 10);
-    rx.set(py * -10);
-  };
-
-  const onLeave = () => {
-    rx.set(0);
-    ry.set(0);
-  };
+  // Pointer (mouse/touch) + gyroscope tilt on the product card
+  const { rotateX, rotateY, tiltHandlers } = useCrystalTilt({
+    angleX: 10,
+    angleY: 10,
+    stiffness: 150,
+    damping: 16,
+    gyroX: 7,
+    gyroY: 7,
+  });
 
   const float = (delay: number, distance = 12): Variants => ({
     hidden: { opacity: 0, scale: 0.92, y: 16 },
@@ -199,8 +188,8 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
       />
 
       <motion.div
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
+        {...tiltHandlers}
+        className="touch-pan-y"
         style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
       >
         <Link

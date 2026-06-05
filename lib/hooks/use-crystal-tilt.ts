@@ -63,6 +63,19 @@ function requestGyroPermission() {
   }
 }
 
+export interface TiltOptions {
+  /** Max pointer-driven tilt in degrees (default: 42 for X, 34 for Y). */
+  angleX?: number;
+  angleY?: number;
+  /** Spring physics (default: crystal-style — stiffness 220, damping 12). */
+  stiffness?: number;
+  damping?: number;
+  /** Gyro scale — maps 25° of physical tilt to this many degrees of rotation.
+   *  Defaults match the pointer range so the two sources feel consistent. */
+  gyroX?: number;
+  gyroY?: number;
+}
+
 export interface CrystalTilt {
   rotateX: MotionValue<number>;
   rotateY: MotionValue<number>;
@@ -74,29 +87,41 @@ export interface CrystalTilt {
   };
 }
 
-/* Tilt a crystal toward the pointer (mouse OR finger) while it's being
+/* Tilt an element toward the pointer (mouse OR finger) while it's being
    touched/hovered, and toward the phone's physical tilt the rest of the
    time on devices with a gyroscope. */
-export function useCrystalTilt(): CrystalTilt {
+export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
+  const {
+    angleX = 34,
+    angleY = 42,
+    stiffness = 220,
+    damping = 12,
+    gyroX,
+    gyroY,
+  } = opts;
+
+  // How far the gyro moves the element (default: match pointer range).
+  const gx = gyroX ?? angleX * 0.6;
+  const gy = gyroY ?? angleY * 0.6;
+
   const reduce = useReducedMotion();
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
-  const rotateX = useSpring(rx, { stiffness: 220, damping: 12 });
-  const rotateY = useSpring(ry, { stiffness: 220, damping: 12 });
+  const rotateX = useSpring(rx, { stiffness, damping });
+  const rotateY = useSpring(ry, { stiffness, damping });
   const interacting = useRef(false);
 
   useEffect(() => {
     if (reduce || typeof window === "undefined") return;
 
     const onGyro = (t: GyroTilt) => {
-      // Finger interaction wins while it's active.
       if (interacting.current) return;
-      rx.set(t.x);
-      ry.set(t.y);
+      // Scale the shared gyro output (calibrated for crystal range) to our range.
+      rx.set((t.x / 20) * gx);
+      ry.set((t.y / 24) * gy);
     };
     gyroListeners.add(onGyro);
 
-    // Kick off the gyroscope on the first touch (covers the iOS permission gate).
     const kick = () => requestGyroPermission();
     const hasPermissionGate =
       typeof (
@@ -113,7 +138,7 @@ export function useCrystalTilt(): CrystalTilt {
       gyroListeners.delete(onGyro);
       window.removeEventListener("touchstart", kick);
     };
-  }, [reduce, rx, ry]);
+  }, [reduce, rx, ry, gx, gy]);
 
   const onPointerMove = useCallback(
     (event: React.PointerEvent<HTMLElement>) => {
@@ -122,16 +147,15 @@ export function useCrystalTilt(): CrystalTilt {
       const rect = event.currentTarget.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width - 0.5;
       const py = (event.clientY - rect.top) / rect.height - 0.5;
-      ry.set(px * 42);
-      rx.set(py * -34);
+      ry.set(px * angleY);
+      rx.set(py * -angleX);
     },
-    [reduce, rx, ry],
+    [reduce, rx, ry, angleX, angleY],
   );
 
   const release = useCallback(() => {
     interacting.current = false;
     if (reduce) return;
-    // Spring back to rest; the gyro loop takes over again if it's running.
     rx.set(0);
     ry.set(0);
   }, [reduce, rx, ry]);
