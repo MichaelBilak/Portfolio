@@ -164,13 +164,7 @@ export function LoadingScreen() {
                   width={108}
                   height={108}
                   priority
-                  style={{
-                    width: "clamp(4.32rem, 11.35vw, 7.15rem)",
-                    height: "auto",
-                    objectFit: "contain",
-                    marginRight: "-1.82rem",
-                    transform: "translateY(0.2em)",
-                  }}
+                  className="h-auto w-[clamp(3.65rem,10.5vw,7.15rem)] -translate-x-3 -mr-3 translate-y-[0.2em] object-contain sm:w-[clamp(4.32rem,11.35vw,7.15rem)] sm:translate-x-0 sm:-mr-[1.82rem]"
                 />
                 <span
                   aria-hidden
