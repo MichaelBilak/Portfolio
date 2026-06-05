@@ -184,6 +184,16 @@ export function LoadingScreen() {
                   }}
                 >
                   orm<span style={{ color: "#fcd34d" }}>Up</span>
+                  <span
+                    style={{
+                      color: "#f6f5f1",
+                      fontSize: "0.46em",
+                      letterSpacing: "0.02em",
+                      marginLeft: "0.22em",
+                    }}
+                  >
+                    Group
+                  </span>
                 </span>
               </motion.div>
 
