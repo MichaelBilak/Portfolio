@@ -113,10 +113,10 @@ function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
         style={tiltStyle}
         className="glass-card spotlight-card relative overflow-hidden rounded-2xl p-6 transition-colors duration-300 hover:border-borderStrong md:p-7"
       >
-        {/* Ghost number — bottom-right so it never overlaps the title or header row */}
+        {/* Ghost number — bottom-right decorative accent */}
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-3 right-5 select-none font-display text-[5.5rem] font-bold leading-none text-textPrimary/[0.04] md:text-[7rem]"
+          className="pointer-events-none absolute bottom-3 right-4 select-none font-display text-[3rem] font-bold leading-none text-textPrimary/[0.04] sm:text-[5rem] md:text-[5.5rem] lg:text-[7rem]"
         >
           {meta.number}
         </span>
@@ -131,7 +131,7 @@ function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
         <p className="relative mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-textMuted">
           {copy.summary}
         </p>
-        <p className="relative mt-4 leading-relaxed text-textSecondary">{copy.description}</p>
+        <p className="relative mt-4 pr-20 leading-relaxed text-textSecondary sm:pr-24 md:pr-0">{copy.description}</p>
       </motion.article>
     </motion.li>
   );
