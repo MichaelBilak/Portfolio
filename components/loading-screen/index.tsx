@@ -165,11 +165,11 @@ export function LoadingScreen() {
                   height={108}
                   priority
                   style={{
-                    width: "clamp(3.35rem, 9.2vw, 5.7rem)",
+                    width: "clamp(3.1rem, 8.4vw, 5.15rem)",
                     height: "auto",
                     objectFit: "contain",
-                    marginRight: "-1.42rem",
-                    transform: "translateY(0.03em)",
+                    marginRight: "-1.22rem",
+                    transform: "translateY(0.08em)",
                   }}
                 />
                 <span
