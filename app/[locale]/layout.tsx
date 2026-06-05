@@ -10,6 +10,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
+import { LoadingScreen } from "@/components/loading-screen";
 import "../globals.css";
 
 // Expressive display (hero + section accents + big numbers) — bold, modern,
@@ -191,6 +192,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale}>
       <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
+        <LoadingScreen />
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

@@ -87,7 +87,7 @@ export default async function ServicePage({ params }: PageProps) {
                 <p className="mt-5 max-w-2xl text-sm font-normal leading-relaxed tracking-normal text-accentWarm/90">
                   {service.details}
                 </p>
-                {service.portfolioUrl ? (
+                {service.portfolioUrl || service.portfolioUrl2 ? (
                   <div className="mt-8 flex flex-wrap gap-3">
                     {service.portfolioUrl2 ? (
                       <a
@@ -100,15 +100,17 @@ export default async function ServicePage({ params }: PageProps) {
                         <ArrowUpRight size={16} aria-hidden />
                       </a>
                     ) : null}
-                    <a
-                      href={service.portfolioUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="focus-outline inline-flex items-center gap-2 rounded-full border border-borderStrong bg-bgElevated px-5 py-2.5 text-sm font-medium text-textPrimary transition-colors hover:border-accentGold/45 hover:bg-white/[0.04] hover:text-accentGold"
-                    >
-                      {service.portfolioLinkLabel}
-                      <ArrowUpRight size={16} aria-hidden />
-                    </a>
+                    {service.portfolioUrl ? (
+                      <a
+                        href={service.portfolioUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="focus-outline inline-flex items-center gap-2 rounded-full border border-borderStrong bg-bgElevated px-5 py-2.5 text-sm font-medium text-textPrimary transition-colors hover:border-accentGold/45 hover:bg-white/[0.04] hover:text-accentGold"
+                      >
+                        {service.portfolioLinkLabel}
+                        <ArrowUpRight size={16} aria-hidden />
+                      </a>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
