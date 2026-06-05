@@ -1,4 +1,4 @@
-import { ArrowUpRight, AtSign, Globe, MessageCircle } from "lucide-react";
+import { ArrowUpRight, AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
@@ -18,7 +18,6 @@ export function Footer({ t }: FooterProps) {
   const socials = [
     { href: "#", label: "Website", Icon: Globe },
     { href: "mailto:dormup.it@gmail.com", label: "Email: dormup.it@gmail.com", Icon: AtSign },
-    { href: "https://wa.me/393333333333", label: "WhatsApp", Icon: MessageCircle },
   ];
 
   return (

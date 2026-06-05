@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Mail, MessageCircle, Signal } from "lucide-react";
+import { CheckCircle2, Mail, Signal } from "lucide-react";
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
@@ -60,21 +60,6 @@ export function Contact({ t }: ContactProps) {
                     {t.contact.emailLabel}
                   </span>
                   <span className="block text-sm text-textPrimary">dormup.it@gmail.com</span>
-                </span>
-              </a>
-              <a
-                href="https://wa.me/393333333333"
-                onMouseMove={onMove}
-                className="glass-card spotlight-card interactive group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
-              >
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-borderSubtle bg-white/[0.03] text-accentGold">
-                  <MessageCircle size={16} />
-                </span>
-                <span className="leading-tight">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
-                    {t.contact.whatsappLabel}
-                  </span>
-                  <span className="block text-sm text-textPrimary">+39 333 333 3333</span>
                 </span>
               </a>
               <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">

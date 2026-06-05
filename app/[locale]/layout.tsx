@@ -185,7 +185,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     sameAs: [
       "https://www.instagram.com/",
       "https://www.linkedin.com/",
-      "https://wa.me/393333333333",
     ],
   };
 
