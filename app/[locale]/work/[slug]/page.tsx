@@ -1,10 +1,10 @@
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
+import { BrowserMockup } from "@/components/browser-mockup";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { projectsMeta } from "@/data/projects";
@@ -126,46 +126,18 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 ) : null}
               </div>
 
-              <div className="group relative overflow-hidden rounded-2xl border border-borderCool bg-bgElevated shadow-[0_36px_80px_-32px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accentGold/40 hover:shadow-[0_48px_96px_-32px_rgba(201,169,110,0.25)]">
-                <div className="flex items-center gap-2 border-b border-borderCool bg-white/[0.025] px-3 py-2 transition-colors duration-500 group-hover:bg-white/[0.04]">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-                  <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted transition-colors duration-500 group-hover:text-accentGold/80">
-                    {meta.displayUrl}
-                  </span>
-                </div>
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  {meta.url.startsWith("http") ? (
-                    <a
-                      href={meta.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute inset-0 z-20"
-                      aria-label={`Открыть ${meta.displayUrl}`}
-                    />
-                  ) : null}
-                  {/* gold shimmer sweep */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                  />
-                  {/* subtle dark vignette that lifts on hover */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 z-10 bg-black/20 transition-opacity duration-500 group-hover:opacity-0"
-                  />
-                  <Image
-                    src={meta.image}
-                    alt={`${project.name} — ${project.subtitle}`}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 620px, 100vw"
-                    className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] ${
-                      meta.imagePosition === "center" ? "object-center" : "object-top"
-                    }`}
-                  />
-                </div>
+              <div className="browser-mockup-shell glass-card-strong group relative overflow-hidden rounded-[1.75rem] p-2.5 md:p-3">
+                <BrowserMockup
+                  image={meta.image}
+                  alt={`${project.name} — ${project.subtitle}`}
+                  displayUrl={meta.displayUrl}
+                  imagePosition={meta.imagePosition ?? "top"}
+                  priority
+                  sizes="(min-width: 1024px) 620px, 100vw"
+                  href={hasLiveSite ? meta.url : undefined}
+                  linkLabel={hasLiveSite ? `Open ${meta.displayUrl}` : undefined}
+                  interactive
+                />
               </div>
             </div>
           </div>

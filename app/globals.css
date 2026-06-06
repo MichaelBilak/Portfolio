@@ -182,6 +182,44 @@ select option {
     0 34px 80px -44px rgba(13, 19, 15, 0.45);
 }
 
+/* Recessed browser / screen frame — pairs with glass-card-strong shell */
+.browser-mockup-inset {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(6, 8, 12, 0.72);
+  box-shadow:
+    inset 0 2px 18px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.theme-light .browser-mockup-inset {
+  border: 1px solid rgba(13, 19, 15, 0.1);
+  background: rgba(13, 19, 15, 0.04);
+  box-shadow:
+    inset 0 2px 14px rgba(13, 19, 15, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.browser-mockup-shell {
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.browser-mockup-shell:hover {
+  border-color: rgba(252, 211, 77, 0.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 48px 96px -32px rgba(201, 169, 110, 0.22);
+}
+
+.theme-light .browser-mockup-shell:hover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 34px 80px -36px rgba(13, 19, 15, 0.28);
+}
+
 .grain-overlay {
   background-image: radial-gradient(rgba(255, 255, 255, 0.07) 0.5px, transparent 0.5px);
   background-size: 3px 3px;

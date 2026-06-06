@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import { ProjectMeta, projectsMeta } from "@/data/projects";
 import { Link } from "@/i18n/navigation";
 import { fadeUp, sectionStagger } from "@/lib/animations";
+import { BrowserMockup } from "@/components/browser-mockup";
 import { Eyebrow, Reveal, useSpotlight, useTilt } from "@/components/ui";
 import { LocalizedProject, TranslationSet } from "@/lib/translations";
 
@@ -213,6 +213,7 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
         imagePosition={meta.imagePosition ?? "top"}
         loaded={loaded}
         onLoad={() => setLoaded(true)}
+        sizes="(min-width: 1024px) 420px, 100vw"
       />
 
       <div className="relative space-y-2">
@@ -237,55 +238,5 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
         </span>
       </div>
     </MotionLink>
-  );
-}
-
-interface BrowserMockupProps {
-  image: string;
-  alt: string;
-  displayUrl: string;
-  imagePosition: "top" | "center";
-  loaded: boolean;
-  onLoad: () => void;
-}
-
-function BrowserMockup({
-  image,
-  alt,
-  displayUrl,
-  imagePosition,
-  loaded,
-  onLoad,
-}: BrowserMockupProps) {
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-borderCool bg-bgElevated shadow-[0_24px_60px_-32px_rgba(0,0,0,0.7)]">
-      <div className="flex items-center gap-2 border-b border-borderCool bg-white/[0.025] px-3 py-2">
-        <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-        <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
-          {displayUrl}
-        </span>
-      </div>
-      <div className="relative aspect-[16/10] overflow-hidden">
-        {!loaded ? (
-          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-bgSecondary via-bgElevated to-bgSecondary" />
-        ) : null}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-accentGold/10 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-        />
-        <Image
-          src={image}
-          alt={alt}
-          fill
-          sizes="(min-width: 1024px) 420px, 100vw"
-          className={`object-cover transition-transform duration-500 group-hover:scale-[1.05] ${
-            imagePosition === "center" ? "object-center" : "object-top"
-          }`}
-          onLoad={onLoad}
-        />
-      </div>
-    </div>
   );
 }
