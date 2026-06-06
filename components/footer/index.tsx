@@ -1,5 +1,6 @@
 import { ArrowUpRight, AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
 
@@ -37,8 +38,8 @@ export function Footer({ t }: FooterProps) {
           <p className="max-w-xl text-fluid-title font-display font-light leading-[1.05] text-textPrimary">
             {t.contact.title}
           </p>
-          <Link
-            href="/#contact"
+          <ContactLink
+            desktopClassName="hidden md:inline-flex"
             className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
           >
             {t.nav.audit}
@@ -48,7 +49,7 @@ export function Footer({ t }: FooterProps) {
                 className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </span>
-          </Link>
+          </ContactLink>
         </div>
       </div>
 
@@ -82,15 +83,25 @@ export function Footer({ t }: FooterProps) {
             {t.footer.links}
           </p>
           <div className="mt-4 space-y-1 text-sm text-textPrimary">
-            {quickLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="interactive block w-fit py-1.5 hover:text-accentGold"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {quickLinks.map((link) =>
+              link.href === "/#contact" ? (
+                <ContactLink
+                  key={link.href}
+                  desktopClassName="hidden md:block"
+                  className="interactive block w-fit py-1.5 hover:text-accentGold"
+                >
+                  {link.label}
+                </ContactLink>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="interactive block w-fit py-1.5 hover:text-accentGold"
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand-logo";
+import { ContactLink } from "@/components/contact-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ScrollProgress } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
@@ -61,19 +62,33 @@ export function Navigation({ locale, t }: NavigationProps) {
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="interactive focus-outline group relative rounded-full px-3.5 py-2 text-sm text-textPrimary/85 hover:text-accentGold"
-              >
-                {link.label}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-accentGold/70 transition-transform duration-300 group-hover:scale-x-100"
-                />
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.href === "/#contact" ? (
+                <Link
+                  key={link.href}
+                  href="/#contact"
+                  className="interactive focus-outline group relative rounded-full px-3.5 py-2 text-sm text-textPrimary/85 hover:text-accentGold"
+                >
+                  {link.label}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-accentGold/70 transition-transform duration-300 group-hover:scale-x-100"
+                  />
+                </Link>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="interactive focus-outline group relative rounded-full px-3.5 py-2 text-sm text-textPrimary/85 hover:text-accentGold"
+                >
+                  {link.label}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-3.5 bottom-1 h-px origin-left scale-x-0 bg-accentGold/70 transition-transform duration-300 group-hover:scale-x-100"
+                  />
+                </Link>
+              ),
+            )}
           </div>
 
           <div className="flex items-center gap-2.5">
@@ -128,16 +143,29 @@ export function Navigation({ locale, t }: NavigationProps) {
                     duration: shouldReduceMotion ? 0 : 0.45,
                   }}
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="interactive flex items-baseline gap-3 text-textPrimary hover:text-accentGold"
-                  >
-                    <span className="font-mono text-xs text-accentGold/60">
-                      0{index + 1}
-                    </span>
-                    {link.label}
-                  </Link>
+                  {link.href === "/#contact" ? (
+                    <ContactLink
+                      onClick={() => setOpen(false)}
+                      desktopClassName="hidden md:inline lg:hidden"
+                      className="interactive flex items-baseline gap-3 text-textPrimary hover:text-accentGold"
+                    >
+                      <span className="font-mono text-xs text-accentGold/60">
+                        0{index + 1}
+                      </span>
+                      {link.label}
+                    </ContactLink>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="interactive flex items-baseline gap-3 text-textPrimary hover:text-accentGold"
+                    >
+                      <span className="font-mono text-xs text-accentGold/60">
+                        0{index + 1}
+                      </span>
+                      {link.label}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -148,14 +176,13 @@ export function Navigation({ locale, t }: NavigationProps) {
               transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: 0.45 }}
               className="relative mt-auto pb-10"
             >
-              <Link
-                href="/#contact"
+              <ContactLink
                 onClick={() => setOpen(false)}
                 className="focus-outline group inline-flex w-full items-center justify-center gap-2 rounded-full bg-accentGold px-8 py-4 text-base font-semibold text-bgPrimary"
               >
                 {t.nav.audit}
                 <ArrowUpRight size={18} />
-              </Link>
+              </ContactLink>
             </motion.div>
           </motion.div>
         ) : null}
@@ -163,7 +190,7 @@ export function Navigation({ locale, t }: NavigationProps) {
 
       {!open ? (
         <Link
-          href="/#contact"
+          href="/contact"
           className="interactive focus-outline fixed bottom-5 right-5 z-[35] inline-flex min-h-11 max-w-[min(100vw-2.5rem,20rem)] items-center justify-center gap-1.5 rounded-full border border-accentGold bg-[rgba(6,8,12,0.92)] px-4 py-2.5 text-center text-xs font-medium text-accentGold shadow-[0_14px_44px_-18px_rgba(0,0,0,0.85)] backdrop-blur-md transition-colors hover:bg-accentGold hover:text-bgPrimary sm:text-sm md:hidden"
         >
           {t.nav.audit}

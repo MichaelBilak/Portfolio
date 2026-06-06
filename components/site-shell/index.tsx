@@ -62,7 +62,7 @@ export function SiteShell({ locale }: SiteShellProps) {
         <div className="section-deferred">
           <About t={t} />
         </div>
-        <div className="section-deferred">
+        <div className="section-deferred hidden md:block">
           <Contact t={t} />
         </div>
       </main>

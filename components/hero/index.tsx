@@ -12,6 +12,7 @@ import {
 } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
+import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
@@ -58,13 +59,15 @@ export function Hero({ t }: HeroProps) {
           animate="visible"
           className="space-y-7 sm:space-y-9"
         >
-          <motion.div variants={item}>
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-borderSubtle bg-white/[0.03] px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-accentGold backdrop-blur sm:text-[11px]">
-              <span className="relative inline-flex h-1.5 w-1.5">
+          <motion.div variants={item} className="max-w-full">
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-2.5 py-1.5 font-mono uppercase text-accentGold backdrop-blur sm:gap-2.5 sm:px-4">
+              <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accentGold opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accentGold" />
               </span>
-              {t.hero.eyebrow}
+              <span className="min-w-0 whitespace-nowrap text-[min(0.6875rem,2.65vw)] tracking-[0.1em] sm:text-[11px] sm:tracking-[0.28em]">
+                {t.hero.eyebrow}
+              </span>
             </span>
           </motion.div>
 
@@ -95,7 +98,7 @@ export function Hero({ t }: HeroProps) {
           </motion.p>
 
           <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link href="/#contact" className={btn("primary", "lg", "w-full sm:w-auto")}>
+            <ContactLink className={btn("primary", "lg", "w-full sm:w-auto")}>
               <span className="relative z-10">{t.hero.secondaryCta}</span>
               <ArrowUpRight
                 size={18}
@@ -105,7 +108,7 @@ export function Hero({ t }: HeroProps) {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 group-hover:translate-x-full"
               />
-            </Link>
+            </ContactLink>
             <Link href="/#work" className={btn("ghost", "lg", "w-full sm:w-auto")}>
               {t.hero.primaryCta}
             </Link>
@@ -192,9 +195,9 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
         className="touch-pan-y"
         style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
       >
-        <Link
-          href="/#contact"
+        <ContactLink
           aria-label={t.hero.secondaryCta}
+          desktopClassName="hidden md:block"
           className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-[1.75rem] p-3 transition-all duration-300 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
         >
           <span
@@ -216,7 +219,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
           </div>
 
           <HeroSiteCarousel reduce={reduce} />
-        </Link>
+        </ContactLink>
       </motion.div>
 
       {/* Floating UI chips — product-dashboard feel */}

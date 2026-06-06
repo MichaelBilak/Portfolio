@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
@@ -40,13 +41,13 @@ export function AuditCta({ t }: AuditCtaProps) {
             <p className="mx-auto mt-6 max-w-2xl text-lg text-textSecondary text-pretty">
               {t.audit.body}
             </p>
-            <Link href="/#contact" className={btn("primary", "lg", "amber-pulse mt-10 w-full sm:w-auto")}>
+            <ContactLink className={btn("primary", "lg", "amber-pulse mt-10 w-full sm:w-auto")}>
               {t.audit.cta}
               <ArrowUpRight
                 size={18}
                 className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
-            </Link>
+            </ContactLink>
           </div>
         </div>
       </div>
