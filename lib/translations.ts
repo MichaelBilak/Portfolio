@@ -407,7 +407,7 @@ const it: TranslationSet = {
   proof: {
     eyebrow: "In numeri",
     items: [
-      { value: "24h", label: "Tempo di risposta medio" },
+      { value: "6h", label: "Tempo di risposta medio" },
       { value: "100%", label: "Mobile-first e veloce" },
       { value: "5", label: "Lingue gestite in produzione" },
       { value: "20%", label: "Commissioni OTA che puoi evitare" },
@@ -535,7 +535,7 @@ const it: TranslationSet = {
     title: "Vuoi sapere\ncosa frena il tuo sito?",
     body: "Analizziamo il tuo sito attuale e ti diciamo esattamente cosa migliorare. Gratuitamente, senza impegno.",
     cta: "Richiedi il tuo audit gratuito",
-    meta: "Rispondiamo entro 24 ore · Nessun costo · Nessun impegno",
+    meta: "Rispondiamo entro 6 ore · Nessun costo · Nessun impegno",
   },
   about: {
     eyebrow: "Chi siamo",
@@ -548,7 +548,7 @@ const it: TranslationSet = {
     title: "Costruiamo qualcosa che funziona.",
     body: "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Rispondiamo entro 24h",
+    whatsappLabel: "WhatsApp · Rispondiamo entro 6h",
     availability: "Attualmente disponibile per nuovi clienti",
     form: {
       name: "Nome e cognome",
@@ -559,7 +559,7 @@ const it: TranslationSet = {
       source: "Come ci hai trovato?",
       submit: "Invia messaggio",
       submitting: "Invio in corso...",
-      success: "Ricevuto. Ti rispondiamo entro 24 ore.",
+      success: "Ricevuto. Ti rispondiamo entro 6 ore.",
       options: {
         restaurant: "Ristorante",
         hotel: "Hotel",
@@ -874,7 +874,7 @@ const en: TranslationSet = {
   proof: {
     eyebrow: "By the numbers",
     items: [
-      { value: "24h", label: "Average response time" },
+      { value: "6h", label: "Average response time" },
       { value: "100%", label: "Mobile-first & fast" },
       { value: "5", label: "Languages shipped in production" },
       { value: "20%", label: "OTA commissions you can avoid" },
@@ -1002,7 +1002,7 @@ const en: TranslationSet = {
     title: "Want to know\nwhat's holding your site back?",
     body: "We analyze your current website and tell you exactly what to improve. Free of charge, no commitment.",
     cta: "Request your free audit",
-    meta: "Reply within 24 hours · Free · No commitment",
+    meta: "Reply within 6 hours · Free · No commitment",
   },
   about: {
     eyebrow: "About us",
@@ -1015,7 +1015,7 @@ const en: TranslationSet = {
     title: "Let's build something that works.",
     body: "After your message you get a clear reply with next steps, timeline and feasibility.",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Reply within 24h",
+    whatsappLabel: "WhatsApp · Reply within 6h",
     availability: "Currently available for new clients",
     form: {
       name: "Full name",
@@ -1026,7 +1026,7 @@ const en: TranslationSet = {
       source: "How did you find us?",
       submit: "Send message",
       submitting: "Sending...",
-      success: "Got it. We'll reply within 24 hours.",
+      success: "Got it. We'll reply within 6 hours.",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
@@ -1341,7 +1341,7 @@ const fr: TranslationSet = {
   proof: {
     eyebrow: "En chiffres",
     items: [
-      { value: "24h", label: "Temps de reponse moyen" },
+      { value: "6h", label: "Temps de reponse moyen" },
       { value: "100%", label: "Mobile-first et rapide" },
       { value: "5", label: "Langues livrees en production" },
       { value: "20%", label: "Commissions OTA evitables" },
@@ -1469,7 +1469,7 @@ const fr: TranslationSet = {
     title: "Vous voulez savoir\nce qui freine votre site?",
     body: "Nous analysons votre site actuel et nous vous disons exactement ce qu'il faut ameliorer. Gratuitement, sans engagement.",
     cta: "Demander votre audit gratuit",
-    meta: "Reponse sous 24h · Gratuit · Sans engagement",
+    meta: "Reponse sous 6h · Gratuit · Sans engagement",
   },
   about: {
     eyebrow: "Qui sommes-nous",
@@ -1482,7 +1482,7 @@ const fr: TranslationSet = {
     title: "Construisons quelque chose qui fonctionne.",
     body: "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Reponse sous 24h",
+    whatsappLabel: "WhatsApp · Reponse sous 6h",
     availability: "Actuellement disponible pour nouveaux clients",
     form: {
       name: "Nom et prenom",
@@ -1493,7 +1493,7 @@ const fr: TranslationSet = {
       source: "Comment nous avez-vous trouves?",
       submit: "Envoyer le message",
       submitting: "Envoi en cours...",
-      success: "Bien recu. Nous repondons sous 24 heures.",
+      success: "Bien recu. Nous repondons sous 6 heures.",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
@@ -1809,7 +1809,7 @@ const ru: TranslationSet = {
   proof: {
     eyebrow: "В цифрах",
     items: [
-      { value: "24h", label: "Среднее время ответа" },
+      { value: "6h", label: "Среднее время ответа" },
       { value: "100%", label: "Mobile-first и быстро" },
       { value: "5", label: "Языков в продакшене" },
       { value: "20%", label: "Комиссий OTA можно избежать" },
@@ -1937,7 +1937,7 @@ const ru: TranslationSet = {
     title: "Хотите узнать,\nчто мешает вашему сайту?",
     body: "Мы проанализируем ваш текущий сайт и скажем точно, что улучшить. Бесплатно, без обязательств.",
     cta: "Запросить свой бесплатный аудит",
-    meta: "Отвечаем в течение 24 часов · Бесплатно · Без обязательств",
+    meta: "Отвечаем в течение 6 часов · Бесплатно · Без обязательств",
   },
   about: {
     eyebrow: "О нас",
@@ -1950,7 +1950,7 @@ const ru: TranslationSet = {
     title: "Давайте построим что-то, что работает.",
     body: "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Ответ в течение 24ч",
+    whatsappLabel: "WhatsApp · Ответ в течение 6ч",
     availability: "Сейчас открыты для новых клиентов",
     form: {
       name: "Имя и фамилия",
@@ -1961,7 +1961,7 @@ const ru: TranslationSet = {
       source: "Как вы нас нашли?",
       submit: "Отправить сообщение",
       submitting: "Отправка...",
-      success: "Принято. Ответим в течение 24 часов.",
+      success: "Принято. Ответим в течение 6 часов.",
       options: {
         restaurant: "Ресторан",
         hotel: "Отель",
@@ -2276,7 +2276,7 @@ const de: TranslationSet = {
   proof: {
     eyebrow: "In Zahlen",
     items: [
-      { value: "24h", label: "Durchschnittliche Reaktionszeit" },
+      { value: "6h", label: "Durchschnittliche Reaktionszeit" },
       { value: "100%", label: "Mobile-first und schnell" },
       { value: "5", label: "Sprachen in Produktion" },
       { value: "20%", label: "OTA-Provisionen vermeidbar" },
@@ -2404,7 +2404,7 @@ const de: TranslationSet = {
     title: "Wollen Sie wissen,\nwas Ihre Website bremst?",
     body: "Wir analysieren Ihre aktuelle Website und sagen Ihnen genau, was zu verbessern ist. Kostenlos und unverbindlich.",
     cta: "Ihr kostenloses Audit anfragen",
-    meta: "Antwort innerhalb von 24 Stunden · Kostenlos · Unverbindlich",
+    meta: "Antwort innerhalb von 6 Stunden · Kostenlos · Unverbindlich",
   },
   about: {
     eyebrow: "Uber uns",
@@ -2417,7 +2417,7 @@ const de: TranslationSet = {
     title: "Lassen Sie uns etwas bauen, das funktioniert.",
     body: "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
     emailLabel: "E-Mail",
-    whatsappLabel: "WhatsApp · Antwort innerhalb 24h",
+    whatsappLabel: "WhatsApp · Antwort innerhalb 6h",
     availability: "Derzeit verfugbar fur neue Kunden",
     form: {
       name: "Vor- und Nachname",
@@ -2428,7 +2428,7 @@ const de: TranslationSet = {
       source: "Wie haben Sie uns gefunden?",
       submit: "Nachricht senden",
       submitting: "Wird gesendet...",
-      success: "Erhalten. Wir antworten innerhalb von 24 Stunden.",
+      success: "Erhalten. Wir antworten innerhalb von 6 Stunden.",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
