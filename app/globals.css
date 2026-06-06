@@ -631,4 +631,17 @@ select option {
     content-visibility: auto;
     contain-intrinsic-size: auto 720px;
   }
+
+  #splash-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: #06080c;
+    pointer-events: all;
+  }
+
+  html.splash-done #splash-gate {
+    display: none;
+    pointer-events: none;
+  }
 }

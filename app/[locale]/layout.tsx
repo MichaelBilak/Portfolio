@@ -11,6 +11,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
+import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import "../globals.css";
 
 // Expressive display (hero + section accents + big numbers) — bold, modern,
@@ -194,7 +195,14 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale}>
+      <head>
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: SPLASH_BOOTSTRAP_SCRIPT }}
+        />
+      </head>
       <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
+        <div id={SPLASH_GATE_ID} aria-hidden="true" />
         <ClientProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}

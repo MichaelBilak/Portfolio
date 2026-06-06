@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { AnimatedWordmark } from "@/components/brand-logo/wordmark-animated";
+import { hideSplashGate, isLocaleSwitchInProgress, markSplashSeen, shouldSkipSplash } from "@/lib/splash-session";
 
 const MIN_DISPLAY_MS = 3500;
 const WORDMARK_DONE_MS = 800;
@@ -11,10 +12,17 @@ const EASE_LOAD = [0.22, 1, 0.36, 1] as const;
 
 export function LoadingScreen() {
   const reduceMotion = useReducedMotion();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (shouldSkipSplash()) {
+      hideSplashGate();
+      if (isLocaleSwitchInProgress()) markSplashSeen();
+      return;
+    }
+
+    setVisible(true);
     const start = Date.now();
 
     // Animate the progress bar smoothly to ~90 % on its own,
@@ -35,7 +43,10 @@ export function LoadingScreen() {
       const elapsed = Date.now() - start;
       const minTotal = reduceMotion ? 0 : MIN_DISPLAY_MS;
       const remaining = minTotal - elapsed;
-      setTimeout(() => setVisible(false), Math.max(0, remaining) + EXIT_MS);
+      setTimeout(() => {
+        markSplashSeen();
+        setVisible(false);
+      }, Math.max(0, remaining) + EXIT_MS);
     };
 
     if (document.readyState === "complete") {

@@ -4,15 +4,15 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, Globe } from "lucide-react";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { LOCALE_SWITCH_SCROLL_KEY } from "@/lib/locale-navigation";
 import { localeMeta, localeOrder } from "@/lib/locale-meta";
+import { markSplashSeen } from "@/lib/splash-session";
 import { Locale } from "@/lib/translations";
 
 interface LanguageSwitcherProps {
   locale: Locale;
   variant?: "compact" | "full";
 }
-
-const SCROLL_PRESERVE_KEY = "intl-locale-switch-scroll-y";
 
 export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitcherProps) {
   const shouldReduceMotion = useReducedMotion();
@@ -44,9 +44,9 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const raw = sessionStorage.getItem(SCROLL_PRESERVE_KEY);
+    const raw = sessionStorage.getItem(LOCALE_SWITCH_SCROLL_KEY);
     if (raw === null) return;
-    sessionStorage.removeItem(SCROLL_PRESERVE_KEY);
+    sessionStorage.removeItem(LOCALE_SWITCH_SCROLL_KEY);
     const y = Number.parseFloat(raw);
     if (!Number.isFinite(y)) return;
     const restore = () => window.scrollTo(0, y);
@@ -71,7 +71,8 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
     const href = `${pathname}${suffix}`;
 
     if (typeof window !== "undefined") {
-      sessionStorage.setItem(SCROLL_PRESERVE_KEY, String(scrollY));
+      sessionStorage.setItem(LOCALE_SWITCH_SCROLL_KEY, String(scrollY));
+      markSplashSeen();
     }
 
     startTransition(() => {
