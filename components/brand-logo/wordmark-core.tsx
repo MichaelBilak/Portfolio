@@ -1,11 +1,12 @@
 import Image from "next/image";
 
+/** Tightly cropped D glyph — no transparent padding (see logo-dm-group.png source). */
+export const LOGO_D_SRC = "/images/logo-d-letter.png";
+/** Full lockup PNG kept for favicon / schema / other uses. */
 export const LOGO_SRC = "/images/logo-dm-group.png";
 
-/** Visible width of the D glyph inside the PNG (rest is transparent padding). */
-const D_SLOT_WIDTH = "0.58em";
-/** Pulls "ormUp" left so it sits flush against the D on every size. */
-const TEXT_OVERLAP = "0.46em";
+const D_WIDTH = 661;
+const D_HEIGHT = 615;
 
 interface WordmarkCoreProps {
   className?: string;
@@ -24,25 +25,19 @@ export function WordmarkCore({
 }: WordmarkCoreProps) {
   return (
     <span
-      className={`inline-flex items-center whitespace-nowrap font-brand font-light leading-none tracking-tight text-textPrimary ${className}`}
+      className={`inline-flex items-baseline whitespace-nowrap font-brand font-light leading-none tracking-tight text-textPrimary ${className}`}
       style={style}
     >
-      <span
+      <Image
+        src={LOGO_D_SRC}
+        alt=""
         aria-hidden
-        className="relative shrink-0 overflow-hidden"
-        style={{ width: D_SLOT_WIDTH, height: "1em" }}
-      >
-        <Image
-          src={LOGO_SRC}
-          alt=""
-          aria-hidden
-          width={256}
-          height={256}
-          priority={priority}
-          className="absolute left-0 top-0 h-[1em] w-[1em] max-w-none object-contain object-left"
-        />
-      </span>
-      <span aria-hidden style={{ marginLeft: `calc(-1 * ${TEXT_OVERLAP})` }}>
+        width={D_WIDTH}
+        height={D_HEIGHT}
+        priority={priority}
+        className="h-[1em] w-auto shrink-0 self-baseline"
+      />
+      <span aria-hidden className="leading-none">
         orm<span className="text-accentGold">Up</span>
         {showGroup ? <span className={groupClassName}> Group</span> : null}
       </span>

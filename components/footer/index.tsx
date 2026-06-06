@@ -54,15 +54,12 @@ export function Footer({ t }: FooterProps) {
 
       <div className="container-lux relative grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <div className="flex items-center gap-3">
             <BrandLogo
               priority
               wordmarkClassName="text-3xl"
-              separatorClassName="h-8 w-px bg-borderSubtle"
+              separatorClassName="h-[0.68em] w-px bg-borderSubtle"
               agencyClassName="text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase"
-              taglineClassName="gap-1"
             />
-          </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-textSecondary">
             {t.footer.description}
           </p>

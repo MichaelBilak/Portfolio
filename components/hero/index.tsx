@@ -271,11 +271,42 @@ function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
 
   useEffect(() => {
     if (reduce) return;
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % SITE_IMAGES.length);
-    }, 3800);
-    return () => clearInterval(id);
+
+    let id: number | undefined;
+
+    const start = () => {
+      if (id) return;
+      id = window.setInterval(() => {
+        setIndex((i) => (i + 1) % SITE_IMAGES.length);
+      }, 3800);
+    };
+
+    const stop = () => {
+      if (!id) return;
+      window.clearInterval(id);
+      id = undefined;
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [reduce]);
+
+  useEffect(() => {
+    SITE_IMAGES.slice(1).forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, []);
 
   return (
     <div className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary">

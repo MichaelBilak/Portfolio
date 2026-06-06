@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { WordmarkCore } from "@/components/brand-logo/wordmark-core";
-const MIN_DISPLAY_MS = 1800;
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { AnimatedWordmark } from "@/components/brand-logo/wordmark-animated";
+
+const MIN_DISPLAY_MS = 3500;
+const WORDMARK_DONE_MS = 800;
+const EXIT_MS = 300;
+const EASE_LOAD = [0.22, 1, 0.36, 1] as const;
 
 export function LoadingScreen() {
+  const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -27,8 +32,10 @@ export function LoadingScreen() {
     const finish = () => {
       cancelAnimationFrame(raf);
       setProgress(100);
-      const remaining = MIN_DISPLAY_MS - (Date.now() - start);
-      setTimeout(() => setVisible(false), Math.max(0, remaining) + 350);
+      const elapsed = Date.now() - start;
+      const minTotal = reduceMotion ? 0 : MIN_DISPLAY_MS;
+      const remaining = minTotal - elapsed;
+      setTimeout(() => setVisible(false), Math.max(0, remaining) + EXIT_MS);
     };
 
     if (document.readyState === "complete") {
@@ -41,7 +48,7 @@ export function LoadingScreen() {
       cancelAnimationFrame(raf);
       window.removeEventListener("load", finish);
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
     <AnimatePresence>
@@ -124,9 +131,9 @@ export function LoadingScreen() {
 
           {/* ── center content ── */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, ease: EASE_LOAD }}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -147,16 +154,28 @@ export function LoadingScreen() {
                     "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
                   ],
                 }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: reduceMotion ? 0 : WORDMARK_DONE_MS / 1000,
+                }}
               >
-                <WordmarkCore
+                <AnimatedWordmark
                   priority
                   className="text-[clamp(3rem,9vw,5.35rem)]"
                   groupClassName="text-[0.46em] font-normal tracking-[0.02em] text-textPrimary/90"
                 />
               </motion.div>
 
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.45,
+                  delay: reduceMotion ? 0 : WORDMARK_DONE_MS / 1000,
+                  ease: EASE_LOAD,
+                }}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -189,7 +208,7 @@ export function LoadingScreen() {
                     background: "rgba(252,211,77,0.35)",
                   }}
                 />
-              </div>
+              </motion.div>
             </div>
           </motion.div>
 

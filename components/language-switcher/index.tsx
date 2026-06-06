@@ -4,7 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, Globe } from "lucide-react";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { Locale, localeOrder, translations } from "@/lib/translations";
+import { localeMeta, localeOrder } from "@/lib/locale-meta";
+import { Locale } from "@/lib/translations";
 
 interface LanguageSwitcherProps {
   locale: Locale;
@@ -54,7 +55,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
     requestAnimationFrame(() => requestAnimationFrame(restore));
   }, [locale]);
 
-  const current = translations[locale];
+  const current = localeMeta[locale];
 
   const switchTo = (next: Locale) => {
     setOpen(false);
@@ -85,7 +86,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
         onClick={() => setOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label={current.langSelector.label}
+        aria-label={current.selectorLabel}
         className="focus-outline interactive group inline-flex min-h-11 items-center gap-2 rounded-full border border-borderSubtle bg-bgSecondary/60 px-3.5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-textPrimary backdrop-blur hover:border-borderStrong md:min-h-0"
       >
         <Globe size={14} className="text-accentGold" />
@@ -121,7 +122,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
             } overflow-hidden rounded-2xl border border-borderStrong bg-bgElevated/95 p-1.5 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] backdrop-blur-xl`}
           >
             {localeOrder.map((code) => {
-              const item = translations[code];
+              const item = localeMeta[code];
               const active = code === locale;
               return (
                 <li key={code}>

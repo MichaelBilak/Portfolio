@@ -1,5 +1,5 @@
 import { defineRouting } from "next-intl/routing";
-import { localeOrder } from "@/lib/translations";
+import { localeOrder } from "@/lib/locale-meta";
 
 export const routing = defineRouting({
   locales: localeOrder,

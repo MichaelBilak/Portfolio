@@ -21,20 +21,31 @@ let neutral: { beta: number; gamma: number } | null = null;
 const clamp = (value: number, max: number) =>
   Math.max(-max, Math.min(max, value));
 
+let pendingGyro: GyroTilt | null = null;
+let gyroRafId = 0;
+
+function flushGyro() {
+  gyroRafId = 0;
+  if (!pendingGyro) return;
+  const tilt = pendingGyro;
+  pendingGyro = null;
+  gyroListeners.forEach((fn) => fn(tilt));
+}
+
 function handleOrientation(event: DeviceOrientationEvent) {
   const { beta, gamma } = event;
   if (beta == null || gamma == null) return;
   if (!neutral) neutral = { beta, gamma };
 
-  // Offset from the initial resting position so any starting angle feels neutral.
-  const dBeta = beta - neutral.beta; // front-to-back tilt
-  const dGamma = gamma - neutral.gamma; // left-to-right tilt
+  const dBeta = beta - neutral.beta;
+  const dGamma = gamma - neutral.gamma;
 
-  // Map ~25° of physical tilt to the same rotation range as the pointer effect.
   const y = (clamp(dGamma, 25) / 25) * 24;
   const x = (clamp(dBeta, 25) / 25) * -20;
 
-  gyroListeners.forEach((fn) => fn({ x, y }));
+  pendingGyro = { x, y };
+  if (gyroRafId) return;
+  gyroRafId = requestAnimationFrame(flushGyro);
 }
 
 function startGyro() {

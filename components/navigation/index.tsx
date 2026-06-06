@@ -7,7 +7,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ScrollProgress } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
-import { useScrollDirection } from "@/lib/hooks/use-scroll-direction";
+import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
 import { Locale, TranslationSet } from "@/lib/translations";
 
 interface NavigationProps {
@@ -18,15 +18,7 @@ interface NavigationProps {
 export function Navigation({ locale, t }: NavigationProps) {
   const shouldReduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const direction = useScrollDirection();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const { direction, scrolled } = useNavScroll();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -63,13 +55,9 @@ export function Navigation({ locale, t }: NavigationProps) {
           <Link
             href="/"
             aria-label="DormUp Group"
-            className="interactive focus-outline flex items-center gap-3 rounded-xl"
+            className="interactive focus-outline inline-flex items-center rounded-xl"
           >
-            <BrandLogo
-              priority
-              taglineClassName="hidden md:flex"
-              separatorClassName="hidden h-7 w-px bg-borderSubtle md:block"
-            />
+            <BrandLogo priority />
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">

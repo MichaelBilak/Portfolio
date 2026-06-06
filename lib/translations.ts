@@ -2535,5 +2535,5 @@ export const translations: Record<Locale, TranslationSet> = {
   de,
 };
 
-export const localeOrder: Locale[] = ["it", "en", "fr", "ru", "de"];
+export { localeOrder } from "@/lib/locale-meta";
 

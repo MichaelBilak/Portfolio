@@ -626,4 +626,9 @@ select option {
     );
     mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   }
+
+  .section-deferred {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
 }

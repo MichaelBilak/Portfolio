@@ -9,8 +9,8 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
-import { LoadingScreen } from "@/components/loading-screen";
 import "../globals.css";
 
 // Expressive display (hero + section accents + big numbers) — bold, modern,
@@ -20,6 +20,7 @@ const display = Unbounded({
   weight: ["400", "500", "600", "700"],
   variable: "--font-display",
   display: "swap",
+  preload: false,
 });
 
 // Brand wordmark keeps its original serif so the logo lockup never changes.
@@ -29,14 +30,16 @@ const brand = Cormorant_Garamond({
   weight: ["300", "600"],
   variable: "--font-brand",
   display: "swap",
+  preload: true,
 });
 
 // Body — premium geometric grotesque with Cyrillic coverage.
 const sans = Manrope({
   subsets: ["latin", "cyrillic"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
+  preload: true,
 });
 
 // Mono labels / eyebrows — refined, Cyrillic-aware.
@@ -45,6 +48,7 @@ const mono = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+  preload: false,
 });
 
 const siteUrl = "https://bilakstudio.it";
@@ -191,10 +195,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale}>
       <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
-        <LoadingScreen />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <ClientProviders>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ClientProviders>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
