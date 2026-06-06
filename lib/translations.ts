@@ -244,7 +244,7 @@ const it: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Gioielli artigianali",
-      subtitle: "Gioielli botanici � e-commerce",
+      subtitle: "Gioielli botanici · e-commerce",
       problem:
         "L'artigiana riceveva ordini solo via DM, senza una vetrina chiara per presentare collezioni, prezzi e disponibilita a un pubblico internazionale.",
       solution:
@@ -711,7 +711,7 @@ const en: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Handmade Jewelry",
-      subtitle: "Botanical jewelry � e-commerce",
+      subtitle: "Botanical jewelry · e-commerce",
       problem:
         "The artisan was taking orders only via DMs, with no proper showroom to present collections, pricing and availability to an international audience.",
       solution:
@@ -1178,7 +1178,7 @@ const fr: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Bijoux faits main",
-      subtitle: "Bijoux botaniques � e-commerce",
+      subtitle: "Bijoux botaniques · e-commerce",
       problem:
         "L'artisane prenait les commandes uniquement par messages, sans vitrine claire pour presenter collections, prix et disponibilites a un public international.",
       solution:
@@ -2090,7 +2090,7 @@ const de: TranslationSet = {
     {
       id: "premium-restaurant-local-concept",
       name: "Premium Restaurant Website",
-      subtitle: "Conversion-Seite � lokales Restaurant",
+      subtitle: "Conversion-Seite · lokales Restaurant",
       problem:
         "Veraltetes Layout zeigte Atmosphare, Menu-Wert und Reservierungspfad auf Mobile nicht ausreichend.",
       solution:
@@ -2113,7 +2113,7 @@ const de: TranslationSet = {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Handgefertigter Schmuck",
-      subtitle: "Botanischer Schmuck � e-commerce",
+      subtitle: "Botanischer Schmuck · e-commerce",
       problem:
         "Die Kunsthandwerkerin nahm Bestellungen nur uber DMs entgegen, ohne klaren Showroom fur Kollektionen, Preise und Verfugbarkeit fur ein internationales Publikum.",
       solution:
