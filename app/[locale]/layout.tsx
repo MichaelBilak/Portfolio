@@ -55,33 +55,33 @@ const localeMetaContent: Record<
   { title: string; description: string; ogLocale: string }
 > = {
   it: {
-    title: "DormUp Group · Studio Digitale Rimini - Posizionamento Digitale Esclusivo per il Tuo Brand.",
+    title: "DormUp Group · Studio Digitale Emilia-Romagna - Posizionamento Digitale Esclusivo per il Tuo Brand.",
     description:
-      "Studio digitale a Rimini. Usiamo un approccio unico per valorizzare il tuo brand. Design che converte, sviluppo pulito, risultati rapidi.",
+      "Studio digitale in Emilia-Romagna. Usiamo un approccio unico per valorizzare il tuo brand. Design che converte, sviluppo pulito, risultati rapidi.",
     ogLocale: "it_IT",
   },
   en: {
-    title: "DormUp Group · Digital Studio Rimini - Exclusive Digital Positioning for Your Brand.",
+    title: "DormUp Group · Digital Studio Emilia-Romagna - Exclusive Digital Positioning for Your Brand.",
     description:
-      "Digital studio in Rimini. We use a unique approach to enhance your brand. Design that converts, clean development, quick results.",
+      "Digital studio in Emilia-Romagna. We use a unique approach to enhance your brand. Design that converts, clean development, quick results.",
     ogLocale: "en_US",
   },
   fr: {
-    title: "DormUp Group · Studio Digital Rimini - Positionnement Digital Exclusif pour Votre Marque.",
+    title: "DormUp Group · Studio Digital Emilia-Romagna - Positionnement Digital Exclusif pour Votre Marque.",
     description:
-      "Studio digital à Rimini. Nous utilisons une approche unique pour valoriser votre marque. Design qui convertit, développement propre, résultats rapides.",
+      "Studio digital en Emilia-Romagna. Nous utilisons une approche unique pour valoriser votre marque. Design qui convertit, développement propre, résultats rapides.",
     ogLocale: "fr_FR",
   },
   ru: {
-    title: "DormUp Group · Диджитал Студия Римини - Эксклюзивное цифровое позиционирование вашего бренда.",
+    title: "DormUp Group · Диджитал Студия Эмилия-Романья - Эксклюзивное цифровое позиционирование вашего бренда.",
     description:
-      "Диджитал студия в Римини. Мы используем уникальный подход, чтобы усилить ваш бренд. Дизайн, который конвертирует, чистая разработка, быстрые результаты.",
+      "Диджитал студия в Эмилия-Романье. Мы используем уникальный подход, чтобы усилить ваш бренд. Дизайн, который конвертирует, чистая разработка, быстрые результаты.",
     ogLocale: "ru_RU",
   },
   de: {
-    title: "DormUp Group · Digitalstudio Rimini - Exklusive Digitale Positionierung für Ihre Marke.",
+    title: "DormUp Group · Digitalstudio Emilia-Romagna - Exklusive Digitale Positionierung für Ihre Marke.",
     description:
-      "Digitalstudio in Rimini. Wir nutzen einen einzigartigen Ansatz, um Ihre Marke zu stärken. Design, das konvertiert, saubere Entwicklung, schnelle Ergebnisse.",
+      "Digitalstudio in der Emilia-Romagna. Wir nutzen einen einzigartigen Ansatz, um Ihre Marke zu stärken. Design, das konvertiert, saubere Entwicklung, schnelle Ergebnisse.",
     ogLocale: "de_DE",
   },
 };
@@ -177,7 +177,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     url: `${siteUrl}${localePath(locale as Locale)}`,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Rimini",
+      addressLocality: "Emilia-Romagna",
       addressCountry: "IT",
     },
     description: localeMetaContent[locale as Locale].description,

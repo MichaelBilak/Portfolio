@@ -66,7 +66,6 @@ export function Navigation({ locale, t }: NavigationProps) {
             className="interactive focus-outline flex items-center gap-3 rounded-xl"
           >
             <BrandLogo
-              imageSize={38}
               priority
               taglineClassName="hidden md:flex"
               separatorClassName="hidden h-7 w-px bg-borderSubtle md:block"

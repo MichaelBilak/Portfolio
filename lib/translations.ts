@@ -17,7 +17,7 @@ export interface LocalizedService {
   description: string;
   details: string;
   whatYouGet: string[];
-  /** External portfolio (operator’s reel / Instagram / Vimeo, etc.) */
+  /** External portfolio (videographer’s reel / Instagram / Vimeo, etc.) */
   portfolioUrl?: string;
   portfolioLinkLabel?: string;
   portfolioUrl2?: string;
@@ -312,19 +312,19 @@ const it: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Foto & video con operatore professionista",
+      title: "Foto & video con videografo professionista",
       description:
-        "Riprese e post-produzione affidate a un operatore dedicato: food, interni, team e contenuti per social. Servizio separato dai progetti web, con piani tariffari dedicati.",
+        "Riprese e post-produzione affidate a un videografo dedicato: food, interni, team e contenuti per social. Servizio separato dai progetti web, con piani tariffari dedicati.",
       details: "Sessioni in location · Audio dove serve · Export per sito e social",
       whatYouGet: [
         "Brief con shot list e tempistiche chiare",
-        "Riprese foto e video con operatore professionista",
+        "Riprese foto e video con videografo professionista",
         "Editing (taglio, colore, formati verticali/orizzontali)",
         "Consegna file pronti per hero, menu digitali e campagne",
         "Licenza d'uso per marketing online (come da contratto)",
       ],
       portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Portfolio operatore",
+      portfolioLinkLabel2: "Portfolio videografo",
       pricingSectionTitle: "Piani tariffari (servizio dedicato)",
       pricingFootnote:
         "Importi indicativi: si definiscono in preventivo in base a location, durata e diritti di utilizzo.",
@@ -389,18 +389,18 @@ const it: TranslationSet = {
     audit: "Audit gratuito",
   },
   hero: {
-    eyebrow: "Studio Digitale · Rimini, Italia",
+    eyebrow: "Studio Digitale · Emilia-Romagna, Italia",
     headline: "La prima impressione\ndel tuo business\ninizia qui.",
-    subtitle: "Digital first impression for hospitality brands",
-    lead: "Costruiamo esperienze digitali premium per ristoranti, hotel e brand dell'ospitalita che vogliono apparire come i migliori e ricevere prenotazioni dirette.",
+    subtitle: "La presenza digitale che parla al posto tuo",
+    lead: "Creiamo esperienze digitali premium per brand e business che non vogliono sembrare generici: ristoranti, negozi, studi e startup con ambizioni chiare. Design distintivo, strategia concreta, risultati misurabili.",
     primaryCta: "Vedi i progetti",
     secondaryCta: "Richiedi audit gratuito",
-    socialProof: "4 progetti · Rimini & Italia · Disponibile per nuovi clienti",
+    socialProof: "4 progetti · Emilia-Romagna & Italia · Disponibile per nuovi clienti",
     mockupCaption: "Il tuo miglior biglietto da visita",
   },
   trust: [
     "Design che converte",
-    "Focus su ospitalita e ristorazione",
+    "Pensato per brand ambiziosi",
     "Nessuna dipendenza da OTA",
     "Mobile-first & veloce",
   ],
@@ -416,7 +416,7 @@ const it: TranslationSet = {
   problem: {
     title:
       "Quasi tutti i business locali hanno un sito. Quasi nessuno ha una vera prima impressione digitale.",
-    body: "La maggior parte dei siti locali non costruisce fiducia. Mostra informazioni, ma non comunica qualita. Nel frattempo le OTA trattengono commissioni tra il 15% e il 25%. Un sito premium orientato alla conversione puo ripagarsi in pochi mesi: per questo aiutiamo i business dell'ospitalita italiana a recuperare valore diretto.",
+    body: "La maggior parte dei siti locali non costruisce fiducia. Mostra informazioni, ma non comunica qualita. Nel frattempo le OTA trattengono commissioni tra il 15% e il 25%. Un sito premium orientato alla conversione puo ripagarsi in pochi mesi: per questo aiutiamo i business italiani a conquistare valore diretto.",
   },
   caseStudies: {
     label: "Lavori selezionati",
@@ -540,8 +540,8 @@ const it: TranslationSet = {
   about: {
     eyebrow: "Chi siamo",
     title: "Design e sviluppo",
-    bio: "Siamo un piccolo studio digitale basato a Rimini. Lavoriamo con ristoranti, hotel e brand locali che vogliono un sito che funziona davvero. Non solo bello, ma costruito per portare risultati concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
-    pills: ["Rimini, Italia", "Disponibile per nuovi progetti"],
+    bio: "Siamo un piccolo studio digitale basato in Emilia-Romagna. Lavoriamo con brand e business che vogliono un sito che funziona davvero. Non solo bello, ma costruito per portare risultati concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
+    pills: ["Emilia-Romagna, Italia", "Disponibile per nuovi progetti"],
   },
   contact: {
     label: "Iniziamo",
@@ -576,9 +576,9 @@ const it: TranslationSet = {
     },
   },
   footer: {
-    description: "Studio digitale per hospitality e brand locali premium.",
+    description: "Studio digitale per brand e business premium in tutta Italia.",
     links: "Link rapidi",
-    location: "Rimini, Italia",
+    location: "Emilia-Romagna, Italia",
     status: "Disponibile per nuovi clienti",
     privacy: "Privacy Policy",
     built: "Built with intention.",
@@ -779,9 +779,9 @@ const en: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Photo & video with a professional operator",
+      title: "Photo & video with a professional videographer",
       description:
-        "Location shoots and post-production handled by a dedicated operator—food, interiors, team, and social-ready assets. Separate from web projects, with its own pricing tiers.",
+        "Location shoots and post-production handled by a dedicated videographer—food, interiors, team, and social-ready assets. Separate from web projects, with its own pricing tiers.",
       details: "On-location sessions · Audio when needed · Deliverables for web and social",
       whatYouGet: [
         "Creative brief and shot list aligned with your goals",
@@ -791,7 +791,7 @@ const en: TranslationSet = {
         "Usage rights for digital marketing (per agreement)",
       ],
       portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Operator portfolio",
+      portfolioLinkLabel2: "Videographer portfolio",
       pricingSectionTitle: "Pricing tiers (standalone service)",
       pricingFootnote:
         "Figures are quoted per brief depending on location, duration, and usage rights.",
@@ -856,18 +856,18 @@ const en: TranslationSet = {
     audit: "Free audit",
   },
   hero: {
-    eyebrow: "Digital Studio · Rimini, Italy",
+    eyebrow: "Digital Studio · Emilia-Romagna, Italy",
     headline: "Your business\nfirst impression\nstarts here.",
-    subtitle: "Digital first impression for hospitality brands",
-    lead: "We build premium digital experiences for restaurants, hotels and hospitality brands that want to look like the best and get booked like it.",
+    subtitle: "Where your brand speaks before you do",
+    lead: "We craft premium digital experiences for brands and businesses that refuse to look generic—from local institutions to ambitious startups. Distinctive design, sharp strategy, measurable results.",
     primaryCta: "View projects",
     secondaryCta: "Request free audit",
-    socialProof: "4 projects · Rimini & Italy · Available for new clients",
+    socialProof: "4 projects · Emilia-Romagna & Italy · Available for new clients",
     mockupCaption: "Your best business card",
   },
   trust: [
     "Design that converts",
-    "Hospitality and dining focus",
+    "Built for brands that stand out",
     "Less OTA dependency",
     "Mobile-first & fast",
   ],
@@ -883,7 +883,7 @@ const en: TranslationSet = {
   problem: {
     title:
       "Most local businesses have a website. Almost none of them have a digital first impression.",
-    body: "Most local sites don't build trust. They display information but don't communicate quality. Meanwhile OTAs keep 15% to 25% in commissions. A premium, conversion-focused site can pay for itself within a few months. That's why we help Italian hospitality businesses recover direct value.",
+    body: "Most local sites don't build trust. They display information but don't communicate quality. Meanwhile OTAs keep 15% to 25% in commissions. A premium, conversion-focused site can pay for itself within a few months. That's why we help Italian businesses recover direct value.",
   },
   caseStudies: {
     label: "Selected work",
@@ -1007,8 +1007,8 @@ const en: TranslationSet = {
   about: {
     eyebrow: "About us",
     title: "Design & development",
-    bio: "We're a small digital studio based in Rimini. We work with restaurants, hotels and local brands that want a site that actually works. Not just pretty, but built to bring real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
-    pills: ["Rimini, Italy", "Available for new projects"],
+    bio: "We're a small digital studio based in Emilia-Romagna. We work with brands and businesses that want a site that actually works. Not just pretty, but built to bring real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
+    pills: ["Emilia-Romagna, Italy", "Available for new projects"],
   },
   contact: {
     label: "Let's start",
@@ -1043,9 +1043,9 @@ const en: TranslationSet = {
     },
   },
   footer: {
-    description: "Digital studio for premium hospitality and local brands.",
+    description: "Digital studio for premium brands and businesses across Italy.",
     links: "Quick links",
-    location: "Rimini, Italy",
+    location: "Emilia-Romagna, Italy",
     status: "Available for new clients",
     privacy: "Privacy Policy",
     built: "Built with intention.",
@@ -1246,19 +1246,19 @@ const fr: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Photo & video avec operateur professionnel",
+      title: "Photo & video avec vidéaste professionnel",
       description:
-        "Prises de vue et post-production avec un operateur dedie : platings, lieux, equipe et contenus social. Service distinct des projets web, avec grilles tarifaires dediees.",
-      details: "Seances sur site · Audio si besoin · Livrables web et social",
+        "Prises de vue et post-production avec un vidéaste dédié : platings, lieux, équipe et contenus social. Service distinct des projets web, avec grilles tarifaires dédiées.",
+      details: "Séances sur site · Audio si besoin · Livrables web et social",
       whatYouGet: [
-        "Brief creatif et liste de plans",
+        "Brief créatif et liste de plans",
         "Prises de vue photo et video professionnelles",
         "Montage (decoupage, etalonnage, formats)",
         "Fichiers prets pour hero, menus digitaux et campagnes",
         "Droits d utilisation marketing digital (selon contrat)",
       ],
       portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Portfolio operateur",
+      portfolioLinkLabel2: "Portfolio vidéaste",
       pricingSectionTitle: "Grilles tarifaires (service autonome)",
       pricingFootnote:
         "Montants indicatifs : devis selon lieu, duree et droits d exploitation.",
@@ -1323,18 +1323,18 @@ const fr: TranslationSet = {
     audit: "Audit gratuit",
   },
   hero: {
-    eyebrow: "Studio Digital · Rimini, Italie",
+    eyebrow: "Studio Digital · Emilia-Romagna, Italie",
     headline: "La premiere impression\nde votre business\ncommence ici.",
-    subtitle: "Premiere impression digitale pour l'hospitalite",
-    lead: "Nous concevons des experiences digitales premium pour restaurants, hotels et marques de l'hospitalite qui veulent paraitre au sommet et etre reserves comme tels.",
+    subtitle: "La présence digitale qui parle pour vous",
+    lead: "Nous concevons des expériences digitales premium pour marques et business qui refusent le générique — restaurants, commerces, studios et startups ambitieux. Design distinctif, stratégie concrète, résultats mesurables.",
     primaryCta: "Voir les projets",
     secondaryCta: "Demander un audit",
-    socialProof: "4 projets · Rimini & Italie · Disponible pour nouveaux clients",
+    socialProof: "4 projets · Emilia-Romagna & Italie · Disponible pour nouveaux clients",
     mockupCaption: "Votre meilleure carte de visite",
   },
   trust: [
     "Design qui convertit",
-    "Focus hospitalite et restauration",
+    "Pensé pour les marques ambitieuses",
     "Moins de dependance aux OTA",
     "Mobile-first et rapide",
   ],
@@ -1350,7 +1350,7 @@ const fr: TranslationSet = {
   problem: {
     title:
       "Presque tous les business locaux ont un site. Presque aucun n'a une vraie premiere impression digitale.",
-    body: "La majorite des sites locaux n'inspire pas confiance. Ils montrent des infos mais ne communiquent pas la qualite. Les OTA prennent entre 15% et 25% de commission. Un site premium oriente conversion peut s'amortir en quelques mois. C'est pourquoi nous aidons les business de l'hospitalite italienne a recuperer de la valeur en direct.",
+    body: "La majorite des sites locaux n'inspire pas confiance. Ils montrent des infos mais ne communiquent pas la qualite. Les OTA prennent entre 15% et 25% de commission. Un site premium oriente conversion peut s'amortir en quelques mois. C'est pourquoi nous aidons les business italiens a recuperer de la valeur en direct.",
   },
   caseStudies: {
     label: "Projets selectionnes",
@@ -1474,8 +1474,8 @@ const fr: TranslationSet = {
   about: {
     eyebrow: "Qui sommes-nous",
     title: "Design & développement",
-    bio: "Nous sommes un petit studio digital base a Rimini. Nous travaillons avec des restaurants, hotels et marques locales qui veulent un site qui fonctionne vraiment. Pas juste beau, mais construit pour apporter des resultats concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
-    pills: ["Rimini, Italie", "Disponible pour nouveaux projets"],
+    bio: "Nous sommes un petit studio digital base en Emilia-Romagna. Nous travaillons avec des marques et business qui veulent un site qui fonctionne vraiment. Pas juste beau, mais construit pour apporter des resultats concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
+    pills: ["Emilia-Romagna, Italie", "Disponible pour nouveaux projets"],
   },
   contact: {
     label: "Commencons",
@@ -1510,9 +1510,9 @@ const fr: TranslationSet = {
     },
   },
   footer: {
-    description: "Studio digital pour l'hospitalite et les marques locales premium.",
+    description: "Studio digital pour marques et business premium en Italie.",
     links: "Liens rapides",
-    location: "Rimini, Italie",
+    location: "Emilia-Romagna, Italie",
     status: "Disponible pour nouveaux clients",
     privacy: "Politique de confidentialite",
     built: "Built with intention.",
@@ -1790,19 +1790,19 @@ const ru: TranslationSet = {
     audit: "Бесплатный аудит",
   },
   hero: {
-    eyebrow: "Digital Studio · Rimini, Italia",
+    eyebrow: "Digital Studio · Emilia-Romagna, Italia",
     headline: "Первое впечатление\nо вашем бизнесе\nначинается здесь.",
-    subtitle: "Цифровое первое впечатление для hospitality-брендов",
-    lead: "Создаём премиум цифровые опыты для ресторанов, отелей и hospitality-брендов, которые хотят выглядеть как лучшие и получать бронирования напрямую.",
+    subtitle: "Цифровое присутствие, которое говорит за вас",
+    lead: "Создаём премиум цифровые опыты для брендов и бизнесов, которые не хотят выглядеть шаблонно — от локальных проектов до амбициозных стартапов. Выразительный дизайн, чёткая стратегия, измеримый результат.",
     primaryCta: "Смотреть проекты",
     secondaryCta: "Запросить бесплатный аудит",
-    socialProof: "4 проекта · Римини и Италия · Открыты для новых клиентов",
+    socialProof: "4 проекта · Эмилия-Романья и Италия · Открыты для новых клиентов",
     mockupCaption: "Ваша лучшая визитная карточка",
     mockupCaptionSm: true,
   },
   trust: [
     "Дизайн, который конвертирует",
-    "Фокус на hospitality и ресторанах",
+    "Для брендов, которые выделяются",
     "Меньше зависимости от OTA",
     "Mobile-first и быстрый",
   ],
@@ -1818,7 +1818,7 @@ const ru: TranslationSet = {
   problem: {
     title:
       "Почти у всех локальных бизнесов есть сайт. Почти ни у кого нет настоящего цифрового первого впечатления.",
-    body: "Большинство локальных сайтов не строит доверие. Они показывают информацию, но не передают качество. OTA при этом удерживают от 15% до 25% комиссии. Премиум-сайт, сделанный под конверсию, может окупиться за несколько месяцев. Именно поэтому мы помогаем hospitality-бизнесам в Италии возвращать прямую ценность.",
+    body: "Большинство локальных сайтов не строит доверие. Они показывают информацию, но не передают качество. OTA при этом удерживают от 15% до 25% комиссии. Премиум-сайт, сделанный под конверсию, может окупиться за несколько месяцев. Именно поэтому мы помогаем итальянским бизнесам возвращать прямую ценность.",
   },
   caseStudies: {
     label: "Избранные работы",
@@ -1942,8 +1942,8 @@ const ru: TranslationSet = {
   about: {
     eyebrow: "О нас",
     title: "Дизайн и разработка",
-    bio: "Мы небольшая цифровая студия в Римини. Работаем с ресторанами, отелями и локальными брендами, которым нужен сайт, действительно работающий. Не просто красивый, а построенный под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
-    pills: ["Римини, Италия", "Открыты для новых проектов"],
+    bio: "Мы небольшая цифровая студия в Эмилия-Романье. Работаем с брендами и бизнесами, которым нужен сайт, действительно работающий. Не просто красивый, а построенный под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
+    pills: ["Эмилия-Романья, Италия", "Открыты для новых проектов"],
   },
   contact: {
     label: "Начнём",
@@ -1978,9 +1978,9 @@ const ru: TranslationSet = {
     },
   },
   footer: {
-    description: "Цифровая студия для премиум hospitality и локальных брендов.",
+    description: "Цифровая студия для премиум-брендов и бизнесов по всей Италии.",
     links: "Быстрые ссылки",
-    location: "Римини, Италия",
+    location: "Эмилия-Романья, Италия",
     status: "Открыты для новых клиентов",
     privacy: "Политика конфиденциальности",
     built: "Built with intention.",
@@ -2181,9 +2181,9 @@ const de: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Foto & Video mit professionellem Operator",
+      title: "Foto & Video mit professionellem Videografen",
       description:
-        "Drehs und Postproduktion mit festem Operator: Food, Raume, Team und Social-Assets. Eigenstandiger Service neben Webprojekten, mit eigenen Tarifen.",
+        "Drehs und Postproduktion mit festem Videografen: Food, Raume, Team und Social-Assets. Eigenstandiger Service neben Webprojekten, mit eigenen Tarifen.",
       details: "Location-Drehs · Audio bei Bedarf · Deliverables fur Web und Social",
       whatYouGet: [
         "Briefing und Shotliste mit klarem Zeitplan",
@@ -2193,7 +2193,7 @@ const de: TranslationSet = {
         "Nutzungsrechte fur Digital-Marketing (vertraglich)",
       ],
       portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Operator-Portfolio",
+      portfolioLinkLabel2: "Videograf-Portfolio",
       pricingSectionTitle: "Tarife (separate Leistung)",
       pricingFootnote:
         "Preise werden je nach Location, Dauer und Nutzungsrechten im Angebot festgelegt.",
@@ -2258,18 +2258,18 @@ const de: TranslationSet = {
     audit: "Kostenloses Audit",
   },
   hero: {
-    eyebrow: "Digitales Studio · Rimini, Italien",
+    eyebrow: "Digitales Studio · Emilia-Romagna, Italien",
     headline: "Der erste Eindruck\nIhres Business\nbeginnt hier.",
-    subtitle: "Digitaler erster Eindruck fur Hospitality-Marken",
-    lead: "Wir bauen Premium-Digitalerlebnisse fur Restaurants, Hotels und Hospitality-Marken, die wie die Besten aussehen und so gebucht werden wollen.",
+    subtitle: "Digitale Präsenz, die für Sie spricht",
+    lead: "Wir bauen Premium-Digitalerlebnisse für Marken und Unternehmen, die nicht generisch wirken wollen — von lokalen Betrieben bis zu ambitionierten Startups. Ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
     primaryCta: "Projekte ansehen",
     secondaryCta: "Audit anfragen",
-    socialProof: "4 Projekte · Rimini & Italien · Verfugbar fur neue Kunden",
+    socialProof: "4 Projekte · Emilia-Romagna & Italien · Verfugbar fur neue Kunden",
     mockupCaption: "Ihre beste Visitenkarte",
   },
   trust: [
     "Design, das konvertiert",
-    "Fokus auf Hospitality und Gastronomie",
+    "Fur Marken, die herausstechen",
     "Weniger Abhangigkeit von OTAs",
     "Mobile-first und schnell",
   ],
@@ -2285,7 +2285,7 @@ const de: TranslationSet = {
   problem: {
     title:
       "Fast jedes lokale Unternehmen hat eine Website. Fast keines hat einen echten digitalen ersten Eindruck.",
-    body: "Die meisten lokalen Websites schaffen kein Vertrauen. Sie zeigen Informationen, vermitteln aber keine Qualitat. OTAs behalten dabei 15 bis 25 Prozent Provision. Eine Premium-Website mit Conversion-Fokus kann sich in wenigen Monaten amortisieren. Genau deshalb helfen wir italienischen Hospitality-Unternehmen, direkten Wert zuruckzuholen.",
+    body: "Die meisten lokalen Websites schaffen kein Vertrauen. Sie zeigen Informationen, vermitteln aber keine Qualitat. OTAs behalten dabei 15 bis 25 Prozent Provision. Eine Premium-Website mit Conversion-Fokus kann sich in wenigen Monaten amortisieren. Genau deshalb helfen wir italienischen Unternehmen, direkten Wert zuruckzuholen.",
   },
   caseStudies: {
     label: "Ausgewahlte Arbeiten",
@@ -2409,8 +2409,8 @@ const de: TranslationSet = {
   about: {
     eyebrow: "Uber uns",
     title: "Design & Entwicklung",
-    bio: "Wir sind ein kleines Digital-Studio aus Rimini. Wir arbeiten mit Restaurants, Hotels und lokalen Marken, die eine Website wollen, die wirklich funktioniert. Nicht nur schon, sondern fur echte Business-Ergebnisse gebaut.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
-    pills: ["Rimini, Italien", "Verfugbar fur neue Projekte"],
+    bio: "Wir sind ein kleines Digital-Studio aus der Emilia-Romagna. Wir arbeiten mit Marken und Unternehmen, die eine Website wollen, die wirklich funktioniert. Nicht nur schon, sondern fur echte Business-Ergebnisse gebaut.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
+    pills: ["Emilia-Romagna, Italien", "Verfugbar fur neue Projekte"],
   },
   contact: {
     label: "Lass uns starten",
@@ -2445,9 +2445,9 @@ const de: TranslationSet = {
     },
   },
   footer: {
-    description: "Digitales Studio fur Premium-Hospitality und lokale Marken.",
+    description: "Digitales Studio fur Premium-Marken und Unternehmen in ganz Italien.",
     links: "Schnellzugriff",
-    location: "Rimini, Italien",
+    location: "Emilia-Romagna, Italien",
     status: "Verfugbar fur neue Kunden",
     privacy: "Datenschutz",
     built: "Built with intention.",

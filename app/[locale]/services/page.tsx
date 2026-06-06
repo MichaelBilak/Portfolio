@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
-import { CustomCursor } from "@/components/custom-cursor";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { servicesMeta } from "@/data/services";
@@ -39,7 +38,6 @@ export default async function ServicesPage({ params }: PageProps) {
 
   return (
     <>
-      <CustomCursor />
       <Navigation locale={safeLocale} t={t} />
 
       <main className="relative pt-32">

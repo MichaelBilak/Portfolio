@@ -247,7 +247,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
           <MapPin size={16} />
         </span>
         <span className="leading-tight">
-          <span className="block text-sm font-medium text-textPrimary">Rimini, IT</span>
+          <span className="block text-sm font-medium text-textPrimary">Emilia-Romagna, IT</span>
           <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
             digital studio
           </span>

@@ -3,7 +3,6 @@ import { AuditCta } from "@/components/audit-cta";
 import { BeforeAfter } from "@/components/before-after";
 import { BusinessImpact } from "@/components/business-impact";
 import { Contact } from "@/components/contact";
-import { CustomCursor } from "@/components/custom-cursor";
 import { FeaturedWork } from "@/components/featured-work";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
@@ -24,7 +23,6 @@ export function SiteShell({ locale }: SiteShellProps) {
 
   return (
     <>
-      <CustomCursor />
       <Navigation locale={locale} t={t} />
       <main>
         <Hero t={t} />

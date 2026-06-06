@@ -11,42 +11,42 @@ const LOCALITY: Record<
   { title: string; rows: { k: string; v: string }[] }
 > = {
   IT: {
-    title: "Rimini, Italia",
+    title: "Emilia-Romagna, Italia",
     rows: [
-      { k: "Base", v: "Rimini · Emilia-Romagna" },
-      { k: "Area servita", v: "Italia · Hospitality e brand locali" },
+      { k: "Base", v: "Emilia-Romagna · Italia" },
+      { k: "Area servita", v: "Italia · Brand e business premium" },
       { k: "Lingue", v: "IT · EN · FR · RU · DE" },
     ],
   },
   EN: {
-    title: "Rimini, Italy",
+    title: "Emilia-Romagna, Italy",
     rows: [
-      { k: "Base", v: "Rimini · Emilia-Romagna" },
-      { k: "Area served", v: "Italy · Hospitality & local brands" },
+      { k: "Base", v: "Emilia-Romagna · Italy" },
+      { k: "Area served", v: "Italy · Premium brands & businesses" },
       { k: "Languages", v: "IT · EN · FR · RU · DE" },
     ],
   },
   FR: {
-    title: "Rimini, Italie",
+    title: "Émilie-Romagne, Italie",
     rows: [
-      { k: "Base", v: "Rimini · Émilie-Romagne" },
-      { k: "Zone couverte", v: "Italie · Hospitalité & marques locales" },
+      { k: "Base", v: "Émilie-Romagne · Italie" },
+      { k: "Zone couverte", v: "Italie · Marques & business premium" },
       { k: "Langues", v: "IT · EN · FR · RU · DE" },
     ],
   },
   RU: {
-    title: "Римини, Италия",
+    title: "Эмилия-Романья, Италия",
     rows: [
-      { k: "База", v: "Римини · Эмилия-Романья" },
-      { k: "Зона работы", v: "Италия · Hospitality и локальные бренды" },
+      { k: "База", v: "Эмилия-Романья · Италия" },
+      { k: "Зона работы", v: "Италия · Премиум-бренды и бизнесы" },
       { k: "Языки", v: "IT · EN · FR · RU · DE" },
     ],
   },
   DE: {
-    title: "Rimini, Italien",
+    title: "Emilia-Romagna, Italien",
     rows: [
-      { k: "Standort", v: "Rimini · Emilia-Romagna" },
-      { k: "Tätigkeitsgebiet", v: "Italien · Hospitality & lokale Marken" },
+      { k: "Standort", v: "Emilia-Romagna · Italien" },
+      { k: "Tätigkeitsgebiet", v: "Italien · Premium-Marken & Businesses" },
       { k: "Sprachen", v: "IT · EN · FR · RU · DE" },
     ],
   },
@@ -86,7 +86,6 @@ export function About({ t }: AboutProps) {
             </Reveal>
           </div>
 
-          {/* Locality / ecosystem — starts in Rimini, scales across Italy */}
           <Reveal delay={0.1}>
             <div className="spotlight-card group relative overflow-hidden rounded-3xl border border-borderSubtle bg-bgCard p-7 shadow-[0_24px_60px_-40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:-translate-y-1 hover:border-borderStrong md:p-9">
               <span

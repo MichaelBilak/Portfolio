@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-
-const LOGO_SRC = "/images/logo-dm-group.png";
+import { WordmarkCore } from "@/components/brand-logo/wordmark-core";
 const MIN_DISPLAY_MS = 1800;
 
 export function LoadingScreen() {
@@ -150,45 +148,12 @@ export function LoadingScreen() {
                   ],
                 }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  whiteSpace: "nowrap",
-                }}
               >
-                <Image
-                  src={LOGO_SRC}
-                  alt=""
-                  aria-hidden
-                  width={108}
-                  height={108}
+                <WordmarkCore
                   priority
-                  className="h-auto w-[clamp(3.65rem,10.5vw,7.15rem)] -translate-x-3 -mr-3 translate-y-[0.2em] object-contain sm:w-[clamp(4.32rem,11.35vw,7.15rem)] sm:translate-x-0 sm:-mr-[1.82rem]"
+                  className="text-[clamp(3rem,9vw,5.35rem)]"
+                  groupClassName="text-[0.46em] font-normal tracking-[0.02em] text-textPrimary/90"
                 />
-                <span
-                  aria-hidden
-                  style={{
-                    fontFamily: "var(--font-brand)",
-                    fontWeight: 300,
-                    fontSize: "clamp(3rem, 9vw, 5.35rem)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.035em",
-                    color: "#f6f5f1",
-                  }}
-                >
-                  orm<span style={{ color: "#fcd34d" }}>Up</span>
-                  <span
-                    style={{
-                      color: "#f6f5f1",
-                      fontSize: "0.46em",
-                      letterSpacing: "0.02em",
-                      marginLeft: "0.22em",
-                    }}
-                  >
-                    Group
-                  </span>
-                </span>
               </motion.div>
 
               <div
@@ -215,7 +180,7 @@ export function LoadingScreen() {
                     color: "rgba(252,211,77,0.7)",
                   }}
                 >
-                  Digital Studio · Rimini
+                  Digital Studio · Emilia-Romagna
                 </span>
                 <span
                   style={{

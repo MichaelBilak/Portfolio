@@ -56,11 +56,9 @@ export function Footer({ t }: FooterProps) {
         <div>
           <div className="flex items-center gap-3">
             <BrandLogo
-              imageSize={44}
+              priority
               wordmarkClassName="text-3xl"
-              wordmarkOffsetClassName="-ml-3"
               separatorClassName="h-8 w-px bg-borderSubtle"
-              groupClassName="text-[11px] font-semibold leading-none tracking-[0.18em] text-textPrimary/90 uppercase"
               agencyClassName="text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase"
               taglineClassName="gap-1"
             />

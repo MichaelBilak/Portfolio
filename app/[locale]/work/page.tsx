@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
-import { CustomCursor } from "@/components/custom-cursor";
 import { FeaturedWork } from "@/components/featured-work";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
@@ -37,7 +36,6 @@ export default async function WorkPage({ params }: PageProps) {
 
   return (
     <>
-      <CustomCursor />
       <Navigation locale={safeLocale} t={t} />
 
       <main className="relative pt-32">
