@@ -50,18 +50,16 @@ export function Contact({ t }: ContactProps) {
           <div className="mt-9 space-y-3">
             <MailtoLink
               onMouseMove={onMove}
-              className="glass-card spotlight-card interactive focus-outline group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
+              className="glass-card spotlight-card interactive focus-outline group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong md:hidden"
             >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400">
-                <Mail size={16} aria-hidden />
-              </span>
-              <span className="leading-tight">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
-                  {t.contact.emailLabel}
-                </span>
-                <span className="block text-sm text-textPrimary">{CONTACT_EMAIL}</span>
-              </span>
+              <EmailCardContent emailLabel={t.contact.emailLabel} />
             </MailtoLink>
+            <div
+              onMouseMove={onMove}
+              className="glass-card spotlight-card hidden items-center gap-4 rounded-2xl px-5 py-4 md:flex"
+            >
+              <EmailCardContent emailLabel={t.contact.emailLabel} copyable />
+            </div>
             <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">
               <Signal size={16} className="shrink-0 text-emerald-400" aria-hidden />{" "}
               {t.contact.availability}
@@ -74,6 +72,32 @@ export function Contact({ t }: ContactProps) {
         </ContactErrorBoundary>
       </div>
     </section>
+  );
+}
+
+function EmailCardContent({
+  emailLabel,
+  copyable = false,
+}: {
+  emailLabel: string;
+  copyable?: boolean;
+}) {
+  return (
+    <>
+      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400">
+        <Mail size={16} aria-hidden />
+      </span>
+      <span className="min-w-0 leading-tight">
+        <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
+          {emailLabel}
+        </span>
+        <span
+          className={`block text-sm text-textPrimary ${copyable ? "cursor-text select-all" : ""}`}
+        >
+          {CONTACT_EMAIL}
+        </span>
+      </span>
+    </>
   );
 }
 
