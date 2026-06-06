@@ -8,6 +8,11 @@ type MailtoLinkProps = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
   href?: string;
 };
 
+function isTouchLikeDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+}
+
 export function MailtoLink({
   href,
   onClick,
@@ -20,6 +25,11 @@ export function MailtoLink({
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event);
     if (event.defaultPrevented) return;
+
+    // Desktop: native mailto navigation (Outlook, Mail, Gmail handler, etc.)
+    if (!isTouchLikeDevice()) return;
+
+    // Mobile webviews / iOS: programmatic open avoids transform/tap quirks
     event.preventDefault();
     openContactEmail();
   }
