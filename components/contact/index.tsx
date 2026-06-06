@@ -3,7 +3,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Mail, Signal } from "lucide-react";
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { MailtoLink } from "@/components/mailto-link";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
+import { CONTACT_EMAIL } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 import { ContactErrorBoundary } from "./contact-error-boundary";
 
@@ -22,8 +24,6 @@ interface FormState {
   brief: string;
   source: SourceType;
 }
-
-const CONTACT_EMAIL = "dormup.it@gmail.com";
 
 export function Contact({ t }: ContactProps) {
   const onMove = useSpotlight();
@@ -47,29 +47,26 @@ export function Contact({ t }: ContactProps) {
             <p className="mt-6 max-w-xl text-lg text-textSecondary text-pretty">{t.contact.body}</p>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <div className="mt-9 space-y-3">
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                onMouseMove={onMove}
-                className="glass-card spotlight-card interactive focus-outline group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
-              >
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400">
-                  <Mail size={16} aria-hidden />
+          <div className="mt-9 space-y-3">
+            <MailtoLink
+              onMouseMove={onMove}
+              className="glass-card spotlight-card interactive focus-outline group flex items-center gap-4 rounded-2xl px-5 py-4 hover:-translate-y-0.5 hover:border-borderStrong"
+            >
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/10 text-emerald-400">
+                <Mail size={16} aria-hidden />
+              </span>
+              <span className="leading-tight">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
+                  {t.contact.emailLabel}
                 </span>
-                <span className="leading-tight">
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
-                    {t.contact.emailLabel}
-                  </span>
-                  <span className="block text-sm text-textPrimary">{CONTACT_EMAIL}</span>
-                </span>
-              </a>
-              <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">
-                <Signal size={16} className="shrink-0 text-emerald-400" aria-hidden />{" "}
-                {t.contact.availability}
-              </p>
-            </div>
-          </Reveal>
+                <span className="block text-sm text-textPrimary">{CONTACT_EMAIL}</span>
+              </span>
+            </MailtoLink>
+            <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">
+              <Signal size={16} className="shrink-0 text-emerald-400" aria-hidden />{" "}
+              {t.contact.availability}
+            </p>
+          </div>
         </div>
 
         <ContactErrorBoundary>

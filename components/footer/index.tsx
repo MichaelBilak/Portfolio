@@ -1,7 +1,9 @@
 import { ArrowUpRight, AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { ContactLink } from "@/components/contact-link";
+import { MailtoLink } from "@/components/mailto-link";
 import { Link } from "@/i18n/navigation";
+import { CONTACT_EMAIL, contactMailtoHref } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 
 interface FooterProps {
@@ -17,9 +19,9 @@ export function Footer({ t }: FooterProps) {
   ];
 
   const socials = [
-    { href: "#", label: "Website", Icon: Globe },
-    { href: "mailto:dormup.it@gmail.com", label: "Email: dormup.it@gmail.com", Icon: AtSign },
-  ];
+    { href: "#", label: "Website", Icon: Globe, mailto: false },
+    { href: contactMailtoHref(), label: `Email: ${CONTACT_EMAIL}`, Icon: AtSign, mailto: true },
+  ] as const;
 
   return (
     <footer className="relative overflow-hidden border-t border-borderStrong bg-bgSecondary pt-16">
@@ -65,16 +67,27 @@ export function Footer({ t }: FooterProps) {
             {t.footer.description}
           </p>
           <div className="mt-5 flex gap-3">
-            {socials.map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
-                aria-label={label}
-              >
-                <Icon size={16} />
-              </a>
-            ))}
+            {socials.map(({ href, label, Icon, mailto }) =>
+              mailto ? (
+                <MailtoLink
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
+                >
+                  <Icon size={16} />
+                </MailtoLink>
+              ) : (
+                <a
+                  key={label}
+                  href={href}
+                  className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
+                  aria-label={label}
+                >
+                  <Icon size={16} />
+                </a>
+              ),
+            )}
           </div>
         </div>
 
@@ -116,12 +129,9 @@ export function Footer({ t }: FooterProps) {
             </span>
             {t.footer.status}
           </p>
-          <a
-            href="mailto:dormup.it@gmail.com"
-            className="interactive mt-4 block w-fit text-sm text-textPrimary hover:text-accentGold"
-          >
-            dormup.it@gmail.com
-          </a>
+          <MailtoLink className="interactive mt-4 block w-fit text-sm text-textPrimary hover:text-accentGold">
+            {CONTACT_EMAIL}
+          </MailtoLink>
         </div>
       </div>
 
