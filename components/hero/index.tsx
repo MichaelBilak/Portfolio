@@ -127,7 +127,7 @@ export function Hero({ t }: HeroProps) {
                 />
               </ContactLink>
               <Link
-                href="/#work"
+                href="/work"
                 className={btn(
                   "ghost",
                   "md",

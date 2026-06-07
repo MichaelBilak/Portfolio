@@ -69,13 +69,13 @@ function CrystalItem({ meta, index, copy, viewServiceLabel }: CrystalItemProps) 
         {copy.title}
       </h3>
 
-      {/* Short line — always visible */}
-      <p className="mt-2.5 max-w-[17rem] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/80">
+      {/* Short line — desktop only on homepage */}
+      <p className="mt-2.5 hidden max-w-[17rem] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/80 md:block">
         {copy.details}
       </p>
 
-      {/* Main text — unfolds smoothly on hover */}
-      <div className="crystal-reveal w-full max-w-[18rem]">
+      {/* Main text — desktop hover; full copy lives on the service page */}
+      <div className="crystal-reveal hidden w-full max-w-[18rem] md:block">
         <div>
           <p className="text-sm leading-relaxed text-textSecondary">
             {copy.description}

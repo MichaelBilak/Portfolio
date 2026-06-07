@@ -233,7 +233,7 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
             className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           />
         </span>
-        <span className="max-w-[55%] text-right font-mono text-[10px] uppercase tracking-[0.14em] text-textMuted">
+        <span className="hidden max-w-[55%] text-right font-mono text-[10px] uppercase tracking-[0.14em] text-textMuted md:inline">
           {meta.tech.join(" · ")}
         </span>
       </div>
