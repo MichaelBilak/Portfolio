@@ -38,7 +38,7 @@ export function Hero({ t }: HeroProps) {
   return (
     <section
       id="top"
-      className="relative min-h-screen-dvh overflow-hidden pt-28 md:pt-32"
+      className="relative min-h-screen-dvh overflow-x-clip pt-24 sm:pt-28 md:pt-32"
     >
       {/* Calm aurora backdrop — slow drifting orbs, no busy grid */}
       <div aria-hidden className="absolute inset-0 overflow-hidden">
@@ -52,12 +52,12 @@ export function Hero({ t }: HeroProps) {
       />
       <div className="grain-overlay absolute inset-0" aria-hidden />
 
-      <div className="container-wide relative grid min-h-hero items-center gap-12 py-10 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+      <div className="container-wide relative grid min-h-hero min-w-0 items-center gap-12 py-8 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         <motion.div
           variants={container}
           initial="hidden"
           animate="visible"
-          className="space-y-7 sm:space-y-9"
+          className="min-w-0 space-y-6 sm:space-y-9"
         >
           <motion.div variants={item} className="max-w-full">
             <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-2.5 py-1.5 font-mono uppercase text-accentGold backdrop-blur sm:gap-2.5 sm:px-4">
@@ -65,13 +65,13 @@ export function Hero({ t }: HeroProps) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accentGold opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accentGold" />
               </span>
-              <span className="min-w-0 whitespace-nowrap text-[min(0.6875rem,2.65vw)] tracking-[0.1em] sm:text-[11px] sm:tracking-[0.28em]">
+              <span className="min-w-0 text-[10px] leading-tight tracking-[0.08em] sm:whitespace-nowrap sm:text-[11px] sm:tracking-[0.28em]">
                 {t.hero.eyebrow}
               </span>
             </span>
           </motion.div>
 
-          <h1 className="text-fluid-hero font-display font-semibold text-textPrimary text-balance">
+          <h1 className="text-fluid-hero max-w-full font-display font-semibold text-textPrimary text-balance break-words">
             {headlineLines.map((line, index) => (
               <motion.span key={line} variants={item} className="block">
                 {index === headlineLines.length - 1 ? (
@@ -92,40 +92,50 @@ export function Hero({ t }: HeroProps) {
 
           <motion.p
             variants={item}
-            className="max-w-xl text-lg leading-relaxed text-textSecondary text-pretty"
+            className="max-w-xl text-base leading-relaxed text-textSecondary text-pretty sm:text-lg"
           >
             {t.hero.lead}
           </motion.p>
 
-          <motion.div variants={item} className="relative -mx-1 px-1 py-2">
-            <div className="overflow-x-auto pb-3 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex w-max max-w-none flex-nowrap items-center gap-2 sm:gap-3">
-                <Link
-                  href="/order"
-                  className={btn("primary", "md", "shrink-0 overflow-visible whitespace-nowrap")}
-                >
-                  <span className="relative z-10">{t.hero.buyCta}</span>
-                  <ArrowUpRight
-                    size={16}
-                    className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </Link>
-                <ContactLink
-                  className={btn("secondary", "md", "shrink-0 overflow-visible whitespace-nowrap")}
-                >
-                  <span className="relative z-10">{t.hero.secondaryCta}</span>
-                  <ArrowUpRight
-                    size={16}
-                    className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </ContactLink>
-                <Link
-                  href="/#work"
-                  className={btn("ghost", "md", "shrink-0 overflow-visible whitespace-nowrap")}
-                >
-                  {t.hero.primaryCta}
-                </Link>
-              </div>
+          <motion.div variants={item} className="py-1">
+            <div className="flex max-w-full flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+              <Link
+                href="/order"
+                className={btn(
+                  "primary",
+                  "md",
+                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                )}
+              >
+                <span className="relative z-10">{t.hero.buyCta}</span>
+                <ArrowUpRight
+                  size={16}
+                  className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+              <ContactLink
+                className={btn(
+                  "secondary",
+                  "md",
+                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                )}
+              >
+                <span className="relative z-10">{t.hero.secondaryCta}</span>
+                <ArrowUpRight
+                  size={16}
+                  className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </ContactLink>
+              <Link
+                href="/#work"
+                className={btn(
+                  "ghost",
+                  "md",
+                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                )}
+              >
+                {t.hero.primaryCta}
+              </Link>
             </div>
           </motion.div>
 

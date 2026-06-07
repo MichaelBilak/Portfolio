@@ -26,7 +26,7 @@ export function SiteShell({ locale }: SiteShellProps) {
   return (
     <>
       <Navigation locale={locale} t={t} />
-      <main>
+      <main className="min-w-0 overflow-x-clip">
         <Hero t={t} />
         <TrustStrip t={t} />
         <Proof t={t} />

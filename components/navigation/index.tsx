@@ -102,9 +102,9 @@ export function Navigation({ locale, t }: NavigationProps) {
           <Link
             href="/"
             aria-label="DormUp Group"
-            className="interactive focus-outline inline-flex items-center rounded-xl"
+            className="interactive focus-outline inline-flex min-w-0 max-w-[58vw] shrink items-center rounded-xl sm:max-w-none"
           >
-            <BrandLogo priority />
+            <BrandLogo priority showTagline={false} wordmarkClassName="text-lg sm:text-2xl" />
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
@@ -137,18 +137,11 @@ export function Navigation({ locale, t }: NavigationProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             {showOrderCta && !open && !navHidden ? (
-              <>
-                <span className="hidden lg:inline-flex">
-                  <OrderCtaLink t={t} />
-                </span>
-                {showMobileOrderCta ? (
-                  <span className="inline-flex lg:hidden">
-                    <OrderCtaLink t={t} compact />
-                  </span>
-                ) : null}
-              </>
+              <span className="hidden lg:inline-flex">
+                <OrderCtaLink t={t} />
+              </span>
             ) : null}
             <span className="hidden md:block">
               <LanguageSwitcher locale={locale} />
@@ -235,29 +228,34 @@ export function Navigation({ locale, t }: NavigationProps) {
       </AnimatePresence>
 
       {showOrderCta && !open && navHidden ? (
-        <>
-          <motion.span
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            className="pointer-events-none fixed top-5 right-5 z-[48] hidden lg:inline-flex"
-          >
-            <OrderCtaLink t={t} className="pointer-events-auto" />
-          </motion.span>
+        <motion.span
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
+          className="pointer-events-none fixed top-5 right-5 z-[48] hidden lg:inline-flex"
+        >
+          <OrderCtaLink t={t} className="pointer-events-auto" />
+        </motion.span>
+      ) : null}
 
-          {showMobileOrderCta ? (
-            <motion.span
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: shouldReduceMotion ? 0 : 0.35,
-                ease: [0.22, 0.61, 0.36, 1],
-              }}
-              className="pointer-events-none fixed top-[max(0.75rem,env(safe-area-inset-top))] right-3 z-[48] inline-flex lg:hidden"
-            >
-              <OrderCtaLink t={t} compact className="pointer-events-auto" />
-            </motion.span>
-          ) : null}
-        </>
+      {showOrderCta && !open && showMobileOrderCta ? (
+        <motion.span
+          initial={false}
+          animate={{
+            opacity: pastHero ? 1 : 0,
+            y: pastHero ? 0 : 16,
+          }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.35,
+            ease: [0.22, 0.61, 0.36, 1],
+          }}
+          className={cn(
+            "pointer-events-none fixed right-4 z-[48] inline-flex lg:hidden",
+            "bottom-[max(1.25rem,env(safe-area-inset-bottom))]",
+            pastHero ? "pointer-events-auto" : "pointer-events-none",
+          )}
+        >
+          <OrderCtaLink t={t} compact className="pointer-events-auto shadow-[0_18px_42px_-14px_rgba(0,0,0,0.65)]" />
+        </motion.span>
       ) : null}
     </>
   );
