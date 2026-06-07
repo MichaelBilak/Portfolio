@@ -15,7 +15,7 @@ export function BrandLogo({
   showTagline = true,
   wordmarkClassName = "text-2xl",
   taglineClassName = "hidden md:inline-block",
-  groupClassName = "text-[0.72em] font-normal tracking-[0.04em] text-textPrimary/90",
+  groupClassName = "text-[0.68em] font-medium tracking-[0.01em] text-textPrimary/90",
   agencyClassName = "text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase",
   separatorClassName = "h-[0.68em] w-px bg-borderSubtle",
 }: BrandLogoProps) {

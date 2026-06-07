@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { AboutLogoMark } from "@/components/about/about-logo-mark";
 import { Eyebrow, Reveal } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
 
@@ -6,54 +6,7 @@ interface AboutProps {
   t: TranslationSet;
 }
 
-const LOCALITY: Record<
-  string,
-  { title: string; rows: { k: string; v: string }[] }
-> = {
-  IT: {
-    title: "Emilia-Romagna, Italia",
-    rows: [
-      { k: "Base", v: "Emilia-Romagna · Italia" },
-      { k: "Area servita", v: "Italia · Brand e business premium" },
-      { k: "Lingue", v: "IT · EN · FR · RU · DE" },
-    ],
-  },
-  EN: {
-    title: "Emilia-Romagna, Italy",
-    rows: [
-      { k: "Base", v: "Emilia-Romagna · Italy" },
-      { k: "Area served", v: "Italy · Premium brands & businesses" },
-      { k: "Languages", v: "IT · EN · FR · RU · DE" },
-    ],
-  },
-  FR: {
-    title: "Émilie-Romagne, Italie",
-    rows: [
-      { k: "Base", v: "Émilie-Romagne · Italie" },
-      { k: "Zone couverte", v: "Italie · Marques & business premium" },
-      { k: "Langues", v: "IT · EN · FR · RU · DE" },
-    ],
-  },
-  RU: {
-    title: "Эмилия-Романья, Италия",
-    rows: [
-      { k: "База", v: "Эмилия-Романья · Италия" },
-      { k: "Зона работы", v: "Италия · Премиум-бренды и бизнесы" },
-      { k: "Языки", v: "IT · EN · FR · RU · DE" },
-    ],
-  },
-  DE: {
-    title: "Emilia-Romagna, Italien",
-    rows: [
-      { k: "Standort", v: "Emilia-Romagna · Italien" },
-      { k: "Tätigkeitsgebiet", v: "Italien · Premium-Marken & Businesses" },
-      { k: "Sprachen", v: "IT · EN · FR · RU · DE" },
-    ],
-  },
-};
-
 export function About({ t }: AboutProps) {
-  const locality = LOCALITY[t.langCode] ?? LOCALITY.EN;
   return (
     <section className="relative overflow-hidden py-20 md:py-32">
       <div className="container-lux">
@@ -87,48 +40,7 @@ export function About({ t }: AboutProps) {
           </div>
 
           <Reveal delay={0.1}>
-            <div className="spotlight-card group relative overflow-hidden rounded-3xl border border-borderSubtle bg-bgCard p-7 shadow-[0_24px_60px_-40px_rgba(0,0,0,0.65)] transition-all duration-300 hover:-translate-y-1 hover:border-borderStrong md:p-9">
-              <span
-                aria-hidden
-                className="pointer-events-none absolute -right-10 top-10 h-44 w-44 rounded-full bg-gold-radial opacity-20 blur-3xl"
-              />
-
-              <div className="relative z-10 flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-accentGold/40 bg-accentGold/10 text-accentGold">
-                  <MapPin size={18} />
-                </span>
-                <div>
-                  <p className="text-2xl font-semibold leading-none tracking-tight text-textPrimary">
-                    {locality.title}
-                  </p>
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.24em] text-textMuted">
-                    44.06° N · 12.57° E
-                  </p>
-                </div>
-              </div>
-
-              <ul className="relative z-10 mt-8 space-y-4">
-                {locality.rows.map((row, index) => (
-                  <li
-                    key={row.k}
-                    className="flex items-center justify-between gap-4 border-t border-borderCool pt-4 first:border-t-0 first:pt-0"
-                  >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
-                      {String(index + 1).padStart(2, "0")} · {row.k}
-                    </span>
-                    <span className="text-right text-sm text-textPrimary">{row.v}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="relative z-10 mt-8 flex items-center gap-2 text-sm text-textSecondary">
-                <span className="relative inline-flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                </span>
-                {t.about.pills[t.about.pills.length - 1]}
-              </div>
-            </div>
+            <AboutLogoMark />
           </Reveal>
         </div>
       </div>

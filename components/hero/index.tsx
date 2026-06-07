@@ -97,21 +97,36 @@ export function Hero({ t }: HeroProps) {
             {t.hero.lead}
           </motion.p>
 
-          <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ContactLink className={btn("primary", "lg", "w-full sm:w-auto")}>
-              <span className="relative z-10">{t.hero.secondaryCta}</span>
-              <ArrowUpRight
-                size={18}
-                className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-              />
-            </ContactLink>
-            <Link href="/#work" className={btn("ghost", "lg", "w-full sm:w-auto")}>
-              {t.hero.primaryCta}
-            </Link>
+          <motion.div variants={item} className="relative -mx-1 px-1 py-2">
+            <div className="overflow-x-auto pb-3 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex w-max max-w-none flex-nowrap items-center gap-2 sm:gap-3">
+                <Link
+                  href="/order"
+                  className={btn("primary", "md", "shrink-0 overflow-visible whitespace-nowrap")}
+                >
+                  <span className="relative z-10">{t.hero.buyCta}</span>
+                  <ArrowUpRight
+                    size={16}
+                    className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </Link>
+                <ContactLink
+                  className={btn("secondary", "md", "shrink-0 overflow-visible whitespace-nowrap")}
+                >
+                  <span className="relative z-10">{t.hero.secondaryCta}</span>
+                  <ArrowUpRight
+                    size={16}
+                    className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </ContactLink>
+                <Link
+                  href="/#work"
+                  className={btn("ghost", "md", "shrink-0 overflow-visible whitespace-nowrap")}
+                >
+                  {t.hero.primaryCta}
+                </Link>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div

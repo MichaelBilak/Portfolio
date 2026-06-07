@@ -5,7 +5,7 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-moti
 import { type MouseEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ProcessStepMeta, processStepsMeta } from "@/data/process";
-import { Eyebrow, Reveal, useSpotlight, useTilt } from "@/components/ui";
+import { Eyebrow, Reveal } from "@/components/ui";
 import { LocalizedProcessStep, TranslationSet } from "@/lib/translations";
 
 interface ProcessProps {
@@ -86,8 +86,6 @@ interface StepProps {
 
 function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
   const Icon: LucideIcon = meta.icon;
-  const onMove = useSpotlight();
-  const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(5);
 
   return (
     <motion.li
@@ -107,12 +105,7 @@ function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
         </span>
       </span>
 
-      <motion.article
-        onMouseMove={(e) => { onMove(e); onTiltMove(e); }}
-        onMouseLeave={onTiltLeave}
-        style={tiltStyle}
-        className="glass-card spotlight-card relative overflow-hidden rounded-2xl p-6 transition-colors duration-300 hover:border-borderStrong md:p-7"
-      >
+      <article className="glass-card relative overflow-hidden rounded-2xl p-6 md:p-7">
         {/* Ghost number — bottom-right decorative accent */}
         <span
           aria-hidden
@@ -132,7 +125,7 @@ function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
           {copy.summary}
         </p>
         <p className="relative mt-4 pr-20 leading-relaxed text-textSecondary sm:pr-24 md:pr-0">{copy.description}</p>
-      </motion.article>
+      </article>
     </motion.li>
   );
 }

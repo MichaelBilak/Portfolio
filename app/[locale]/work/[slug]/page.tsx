@@ -103,6 +103,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                   ) : null}
                 </h1>
                 <p className="max-w-xl text-lg text-textSecondary">{project.subtitle}</p>
+                <ul className="flex flex-wrap gap-2 pt-1">
+                  {meta.tech.map((item) => (
+                    <li
+                      key={item}
+                      className="inline-flex items-center rounded-full border border-borderSubtle bg-white/[0.03] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-textMuted"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
 
                 {hasLiveSite ? (
                   <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -169,26 +179,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 value={project.businessImpact}
               />
             </div>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-16">
-          <div className="container-lux">
-            <header className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
-                {t.workPage.techStack}
-              </p>
-            </header>
-            <ul className="mt-6 flex flex-wrap gap-3">
-              {meta.tech.map((item) => (
-                <li
-                  key={item}
-                  className="inline-flex items-center rounded-full border border-borderSubtle bg-white/[0.03] px-4 py-2 font-mono text-xs uppercase tracking-[0.18em] text-textSecondary"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 

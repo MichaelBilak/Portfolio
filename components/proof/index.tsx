@@ -24,7 +24,7 @@ export function Proof({ t }: ProofProps) {
               delay={index * 0.08}
               className="relative px-3 text-center sm:px-6"
             >
-              <span className="block font-display text-4xl font-light leading-none text-gradient-gold sm:text-6xl md:text-7xl">
+              <span className="inline-block whitespace-nowrap font-display text-4xl font-light leading-none text-gradient-gold sm:text-6xl md:text-7xl">
                 <AnimatedCounter value={item.value} />
               </span>
               <span className="mx-auto mt-4 block max-w-[14rem] text-sm leading-snug text-textSecondary">

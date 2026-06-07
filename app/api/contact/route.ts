@@ -144,16 +144,16 @@ async function appendToGoogleSheets(
 export async function POST(request: NextRequest) {
   const payload = (await request.json()) as ContactPayload;
 
-  if (!payload.fullName || !payload.email || !payload.businessName || !payload.brief) {
+  if (!payload.email || !payload.businessName) {
     return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
   }
 
   const p: Required<ContactPayload> = {
-    fullName: payload.fullName,
+    fullName: payload.fullName?.trim() || "—",
     email: payload.email,
     businessName: payload.businessName,
     businessType: payload.businessType ?? "other",
-    brief: payload.brief,
+    brief: payload.brief?.trim() || "—",
     source: payload.source ?? "other",
   };
 

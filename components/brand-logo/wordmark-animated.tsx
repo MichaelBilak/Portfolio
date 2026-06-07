@@ -19,7 +19,7 @@ interface AnimatedWordmarkProps {
 
 export function AnimatedWordmark({
   className = "",
-  groupClassName = "text-[0.72em] font-normal tracking-[0.04em] text-textPrimary/90",
+  groupClassName = "text-[0.68em] font-medium tracking-[0.01em] text-textPrimary/90",
   priority = false,
 }: AnimatedWordmarkProps) {
   const reduce = useReducedMotion();
@@ -32,12 +32,12 @@ export function AnimatedWordmark({
   return (
     <span
       aria-hidden
-      className={`inline-flex items-baseline whitespace-nowrap font-brand font-light leading-none tracking-tight text-textPrimary ${className}`}
+      className={`inline-flex items-baseline whitespace-nowrap font-brand font-semibold leading-none tracking-tight text-textPrimary ${className}`}
     >
       <motion.span
         className="inline-block shrink-0 leading-none"
         initial={reduce ? false : { opacity: 0, x: "-1.1em" }}
-        animate={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 1, x: 2 }}
         transition={step(0)}
       >
         <Image

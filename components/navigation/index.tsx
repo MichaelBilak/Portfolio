@@ -7,19 +7,67 @@ import { BrandLogo } from "@/components/brand-logo";
 import { ContactLink } from "@/components/contact-link";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ScrollProgress } from "@/components/ui";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
+import { usePastHero } from "@/lib/hooks/use-past-hero";
 import { Locale, TranslationSet } from "@/lib/translations";
+import { btn, cn } from "@/lib/ui";
 
 interface NavigationProps {
   locale: Locale;
   t: TranslationSet;
 }
 
+function OrderCtaLink({
+  t,
+  compact = false,
+  fullWidth = false,
+  className,
+  onClick,
+}: {
+  t: TranslationSet;
+  compact?: boolean;
+  fullWidth?: boolean;
+  className?: string;
+  onClick?: () => void;
+}) {
+  return (
+    <span
+      className={cn(
+        "order-cta-lift",
+        fullWidth ? "flex w-full" : "inline-flex shrink-0",
+      )}
+    >
+      <Link
+        href="/order"
+        onClick={onClick}
+        aria-label={t.hero.buyCta}
+        className={btn(
+          "primary",
+          fullWidth ? "md" : "sm",
+          cn("order-cta-glow whitespace-nowrap", fullWidth && "w-full", className),
+        )}
+      >
+        <span className="relative z-10">{compact ? t.hero.buyCta.split(" ")[0] : t.hero.buyCta}</span>
+        <ArrowUpRight
+          size={14}
+          className="relative z-10 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+        />
+      </Link>
+    </span>
+  );
+}
+
 export function Navigation({ locale, t }: NavigationProps) {
   const shouldReduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const { direction, scrolled } = useNavScroll();
+  const pastHero = usePastHero();
+  const pathname = usePathname();
+  const onOrderPage = pathname === "/order" || pathname.endsWith("/order");
+  const navHidden = direction === "down" && scrolled && !open;
+  const showOrderCta = !onOrderPage;
+  const showMobileOrderCta = pastHero || pathname !== "/";
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -28,12 +76,10 @@ export function Navigation({ locale, t }: NavigationProps) {
     };
   }, [open]);
 
-  const hidden = direction === "down" && scrolled && !open;
-
   const navLinks: { href: string; label: string }[] = [
     { href: "/work", label: t.nav.work },
     { href: "/services", label: t.nav.services },
-    { href: "/#process", label: t.nav.process },
+    { href: "/about", label: t.nav.about },
     { href: "/#contact", label: t.nav.contact },
   ];
 
@@ -42,7 +88,7 @@ export function Navigation({ locale, t }: NavigationProps) {
       <ScrollProgress />
       <motion.header
         initial={false}
-        animate={{ y: hidden ? -120 : 0 }}
+        animate={{ y: navHidden ? -120 : 0 }}
         transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: [0.22, 0.61, 0.36, 1] }}
         className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4"
       >
@@ -91,21 +137,22 @@ export function Navigation({ locale, t }: NavigationProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {showOrderCta && !open && !navHidden ? (
+              <>
+                <span className="hidden lg:inline-flex">
+                  <OrderCtaLink t={t} />
+                </span>
+                {showMobileOrderCta ? (
+                  <span className="inline-flex lg:hidden">
+                    <OrderCtaLink t={t} compact />
+                  </span>
+                ) : null}
+              </>
+            ) : null}
             <span className="hidden md:block">
               <LanguageSwitcher locale={locale} />
             </span>
-            <Link
-              href="/#contact"
-              className="focus-outline interactive group hidden items-center gap-2 rounded-full bg-accentGold px-7 py-3 text-sm font-semibold text-bgPrimary shadow-[0_16px_38px_-18px_rgba(252,211,77,0.7)] hover:-translate-y-0.5 hover:shadow-[0_22px_50px_-18px_rgba(252,211,77,0.9)] md:inline-flex"
-            >
-              {t.nav.audit}
-              <ArrowUpRight
-                size={15}
-                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </Link>
-
             <span className="md:hidden">
               <LanguageSwitcher locale={locale} />
             </span>
@@ -176,26 +223,41 @@ export function Navigation({ locale, t }: NavigationProps) {
               transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: 0.45 }}
               className="relative mt-auto pb-10"
             >
-              <ContactLink
+              <OrderCtaLink
+                t={t}
+                fullWidth
                 onClick={() => setOpen(false)}
-                className="focus-outline group inline-flex w-full items-center justify-center gap-2 rounded-full bg-accentGold px-8 py-4 text-base font-semibold text-bgPrimary"
-              >
-                {t.nav.audit}
-                <ArrowUpRight size={18} />
-              </ContactLink>
+                className="justify-center"
+              />
             </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      {!open ? (
-        <Link
-          href="/contact"
-          className="interactive focus-outline fixed bottom-5 right-5 z-[35] inline-flex min-h-11 max-w-[min(100vw-2.5rem,20rem)] items-center justify-center gap-1.5 rounded-full border border-accentGold bg-[rgba(6,8,12,0.92)] px-4 py-2.5 text-center text-xs font-medium text-accentGold shadow-[0_14px_44px_-18px_rgba(0,0,0,0.85)] backdrop-blur-md transition-colors hover:bg-accentGold hover:text-bgPrimary sm:text-sm md:hidden"
-        >
-          {t.nav.audit}
-          <ArrowUpRight size={14} />
-        </Link>
+      {showOrderCta && !open && navHidden ? (
+        <>
+          <motion.span
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
+            className="pointer-events-none fixed top-5 right-5 z-[48] hidden lg:inline-flex"
+          >
+            <OrderCtaLink t={t} className="pointer-events-auto" />
+          </motion.span>
+
+          {showMobileOrderCta ? (
+            <motion.span
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.35,
+                ease: [0.22, 0.61, 0.36, 1],
+              }}
+              className="pointer-events-none fixed top-[max(0.75rem,env(safe-area-inset-top))] right-3 z-[48] inline-flex lg:hidden"
+            >
+              <OrderCtaLink t={t} compact className="pointer-events-auto" />
+            </motion.span>
+          ) : null}
+        </>
       ) : null}
     </>
   );

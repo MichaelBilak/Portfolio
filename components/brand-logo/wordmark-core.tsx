@@ -19,13 +19,13 @@ interface WordmarkCoreProps {
 export function WordmarkCore({
   className = "",
   showGroup = true,
-  groupClassName = "text-[0.72em] font-normal tracking-[0.04em] text-textPrimary/90",
+  groupClassName = "text-[0.68em] font-medium tracking-[0.01em] text-textPrimary/90",
   priority = false,
   style,
 }: WordmarkCoreProps) {
   return (
     <span
-      className={`inline-flex items-baseline whitespace-nowrap font-brand font-light leading-none tracking-tight text-textPrimary ${className}`}
+      className={`inline-flex items-baseline whitespace-nowrap font-brand font-semibold leading-none tracking-tight text-textPrimary ${className}`}
       style={style}
     >
       <Image
@@ -35,7 +35,7 @@ export function WordmarkCore({
         width={D_WIDTH}
         height={D_HEIGHT}
         priority={priority}
-        className="h-[1em] w-auto shrink-0 self-baseline"
+        className="h-[1em] w-auto shrink-0 translate-x-[2px] self-baseline"
       />
       <span aria-hidden className="leading-none">
         orm<span className="text-accentGold">Up</span>

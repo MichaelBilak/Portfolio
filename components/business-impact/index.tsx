@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Eyebrow, Reveal, useTilt } from "@/components/ui";
+import { Eyebrow, Reveal } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
 
 interface BusinessImpactProps {
@@ -20,7 +19,7 @@ export function BusinessImpact({ t }: BusinessImpactProps) {
           <Eyebrow>{t.impact.label}</Eyebrow>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {t.impact.items.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.08}>
               <ImpactCard item={item} index={index} />
@@ -39,15 +38,8 @@ interface ImpactItem {
 }
 
 function ImpactCard({ item, index }: { item: ImpactItem; index: number }) {
-  const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(8);
-
   return (
-    <motion.article
-      onMouseMove={onTiltMove}
-      onMouseLeave={onTiltLeave}
-      style={tiltStyle}
-      className="glass-card spotlight-card group relative flex h-full flex-col overflow-hidden rounded-3xl p-7 transition-colors duration-300 hover:border-borderStrong md:p-8"
-    >
+    <article className="glass-card relative flex h-full flex-col overflow-hidden rounded-3xl p-7 md:p-8">
       <h3 className="relative text-2xl font-semibold leading-snug tracking-tight text-textPrimary md:text-[1.55rem]">
         {item.title}
       </h3>
@@ -61,6 +53,6 @@ function ImpactCard({ item, index }: { item: ImpactItem; index: number }) {
       >
         {String(index + 1).padStart(2, "0")}
       </span>
-    </motion.article>
+    </article>
   );
 }

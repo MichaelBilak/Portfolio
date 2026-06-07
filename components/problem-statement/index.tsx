@@ -31,7 +31,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
           <div>
             <Reveal>
               <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accentDeep">
-                01 — Why it matters
+                {t.problem.eyebrow}
               </span>
             </Reveal>
             <Reveal delay={0.05}>

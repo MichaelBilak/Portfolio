@@ -334,6 +334,44 @@ select option {
   }
 }
 
+/* Header order CTA — gentle float + gold pulse */
+.order-cta-lift {
+  animation: orderCtaFloat 3.6s ease-in-out infinite;
+}
+
+.order-cta-lift:has(:hover),
+.order-cta-lift:has(:focus-visible) {
+  animation-play-state: paused;
+}
+
+@keyframes orderCtaFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.order-cta-glow {
+  animation: orderCtaGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes orderCtaGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 14px 34px -16px rgba(252, 211, 77, 0.65),
+      0 0 0 0 rgba(252, 211, 77, 0);
+  }
+  50% {
+    box-shadow:
+      0 22px 48px -14px rgba(252, 211, 77, 0.92),
+      0 0 0 5px rgba(252, 211, 77, 0.14);
+  }
+}
+
 /* ── Typography scale ───────────────────────────────────────── */
 /* Unbounded display scale — bold but readable, tight metrics */
 .text-fluid-hero {
@@ -643,5 +681,18 @@ select option {
   html.splash-done #splash-gate {
     display: none;
     pointer-events: none;
+  }
+
+  .about-logo-figure {
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 8px 22px rgba(252, 211, 77, 0.16));
+    transition: filter 0.55s ease, transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
+
+  .group:hover .about-logo-figure,
+  .group:focus-visible .about-logo-figure {
+    transform: translateY(-5px) scale(1.06);
+    filter: drop-shadow(0 16px 34px rgba(245, 200, 90, 0.3));
   }
 }

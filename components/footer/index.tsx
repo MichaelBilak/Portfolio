@@ -1,4 +1,4 @@
-import { ArrowUpRight, AtSign, Globe } from "lucide-react";
+import { AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { ContactLink } from "@/components/contact-link";
 import { MailtoLink } from "@/components/mailto-link";
@@ -13,8 +13,8 @@ interface FooterProps {
 export function Footer({ t }: FooterProps) {
   const quickLinks: { href: string; label: string }[] = [
     { href: "/work", label: t.nav.work },
-    { href: "/#services", label: t.nav.services },
-    { href: "/#process", label: t.nav.process },
+    { href: "/services", label: t.nav.services },
+    { href: "/about", label: t.nav.about },
     { href: "/#contact", label: t.nav.contact },
   ];
 
@@ -33,27 +33,6 @@ export function Footer({ t }: FooterProps) {
         aria-hidden
         className="pointer-events-none absolute -top-40 right-1/4 h-72 w-72 rounded-full bg-gold-radial opacity-20 blur-3xl"
       />
-
-      {/* Big closing CTA line */}
-      <div className="container-lux relative">
-        <div className="flex flex-col items-start justify-between gap-6 border-b border-borderCool pb-12 md:flex-row md:items-end">
-          <p className="max-w-xl text-fluid-title font-display font-light leading-[1.05] text-textPrimary">
-            {t.contact.title}
-          </p>
-          <ContactLink
-            desktopClassName="hidden md:inline-flex"
-            className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
-          >
-            {t.nav.audit}
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderStrong transition-colors group-hover:border-accentGold group-hover:bg-accentGold/10">
-              <ArrowUpRight
-                size={18}
-                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </span>
-          </ContactLink>
-        </div>
-      </div>
 
       <div className="container-lux relative grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>

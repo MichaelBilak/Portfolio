@@ -92,10 +92,10 @@ export default async function ServicePage({ params }: PageProps) {
                         href={service.portfolioUrl2}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="focus-outline inline-flex items-center gap-2 rounded-full border border-borderStrong bg-bgElevated px-5 py-2.5 text-sm font-medium text-accentGold transition-colors hover:border-accentGold/45 hover:bg-white/[0.04]"
+                        className="focus-outline group inline-flex items-center gap-2.5 rounded-full border border-accentGold/40 bg-accentGold/10 px-7 py-3.5 text-base font-semibold text-accentGold transition-all hover:-translate-y-0.5 hover:border-accentGold hover:bg-accentGold/15 hover:shadow-[0_12px_32px_-12px_rgba(201,169,110,0.45)]"
                       >
                         {service.portfolioLinkLabel2}
-                        <ArrowUpRight size={16} aria-hidden />
+                        <ArrowUpRight size={18} aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </a>
                     ) : null}
                     {service.portfolioUrl ? (

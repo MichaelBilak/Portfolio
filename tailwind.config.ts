@@ -37,9 +37,9 @@ const config: Config = {
         ],
         brand: [
           "var(--font-brand)",
-          "ui-serif",
-          "Georgia",
-          "serif",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
         ],
         sans: [
           "var(--font-sans)",

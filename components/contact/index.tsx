@@ -132,7 +132,7 @@ function ContactForm({ t }: ContactProps) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const next: Record<keyof FormState, string> = {
-      fullName: state.fullName.trim() ? "" : requiredError,
+      fullName: "",
       email: !state.email.trim()
         ? requiredError
         : !emailRegex.test(state.email.trim())
@@ -140,7 +140,7 @@ function ContactForm({ t }: ContactProps) {
           : "",
       businessName: state.businessName.trim() ? "" : requiredError,
       businessType: state.businessType ? "" : requiredError,
-      brief: state.brief.trim() ? "" : requiredError,
+      brief: "",
       source: state.source ? "" : requiredError,
     };
     setErrors(next);
@@ -192,7 +192,10 @@ function ContactForm({ t }: ContactProps) {
   return (
     <form onSubmit={onSubmit} className="glass-card rounded-3xl p-7">
       <div className="space-y-5">
-        <Field label={t.contact.form.name} error={errors.fullName}>
+        <Field
+          label={`${t.contact.form.name} (${t.contact.form.optional})`}
+          error={errors.fullName}
+        >
           <input className={inputClass("fullName")} value={form.fullName} onChange={onChange("fullName")} />
         </Field>
 
@@ -222,7 +225,10 @@ function ContactForm({ t }: ContactProps) {
           </select>
         </Field>
 
-        <Field label={t.contact.form.brief} error={errors.brief}>
+        <Field
+          label={`${t.contact.form.brief} (${t.contact.form.optional})`}
+          error={errors.brief}
+        >
           <textarea className={inputClass("brief")} rows={4} value={form.brief} onChange={onChange("brief")} />
         </Field>
 

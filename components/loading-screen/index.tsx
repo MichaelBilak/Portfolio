@@ -175,7 +175,7 @@ export function LoadingScreen() {
                 <AnimatedWordmark
                   priority
                   className="text-[clamp(3rem,9vw,5.35rem)]"
-                  groupClassName="text-[0.46em] font-normal tracking-[0.02em] text-textPrimary/90"
+                  groupClassName="text-[0.46em] font-medium tracking-[0.01em] text-textPrimary/90"
                 />
               </motion.div>
 

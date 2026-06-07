@@ -47,6 +47,8 @@ export interface TranslationSet {
     process: string;
     contact: string;
     audit: string;
+    buy: string;
+    about: string;
   };
   hero: {
     eyebrow: string;
@@ -55,6 +57,7 @@ export interface TranslationSet {
     lead: string;
     primaryCta: string;
     secondaryCta: string;
+    buyCta: string;
     socialProof: string;
     mockupCaption: string;
     mockupCaptionSm?: true;
@@ -65,6 +68,7 @@ export interface TranslationSet {
     items: { value: string; label: string }[];
   };
   problem: {
+    eyebrow: string;
     title: string;
     body: string;
   };
@@ -144,11 +148,25 @@ export interface TranslationSet {
         referral: string;
         social: string;
       };
+      optional: string;
       errors: {
         required: string;
         invalidEmail: string;
       };
     };
+  };
+  orderPage: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    fromLabel: string;
+    selectHint: string;
+    proceedCta: string;
+    footnote: string;
+    prices: Record<string, string>;
+  };
+  aboutPage: {
+    backToHome: string;
   };
   footer: {
     description: string;
@@ -174,6 +192,7 @@ export interface TranslationSet {
     eyebrow: string;
     title: string;
     subtitle: string;
+    techStack: string;
     viewAll: string;
     categories: { title: string; items: { label: string; info: string }[] }[];
   };
@@ -212,7 +231,7 @@ const it: TranslationSet = {
       nameTagline: "Hotel Direct Booking System",
       subtitle: "Hotel fronte mare · booking diretto",
       problem:
-        "L'hotel aveva bisogno di un'esperienza di prenotazione diretta capace di comunicare posizione, camere, servizi e offerte senza rimandare gli ospiti alle OTA.",
+        "L'hotel aveva bisogno di un'esperienza di prenotazione diretta capace di comunicare posizione, camere, servizi e offerte senza rimandare gli ospiti su piattaforme esterne.",
       solution:
         "Sito hotel orientato alla conversione con hero immersiva, camere in evidenza, servizi, recensioni, pacchetti speciali e flusso di booking guidato.",
       businessImpact:
@@ -286,7 +305,7 @@ const it: TranslationSet = {
       id: "booking-flow",
       title: "Booking & Lead Flow",
       description:
-        "Costruiamo flussi di prenotazione diretta che riducono la dipendenza da OTA e aumentano le conversioni.",
+        "Costruiamo flussi di prenotazione e richiesta diretta dal sito che aumentano le conversioni.",
       details: "Integrazione booking · Form intelligenti · A/B logic",
       whatYouGet: [
         "Analisi del funnel di prenotazione attuale",
@@ -387,21 +406,24 @@ const it: TranslationSet = {
     process: "Processo",
     contact: "Contatti",
     audit: "Audit gratuito",
+    buy: "Ordina",
+    about: "Chi siamo",
   },
   hero: {
     eyebrow: "Studio Digitale · Emilia-Romagna, Italia",
-    headline: "La prima impressione\ndel tuo business\ninizia qui.",
+    headline: "La prima impressione sul business\ninizia\ndal sito.",
     subtitle: "La presenza digitale che parla al posto tuo",
     lead: "Creiamo esperienze digitali premium per brand e business che non vogliono sembrare generici: ristoranti, negozi, studi e startup con ambizioni chiare. Design distintivo, strategia concreta, risultati misurabili.",
     primaryCta: "Vedi i progetti",
     secondaryCta: "Richiedi audit gratuito",
+    buyCta: "Ordina servizi",
     socialProof: "4 progetti · Emilia-Romagna & Italia · Disponibile per nuovi clienti",
     mockupCaption: "Il tuo miglior biglietto da visita",
   },
   trust: [
     "Design che converte",
     "Pensato per brand ambiziosi",
-    "Nessuna dipendenza da OTA",
+    "Prenotazioni e lead diretti",
     "Mobile-first & veloce",
   ],
   proof: {
@@ -409,14 +431,15 @@ const it: TranslationSet = {
     items: [
       { value: "1h", label: "Tempo di risposta medio" },
       { value: "100%", label: "Mobile-first e veloce" },
-      { value: "5", label: "Lingue gestite in produzione" },
-      { value: "20%", label: "Commissioni OTA che puoi evitare" },
+      { value: "20%", label: "Commissioni ai portali che puoi evitare" },
+      { value: "2 sett.", label: "Avvio medio progetto" },
     ],
   },
   problem: {
+    eyebrow: "01 — Perche conta",
     title:
       "Quasi tutti i business locali hanno un sito. Quasi nessuno ha una vera prima impressione digitale.",
-    body: "La maggior parte dei siti locali non costruisce fiducia. Mostra informazioni, ma non comunica qualita. Nel frattempo le OTA trattengono commissioni tra il 15% e il 25%. Un sito premium orientato alla conversione puo ripagarsi in pochi mesi: per questo aiutiamo i business italiani a conquistare valore diretto.",
+    body: "La maggior parte dei siti locali non costruisce fiducia. Mostra informazioni, ma non comunica qualita. Un sito premium orientato alla conversione puo ripagarsi in pochi mesi: per questo aiutiamo i business italiani a conquistare clienti diretti.",
   },
   caseStudies: {
     label: "Lavori selezionati",
@@ -428,10 +451,10 @@ const it: TranslationSet = {
     },
   },
   beforeAfter: {
-    eyebrow: "Mini confronti · primo schermo",
-    title: "Cinque tipologie, stesso problema: confusione. Cinque direzioni ‘dopo’ — non sempre piu scuro.",
+    eyebrow: "Prima e dopo · primo schermo",
+    title: "Come cambia il primo schermo dopo un redesign mirato.",
     subtitle:
-      "Il miglioramento e gerarchia, messaggio e azione. Sotto scegli hotel, ristorante, bar, business locale o un layout su misura dal brief. Trascina il bordo dorato.",
+      "Esempi interattivi da settori diversi — hotel, ristorante, bar, business locale e progetto su misura. Confronta come migliorano gerarchia, messaggio e invito all'azione. Trascina il bordo dorato.",
     beforeBadge: "Prima",
     afterBadge: "Dopo",
     dragHint: "Trascina per confrontare",
@@ -515,37 +538,32 @@ const it: TranslationSet = {
     label: "Perche conta",
     items: [
       {
-        title: "Le OTA ti costano il 20%",
-        body: "Un hotel che riceve 100.000EUR di prenotazioni annue paga fino a 20.000EUR in commissioni. Un sito diretto ben fatto puo recuperare buona parte di quella cifra nel primo anno.",
-        note: "Dato medio di settore. I risultati variano.",
-      },
-      {
-        title: "Il 70% dei clienti giudica un business dal sito",
-        body: "Prima di entrare nel tuo ristorante, i clienti ti hanno gia giudicato online. Un sito scadente costa piu di quanto pensi.",
-        note: "Fonte: Stanford Web Credibility Research.",
+        title: "Il 70% giudica un business dal sito",
+        body: "Prima di contattarti, i clienti ti hanno gia valutato online. Un sito debole perde fiducia e conversioni.",
+        note: "Stanford Web Credibility Research",
       },
       {
         title: "Un sito premium si ripaga",
-        body: "Una singola prenotazione diretta in piu a settimana puo coprire l'intero investimento nel sito nel giro di pochi mesi.",
-        note: "Stima indicativa basata su prezzi medi del settore.",
+        body: "Piu richieste dirette dal sito possono coprire l'investimento in pochi mesi — se il percorso e chiaro.",
+        note: "Stima indicativa per il settore hospitality e locale",
       },
     ],
   },
   audit: {
     title: "Vuoi sapere\ncosa frena il tuo sito?",
-    body: "Analizziamo il tuo sito attuale e ti diciamo esattamente cosa migliorare. Gratuitamente, senza impegno.",
+    body: "Analizziamo il tuo sito attuale e ti diciamo esattamente cosa migliorare. Gratuito, senza pressione.",
     cta: "Richiedi il tuo audit gratuito",
-    meta: "Rispondiamo entro 1 ora · Nessun costo · Nessun impegno",
+    meta: "Rispondiamo entro 1 ora · Gratuito · Decidi tu i prossimi passi",
   },
   about: {
     eyebrow: "Chi siamo",
     title: "Design e sviluppo",
-    bio: "Siamo un piccolo studio digitale basato in Emilia-Romagna. Lavoriamo con brand e business che vogliono un sito che funziona davvero. Non solo bello, ma costruito per portare risultati concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
+    bio: "Siamo un piccolo studio digitale in Emilia-Romagna. Creiamo un ambiente digitale per il business: dai siti e le interfacce all'automazione delle richieste, ai contenuti visivi e allo sviluppo continuo del prodotto. Non solo belli — tutto e costruito per risultati di business concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
     pills: ["Emilia-Romagna, Italia", "Disponibile per nuovi progetti"],
   },
   contact: {
     label: "Iniziamo",
-    title: "Costruiamo qualcosa che funziona.",
+    title: "Creiamo siti e prodotti digitali per il tuo business.",
     body: "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Rispondiamo entro 1h",
@@ -560,6 +578,7 @@ const it: TranslationSet = {
       submit: "Invia messaggio",
       submitting: "Invio in corso...",
       success: "Ricevuto. Ti rispondiamo entro 1 ora.",
+      optional: "facoltativo",
       options: {
         restaurant: "Ristorante",
         hotel: "Hotel",
@@ -574,6 +593,27 @@ const it: TranslationSet = {
         invalidEmail: "Inserisci un'email valida",
       },
     },
+  },
+  orderPage: {
+    eyebrow: "Ordine",
+    title: "Scegli i servizi",
+    subtitle:
+      "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora. I prezzi sono indicativi e dipendono da scope e tempistiche.",
+    fromLabel: "da",
+    selectHint: "Seleziona almeno un servizio per continuare, oppure scrivici direttamente.",
+    proceedCta: "Richiedi preventivo",
+    footnote:
+      "Dopo la richiesta ricevi una risposta con scope, tempi e costo finale. Nessun pagamento automatico.",
+    prices: {
+      "premium-site": "€2.500",
+      redesign: "€1.500",
+      "booking-flow": "€800",
+      "monthly-support": "€200/mese",
+      "photo-video": "€600",
+    },
+  },
+  aboutPage: {
+    backToHome: "Torna alla home",
   },
   footer: {
     description: "Studio digitale per brand e business premium in tutta Italia.",
@@ -599,6 +639,7 @@ const it: TranslationSet = {
     eyebrow: "Servizi",
     title: "Cosa costruiamo",
     subtitle: "Dal sito di presentazione alla piattaforma digitale completa.",
+    techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
     categories: [
       {
@@ -679,7 +720,7 @@ const en: TranslationSet = {
       nameTagline: "Hotel Direct Booking System",
       subtitle: "Seafront hotel · direct booking",
       problem:
-        "The hotel needed a polished direct-booking experience that could communicate location, rooms, services and exclusive offers without sending guests back to OTA platforms.",
+        "The hotel needed a polished direct-booking experience that could communicate location, rooms, services and exclusive offers without sending guests back to third-party booking sites.",
       solution:
         "A conversion-focused hotel website with immersive hero, room highlights, service sections, guest reviews, packages and a guided booking flow.",
       businessImpact:
@@ -753,7 +794,7 @@ const en: TranslationSet = {
       id: "booking-flow",
       title: "Booking & Lead Flow",
       description:
-        "We build direct booking flows that reduce OTA dependency and increase conversion.",
+        "We build direct booking and enquiry flows on your site that increase conversion.",
       details: "Booking integration · Smart forms · A/B logic",
       whatYouGet: [
         "Analysis of your current booking funnel",
@@ -854,21 +895,24 @@ const en: TranslationSet = {
     process: "Process",
     contact: "Contact",
     audit: "Free audit",
+    buy: "Order",
+    about: "About us",
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italy",
-    headline: "Your business\nfirst impression\nstarts here.",
+    headline: "Your business first impression\nstarts with\nthe website.",
     subtitle: "Where your brand speaks before you do",
     lead: "We craft premium digital experiences for brands and businesses that refuse to look generic—from local institutions to ambitious startups. Distinctive design, sharp strategy, measurable results.",
     primaryCta: "View projects",
     secondaryCta: "Request free audit",
+    buyCta: "Order services",
     socialProof: "4 projects · Emilia-Romagna & Italy · Available for new clients",
     mockupCaption: "Your best business card",
   },
   trust: [
     "Design that converts",
     "Built for brands that stand out",
-    "Less OTA dependency",
+    "Direct bookings & leads",
     "Mobile-first & fast",
   ],
   proof: {
@@ -876,14 +920,15 @@ const en: TranslationSet = {
     items: [
       { value: "1h", label: "Average response time" },
       { value: "100%", label: "Mobile-first & fast" },
-      { value: "5", label: "Languages shipped in production" },
-      { value: "20%", label: "OTA commissions you can avoid" },
+      { value: "20%", label: "Booking site fees you can avoid" },
+      { value: "2 wks", label: "Average project kickoff" },
     ],
   },
   problem: {
+    eyebrow: "01 — Why it matters",
     title:
       "Most local businesses have a website. Almost none of them have a digital first impression.",
-    body: "Most local sites don't build trust. They display information but don't communicate quality. Meanwhile OTAs keep 15% to 25% in commissions. A premium, conversion-focused site can pay for itself within a few months. That's why we help Italian businesses recover direct value.",
+    body: "Most local sites don't build trust. They display information but don't communicate quality. A premium, conversion-focused site can pay for itself within a few months. That's why we help Italian businesses win customers directly.",
   },
   caseStudies: {
     label: "Selected work",
@@ -895,10 +940,10 @@ const en: TranslationSet = {
     },
   },
   beforeAfter: {
-    eyebrow: "Quick comparisons · first screen",
-    title: "Five segments, same issue: clutter. Five ‘after’ directions — darker is not the goal.",
+    eyebrow: "Before & after · first screen",
+    title: "How the first screen changes after a focused redesign.",
     subtitle:
-      "Improvement is hierarchy, message and action. Pick hotel, restaurant, bar, local business or a brief-led layout. Drag the gold divider.",
+      "Interactive examples across sectors — hotel, restaurant, bar, local business and a custom brief-led layout. Compare how hierarchy, message and call-to-action improve. Drag the gold divider.",
     beforeBadge: "Before",
     afterBadge: "After",
     dragHint: "Drag to compare",
@@ -982,37 +1027,32 @@ const en: TranslationSet = {
     label: "Why it matters",
     items: [
       {
-        title: "OTAs cost you 20%",
-        body: "A hotel doing 100,000EUR in annual bookings pays up to 20,000EUR in commissions. A well-built direct site can recover a meaningful share of that in the first year.",
-        note: "Industry average. Results vary.",
-      },
-      {
-        title: "70% of customers judge a business by its website",
-        body: "Before stepping into your restaurant, customers have already judged you online. A weak site costs more than you think.",
-        note: "Source: Stanford Web Credibility Research.",
+        title: "70% judge a business by its website",
+        body: "Before they contact you, customers have already formed an opinion online. A weak site loses trust and conversions.",
+        note: "Stanford Web Credibility Research",
       },
       {
         title: "A premium site pays for itself",
-        body: "A single extra direct booking per week can cover the entire site investment within a few months.",
-        note: "Indicative estimate based on industry averages.",
+        body: "More direct enquiries from your site can cover the investment within months — when the path is clear.",
+        note: "Indicative estimate for hospitality and local businesses",
       },
     ],
   },
   audit: {
     title: "Want to know\nwhat's holding your site back?",
-    body: "We analyze your current website and tell you exactly what to improve. Free of charge, no commitment.",
+    body: "We analyze your current website and tell you exactly what to improve. Free, no pressure.",
     cta: "Request your free audit",
-    meta: "Reply within 1 hour · Free · No commitment",
+    meta: "Reply within 1 hour · Free · You decide the next steps",
   },
   about: {
     eyebrow: "About us",
     title: "Design & development",
-    bio: "We're a small digital studio based in Emilia-Romagna. We work with brands and businesses that want a site that actually works. Not just pretty, but built to bring real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
+    bio: "We're a small digital studio based in Emilia-Romagna. We build a digital environment for your business—from websites and interfaces to enquiry automation, visual content and ongoing product development. Not just polished looks: everything is built for real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
     pills: ["Emilia-Romagna, Italy", "Available for new projects"],
   },
   contact: {
     label: "Let's start",
-    title: "Let's build something that works.",
+    title: "We build websites and digital products for your business.",
     body: "After your message you get a clear reply with next steps, timeline and feasibility.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reply within 1h",
@@ -1027,6 +1067,7 @@ const en: TranslationSet = {
       submit: "Send message",
       submitting: "Sending...",
       success: "Got it. We'll reply within 1 hour.",
+      optional: "optional",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
@@ -1041,6 +1082,27 @@ const en: TranslationSet = {
         invalidEmail: "Enter a valid email address",
       },
     },
+  },
+  orderPage: {
+    eyebrow: "Order",
+    title: "Choose your services",
+    subtitle:
+      "Select one or more options — you'll get a tailored quote within 1 hour. Prices are starting points and depend on scope and timeline.",
+    fromLabel: "from",
+    selectHint: "Select at least one service to continue, or message us directly.",
+    proceedCta: "Request a quote",
+    footnote:
+      "After your request you get scope, timeline and final cost. No automatic payment.",
+    prices: {
+      "premium-site": "€2,500",
+      redesign: "€1,500",
+      "booking-flow": "€800",
+      "monthly-support": "€200/mo",
+      "photo-video": "€600",
+    },
+  },
+  aboutPage: {
+    backToHome: "Back to home",
   },
   footer: {
     description: "Digital studio for premium brands and businesses across Italy.",
@@ -1066,6 +1128,7 @@ const en: TranslationSet = {
     eyebrow: "Services",
     title: "What we build",
     subtitle: "From a presentation site to a full digital platform.",
+    techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
     categories: [
       {
@@ -1146,7 +1209,7 @@ const fr: TranslationSet = {
       nameTagline: "Hotel Direct Booking System",
       subtitle: "Hotel en bord de mer · reservation directe",
       problem:
-        "L'hotel avait besoin d'une experience de reservation directe capable de presenter emplacement, chambres, services et offres exclusives sans renvoyer les clients vers les OTA.",
+        "L'hotel avait besoin d'une experience de reservation directe capable de presenter emplacement, chambres, services et offres exclusives sans renvoyer les clients vers des plateformes externes.",
       solution:
         "Site hotelier oriente conversion avec hero immersive, chambres mises en avant, services, avis clients, forfaits et parcours de booking guide.",
       businessImpact:
@@ -1220,7 +1283,7 @@ const fr: TranslationSet = {
       id: "booking-flow",
       title: "Booking et Lead Flow",
       description:
-        "Nous construisons des flux de reservation directe qui reduisent la dependance aux OTA et augmentent les conversions.",
+        "Nous construisons des flux de reservation et de demande directe sur votre site qui augmentent les conversions.",
       details: "Integration booking · Formulaires intelligents · Logique A/B",
       whatYouGet: [
         "Analyse du funnel de booking actuel",
@@ -1321,21 +1384,24 @@ const fr: TranslationSet = {
     process: "Methode",
     contact: "Contact",
     audit: "Audit gratuit",
+    buy: "Commander",
+    about: "A propos",
   },
   hero: {
     eyebrow: "Studio Digital · Emilia-Romagna, Italie",
-    headline: "La premiere impression\nde votre business\ncommence ici.",
+    headline: "La premiere impression sur votre business\ncommence\npar le site.",
     subtitle: "La présence digitale qui parle pour vous",
     lead: "Nous concevons des expériences digitales premium pour marques et business qui refusent le générique — restaurants, commerces, studios et startups ambitieux. Design distinctif, stratégie concrète, résultats mesurables.",
     primaryCta: "Voir les projets",
     secondaryCta: "Demander un audit",
+    buyCta: "Commander des services",
     socialProof: "4 projets · Emilia-Romagna & Italie · Disponible pour nouveaux clients",
     mockupCaption: "Votre meilleure carte de visite",
   },
   trust: [
     "Design qui convertit",
     "Pensé pour les marques ambitieuses",
-    "Moins de dependance aux OTA",
+    "Reservations et leads directs",
     "Mobile-first et rapide",
   ],
   proof: {
@@ -1343,14 +1409,15 @@ const fr: TranslationSet = {
     items: [
       { value: "1h", label: "Temps de reponse moyen" },
       { value: "100%", label: "Mobile-first et rapide" },
-      { value: "5", label: "Langues livrees en production" },
-      { value: "20%", label: "Commissions OTA evitables" },
+      { value: "20%", label: "Commissions aux plateformes evitables" },
+      { value: "2 sem.", label: "Demarrage moyen projet" },
     ],
   },
   problem: {
+    eyebrow: "01 — Pourquoi c'est important",
     title:
       "Presque tous les business locaux ont un site. Presque aucun n'a une vraie premiere impression digitale.",
-    body: "La majorite des sites locaux n'inspire pas confiance. Ils montrent des infos mais ne communiquent pas la qualite. Les OTA prennent entre 15% et 25% de commission. Un site premium oriente conversion peut s'amortir en quelques mois. C'est pourquoi nous aidons les business italiens a recuperer de la valeur en direct.",
+    body: "La majorite des sites locaux n'inspire pas confiance. Ils montrent des infos mais ne communiquent pas la qualite. Un site premium oriente conversion peut s'amortir en quelques mois. C'est pourquoi nous aidons les business italiens a gagner des clients en direct.",
   },
   caseStudies: {
     label: "Projets selectionnes",
@@ -1362,10 +1429,10 @@ const fr: TranslationSet = {
     },
   },
   beforeAfter: {
-    eyebrow: "Mini-comparaisons · premier écran",
-    title: "Cinq segments, même problème : le flou. Cinq directions ‘après’ — pas toujours plus sombre.",
+    eyebrow: "Avant et apres · premier ecran",
+    title: "Comment le premier ecran change apres un redesign cible.",
     subtitle:
-      "Le progrès, c’est hiérarchie, message et action. Choisissez hôtel, restaurant, bar, commerce local ou une mise en page pilotée par le brief. Glissez la ligne dorée.",
+      "Exemples interactifs par secteur — hotel, restaurant, bar, commerce local et projet sur mesure. Comparez l'amelioration de la hierarchie, du message et de l'appel a l'action. Glissez la ligne doree.",
     beforeBadge: "Avant",
     afterBadge: "Après",
     dragHint: "Glisser pour comparer",
@@ -1449,37 +1516,32 @@ const fr: TranslationSet = {
     label: "Pourquoi c'est important",
     items: [
       {
-        title: "Les OTA vous coutent 20%",
-        body: "Un hotel avec 100.000EUR de reservations annuelles paie jusqu'a 20.000EUR de commissions. Un site direct bien fait peut recuperer une part importante de cette somme des la premiere annee.",
-        note: "Moyenne du secteur. Les resultats varient.",
-      },
-      {
-        title: "70% des clients jugent un business par son site",
-        body: "Avant d'entrer dans votre restaurant, vos clients vous ont deja juge en ligne. Un site mediocre coute plus cher qu'on ne le pense.",
-        note: "Source: Stanford Web Credibility Research.",
+        title: "70% jugent un business par son site",
+        body: "Avant de vous contacter, vos clients vous ont deja evalue en ligne. Un site faible perd confiance et conversions.",
+        note: "Stanford Web Credibility Research",
       },
       {
         title: "Un site premium se rembourse",
-        body: "Une seule reservation directe supplementaire par semaine peut couvrir tout l'investissement en quelques mois.",
-        note: "Estimation indicative basee sur les moyennes du secteur.",
+        body: "Plus de demandes directes depuis votre site peuvent couvrir l'investissement en quelques mois — si le parcours est clair.",
+        note: "Estimation indicative pour l'hospitality et le local",
       },
     ],
   },
   audit: {
     title: "Vous voulez savoir\nce qui freine votre site?",
-    body: "Nous analysons votre site actuel et nous vous disons exactement ce qu'il faut ameliorer. Gratuitement, sans engagement.",
+    body: "Nous analysons votre site actuel et nous vous disons exactement ce qu'il faut ameliorer. Gratuit, sans pression.",
     cta: "Demander votre audit gratuit",
-    meta: "Reponse sous 1h · Gratuit · Sans engagement",
+    meta: "Reponse sous 1h · Gratuit · Vous decidez des prochaines etapes",
   },
   about: {
     eyebrow: "Qui sommes-nous",
     title: "Design & développement",
-    bio: "Nous sommes un petit studio digital base en Emilia-Romagna. Nous travaillons avec des marques et business qui veulent un site qui fonctionne vraiment. Pas juste beau, mais construit pour apporter des resultats concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
+    bio: "Nous sommes un petit studio digital en Emilia-Romagna. Nous creons un environnement digital pour le business : des sites et interfaces a l'automatisation des demandes, au contenu visuel et au developpement continu du produit. Pas seulement beau — tout est pense pour des resultats business concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
     pills: ["Emilia-Romagna, Italie", "Disponible pour nouveaux projets"],
   },
   contact: {
     label: "Commencons",
-    title: "Construisons quelque chose qui fonctionne.",
+    title: "Nous creons des sites et produits digitaux pour votre business.",
     body: "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reponse sous 1h",
@@ -1494,6 +1556,7 @@ const fr: TranslationSet = {
       submit: "Envoyer le message",
       submitting: "Envoi en cours...",
       success: "Bien recu. Nous repondons sous 1 heure.",
+      optional: "facultatif",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
@@ -1508,6 +1571,27 @@ const fr: TranslationSet = {
         invalidEmail: "Entrez une adresse e-mail valide",
       },
     },
+  },
+  orderPage: {
+    eyebrow: "Commande",
+    title: "Choisissez vos services",
+    subtitle:
+      "Selectionnez une ou plusieurs options — vous recevrez un devis personnalise sous 1 heure. Les prix sont indicatifs et dependent du scope et des delais.",
+    fromLabel: "a partir de",
+    selectHint: "Selectionnez au moins un service pour continuer, ou ecrivez-nous directement.",
+    proceedCta: "Demander un devis",
+    footnote:
+      "Apres votre demande vous recevez scope, delais et cout final. Aucun paiement automatique.",
+    prices: {
+      "premium-site": "€2.500",
+      redesign: "€1.500",
+      "booking-flow": "€800",
+      "monthly-support": "€200/mois",
+      "photo-video": "€600",
+    },
+  },
+  aboutPage: {
+    backToHome: "Retour a l'accueil",
   },
   footer: {
     description: "Studio digital pour marques et business premium en Italie.",
@@ -1533,6 +1617,7 @@ const fr: TranslationSet = {
     eyebrow: "Services",
     title: "Ce que nous créons",
     subtitle: "Du site vitrine à la plateforme numérique complète.",
+    techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tous les services",
     categories: [
       {
@@ -1613,7 +1698,7 @@ const ru: TranslationSet = {
       nameTagline: "Hotel Direct Booking System",
       subtitle: "Отель у моря · прямое бронирование",
       problem:
-        "Отелю нужен был убедительный сценарий прямого бронирования, который показывает локацию, номера, сервисы и специальные предложения без возврата гостя на OTA-платформы.",
+        "Отелю нужен был убедительный сценарий прямого бронирования, который показывает локацию, номера, сервисы и специальные предложения без возврата гостя на сторонние площадки.",
       solution:
         "Конверсионный сайт отеля с атмосферным первым экраном, витриной номеров, блоками сервисов, отзывами, пакетами и понятным booking-flow.",
       businessImpact:
@@ -1687,7 +1772,7 @@ const ru: TranslationSet = {
       id: "booking-flow",
       title: "Booking и lead-flow",
       description:
-        "Строим прямые бронирования, снижающие зависимость от OTA и поднимающие конверсию.",
+        "Строим прямые бронирования и заявки с сайта, которые поднимают конверсию.",
       details: "Интеграция booking · Умные формы · A/B логика",
       whatYouGet: [
         "Анализ текущего booking-funnel",
@@ -1788,14 +1873,17 @@ const ru: TranslationSet = {
     process: "Процесс",
     contact: "Контакты",
     audit: "Бесплатный аудит",
+    buy: "Купить",
+    about: "О нас",
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italia",
-    headline: "Первое впечатление\nо вашем бизнесе\nначинается здесь.",
+    headline: "Первое впечатление\nо бизнесе\nначинается с сайта.",
     subtitle: "Цифровое присутствие, которое говорит за вас",
     lead: "Создаём премиум цифровые опыты для брендов и бизнесов, которые не хотят выглядеть шаблонно — от локальных проектов до амбициозных стартапов. Выразительный дизайн, чёткая стратегия, измеримый результат.",
     primaryCta: "Смотреть проекты",
     secondaryCta: "Запросить бесплатный аудит",
+    buyCta: "Заказать услуги",
     socialProof: "4 проекта · Эмилия-Романья и Италия · Открыты для новых клиентов",
     mockupCaption: "Ваша лучшая визитная карточка",
     mockupCaptionSm: true,
@@ -1803,7 +1891,7 @@ const ru: TranslationSet = {
   trust: [
     "Дизайн, который конвертирует",
     "Для брендов, которые выделяются",
-    "Меньше зависимости от OTA",
+    "Прямые заявки и бронирования",
     "Mobile-first и быстрый",
   ],
   proof: {
@@ -1811,14 +1899,15 @@ const ru: TranslationSet = {
     items: [
       { value: "1h", label: "Среднее время ответа" },
       { value: "100%", label: "Mobile-first и быстро" },
-      { value: "5", label: "Языков в продакшене" },
-      { value: "20%", label: "Комиссий OTA можно избежать" },
+      { value: "20%", label: "Комиссии посредников, которые можно не платить" },
+      { value: "2 нед.", label: "Средний старт проекта" },
     ],
   },
   problem: {
+    eyebrow: "01 — Почему это важно",
     title:
       "Почти у всех локальных бизнесов есть сайт. Почти ни у кого нет настоящего цифрового первого впечатления.",
-    body: "Большинство локальных сайтов не строит доверие. Они показывают информацию, но не передают качество. OTA при этом удерживают от 15% до 25% комиссии. Премиум-сайт, сделанный под конверсию, может окупиться за несколько месяцев. Именно поэтому мы помогаем итальянским бизнесам возвращать прямую ценность.",
+    body: "Большинство локальных сайтов не строит доверие. Они показывают информацию, но не передают качество. Премиум-сайт, сделанный под конверсию, может окупиться за несколько месяцев. Именно поэтому мы помогаем итальянским бизнесам получать клиентов напрямую.",
   },
   caseStudies: {
     label: "Избранные работы",
@@ -1830,10 +1919,10 @@ const ru: TranslationSet = {
     },
   },
   beforeAfter: {
-    eyebrow: "Быстрые сравнения · первый экран",
-    title: "Пять типов бизнеса — одна проблема: шум. Пять вариантов «после» — не обязательно темнее.",
+    eyebrow: "До и после · первый экран",
+    title: "Как меняется первый экран после целевого редизайна.",
     subtitle:
-      "Улучшение — это иерархия, смысл и действие. Выберите отель, ресторан, бар, локальный бизнес или сетку под ваш бриф. Тяните золотую границу.",
+      "Интерактивные примеры из разных отраслей — отель, ресторан, бар, локальный бизнес и индивидуальный проект. Сравните, как улучшаются иерархия, смысл и призыв к действию. Тяните золотую границу.",
     beforeBadge: "До",
     afterBadge: "После",
     dragHint: "Потяните, чтобы сравнить",
@@ -1917,37 +2006,32 @@ const ru: TranslationSet = {
     label: "Почему это важно",
     items: [
       {
-        title: "OTA забирают у вас 20%",
-        body: "Отель с годовым оборотом бронирований в 100.000EUR теряет до 20.000EUR на комиссиях. Хороший сайт с прямым бронированием может вернуть значительную часть этой суммы уже в первый год.",
-        note: "Средний показатель по отрасли. Результаты могут отличаться.",
-      },
-      {
-        title: "70% клиентов судит о бизнесе по сайту",
-        body: "Ещё до того, как зайти в ваш ресторан, клиенты уже оценили вас онлайн. Слабый сайт стоит дороже, чем кажется.",
-        note: "Источник: Stanford Web Credibility Research.",
+        title: "70% судят о бизнесе по сайту",
+        body: "Ещё до обращения клиенты уже оценили вас онлайн. Слабый сайт теряет доверие и заявки.",
+        note: "Stanford Web Credibility Research",
       },
       {
         title: "Премиум-сайт себя окупает",
-        body: "Всего одно дополнительное прямое бронирование в неделю может покрыть всю стоимость сайта за несколько месяцев.",
-        note: "Ориентировочная оценка на основе средних по рынку.",
+        body: "Больше прямых заявок с сайта может покрыть вложения за несколько месяцев — если путь понятен.",
+        note: "Ориентир для отелей и локального бизнеса",
       },
     ],
   },
   audit: {
     title: "Хотите узнать,\nчто мешает вашему сайту?",
-    body: "Мы проанализируем ваш текущий сайт и скажем точно, что улучшить. Бесплатно, без обязательств.",
+    body: "Мы проанализируем ваш текущий сайт и скажем точно, что улучшить. Бесплатно, без давления.",
     cta: "Запросить свой бесплатный аудит",
-    meta: "Отвечаем в течение 1 часа · Бесплатно · Без обязательств",
+    meta: "Отвечаем в течение 1 часа · Бесплатно · Решение за вами",
   },
   about: {
     eyebrow: "О нас",
     title: "Дизайн и разработка",
-    bio: "Мы небольшая цифровая студия в Эмилия-Романье. Работаем с брендами и бизнесами, которым нужен сайт, действительно работающий. Не просто красивый, а построенный под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
+    bio: "Мы небольшая цифровая студия в Эмилия-Романье. Создаём цифровую среду для бизнеса: от сайтов и интерфейсов до автоматизации заявок, визуального контента и постоянного развития продукта. Не просто красиво — всё заточено под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
     pills: ["Эмилия-Романья, Италия", "Открыты для новых проектов"],
   },
   contact: {
     label: "Начнём",
-    title: "Давайте построим что-то, что работает.",
+    title: "Создаём сайты и цифровые продукты для вашего бизнеса.",
     body: "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Ответ в течение 1ч",
@@ -1962,6 +2046,7 @@ const ru: TranslationSet = {
       submit: "Отправить сообщение",
       submitting: "Отправка...",
       success: "Принято. Ответим в течение 1 часа.",
+      optional: "необязательно",
       options: {
         restaurant: "Ресторан",
         hotel: "Отель",
@@ -1976,6 +2061,27 @@ const ru: TranslationSet = {
         invalidEmail: "Введите корректный email",
       },
     },
+  },
+  orderPage: {
+    eyebrow: "Заказ",
+    title: "Выберите услуги",
+    subtitle:
+      "Отметьте одну или несколько опций — персональный расчёт пришлём в течение 1 часа. Цены указаны «от» и зависят от объёма и сроков.",
+    fromLabel: "от",
+    selectHint: "Выберите хотя бы одну услугу или напишите нам напрямую.",
+    proceedCta: "Запросить расчёт",
+    footnote:
+      "После заявки вы получите объём работ, сроки и итоговую стоимость. Автоматической оплаты нет.",
+    prices: {
+      "premium-site": "€2 500",
+      redesign: "€1 500",
+      "booking-flow": "€800",
+      "monthly-support": "€200/мес",
+      "photo-video": "€600",
+    },
+  },
+  aboutPage: {
+    backToHome: "На главную",
   },
   footer: {
     description: "Цифровая студия для премиум-брендов и бизнесов по всей Италии.",
@@ -2001,6 +2107,7 @@ const ru: TranslationSet = {
     eyebrow: "Услуги",
     title: "Что мы создаём",
     subtitle: "От сайта-визитки до полноценной цифровой платформы.",
+    techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
     categories: [
       {
@@ -2081,7 +2188,7 @@ const de: TranslationSet = {
       nameTagline: "Hotel Direct Booking System",
       subtitle: "Strandhotel · Direktbuchung",
       problem:
-        "Das Hotel brauchte ein hochwertiges Direktbuchungserlebnis, das Lage, Zimmer, Services und exklusive Angebote vermittelt, ohne Gaste zuruck zu OTA-Plattformen zu schicken.",
+        "Das Hotel brauchte ein hochwertiges Direktbuchungserlebnis, das Lage, Zimmer, Services und exklusive Angebote vermittelt, ohne Gaste zu externen Buchungsplattformen zu schicken.",
       solution:
         "Conversion-fokussierte Hotelwebsite mit immersiver Hero-Section, Zimmer-Highlights, Services, Gastebewertungen, Paketen und gefuhrtem Buchungsflow.",
       businessImpact:
@@ -2155,7 +2262,7 @@ const de: TranslationSet = {
       id: "booking-flow",
       title: "Booking und Lead-Flow",
       description:
-        "Wir bauen Direktbuchungs-Flows, die OTA-Abhangigkeit reduzieren und Conversion steigern.",
+        "Wir bauen Direktbuchungs- und Anfrage-Flows auf Ihrer Website, die Conversion steigern.",
       details: "Booking-Integration · Smarte Formulare · A/B-Logik",
       whatYouGet: [
         "Analyse des aktuellen Booking-Funnels",
@@ -2256,21 +2363,24 @@ const de: TranslationSet = {
     process: "Prozess",
     contact: "Kontakt",
     audit: "Kostenloses Audit",
+    buy: "Bestellen",
+    about: "Uber uns",
   },
   hero: {
     eyebrow: "Digitales Studio · Emilia-Romagna, Italien",
-    headline: "Der erste Eindruck\nIhres Business\nbeginnt hier.",
+    headline: "Der erste Eindruck uber Ihr Business\nbeginnt\nmit der Website.",
     subtitle: "Digitale Präsenz, die für Sie spricht",
     lead: "Wir bauen Premium-Digitalerlebnisse für Marken und Unternehmen, die nicht generisch wirken wollen — von lokalen Betrieben bis zu ambitionierten Startups. Ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
     primaryCta: "Projekte ansehen",
     secondaryCta: "Audit anfragen",
+    buyCta: "Leistungen bestellen",
     socialProof: "4 Projekte · Emilia-Romagna & Italien · Verfugbar fur neue Kunden",
     mockupCaption: "Ihre beste Visitenkarte",
   },
   trust: [
     "Design, das konvertiert",
     "Fur Marken, die herausstechen",
-    "Weniger Abhangigkeit von OTAs",
+    "Direkte Buchungen und Anfragen",
     "Mobile-first und schnell",
   ],
   proof: {
@@ -2278,14 +2388,15 @@ const de: TranslationSet = {
     items: [
       { value: "1h", label: "Durchschnittliche Reaktionszeit" },
       { value: "100%", label: "Mobile-first und schnell" },
-      { value: "5", label: "Sprachen in Produktion" },
-      { value: "20%", label: "OTA-Provisionen vermeidbar" },
+      { value: "20%", label: "Provisionen an Buchungsportale vermeidbar" },
+      { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
     ],
   },
   problem: {
+    eyebrow: "01 — Warum es zahlt",
     title:
       "Fast jedes lokale Unternehmen hat eine Website. Fast keines hat einen echten digitalen ersten Eindruck.",
-    body: "Die meisten lokalen Websites schaffen kein Vertrauen. Sie zeigen Informationen, vermitteln aber keine Qualitat. OTAs behalten dabei 15 bis 25 Prozent Provision. Eine Premium-Website mit Conversion-Fokus kann sich in wenigen Monaten amortisieren. Genau deshalb helfen wir italienischen Unternehmen, direkten Wert zuruckzuholen.",
+    body: "Die meisten lokalen Websites schaffen kein Vertrauen. Sie zeigen Informationen, vermitteln aber keine Qualitat. Eine Premium-Website mit Conversion-Fokus kann sich in wenigen Monaten amortisieren. Genau deshalb helfen wir italienischen Unternehmen, Kunden direkt zu gewinnen.",
   },
   caseStudies: {
     label: "Ausgewahlte Arbeiten",
@@ -2297,10 +2408,10 @@ const de: TranslationSet = {
     },
   },
   beforeAfter: {
-    eyebrow: "Kurzvergleiche · erster Screen",
-    title: "Funf Segmente, gleiches Problem: Unruhe. Funf ‘Nachher’-Richtungen — nicht immer dunkler.",
+    eyebrow: "Vorher und nachher · erster Screen",
+    title: "Wie sich der erste Screen nach einem gezielten Redesign verandert.",
     subtitle:
-      "Verbesserung ist Hierarchie, Botschaft und Handlung. Wahlen Sie Hotel, Restaurant, Bar, lokales Business oder ein Brief-getriebenes Layout. Ziehen Sie die goldene Linie.",
+      "Interaktive Beispiele aus verschiedenen Branchen — Hotel, Restaurant, Bar, lokales Business und individuelles Projekt. Vergleichen Sie Hierarchie, Botschaft und Handlungsaufforderung. Ziehen Sie die goldene Linie.",
     beforeBadge: "Vorher",
     afterBadge: "Nachher",
     dragHint: "Ziehen zum Vergleichen",
@@ -2384,37 +2495,32 @@ const de: TranslationSet = {
     label: "Warum es zahlt",
     items: [
       {
-        title: "OTAs kosten Sie 20%",
-        body: "Ein Hotel mit 100.000EUR Jahresumsatz an Buchungen zahlt bis zu 20.000EUR an Provisionen. Eine gute Direkt-Website kann einen wesentlichen Teil davon im ersten Jahr zuruckholen.",
-        note: "Branchendurchschnitt. Ergebnisse variieren.",
-      },
-      {
-        title: "70% der Kunden beurteilen ein Business an seiner Website",
-        body: "Bevor Gaste Ihr Restaurant betreten, haben sie Sie online schon beurteilt. Eine schwache Website kostet mehr, als man denkt.",
-        note: "Quelle: Stanford Web Credibility Research.",
+        title: "70% beurteilen ein Business an der Website",
+        body: "Bevor Kunden Sie kontaktieren, haben sie Sie online schon bewertet. Eine schwache Website verliert Vertrauen und Anfragen.",
+        note: "Stanford Web Credibility Research",
       },
       {
         title: "Eine Premium-Website rechnet sich",
-        body: "Eine einzige zusatzliche Direktbuchung pro Woche kann die gesamte Website-Investition in wenigen Monaten decken.",
-        note: "Indikative Schatzung basierend auf Branchendurchschnitten.",
+        body: "Mehr direkte Anfragen uber Ihre Website konnen die Investition in wenigen Monaten decken — wenn der Weg klar ist.",
+        note: "Indikativ fur Hospitality und lokale Businesses",
       },
     ],
   },
   audit: {
     title: "Wollen Sie wissen,\nwas Ihre Website bremst?",
-    body: "Wir analysieren Ihre aktuelle Website und sagen Ihnen genau, was zu verbessern ist. Kostenlos und unverbindlich.",
+    body: "Wir analysieren Ihre aktuelle Website und sagen Ihnen genau, was zu verbessern ist. Kostenlos, ohne Druck.",
     cta: "Ihr kostenloses Audit anfragen",
-    meta: "Antwort innerhalb einer Stunde · Kostenlos · Unverbindlich",
+    meta: "Antwort innerhalb einer Stunde · Kostenlos · Sie entscheiden uber die nachsten Schritte",
   },
   about: {
     eyebrow: "Uber uns",
     title: "Design & Entwicklung",
-    bio: "Wir sind ein kleines Digital-Studio aus der Emilia-Romagna. Wir arbeiten mit Marken und Unternehmen, die eine Website wollen, die wirklich funktioniert. Nicht nur schon, sondern fur echte Business-Ergebnisse gebaut.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
+    bio: "Wir sind ein kleines Digital-Studio in der Emilia-Romagna. Wir schaffen eine digitale Umgebung fur Ihr Business — von Websites und Interfaces bis zur Automatisierung von Anfragen, visuellem Content und kontinuierlicher Produktentwicklung. Nicht nur schon — alles ist auf echte Business-Ergebnisse ausgelegt.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
     pills: ["Emilia-Romagna, Italien", "Verfugbar fur neue Projekte"],
   },
   contact: {
     label: "Lass uns starten",
-    title: "Lassen Sie uns etwas bauen, das funktioniert.",
+    title: "Wir bauen Websites und digitale Produkte fur Ihr Business.",
     body: "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
     emailLabel: "E-Mail",
     whatsappLabel: "WhatsApp · Antwort innerhalb 1h",
@@ -2429,6 +2535,7 @@ const de: TranslationSet = {
       submit: "Nachricht senden",
       submitting: "Wird gesendet...",
       success: "Erhalten. Wir antworten innerhalb einer Stunde.",
+      optional: "optional",
       options: {
         restaurant: "Restaurant",
         hotel: "Hotel",
@@ -2443,6 +2550,27 @@ const de: TranslationSet = {
         invalidEmail: "Gültige E-Mail-Adresse eingeben",
       },
     },
+  },
+  orderPage: {
+    eyebrow: "Bestellung",
+    title: "Leistungen auswahlen",
+    subtitle:
+      "Wahlen Sie eine oder mehrere Optionen — Sie erhalten innerhalb einer Stunde ein individuelles Angebot. Preise sind Startwerte und hangen von Umfang und Zeitplan ab.",
+    fromLabel: "ab",
+    selectHint: "Wahlen Sie mindestens eine Leistung oder schreiben Sie uns direkt.",
+    proceedCta: "Angebot anfragen",
+    footnote:
+      "Nach Ihrer Anfrage erhalten Sie Umfang, Zeitplan und Endpreis. Keine automatische Zahlung.",
+    prices: {
+      "premium-site": "€2.500",
+      redesign: "€1.500",
+      "booking-flow": "€800",
+      "monthly-support": "€200/Mon.",
+      "photo-video": "€600",
+    },
+  },
+  aboutPage: {
+    backToHome: "Zur Startseite",
   },
   footer: {
     description: "Digitales Studio fur Premium-Marken und Unternehmen in ganz Italien.",
@@ -2468,6 +2596,7 @@ const de: TranslationSet = {
     eyebrow: "Leistungen",
     title: "Was wir bauen",
     subtitle: "Vom Präsentationssite bis zur vollständigen digitalen Plattform.",
+    techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Alle Leistungen",
     categories: [
       {

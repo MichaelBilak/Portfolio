@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Cormorant_Garamond,
-  IBM_Plex_Mono,
-  Manrope,
-  Unbounded,
-} from "next/font/google";
+import { IBM_Plex_Mono, Inter, Manrope, Unbounded } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -24,11 +19,10 @@ const display = Unbounded({
   preload: false,
 });
 
-// Brand wordmark keeps its original serif so the logo lockup never changes.
-// (Not part of the 3-font UI system — it's a locked brand asset.)
-const brand = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "600"],
+// Brand wordmark only — neutral product grotesque (rest of UI unchanged).
+const brand = Inter({
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600"],
   variable: "--font-brand",
   display: "swap",
   preload: true,
