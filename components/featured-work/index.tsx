@@ -128,7 +128,7 @@ function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardP
       <Link
         href="/work"
         aria-label={`${title} (${count})`}
-        className="glass-card group relative flex items-center justify-between gap-5 overflow-hidden rounded-3xl px-6 py-6 transition-colors duration-300 hover:border-accentGold/40 md:px-10 md:py-8"
+        className="glass-card group relative flex flex-col items-start justify-between gap-5 overflow-hidden rounded-3xl px-6 py-6 transition-colors duration-300 hover:border-accentGold/40 sm:flex-row sm:items-center md:px-10 md:py-8"
       >
         <span
           aria-hidden
@@ -149,7 +149,7 @@ function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardP
           </div>
         </div>
 
-        <span className="relative inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-borderCool bg-white/[0.03] text-textPrimary transition-all duration-300 group-hover:border-accentGold group-hover:bg-accentGold/10 group-hover:text-accentGold md:h-16 md:w-16">
+        <span className="relative inline-flex h-12 w-12 shrink-0 items-center justify-center self-end rounded-full border border-borderCool bg-white/[0.03] text-textPrimary transition-all duration-300 group-hover:border-accentGold group-hover:bg-accentGold/10 group-hover:text-accentGold sm:h-14 sm:w-14 md:h-16 md:w-16">
           <ArrowUpRight
             size={22}
             className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

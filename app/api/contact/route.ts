@@ -9,7 +9,13 @@ interface ContactPayload {
   businessType?: string;
   brief?: string;
   source?: string;
+  selectedServices?: string[];
+  selectedAddons?: string[];
 }
+
+type ContactFormPayload = Required<
+  Pick<ContactPayload, "fullName" | "email" | "businessName" | "businessType" | "brief" | "source">
+>;
 
 const BUSINESS_TYPE_LABELS: Record<string, string> = {
   restaurant: "Restaurant",
@@ -25,11 +31,16 @@ const SOURCE_LABELS: Record<string, string> = {
   other: "Other",
 };
 
-function buildPlainText(p: Required<ContactPayload>, timestamp: string): string {
+function buildPlainText(
+  p: ContactFormPayload,
+  timestamp: string,
+  selectedServices: string[],
+  selectedAddons: string[],
+): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
   const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
 
-  return [
+  const lines = [
     "================================================",
     "  NEW AUDIT REQUEST  —  DormUp Group",
     "================================================",
@@ -40,6 +51,23 @@ function buildPlainText(p: Required<ContactPayload>, timestamp: string): string 
     `Business Name:   ${p.businessName}`,
     `Business Type:   ${businessTypeLabel}`,
     `How found us:    ${sourceLabel}`,
+  ];
+
+  if (selectedServices.length > 0) {
+    lines.push("", "Selected Services", "------------------------------------------------");
+    for (const name of selectedServices) {
+      lines.push(`• ${name}`);
+    }
+  }
+
+  if (selectedAddons.length > 0) {
+    lines.push("", "Add-on Modules", "------------------------------------------------");
+    for (const name of selectedAddons) {
+      lines.push(`• ${name}`);
+    }
+  }
+
+  lines.push(
     "",
     "Brief / Project Description",
     "------------------------------------------------",
@@ -47,11 +75,13 @@ function buildPlainText(p: Required<ContactPayload>, timestamp: string): string 
     "",
     "------------------------------------------------",
     "Sent automatically from dormup-it.com",
-  ].join("\n");
+  );
+
+  return lines.join("\n");
 }
 
 async function appendToGoogleSheets(
-  p: Required<ContactPayload>,
+  p: ContactFormPayload,
   timestamp: string,
 ): Promise<void> {
   const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
@@ -148,7 +178,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
   }
 
-  const p: Required<ContactPayload> = {
+  const p: ContactFormPayload = {
     fullName: payload.fullName?.trim() || "—",
     email: payload.email,
     businessName: payload.businessName,
@@ -156,6 +186,13 @@ export async function POST(request: NextRequest) {
     brief: payload.brief?.trim() || "—",
     source: payload.source ?? "other",
   };
+
+  const selectedServices = Array.isArray(payload.selectedServices)
+    ? payload.selectedServices.filter((s) => typeof s === "string" && s.trim())
+    : [];
+  const selectedAddons = Array.isArray(payload.selectedAddons)
+    ? payload.selectedAddons.filter((s) => typeof s === "string" && s.trim())
+    : [];
 
   const now = new Date();
   const timestamp = now.toLocaleString("en-GB", {
@@ -184,7 +221,7 @@ export async function POST(request: NextRequest) {
       from: `"DormUp Group" <${gmailUser}>`,
       to: toEmail,
       subject: `New audit request — ${p.businessName}`,
-      text: buildPlainText(p, timestamp),
+      text: buildPlainText(p, timestamp, selectedServices, selectedAddons),
     });
   })();
 

@@ -39,7 +39,7 @@ interface ImpactItem {
 
 function ImpactCard({ item, index }: { item: ImpactItem; index: number }) {
   return (
-    <article className="glass-card relative flex h-full flex-col overflow-hidden rounded-3xl p-7 md:p-8">
+    <article className="glass-card relative flex h-full flex-col overflow-hidden rounded-3xl p-5 sm:p-7 md:p-8">
       <h3 className="relative text-2xl font-semibold leading-snug tracking-tight text-textPrimary md:text-[1.55rem]">
         {item.title}
       </h3>

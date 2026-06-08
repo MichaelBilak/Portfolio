@@ -8,7 +8,7 @@ interface AboutProps {
 
 export function About({ t }: AboutProps) {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden py-14 md:py-32">
       <div className="container-lux">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
           <div className="max-w-2xl">
@@ -16,7 +16,7 @@ export function About({ t }: AboutProps) {
               <Eyebrow>{t.about.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 whitespace-nowrap font-display font-light text-textPrimary [font-size:clamp(1.2rem,6vw,2rem)] md:whitespace-normal md:text-fluid-title">
+              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
                 {t.about.title}
               </h2>
             </Reveal>

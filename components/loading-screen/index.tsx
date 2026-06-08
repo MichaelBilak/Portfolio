@@ -227,7 +227,7 @@ export function LoadingScreen() {
           <div
             style={{
               position: "absolute",
-              bottom: "2.5rem",
+              bottom: "max(2.5rem, env(safe-area-inset-bottom))",
               left: "50%",
               transform: "translateX(-50%)",
               width: "min(280px, 70vw)",

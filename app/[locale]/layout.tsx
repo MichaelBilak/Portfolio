@@ -83,6 +83,12 @@ const localeMetaContent: Record<
       "Digitalstudio in Rimini, Italien. Wir gestalten Premium-Websites und digitale Erlebnisse für Marken und Unternehmen, die herausstechen wollen — ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
     ogLocale: "de_DE",
   },
+  es: {
+    title: "DormUp Group · Estudio Digital",
+    description:
+      "Estudio digital en Rímini, Italia. Creamos sitios web y experiencias digitales premium para marcas y negocios que quieren destacar — diseño distintivo, estrategia clara, resultados medibles.",
+    ogLocale: "es_ES",
+  },
 };
 
 function localePath(locale: Locale): string {
@@ -156,6 +162,7 @@ export async function generateMetadata({
 export const viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps) {

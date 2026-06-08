@@ -3,8 +3,15 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  SERVICE_BASE_PRICES,
+  SERVICE_MONTHLY,
+  type ServiceId,
+} from "@/data/pricing";
 import { Link } from "@/i18n/navigation";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
+import { PriceDisplay } from "@/components/price-display";
+import type { Locale } from "@/lib/translations";
 
 interface ServiceItem {
   id: string;
@@ -16,19 +23,27 @@ interface ServicesCrystalGridProps {
   metas: ServiceItem[];
   titles: string[];
   viewServiceLabel: string;
+  fromLabel: string;
+  locale: Locale;
 }
 
 function CrystalCard({
   meta,
   title,
   viewServiceLabel,
+  fromLabel,
+  locale,
 }: {
   meta: ServiceItem;
   title: string;
   viewServiceLabel: string;
+  fromLabel: string;
+  locale: Locale;
 }) {
   const reduce = useReducedMotion();
   const { rotateX, rotateY, tiltHandlers } = useCrystalTilt();
+  const price = SERVICE_BASE_PRICES[meta.id as ServiceId];
+  const monthly = SERVICE_MONTHLY[meta.id as ServiceId];
 
   return (
     <Link
@@ -36,7 +51,6 @@ function CrystalCard({
       className="group focus-outline flex flex-col items-center text-center"
       aria-label={title}
     >
-      {/* Tilt stage — pointer (mouse/finger) + gyroscope driven */}
       <motion.div
         {...tiltHandlers}
         className="crystal-stage relative flex h-28 w-full touch-pan-y items-center justify-center sm:h-36 md:h-44"
@@ -56,13 +70,22 @@ function CrystalCard({
         />
       </motion.div>
 
-      {/* Label */}
       <h3 className="mt-3 text-base font-semibold leading-tight tracking-tight text-textPrimary md:text-lg">
         {title}
       </h3>
 
-      {/* CTA */}
-      <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-accentGold/70 transition-colors duration-300 group-hover:text-accentGold">
+      <div className="mt-2">
+        <PriceDisplay
+          amount={price}
+          locale={locale}
+          prefixLabel={fromLabel}
+          monthly={monthly}
+          size="sm"
+          className="opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+        />
+      </div>
+
+      <span className="mt-2.5 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-textMuted transition-colors duration-300 group-hover:text-accentGold/80">
         {viewServiceLabel}
         <ArrowUpRight
           size={11}
@@ -77,15 +100,19 @@ export function ServicesCrystalGrid({
   metas,
   titles,
   viewServiceLabel,
+  fromLabel,
+  locale,
 }: ServicesCrystalGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-5 md:gap-x-6">
+    <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 md:gap-x-6">
       {metas.map((meta, i) => (
         <CrystalCard
           key={meta.id}
           meta={meta}
           title={titles[i]}
           viewServiceLabel={viewServiceLabel}
+          fromLabel={fromLabel}
+          locale={locale}
         />
       ))}
     </div>

@@ -36,7 +36,7 @@ export default async function ContactPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-28 md:pt-32">
+      <main className="relative pt-page pb-safe">
         <div className="container-lux max-w-4xl pb-4 md:hidden">
           <Link
             href="/"
@@ -50,7 +50,7 @@ export default async function ContactPage({ params }: PageProps) {
         <Contact t={t} />
       </main>
 
-      <Footer t={t} />
+      <Footer t={t} className="!pb-0 pb-safe lg:!pb-0" />
     </>
   );
 }

@@ -1,4 +1,4 @@
-export type Locale = "it" | "en" | "fr" | "ru" | "de";
+export type Locale = "it" | "en" | "fr" | "ru" | "de" | "es";
 
 export interface LocalizedProject {
   id: string;
@@ -24,7 +24,7 @@ export interface LocalizedService {
   portfolioLinkLabel2?: string;
   pricingSectionTitle?: string;
   pricingFootnote?: string;
-  pricingTiers?: { name: string; detail: string }[];
+  pricingTiers?: { tierId: string; name: string; detail: string }[];
 }
 
 export interface LocalizedProcessStep {
@@ -58,6 +58,7 @@ export interface TranslationSet {
     primaryCta: string;
     secondaryCta: string;
     buyCta: string;
+    buyCtaShort: string;
     socialProof: string;
     mockupCaption: string;
     mockupCaptionSm?: true;
@@ -129,6 +130,13 @@ export interface TranslationSet {
     emailLabel: string;
     whatsappLabel: string;
     availability: string;
+    cart: {
+      eyebrow: string;
+      title: string;
+      addonsLabel: string;
+      continueSearch: string;
+      removeItem: string;
+    };
     form: {
       name: string;
       email: string;
@@ -160,10 +168,24 @@ export interface TranslationSet {
     title: string;
     subtitle: string;
     fromLabel: string;
+    plusLabel: string;
     selectHint: string;
     proceedCta: string;
     footnote: string;
-    prices: Record<string, string>;
+    estimatedLabel: string;
+    addonsSectionTitle: string;
+    aboutServiceCta: string;
+  };
+  pricingAddons: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    footnote: string;
+    categories: {
+      id: string;
+      title: string;
+      items: { id: string; label: string; info: string }[];
+    }[];
   };
   aboutPage: {
     backToHome: string;
@@ -187,6 +209,8 @@ export interface TranslationSet {
     otherServices: string;
     sectionEyebrow: string;
     pricingEyebrow: string;
+    popularLabel: string;
+    orderCta: string;
   };
   servicesPage: {
     eyebrow: string;
@@ -194,6 +218,7 @@ export interface TranslationSet {
     subtitle: string;
     techStack: string;
     viewAll: string;
+    pricingNote: string;
     categories: { title: string; items: { label: string; info: string }[] }[];
   };
   workPage: {
@@ -286,6 +311,26 @@ const it: TranslationSet = {
         "CMS opzionale per gestione contenuti",
         "Lancio e supporto post-live incluso",
       ],
+      pricingSectionTitle: "Pacchetti sito web",
+      pricingFootnote:
+        "Importi indicativi «da». Il preventivo finale dipende da pagine, integrazioni e tempistiche.",
+      pricingTiers: [
+        {
+          tierId: "starter",
+          name: "Starter",
+          detail: "Landing · 3–5 schermate · 1 lingua · SEO base incluso.",
+        },
+        {
+          tierId: "business",
+          name: "Business",
+          detail: "6–10 pagine · CMS · form · SEO base · ideale per PMI e hospitality.",
+        },
+        {
+          tierId: "premium",
+          name: "Premium",
+          detail: "Sito completo · multilingua · booking · animazioni · massima conversione.",
+        },
+      ],
     },
     {
       id: "redesign",
@@ -299,6 +344,26 @@ const it: TranslationSet = {
         "Identita visiva aggiornata e premium",
         "Migrazione contenuti senza perdite",
         "Setup analytics e tracking",
+      ],
+      pricingSectionTitle: "Pacchetti redesign",
+      pricingFootnote:
+        "Il costo dipende dallo stato attuale del sito, dal numero di pagine e dal livello di personalizzazione.",
+      pricingTiers: [
+        {
+          tierId: "audit",
+          name: "Solo audit",
+          detail: "Analisi completa · report con priorità · roadmap di miglioramento.",
+        },
+        {
+          tierId: "standard",
+          name: "Standard",
+          detail: "Redesign schermate chiave + implementazione · nuova UX e visual.",
+        },
+        {
+          tierId: "full",
+          name: "Completo",
+          detail: "Redesign totale · migrazione contenuti · analytics e tracking.",
+        },
       ],
     },
     {
@@ -314,6 +379,26 @@ const it: TranslationSet = {
         "Test A/B su CTA e flussi chiave",
         "Report mensile sui risultati",
       ],
+      pricingSectionTitle: "Pacchetti booking & lead",
+      pricingFootnote:
+        "Compatibile con siti esistenti o nuovi progetti. Il prezzo varia in base a integrazioni e complessità del funnel.",
+      pricingTiers: [
+        {
+          tierId: "single",
+          name: "Singolo flusso",
+          detail: "Un percorso — prenotazione o richiesta diretta · form + CTA ottimizzati.",
+        },
+        {
+          tierId: "multi",
+          name: "Multi-flusso",
+          detail: "Più percorsi · integrazione booking · ottimizzazione CTA su tutto il sito.",
+        },
+        {
+          tierId: "full",
+          name: "Completo",
+          detail: "Funnel end-to-end · A/B test · report mensile sui risultati.",
+        },
+      ],
     },
     {
       id: "monthly-support",
@@ -327,6 +412,26 @@ const it: TranslationSet = {
         "Ottimizzazioni continue di conversione",
         "Priorita su nuove richieste",
         "Report mensile chiaro",
+      ],
+      pricingSectionTitle: "Piani di supporto",
+      pricingFootnote:
+        "Canone mensile. Ore non utilizzate non si accumulano — si rinnovano ogni mese.",
+      pricingTiers: [
+        {
+          tierId: "essential",
+          name: "Essential",
+          detail: "~2 ore/mese · aggiornamenti · monitoraggio base · risposta prioritaria.",
+        },
+        {
+          tierId: "growth",
+          name: "Growth",
+          detail: "~5 ore/mese · ottimizzazione continua · report mensile.",
+        },
+        {
+          tierId: "priority",
+          name: "Priority",
+          detail: "~10 ore/mese · massima priorità · report dettagliato.",
+        },
       ],
     },
     {
@@ -349,14 +454,17 @@ const it: TranslationSet = {
         "Importi indicativi: si definiscono in preventivo in base a location, durata e diritti di utilizzo.",
       pricingTiers: [
         {
+          tierId: "half-day",
           name: "Half day",
           detail: "Fino a 4 ore · foto o video · selezione e editing base · ideale per menu e social.",
         },
         {
+          tierId: "full-day",
           name: "Full day",
           detail: "Giornata intera · foto + video · più varianti per campagne e sito.",
         },
         {
+          tierId: "retainer",
           name: "Retainer / mensile",
           detail: "Sessioni ricorrenti e calendario contenuti · continuità per feed e ads.",
         },
@@ -417,6 +525,7 @@ const it: TranslationSet = {
     primaryCta: "Vedi i progetti",
     secondaryCta: "Richiedi audit gratuito",
     buyCta: "Ordina servizi",
+    buyCtaShort: "Ordina",
     socialProof: "4 progetti · Emilia-Romagna & Italia · Disponibile per nuovi clienti",
     mockupCaption: "Il tuo miglior biglietto da visita",
   },
@@ -424,14 +533,15 @@ const it: TranslationSet = {
     "Design che converte",
     "Pensato per brand ambiziosi",
     "Prenotazioni e lead diretti",
-    "Mobile-first & veloce",
+    "Ottimo su smartphone",
   ],
   proof: {
     eyebrow: "In numeri",
     items: [
       { value: "1h", label: "Tempo di risposta medio" },
-      { value: "100%", label: "Mobile-first e veloce" },
-      { value: "20%", label: "Commissioni ai portali che puoi evitare" },
+      { value: "100%", label: "Custom per il tuo brand, personale" },
+      { value: "70%", label: "Giudica un business dal sito" },
+      { value: "26", label: "Servizi e moduli disponibili" },
       { value: "2 sett.", label: "Avvio medio progetto" },
     ],
   },
@@ -563,11 +673,18 @@ const it: TranslationSet = {
   },
   contact: {
     label: "Iniziamo",
-    title: "Creiamo siti e prodotti digitali per il tuo business.",
+    title: "Un ambiente digitale per business che non vogliono essere come tutti.",
     body: "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Rispondiamo entro 1h",
     availability: "Attualmente disponibile per nuovi clienti",
+    cart: {
+      eyebrow: "La tua selezione",
+      title: "Servizi scelti",
+      addonsLabel: "Moduli aggiuntivi",
+      continueSearch: "Continua a scegliere",
+      removeItem: "Rimuovi",
+    },
     form: {
       name: "Nome e cognome",
       email: "Email",
@@ -600,17 +717,69 @@ const it: TranslationSet = {
     subtitle:
       "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora. I prezzi sono indicativi e dipendono da scope e tempistiche.",
     fromLabel: "da",
+    plusLabel: "+",
     selectHint: "Seleziona almeno un servizio per continuare, oppure scrivici direttamente.",
     proceedCta: "Richiedi preventivo",
     footnote:
       "Dopo la richiesta ricevi una risposta con scope, tempi e costo finale. Nessun pagamento automatico.",
-    prices: {
-      "premium-site": "€2.500",
-      redesign: "€1.500",
-      "booking-flow": "€800",
-      "monthly-support": "€200/mese",
-      "photo-video": "€600",
-    },
+    estimatedLabel: "Stima indicativa",
+    addonsSectionTitle: "Moduli aggiuntivi",
+    aboutServiceCta: "Info sul servizio",
+  },
+  pricingAddons: {
+    eyebrow: "Moduli",
+    title: "Estendi il progetto",
+    subtitle:
+      "Aggiungi funzionalita al pacchetto base. I moduli «+» si sommano al prezzo principale; quelli «da» sono progetti autonomi.",
+    footnote:
+      "Tutti gli importi sono indicativi. Il preventivo finale viene definito dopo il brief.",
+    categories: [
+      {
+        id: "websites",
+        title: "Siti web",
+        items: [
+          { id: "corporate", label: "Siti aziendali", info: "Multi-pagina con team, servizi e SEO." },
+          { id: "promo", label: "Promo", info: "Sito a breve termine per lanci e campagne." },
+          { id: "landing", label: "Landing page", info: "Una pagina, un obiettivo, massima conversione." },
+          { id: "media-blog", label: "Media e blog", info: "Articoli, categorie, tag e RSS." },
+          { id: "no-code", label: "No/Low-code", info: "Webflow, Framer o Tilda — consegna rapida." },
+        ],
+      },
+      {
+        id: "products",
+        title: "Prodotti digitali",
+        items: [
+          { id: "web-service", label: "Web service", info: "Dashboard, booking engine, marketplace." },
+          { id: "ecommerce", label: "E-commerce", info: "Shop con carrello, pagamenti e inventario." },
+          { id: "client-portal", label: "Area riservata", info: "Spazio clienti per ordini e documenti." },
+          { id: "chatbot", label: "Chatbot", info: "Flussi automatizzati per supporto e lead." },
+          { id: "intranet", label: "Intranet", info: "Portali interni per team e documenti." },
+          { id: "mobile-app", label: "App mobile", info: "iOS e Android con React Native o Flutter." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Design",
+        items: [
+          { id: "ux-ui", label: "UX & UI", info: "Wireframe e design d'interfaccia." },
+          { id: "branding", label: "Branding", info: "Logo, palette, tipografia e identita." },
+          { id: "motion-sound", label: "Motion & Sound", info: "Animazioni e identita sonora." },
+          { id: "ux-research", label: "UX Research", info: "Interviste, test e decisioni data-driven." },
+        ],
+      },
+      {
+        id: "development",
+        title: "Sviluppo",
+        items: [
+          { id: "cms", label: "CMS", info: "Gestione contenuti autonoma." },
+          { id: "multilingual", label: "Multilingua", info: "Per ogni lingua aggiuntiva." },
+          { id: "backend", label: "Backend / API", info: "Logica server, database e autenticazione." },
+          { id: "qa", label: "Quality Assurance", info: "Test su dispositivi e browser." },
+          { id: "devops", label: "DevOps", info: "CI/CD, hosting e monitoraggio." },
+          { id: "seo-extended", label: "SEO esteso", info: "Ottimizzazione avanzata e struttura." },
+        ],
+      },
+    ],
   },
   aboutPage: {
     backToHome: "Torna alla home",
@@ -634,6 +803,8 @@ const it: TranslationSet = {
     otherServices: "Altri servizi",
     sectionEyebrow: "Servizio",
     pricingEyebrow: "Tariffe",
+    popularLabel: "Piu scelto",
+    orderCta: "Richiedi il servizio",
   },
   servicesPage: {
     eyebrow: "Servizi",
@@ -641,6 +812,8 @@ const it: TranslationSet = {
     subtitle: "Dal sito di presentazione alla piattaforma digitale completa.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
+    pricingNote:
+      "I prezzi dei pacchetti principali sono nella sezione Tariffe di ogni servizio. I moduli sotto si aggiungono su richiesta.",
     categories: [
       {
         title: "Siti web",
@@ -775,6 +948,26 @@ const en: TranslationSet = {
         "Optional CMS for content management",
         "Launch and post-live support included",
       ],
+      pricingSectionTitle: "Website packages",
+      pricingFootnote:
+        "Indicative starting prices. Final quote depends on pages, integrations and timeline.",
+      pricingTiers: [
+        {
+          tierId: "starter",
+          name: "Starter",
+          detail: "Landing · 3–5 screens · 1 language · base SEO included.",
+        },
+        {
+          tierId: "business",
+          name: "Business",
+          detail: "6–10 pages · CMS · forms · base SEO · ideal for SMBs and hospitality.",
+        },
+        {
+          tierId: "premium",
+          name: "Premium",
+          detail: "Full site · multilingual · booking · animations · maximum conversion.",
+        },
+      ],
     },
     {
       id: "redesign",
@@ -788,6 +981,26 @@ const en: TranslationSet = {
         "Updated, premium visual identity",
         "Content migration without loss",
         "Analytics and tracking setup",
+      ],
+      pricingSectionTitle: "Redesign packages",
+      pricingFootnote:
+        "Cost depends on current site state, page count and customization level.",
+      pricingTiers: [
+        {
+          tierId: "audit",
+          name: "Audit only",
+          detail: "Full analysis · priority report · improvement roadmap.",
+        },
+        {
+          tierId: "standard",
+          name: "Standard",
+          detail: "Key screens redesign + implementation · new UX and visual.",
+        },
+        {
+          tierId: "full",
+          name: "Full",
+          detail: "Complete redesign · content migration · analytics and tracking.",
+        },
       ],
     },
     {
@@ -803,6 +1016,26 @@ const en: TranslationSet = {
         "A/B testing on CTAs and key flows",
         "Monthly results report",
       ],
+      pricingSectionTitle: "Booking & lead packages",
+      pricingFootnote:
+        "Works with existing or new sites. Price varies by integrations and funnel complexity.",
+      pricingTiers: [
+        {
+          tierId: "single",
+          name: "Single flow",
+          detail: "One path — booking or enquiry · optimized form + CTA.",
+        },
+        {
+          tierId: "multi",
+          name: "Multi-flow",
+          detail: "Multiple paths · booking integration · site-wide CTA optimization.",
+        },
+        {
+          tierId: "full",
+          name: "Full",
+          detail: "End-to-end funnel · A/B testing · monthly results report.",
+        },
+      ],
     },
     {
       id: "monthly-support",
@@ -816,6 +1049,25 @@ const en: TranslationSet = {
         "Continuous conversion optimization",
         "Priority on new requests",
         "Clear monthly report",
+      ],
+      pricingSectionTitle: "Support plans",
+      pricingFootnote: "Monthly retainer. Unused hours do not roll over.",
+      pricingTiers: [
+        {
+          tierId: "essential",
+          name: "Essential",
+          detail: "~2h/month · updates · basic monitoring · priority response.",
+        },
+        {
+          tierId: "growth",
+          name: "Growth",
+          detail: "~5h/month · continuous optimization · monthly report.",
+        },
+        {
+          tierId: "priority",
+          name: "Priority",
+          detail: "~10h/month · top priority · detailed report.",
+        },
       ],
     },
     {
@@ -838,14 +1090,17 @@ const en: TranslationSet = {
         "Figures are quoted per brief depending on location, duration, and usage rights.",
       pricingTiers: [
         {
+          tierId: "half-day",
           name: "Half day",
           detail: "Up to 4 hours · photo or video · curated selects and base edit · ideal for menus and social.",
         },
         {
+          tierId: "full-day",
           name: "Full day",
           detail: "Full shoot day · photo + video · more variants for site and campaigns.",
         },
         {
+          tierId: "retainer",
           name: "Monthly retainer",
           detail: "Recurring shoots and a content cadence · continuity for feed and ads.",
         },
@@ -906,6 +1161,7 @@ const en: TranslationSet = {
     primaryCta: "View projects",
     secondaryCta: "Request free audit",
     buyCta: "Order services",
+    buyCtaShort: "Order",
     socialProof: "4 projects · Emilia-Romagna & Italy · Available for new clients",
     mockupCaption: "Your best business card",
   },
@@ -913,14 +1169,15 @@ const en: TranslationSet = {
     "Design that converts",
     "Built for brands that stand out",
     "Direct bookings & leads",
-    "Mobile-first & fast",
+    "Great on phones",
   ],
   proof: {
     eyebrow: "By the numbers",
     items: [
       { value: "1h", label: "Average response time" },
-      { value: "100%", label: "Mobile-first & fast" },
-      { value: "20%", label: "Booking site fees you can avoid" },
+      { value: "100%", label: "Custom for your brand, personally" },
+      { value: "70%", label: "Judge a business by its website" },
+      { value: "26", label: "Services & add-on modules" },
       { value: "2 wks", label: "Average project kickoff" },
     ],
   },
@@ -1052,11 +1309,18 @@ const en: TranslationSet = {
   },
   contact: {
     label: "Let's start",
-    title: "We build websites and digital products for your business.",
+    title: "A digital environment for businesses that don't want to be like everyone else.",
     body: "After your message you get a clear reply with next steps, timeline and feasibility.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reply within 1h",
     availability: "Currently available for new clients",
+    cart: {
+      eyebrow: "Your selection",
+      title: "Selected services",
+      addonsLabel: "Add-on modules",
+      continueSearch: "Continue browsing services",
+      removeItem: "Remove",
+    },
     form: {
       name: "Full name",
       email: "Email",
@@ -1089,17 +1353,68 @@ const en: TranslationSet = {
     subtitle:
       "Select one or more options — you'll get a tailored quote within 1 hour. Prices are starting points and depend on scope and timeline.",
     fromLabel: "from",
+    plusLabel: "+",
     selectHint: "Select at least one service to continue, or message us directly.",
     proceedCta: "Request a quote",
     footnote:
       "After your request you get scope, timeline and final cost. No automatic payment.",
-    prices: {
-      "premium-site": "€2,500",
-      redesign: "€1,500",
-      "booking-flow": "€800",
-      "monthly-support": "€200/mo",
-      "photo-video": "€600",
-    },
+    estimatedLabel: "Indicative estimate",
+    addonsSectionTitle: "Add-on modules",
+    aboutServiceCta: "About this service",
+  },
+  pricingAddons: {
+    eyebrow: "Modules",
+    title: "Extend your project",
+    subtitle:
+      "Add capabilities to the base package. «+» modules stack on the main price; «from» items are standalone projects.",
+    footnote: "All figures are indicative. Final quote is set after the brief.",
+    categories: [
+      {
+        id: "websites",
+        title: "Websites",
+        items: [
+          { id: "corporate", label: "Corporate sites", info: "Multi-page with team, services and SEO." },
+          { id: "promo", label: "Promo", info: "Short-term site for launches and campaigns." },
+          { id: "landing", label: "Landing pages", info: "One page, one goal, maximum conversion." },
+          { id: "media-blog", label: "Media & blogs", info: "Articles, categories, tags and RSS." },
+          { id: "no-code", label: "No/Low-code", info: "Webflow, Framer or Tilda — fast delivery." },
+        ],
+      },
+      {
+        id: "products",
+        title: "Digital products",
+        items: [
+          { id: "web-service", label: "Web services", info: "Dashboards, booking engines, marketplaces." },
+          { id: "ecommerce", label: "E-commerce", info: "Shop with cart, payments and inventory." },
+          { id: "client-portal", label: "Client portals", info: "Protected space for orders and documents." },
+          { id: "chatbot", label: "Chatbots", info: "Automated flows for support and leads." },
+          { id: "intranet", label: "Intranets", info: "Internal portals for teams and docs." },
+          { id: "mobile-app", label: "Mobile apps", info: "iOS and Android with React Native or Flutter." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Design",
+        items: [
+          { id: "ux-ui", label: "UX & UI", info: "Wireframes and interface design." },
+          { id: "branding", label: "Branding", info: "Logo, palette, typography and identity." },
+          { id: "motion-sound", label: "Motion & Sound", info: "Animations and sonic branding." },
+          { id: "ux-research", label: "UX Research", info: "Interviews, tests and data-driven decisions." },
+        ],
+      },
+      {
+        id: "development",
+        title: "Development",
+        items: [
+          { id: "cms", label: "CMS", info: "Self-managed content." },
+          { id: "multilingual", label: "Multilingual", info: "Per additional language." },
+          { id: "backend", label: "Backend / API", info: "Server logic, database and auth." },
+          { id: "qa", label: "Quality Assurance", info: "Testing across devices and browsers." },
+          { id: "devops", label: "DevOps", info: "CI/CD, hosting and monitoring." },
+          { id: "seo-extended", label: "Extended SEO", info: "Advanced optimization and structure." },
+        ],
+      },
+    ],
   },
   aboutPage: {
     backToHome: "Back to home",
@@ -1123,6 +1438,8 @@ const en: TranslationSet = {
     otherServices: "Other services",
     sectionEyebrow: "Service",
     pricingEyebrow: "Pricing",
+    popularLabel: "Most popular",
+    orderCta: "Request this service",
   },
   servicesPage: {
     eyebrow: "Services",
@@ -1130,6 +1447,8 @@ const en: TranslationSet = {
     subtitle: "From a presentation site to a full digital platform.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
+    pricingNote:
+      "Main package prices are in each service's Pricing section. Modules below can be added on request.",
     categories: [
       {
         title: "Websites",
@@ -1264,6 +1583,14 @@ const fr: TranslationSet = {
         "CMS optionnel pour la gestion de contenu",
         "Lancement et support post-live inclus",
       ],
+      pricingSectionTitle: "Forfaits site web",
+      pricingFootnote:
+        "Montants indicatifs « a partir de ». Le devis final depend des pages, integrations et delais.",
+      pricingTiers: [
+        { tierId: "starter", name: "Starter", detail: "Landing · 3–5 ecrans · 1 langue · SEO de base." },
+        { tierId: "business", name: "Business", detail: "6–10 pages · CMS · formulaires · SEO de base." },
+        { tierId: "premium", name: "Premium", detail: "Site complet · multilingue · booking · animations." },
+      ],
     },
     {
       id: "redesign",
@@ -1277,6 +1604,13 @@ const fr: TranslationSet = {
         "Identite visuelle mise a jour, premium",
         "Migration de contenu sans perte",
         "Configuration analytics et tracking",
+      ],
+      pricingSectionTitle: "Forfaits redesign",
+      pricingFootnote: "Le cout depend de l etat actuel du site et du nombre de pages.",
+      pricingTiers: [
+        { tierId: "audit", name: "Audit seul", detail: "Analyse complete · rapport priorise · feuille de route." },
+        { tierId: "standard", name: "Standard", detail: "Redesign des ecrans cles + implementation." },
+        { tierId: "full", name: "Complet", detail: "Redesign total · migration contenu · analytics." },
       ],
     },
     {
@@ -1292,6 +1626,13 @@ const fr: TranslationSet = {
         "A/B testing sur CTAs et flux cles",
         "Rapport mensuel des resultats",
       ],
+      pricingSectionTitle: "Forfaits booking & lead",
+      pricingFootnote: "Compatible site existant ou nouveau projet.",
+      pricingTiers: [
+        { tierId: "single", name: "Flux unique", detail: "Reservation ou demande · formulaire + CTA optimises." },
+        { tierId: "multi", name: "Multi-flux", detail: "Plusieurs parcours · integration booking · CTA site-wide." },
+        { tierId: "full", name: "Complet", detail: "Funnel complet · A/B test · rapport mensuel." },
+      ],
     },
     {
       id: "monthly-support",
@@ -1305,6 +1646,13 @@ const fr: TranslationSet = {
         "Optimisations continues de conversion",
         "Priorite sur les nouvelles demandes",
         "Rapport mensuel clair",
+      ],
+      pricingSectionTitle: "Plans de support",
+      pricingFootnote: "Forfait mensuel. Les heures non utilisees ne sont pas reportees.",
+      pricingTiers: [
+        { tierId: "essential", name: "Essential", detail: "~2h/mois · mises a jour · monitoring de base." },
+        { tierId: "growth", name: "Growth", detail: "~5h/mois · optimisation continue · rapport mensuel." },
+        { tierId: "priority", name: "Priority", detail: "~10h/mois · priorite maximale · rapport detaille." },
       ],
     },
     {
@@ -1326,18 +1674,9 @@ const fr: TranslationSet = {
       pricingFootnote:
         "Montants indicatifs : devis selon lieu, duree et droits d exploitation.",
       pricingTiers: [
-        {
-          name: "Demi-journee",
-          detail: "Jusqu a 4h · photo ou video · selection et montage de base.",
-        },
-        {
-          name: "Journee complete",
-          detail: "Journee pleine · photo + video · variantes pour site et campagnes.",
-        },
-        {
-          name: "Forfait mensuel",
-          detail: "Seances recurrentes et planning contenus · continuite feed et pubs.",
-        },
+        { tierId: "half-day", name: "Demi-journee", detail: "Jusqu a 4h · photo ou video · montage de base." },
+        { tierId: "full-day", name: "Journee complete", detail: "Journee pleine · photo + video · variantes campagnes." },
+        { tierId: "retainer", name: "Forfait mensuel", detail: "Seances recurrentes · planning contenus." },
       ],
     },
   ],
@@ -1395,6 +1734,7 @@ const fr: TranslationSet = {
     primaryCta: "Voir les projets",
     secondaryCta: "Demander un audit",
     buyCta: "Commander des services",
+    buyCtaShort: "Commander",
     socialProof: "4 projets · Emilia-Romagna & Italie · Disponible pour nouveaux clients",
     mockupCaption: "Votre meilleure carte de visite",
   },
@@ -1402,14 +1742,15 @@ const fr: TranslationSet = {
     "Design qui convertit",
     "Pensé pour les marques ambitieuses",
     "Reservations et leads directs",
-    "Mobile-first et rapide",
+    "Parfait sur smartphone",
   ],
   proof: {
     eyebrow: "En chiffres",
     items: [
       { value: "1h", label: "Temps de reponse moyen" },
-      { value: "100%", label: "Mobile-first et rapide" },
-      { value: "20%", label: "Commissions aux plateformes evitables" },
+      { value: "100%", label: "Custom pour votre marque, en personne" },
+      { value: "70%", label: "Jugent un business par son site" },
+      { value: "26", label: "Services et modules disponibles" },
       { value: "2 sem.", label: "Demarrage moyen projet" },
     ],
   },
@@ -1541,11 +1882,18 @@ const fr: TranslationSet = {
   },
   contact: {
     label: "Commencons",
-    title: "Nous creons des sites et produits digitaux pour votre business.",
+    title: "Un environnement digital pour les business qui ne veulent pas ressembler a tout le monde.",
     body: "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reponse sous 1h",
     availability: "Actuellement disponible pour nouveaux clients",
+    cart: {
+      eyebrow: "Votre selection",
+      title: "Services choisis",
+      addonsLabel: "Modules additionnels",
+      continueSearch: "Continuer la selection",
+      removeItem: "Retirer",
+    },
     form: {
       name: "Nom et prenom",
       email: "E-mail",
@@ -1582,13 +1930,63 @@ const fr: TranslationSet = {
     proceedCta: "Demander un devis",
     footnote:
       "Apres votre demande vous recevez scope, delais et cout final. Aucun paiement automatique.",
-    prices: {
-      "premium-site": "€2.500",
-      redesign: "€1.500",
-      "booking-flow": "€800",
-      "monthly-support": "€200/mois",
-      "photo-video": "€600",
-    },
+    plusLabel: "+",
+    estimatedLabel: "Estimation indicative",
+    addonsSectionTitle: "Modules additionnels",
+    aboutServiceCta: "A propos du service",
+  },
+  pricingAddons: {
+    eyebrow: "Modules",
+    title: "Etendez votre projet",
+    subtitle: "Ajoutez des fonctionnalites au forfait de base.",
+    footnote: "Montants indicatifs. Devis final apres le brief.",
+    categories: [
+      {
+        id: "websites",
+        title: "Sites web",
+        items: [
+          { id: "corporate", label: "Sites d'entreprise", info: "Multi-pages avec equipe et SEO." },
+          { id: "promo", label: "Promo", info: "Site court terme pour lancements." },
+          { id: "landing", label: "Landing pages", info: "Une page, un objectif." },
+          { id: "media-blog", label: "Medias et blogs", info: "Articles, categories et RSS." },
+          { id: "no-code", label: "No/Low-code", info: "Webflow, Framer ou Tilda." },
+        ],
+      },
+      {
+        id: "products",
+        title: "Produits numeriques",
+        items: [
+          { id: "web-service", label: "Services web", info: "Dashboards, booking, marketplaces." },
+          { id: "ecommerce", label: "E-commerce", info: "Boutique avec panier et paiements." },
+          { id: "client-portal", label: "Espaces clients", info: "Zone securisee pour commandes." },
+          { id: "chatbot", label: "Chatbots", info: "Flux automatises support et leads." },
+          { id: "intranet", label: "Intranets", info: "Portails internes equipes." },
+          { id: "mobile-app", label: "Apps mobiles", info: "iOS et Android." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Design",
+        items: [
+          { id: "ux-ui", label: "UX & UI", info: "Wireframes et interfaces." },
+          { id: "branding", label: "Branding", info: "Logo, palette et identite." },
+          { id: "motion-sound", label: "Motion & Sound", info: "Animations et son de marque." },
+          { id: "ux-research", label: "UX Research", info: "Interviews et tests." },
+        ],
+      },
+      {
+        id: "development",
+        title: "Developpement",
+        items: [
+          { id: "cms", label: "CMS", info: "Gestion de contenu autonome." },
+          { id: "multilingual", label: "Multilingue", info: "Par langue supplementaire." },
+          { id: "backend", label: "Backend / API", info: "Logique serveur et base de donnees." },
+          { id: "qa", label: "Quality Assurance", info: "Tests multi-appareils." },
+          { id: "devops", label: "DevOps", info: "CI/CD et monitoring." },
+          { id: "seo-extended", label: "SEO etendu", info: "Optimisation avancee." },
+        ],
+      },
+    ],
   },
   aboutPage: {
     backToHome: "Retour a l'accueil",
@@ -1612,6 +2010,8 @@ const fr: TranslationSet = {
     otherServices: "Autres services",
     sectionEyebrow: "Service",
     pricingEyebrow: "Tarifs",
+    popularLabel: "Le plus choisi",
+    orderCta: "Demander ce service",
   },
   servicesPage: {
     eyebrow: "Services",
@@ -1619,6 +2019,7 @@ const fr: TranslationSet = {
     subtitle: "Du site vitrine à la plateforme numérique complète.",
     techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tous les services",
+    pricingNote: "Les tarifs des forfaits principaux sont dans la section Tarifs de chaque service.",
     categories: [
       {
         title: "Sites web",
@@ -1753,6 +2154,14 @@ const ru: TranslationSet = {
         "Опциональный CMS для управления контентом",
         "Запуск и поддержка после launch включены",
       ],
+      pricingSectionTitle: "Пакеты сайта",
+      pricingFootnote:
+        "Цены указаны «от». Итоговая смета зависит от страниц, интеграций и сроков.",
+      pricingTiers: [
+        { tierId: "starter", name: "Starter", detail: "Лендинг · 3–5 экранов · 1 язык · базовый SEO." },
+        { tierId: "business", name: "Business", detail: "6–10 страниц · CMS · формы · SEO · для SMB и hospitality." },
+        { tierId: "premium", name: "Premium", detail: "Полный сайт · мультиязычность · booking · анимации." },
+      ],
     },
     {
       id: "redesign",
@@ -1766,6 +2175,13 @@ const ru: TranslationSet = {
         "Обновлённая премиум-идентичность",
         "Миграция контента без потерь",
         "Настройка аналитики и трекинга",
+      ],
+      pricingSectionTitle: "Пакеты редизайна",
+      pricingFootnote: "Стоимость зависит от состояния сайта и количества страниц.",
+      pricingTiers: [
+        { tierId: "audit", name: "Только аудит", detail: "Полный анализ · отчёт с приоритетами · roadmap." },
+        { tierId: "standard", name: "Standard", detail: "Редизайн ключевых экранов + внедрение." },
+        { tierId: "full", name: "Полный", detail: "Полный редизайн · миграция · аналитика." },
       ],
     },
     {
@@ -1781,6 +2197,13 @@ const ru: TranslationSet = {
         "A/B-тесты CTA и ключевых flow",
         "Ежемесячный отчёт по результатам",
       ],
+      pricingSectionTitle: "Пакеты booking и lead",
+      pricingFootnote: "Подходит для существующих и новых сайтов.",
+      pricingTiers: [
+        { tierId: "single", name: "Один поток", detail: "Бронь или заявка · форма + CTA." },
+        { tierId: "multi", name: "Несколько потоков", detail: "Интеграция booking · оптимизация CTA." },
+        { tierId: "full", name: "Полный", detail: "Весь funnel · A/B · ежемесячный отчёт." },
+      ],
     },
     {
       id: "monthly-support",
@@ -1794,6 +2217,13 @@ const ru: TranslationSet = {
         "Постоянные улучшения конверсии",
         "Приоритет по новым запросам",
         "Ясный ежемесячный отчёт",
+      ],
+      pricingSectionTitle: "Планы поддержки",
+      pricingFootnote: "Ежемесячный абонемент. Неиспользованные часы не переносятся.",
+      pricingTiers: [
+        { tierId: "essential", name: "Essential", detail: "~2 ч/мес · обновления · базовый мониторинг." },
+        { tierId: "growth", name: "Growth", detail: "~5 ч/мес · оптимизация · отчёт." },
+        { tierId: "priority", name: "Priority", detail: "~10 ч/мес · максимальный приоритет." },
       ],
     },
     {
@@ -1815,18 +2245,9 @@ const ru: TranslationSet = {
       pricingFootnote:
         "Итоговая стоимость — в смете: зависит от локации, времени съёмки и прав использования.",
       pricingTiers: [
-        {
-          name: "Полдня",
-          detail: "До 4 часов · фото или видео · отбор кадров и базовый монтаж · соцсети и меню.",
-        },
-        {
-          name: "Полный день",
-          detail: "Целый день · фото + видео · больше вариантов под сайт и рекламу.",
-        },
-        {
-          name: "Ежемесячно / ретейнер",
-          detail: "Регулярные съёмки и календарь контента · стабильный поток для ленты и ads.",
-        },
+        { tierId: "half-day", name: "Полдня", detail: "До 4 часов · фото или видео · базовый монтаж." },
+        { tierId: "full-day", name: "Полный день", detail: "Целый день · фото + видео · варианты под сайт." },
+        { tierId: "retainer", name: "Ретейнер", detail: "Регулярные съёмки · календарь контента." },
       ],
     },
   ],
@@ -1884,6 +2305,7 @@ const ru: TranslationSet = {
     primaryCta: "Смотреть проекты",
     secondaryCta: "Запросить бесплатный аудит",
     buyCta: "Заказать услуги",
+    buyCtaShort: "Заказать",
     socialProof: "4 проекта · Эмилия-Романья и Италия · Открыты для новых клиентов",
     mockupCaption: "Ваша лучшая визитная карточка",
     mockupCaptionSm: true,
@@ -1892,14 +2314,15 @@ const ru: TranslationSet = {
     "Дизайн, который конвертирует",
     "Для брендов, которые выделяются",
     "Прямые заявки и бронирования",
-    "Mobile-first и быстрый",
+    "Удобно со смартфона",
   ],
   proof: {
     eyebrow: "В цифрах",
     items: [
       { value: "1h", label: "Среднее время ответа" },
-      { value: "100%", label: "Mobile-first и быстро" },
-      { value: "20%", label: "Комиссии посредников, которые можно не платить" },
+      { value: "100%", label: "Кастом под ваш бренд лично" },
+      { value: "70%", label: "Судят о бизнесе по сайту" },
+      { value: "26", label: "Услуг и модулей на выбор" },
       { value: "2 нед.", label: "Средний старт проекта" },
     ],
   },
@@ -2031,11 +2454,18 @@ const ru: TranslationSet = {
   },
   contact: {
     label: "Начнём",
-    title: "Создаём сайты и цифровые продукты для вашего бизнеса.",
+    title: "Цифровая среда для бизнеса, который не хочет быть как все.",
     body: "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Ответ в течение 1ч",
     availability: "Сейчас открыты для новых клиентов",
+    cart: {
+      eyebrow: "Ваш выбор",
+      title: "Выбранные услуги",
+      addonsLabel: "Дополнительные модули",
+      continueSearch: "Продолжить выбор услуг",
+      removeItem: "Убрать",
+    },
     form: {
       name: "Имя и фамилия",
       email: "Email",
@@ -2072,13 +2502,64 @@ const ru: TranslationSet = {
     proceedCta: "Запросить расчёт",
     footnote:
       "После заявки вы получите объём работ, сроки и итоговую стоимость. Автоматической оплаты нет.",
-    prices: {
-      "premium-site": "€2 500",
-      redesign: "€1 500",
-      "booking-flow": "€800",
-      "monthly-support": "€200/мес",
-      "photo-video": "€600",
-    },
+    plusLabel: "+",
+    estimatedLabel: "Ориентировочная сумма",
+    addonsSectionTitle: "Дополнительные модули",
+    aboutServiceCta: "Об услуге",
+  },
+  pricingAddons: {
+    eyebrow: "Модули",
+    title: "Расширьте проект",
+    subtitle:
+      "Добавьте функции к базовому пакету. Модули «+» суммируются с основной ценой; «от» — отдельные проекты.",
+    footnote: "Все суммы ориентировочные. Итог — после брифа.",
+    categories: [
+      {
+        id: "websites",
+        title: "Сайты",
+        items: [
+          { id: "corporate", label: "Корпоративные", info: "Многостраничный сайт с SEO." },
+          { id: "promo", label: "Промо", info: "Краткосрочный сайт под акцию." },
+          { id: "landing", label: "Лендинги", info: "Одна страница, одна цель." },
+          { id: "media-blog", label: "Медиа и блоги", info: "Статьи, категории, RSS." },
+          { id: "no-code", label: "No/Low-code", info: "Webflow, Framer или Tilda." },
+        ],
+      },
+      {
+        id: "products",
+        title: "Продукты",
+        items: [
+          { id: "web-service", label: "Веб-сервисы", info: "Дашборды, booking, маркетплейсы." },
+          { id: "ecommerce", label: "Интернет-магазины", info: "Корзина, оплата, каталог." },
+          { id: "client-portal", label: "Личные кабинеты", info: "Заказы и документы клиентов." },
+          { id: "chatbot", label: "Чат-боты", info: "Поддержка и сбор лидов." },
+          { id: "intranet", label: "Интранеты", info: "Внутренние порталы команд." },
+          { id: "mobile-app", label: "Мобильные приложения", info: "iOS и Android." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Дизайн",
+        items: [
+          { id: "ux-ui", label: "UX & UI", info: "Вайрфреймы и интерфейсы." },
+          { id: "branding", label: "Брендинг", info: "Лого, палитра, типографика." },
+          { id: "motion-sound", label: "Motion & Sound", info: "Анимации и звук бренда." },
+          { id: "ux-research", label: "UX-исследования", info: "Интервью и тесты." },
+        ],
+      },
+      {
+        id: "development",
+        title: "Разработка",
+        items: [
+          { id: "cms", label: "CMS", info: "Самостоятельное управление контентом." },
+          { id: "multilingual", label: "Мультиязычность", info: "За каждый доп. язык." },
+          { id: "backend", label: "Backend / API", info: "Сервер, БД, авторизация." },
+          { id: "qa", label: "Quality Assurance", info: "Тестирование на устройствах." },
+          { id: "devops", label: "DevOps", info: "CI/CD и мониторинг." },
+          { id: "seo-extended", label: "Расширенный SEO", info: "Продвинутая оптимизация." },
+        ],
+      },
+    ],
   },
   aboutPage: {
     backToHome: "На главную",
@@ -2102,6 +2583,8 @@ const ru: TranslationSet = {
     otherServices: "Другие услуги",
     sectionEyebrow: "Услуга",
     pricingEyebrow: "Тарифы",
+    popularLabel: "Популярный",
+    orderCta: "Запросить услугу",
   },
   servicesPage: {
     eyebrow: "Услуги",
@@ -2109,6 +2592,8 @@ const ru: TranslationSet = {
     subtitle: "От сайта-визитки до полноценной цифровой платформы.",
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
+    pricingNote:
+      "Цены основных пакетов — в разделе «Тарифы» каждой услуги. Модули ниже добавляются по запросу.",
     categories: [
       {
         title: "Сайты",
@@ -2243,6 +2728,13 @@ const de: TranslationSet = {
         "Optionales CMS fur Content-Management",
         "Launch und Post-Live-Support inklusive",
       ],
+      pricingSectionTitle: "Website-Pakete",
+      pricingFootnote: "Indikative Startpreise. Endangebot hangt von Seiten und Integrationen ab.",
+      pricingTiers: [
+        { tierId: "starter", name: "Starter", detail: "Landing · 3–5 Screens · 1 Sprache · Basis-SEO." },
+        { tierId: "business", name: "Business", detail: "6–10 Seiten · CMS · Formulare · Basis-SEO." },
+        { tierId: "premium", name: "Premium", detail: "Volle Website · mehrsprachig · Booking · Animationen." },
+      ],
     },
     {
       id: "redesign",
@@ -2256,6 +2748,13 @@ const de: TranslationSet = {
         "Aktualisierte, premium visuelle Identitat",
         "Content-Migration ohne Verlust",
         "Analytics- und Tracking-Setup",
+      ],
+      pricingSectionTitle: "Redesign-Pakete",
+      pricingFootnote: "Kosten hangen vom aktuellen Zustand und Seitenumfang ab.",
+      pricingTiers: [
+        { tierId: "audit", name: "Nur Audit", detail: "Vollanalyse · Prioritatenreport · Roadmap." },
+        { tierId: "standard", name: "Standard", detail: "Redesign Kernscreens + Umsetzung." },
+        { tierId: "full", name: "Komplett", detail: "Volles Redesign · Migration · Analytics." },
       ],
     },
     {
@@ -2271,6 +2770,13 @@ const de: TranslationSet = {
         "A/B-Tests auf CTAs und Key Flows",
         "Monatlicher Ergebnisbericht",
       ],
+      pricingSectionTitle: "Booking- und Lead-Pakete",
+      pricingFootnote: "Fur bestehende oder neue Websites.",
+      pricingTiers: [
+        { tierId: "single", name: "Einzel-Flow", detail: "Buchung oder Anfrage · Formular + CTA." },
+        { tierId: "multi", name: "Multi-Flow", detail: "Mehrere Pfade · Booking-Integration." },
+        { tierId: "full", name: "Komplett", detail: "End-to-End-Funnel · A/B · Monatsreport." },
+      ],
     },
     {
       id: "monthly-support",
@@ -2284,6 +2790,13 @@ const de: TranslationSet = {
         "Kontinuierliche Conversion-Optimierung",
         "Prioritat bei neuen Anfragen",
         "Klarer monatlicher Bericht",
+      ],
+      pricingSectionTitle: "Support-Plane",
+      pricingFootnote: "Monatlicher Retainer. Ungenutzte Stunden verfallen.",
+      pricingTiers: [
+        { tierId: "essential", name: "Essential", detail: "~2h/Mon. · Updates · Basis-Monitoring." },
+        { tierId: "growth", name: "Growth", detail: "~5h/Mon. · laufende Optimierung · Report." },
+        { tierId: "priority", name: "Priority", detail: "~10h/Mon. · Top-Prioritat · Detailreport." },
       ],
     },
     {
@@ -2305,18 +2818,9 @@ const de: TranslationSet = {
       pricingFootnote:
         "Preise werden je nach Location, Dauer und Nutzungsrechten im Angebot festgelegt.",
       pricingTiers: [
-        {
-          name: "Halber Tag",
-          detail: "Bis 4 Std. · Foto oder Video · Auswahl und Basis-Edit · ideal fur Social und Menu.",
-        },
-        {
-          name: "Ganzer Tag",
-          detail: "Voller Drehtag · Foto + Video · mehr Varianten fur Website und Ads.",
-        },
-        {
-          name: "Monatlicher Retainer",
-          detail: "Wiederkehrende Drehs und Content-Plan · Kontinuitat fur Feed und Kampagnen.",
-        },
+        { tierId: "half-day", name: "Halber Tag", detail: "Bis 4 Std. · Foto oder Video · Basis-Edit." },
+        { tierId: "full-day", name: "Ganzer Tag", detail: "Voller Drehtag · Foto + Video · Varianten." },
+        { tierId: "retainer", name: "Monatlicher Retainer", detail: "Wiederkehrende Drehs · Content-Plan." },
       ],
     },
   ],
@@ -2374,6 +2878,7 @@ const de: TranslationSet = {
     primaryCta: "Projekte ansehen",
     secondaryCta: "Audit anfragen",
     buyCta: "Leistungen bestellen",
+    buyCtaShort: "Bestellen",
     socialProof: "4 Projekte · Emilia-Romagna & Italien · Verfugbar fur neue Kunden",
     mockupCaption: "Ihre beste Visitenkarte",
   },
@@ -2381,14 +2886,15 @@ const de: TranslationSet = {
     "Design, das konvertiert",
     "Fur Marken, die herausstechen",
     "Direkte Buchungen und Anfragen",
-    "Mobile-first und schnell",
+    "Perfekt auf dem Smartphone",
   ],
   proof: {
     eyebrow: "In Zahlen",
     items: [
       { value: "1h", label: "Durchschnittliche Reaktionszeit" },
-      { value: "100%", label: "Mobile-first und schnell" },
-      { value: "20%", label: "Provisionen an Buchungsportale vermeidbar" },
+      { value: "100%", label: "Custom fur Ihre Marke, personlich" },
+      { value: "70%", label: "Beurteilen ein Business an der Website" },
+      { value: "26", label: "Leistungen und Module zur Auswahl" },
       { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
     ],
   },
@@ -2520,11 +3026,18 @@ const de: TranslationSet = {
   },
   contact: {
     label: "Lass uns starten",
-    title: "Wir bauen Websites und digitale Produkte fur Ihr Business.",
+    title: "Eine digitale Umgebung fur Unternehmen, die nicht wie alle sein wollen.",
     body: "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
     emailLabel: "E-Mail",
     whatsappLabel: "WhatsApp · Antwort innerhalb 1h",
     availability: "Derzeit verfugbar fur neue Kunden",
+    cart: {
+      eyebrow: "Ihre Auswahl",
+      title: "Gewahlte Leistungen",
+      addonsLabel: "Zusatzmodule",
+      continueSearch: "Weiter auswahlen",
+      removeItem: "Entfernen",
+    },
     form: {
       name: "Vor- und Nachname",
       email: "E-Mail",
@@ -2561,13 +3074,63 @@ const de: TranslationSet = {
     proceedCta: "Angebot anfragen",
     footnote:
       "Nach Ihrer Anfrage erhalten Sie Umfang, Zeitplan und Endpreis. Keine automatische Zahlung.",
-    prices: {
-      "premium-site": "€2.500",
-      redesign: "€1.500",
-      "booking-flow": "€800",
-      "monthly-support": "€200/Mon.",
-      "photo-video": "€600",
-    },
+    plusLabel: "+",
+    estimatedLabel: "Richtwert",
+    addonsSectionTitle: "Zusatzmodule",
+    aboutServiceCta: "Zur Leistung",
+  },
+  pricingAddons: {
+    eyebrow: "Module",
+    title: "Projekt erweitern",
+    subtitle: "Funktionen zum Basispaket hinzufugen.",
+    footnote: "Alle Betrage sind Richtwerte. Endangebot nach Briefing.",
+    categories: [
+      {
+        id: "websites",
+        title: "Websites",
+        items: [
+          { id: "corporate", label: "Unternehmenswebsites", info: "Mehrseitig mit SEO." },
+          { id: "promo", label: "Promo", info: "Kurzzeit-Site fur Kampagnen." },
+          { id: "landing", label: "Landingpages", info: "Eine Seite, ein Ziel." },
+          { id: "media-blog", label: "Medien & Blogs", info: "Artikel und RSS." },
+          { id: "no-code", label: "No/Low-code", info: "Webflow, Framer oder Tilda." },
+        ],
+      },
+      {
+        id: "products",
+        title: "Digitale Produkte",
+        items: [
+          { id: "web-service", label: "Web-Services", info: "Dashboards und Booking." },
+          { id: "ecommerce", label: "E-Commerce", info: "Shop mit Warenkorb." },
+          { id: "client-portal", label: "Kundenportale", info: "Geschutzter Kundenbereich." },
+          { id: "chatbot", label: "Chatbots", info: "Automatisierte Flows." },
+          { id: "intranet", label: "Intranets", info: "Interne Team-Portale." },
+          { id: "mobile-app", label: "Mobile Apps", info: "iOS und Android." },
+        ],
+      },
+      {
+        id: "design",
+        title: "Design",
+        items: [
+          { id: "ux-ui", label: "UX & UI", info: "Wireframes und Interfaces." },
+          { id: "branding", label: "Branding", info: "Logo und Identitat." },
+          { id: "motion-sound", label: "Motion & Sound", info: "Animationen und Klang." },
+          { id: "ux-research", label: "UX Research", info: "Interviews und Tests." },
+        ],
+      },
+      {
+        id: "development",
+        title: "Entwicklung",
+        items: [
+          { id: "cms", label: "CMS", info: "Eigenstandige Content-Pflege." },
+          { id: "multilingual", label: "Mehrsprachig", info: "Pro zusatzliche Sprache." },
+          { id: "backend", label: "Backend / API", info: "Serverlogik und Datenbank." },
+          { id: "qa", label: "Quality Assurance", info: "Geraete- und Browser-Tests." },
+          { id: "devops", label: "DevOps", info: "CI/CD und Monitoring." },
+          { id: "seo-extended", label: "Erweitertes SEO", info: "Fortgeschrittene Optimierung." },
+        ],
+      },
+    ],
   },
   aboutPage: {
     backToHome: "Zur Startseite",
@@ -2591,6 +3154,8 @@ const de: TranslationSet = {
     otherServices: "Weitere Leistungen",
     sectionEyebrow: "Leistung",
     pricingEyebrow: "Preise",
+    popularLabel: "Beliebteste",
+    orderCta: "Leistung anfragen",
   },
   servicesPage: {
     eyebrow: "Leistungen",
@@ -2598,6 +3163,7 @@ const de: TranslationSet = {
     subtitle: "Vom Präsentationssite bis zur vollständigen digitalen Plattform.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Alle Leistungen",
+    pricingNote: "Hauptpaket-Preise finden Sie im Bereich Preise jeder Leistung.",
     categories: [
       {
         title: "Websites",
@@ -2656,12 +3222,15 @@ const de: TranslationSet = {
   },
 };
 
+import { es } from "@/lib/locale-es";
+
 export const translations: Record<Locale, TranslationSet> = {
   it,
   en,
   fr,
   ru,
   de,
+  es,
 };
 
 export { localeOrder } from "@/lib/locale-meta";

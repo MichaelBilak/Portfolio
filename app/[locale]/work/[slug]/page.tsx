@@ -64,7 +64,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-32">
+      <main className="relative pt-page">
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div className="container-lux relative">
@@ -120,7 +120,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                       href={meta.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="focus-outline group inline-flex items-center gap-2 rounded-full bg-accentGold px-6 py-3 text-sm font-semibold text-bgPrimary transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(201,169,110,0.55)]"
+                      className="focus-outline group inline-flex w-full items-center justify-center gap-2 rounded-full bg-accentGold px-6 py-3 text-sm font-semibold text-bgPrimary transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(201,169,110,0.55)] sm:w-auto"
                     >
                       {t.workPage.visitLiveSite}
                       <ArrowUpRight

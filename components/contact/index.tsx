@@ -2,8 +2,9 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Mail, Signal } from "lucide-react";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, Suspense, useMemo, useState } from "react";
 import { MailtoLink } from "@/components/mailto-link";
+import { ServiceCart, useOrderCartSelection } from "@/components/service-cart";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
 import { CONTACT_EMAIL } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
@@ -28,13 +29,13 @@ interface FormState {
 export function Contact({ t }: ContactProps) {
   const onMove = useSpotlight();
   return (
-    <section id="contact" className="relative overflow-hidden py-20 md:py-32">
+    <section id="contact" className="relative overflow-hidden py-14 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute -left-24 top-1/3 h-80 w-80 rounded-full bg-gold-radial opacity-15 blur-3xl"
       />
-      <div className="container-lux relative grid gap-12 lg:grid-cols-2 lg:gap-16">
-        <div>
+      <div className="container-lux relative grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="order-2 lg:order-1">
           <Reveal>
             <Eyebrow>{t.contact.label}</Eyebrow>
           </Reveal>
@@ -68,7 +69,11 @@ export function Contact({ t }: ContactProps) {
         </div>
 
         <ContactErrorBoundary>
-          <ContactForm t={t} />
+          <Suspense fallback={null}>
+            <div className="order-1 lg:order-2">
+              <ContactForm t={t} />
+            </div>
+          </Suspense>
         </ContactErrorBoundary>
       </div>
     </section>
@@ -102,6 +107,7 @@ function EmailCardContent({
 }
 
 function ContactForm({ t }: ContactProps) {
+  const cart = useOrderCartSelection(t);
   const [form, setForm] = useState<FormState>({
     fullName: "",
     email: "",
@@ -167,7 +173,11 @@ function ContactForm({ t }: ContactProps) {
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        ...form,
+        selectedServices: cart.services,
+        selectedAddons: cart.addons,
+      }),
     });
     setLoading(false);
 
@@ -190,7 +200,8 @@ function ContactForm({ t }: ContactProps) {
     }`;
 
   return (
-    <form onSubmit={onSubmit} className="glass-card rounded-3xl p-7">
+    <form onSubmit={onSubmit} className="glass-card rounded-3xl p-5 sm:p-7">
+      <ServiceCart t={t} />
       <div className="space-y-5">
         <Field
           label={`${t.contact.form.name} (${t.contact.form.optional})`}

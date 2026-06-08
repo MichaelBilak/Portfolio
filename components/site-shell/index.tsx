@@ -13,6 +13,9 @@ const BusinessImpact = dynamic(
   () => import("@/components/business-impact").then((m) => m.BusinessImpact),
 );
 const AuditCta = dynamic(() => import("@/components/audit-cta").then((m) => m.AuditCta));
+const ContactMobileCta = dynamic(
+  () => import("@/components/contact-mobile-cta").then((m) => m.ContactMobileCta),
+);
 const Contact = dynamic(() => import("@/components/contact").then((m) => m.Contact));
 const Footer = dynamic(() => import("@/components/footer").then((m) => m.Footer));
 
@@ -41,6 +44,9 @@ export function SiteShell({ locale }: SiteShellProps) {
         </div>
         <div className="section-deferred">
           <AuditCta t={t} />
+        </div>
+        <div className="section-deferred md:hidden">
+          <ContactMobileCta t={t} />
         </div>
         <div className="section-deferred hidden md:block">
           <Contact t={t} />

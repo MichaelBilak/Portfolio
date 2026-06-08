@@ -31,7 +31,7 @@ interface CrystalItemProps {
   viewServiceLabel: string;
 }
 
-function CrystalItem({ meta, index, copy, viewServiceLabel }: CrystalItemProps) {
+function CrystalItem({ meta, copy, viewServiceLabel }: CrystalItemProps) {
   const reduce = useReducedMotion();
   const { rotateX, rotateY, tiltHandlers } = useCrystalTilt();
 

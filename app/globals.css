@@ -41,6 +41,18 @@
   --border-cool: rgba(176, 184, 188, 0.12);
 
   --error: #ef4444;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --header-height: 4rem;
+  --header-offset: calc(var(--header-height) + var(--safe-top) + 0.75rem);
+  --fab-clearance: calc(4.75rem + var(--safe-bottom));
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 4.25rem;
+  }
 }
 
 /* Warm light editorial theme — scoped to any wrapper carrying `.theme-light`.
@@ -72,7 +84,7 @@ html {
   scroll-behavior: smooth;
   background: var(--bg-primary);
   color-scheme: dark;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: var(--header-offset);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -391,6 +403,10 @@ select option {
     font-size: clamp(1.65rem, 7vw, 2.25rem);
     line-height: 1.06;
   }
+
+  .min-h-hero {
+    min-height: auto;
+  }
 }
 
 .text-fluid-title {
@@ -645,6 +661,22 @@ select option {
   .min-h-hero {
     min-height: calc(100vh - 5rem);
     min-height: calc(100svh - 5rem);
+  }
+
+  .pt-page {
+    padding-top: var(--header-offset);
+  }
+
+  .pb-safe {
+    padding-bottom: max(1.25rem, var(--safe-bottom));
+  }
+
+  .pb-fab-clearance {
+    padding-bottom: var(--fab-clearance);
+  }
+
+  .safe-top {
+    padding-top: max(0.75rem, var(--safe-top));
   }
 
   .interactive {

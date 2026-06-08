@@ -6,6 +6,7 @@ interface BrandLogoProps {
   wordmarkClassName?: string;
   taglineClassName?: string;
   agencyClassName?: string;
+  /** @deprecated Pipe is used inline; kept for API compat */
   separatorClassName?: string;
   groupClassName?: string;
 }
@@ -14,15 +15,14 @@ export function BrandLogo({
   priority = false,
   showTagline = true,
   wordmarkClassName = "text-2xl",
-  taglineClassName = "hidden md:inline-block",
+  taglineClassName = "",
   groupClassName = "text-[0.68em] font-medium tracking-[0.01em] text-textPrimary/90",
-  agencyClassName = "text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase",
-  separatorClassName = "h-[0.68em] w-px bg-borderSubtle",
+  agencyClassName = "text-[0.52em] font-medium tracking-[0.02em] text-textPrimary/70",
 }: BrandLogoProps) {
   return (
     <span
-      aria-label="DormUp Group Digital Studio"
-      className={`inline-flex items-center gap-2.5 md:gap-3 ${wordmarkClassName}`}
+      aria-label="DormUp Group | digital studio"
+      className={`inline-flex min-w-0 items-center ${wordmarkClassName}`}
     >
       <WordmarkCore
         priority={priority}
@@ -33,10 +33,12 @@ export function BrandLogo({
         <>
           <span
             aria-hidden
-            className={`hidden shrink-0 md:block ${separatorClassName}`}
+            className="mx-3 block h-[1.28em] w-px shrink-0 self-center bg-gradient-to-b from-transparent via-[rgba(252,211,77,0.55)] to-transparent sm:mx-4"
           />
-          <span className={`whitespace-nowrap ${agencyClassName} ${taglineClassName}`}>
-            Digital Studio
+          <span
+            className={`relative -top-[0.06em] whitespace-nowrap leading-none ${agencyClassName} ${taglineClassName}`}
+          >
+            digital studio
           </span>
         </>
       ) : null}

@@ -38,7 +38,7 @@ export function Hero({ t }: HeroProps) {
   return (
     <section
       id="top"
-      className="relative min-h-screen-dvh overflow-x-clip pt-24 sm:pt-28 md:pt-32"
+      className="relative min-h-[85svh] overflow-x-clip pt-page md:min-h-screen-dvh"
     >
       {/* Calm aurora backdrop — slow drifting orbs, no busy grid */}
       <div aria-hidden className="absolute inset-0 overflow-hidden">
@@ -92,13 +92,13 @@ export function Hero({ t }: HeroProps) {
 
           <motion.p
             variants={item}
-            className="max-w-xl text-base leading-relaxed text-textSecondary text-pretty sm:text-lg"
+            className="hidden max-w-xl text-base leading-relaxed text-textSecondary text-pretty sm:block sm:text-lg"
           >
             {t.hero.lead}
           </motion.p>
 
           <motion.div variants={item} className="py-1">
-            <div className="flex max-w-full flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
+            <div className="flex max-w-full flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3 md:flex-nowrap">
               <Link
                 href="/order"
                 className={btn(
@@ -131,7 +131,7 @@ export function Hero({ t }: HeroProps) {
                 className={btn(
                   "ghost",
                   "md",
-                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                  "hidden w-full justify-center overflow-visible sm:inline-flex sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
                 )}
               >
                 {t.hero.primaryCta}
@@ -141,13 +141,13 @@ export function Hero({ t }: HeroProps) {
 
           <motion.div
             variants={item}
-            className="flex items-center gap-3 text-sm text-textSecondary"
+            className="flex min-w-0 items-center gap-3 text-sm text-textSecondary"
           >
-            <span className="relative inline-flex h-2.5 w-2.5">
+            <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-60" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </span>
-            {t.hero.socialProof}
+            <span className="min-w-0 text-pretty">{t.hero.socialProof}</span>
           </motion.div>
         </motion.div>
 
@@ -222,7 +222,6 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
       >
         <ContactLink
           aria-label={t.hero.secondaryCta}
-          desktopClassName="hidden md:block"
           className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-[1.75rem] p-3 transition-all duration-300 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
         >
           <span

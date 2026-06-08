@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { PricingAddons } from "@/components/pricing-addons";
 import { ServiceCategories } from "@/components/service-categories";
 import { ServicesCrystalGrid } from "@/components/services-crystal-grid";
 import type { Metadata } from "next";
@@ -40,7 +41,7 @@ export default async function ServicesPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-32">
+      <main className="relative pt-page">
         {/* ── Hero header ── */}
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
@@ -79,11 +80,18 @@ export default async function ServicesPage({ params }: PageProps) {
               metas={servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }))}
               titles={servicesMeta.map((_, i) => t.services[i].title)}
               viewServiceLabel={t.servicePage.viewService}
+              fromLabel={t.orderPage.fromLabel}
+              locale={safeLocale}
             />
           </div>
         </section>
 
+        <PricingAddons t={t.pricingAddons} />
+
         {/* ── Capability categories ── */}
+        <div className="container-lux border-t border-borderSubtle py-10">
+          <p className="max-w-2xl text-sm leading-relaxed text-textMuted">{sp.pricingNote}</p>
+        </div>
         <ServiceCategories categories={sp.categories} />
 
         <AuditCta t={t} />

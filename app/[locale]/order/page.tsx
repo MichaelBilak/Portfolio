@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
@@ -38,7 +39,7 @@ export default async function OrderPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-32">
+      <main className="relative pt-page pb-28 md:pb-0">
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div className="container-lux relative max-w-5xl">
@@ -60,11 +61,13 @@ export default async function OrderPage({ params }: PageProps) {
           </div>
         </section>
 
-        <OrderServices t={t} />
+        <Suspense fallback={null}>
+          <OrderServices t={t} locale={safeLocale} />
+        </Suspense>
         <AuditCta t={t} />
       </main>
 
-      <Footer t={t} />
+      <Footer t={t} className="!pb-0 pb-safe lg:!pb-0" />
     </>
   );
 }

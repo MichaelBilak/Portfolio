@@ -38,7 +38,7 @@ export default async function WorkPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-32">
+      <main className="relative pt-page">
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div

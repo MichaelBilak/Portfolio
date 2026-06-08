@@ -13,6 +13,7 @@ export const localeMeta: Record<Locale, LocaleMeta> = {
   fr: { langName: "Francais", langCode: "FR", selectorLabel: "Langue" },
   ru: { langName: "Русский", langCode: "RU", selectorLabel: "Язык" },
   de: { langName: "Deutsch", langCode: "DE", selectorLabel: "Sprache" },
+  es: { langName: "Español", langCode: "ES", selectorLabel: "Idioma" },
 };
 
-export const localeOrder: Locale[] = ["it", "en", "fr", "ru", "de"];
+export const localeOrder: Locale[] = ["it", "en", "fr", "ru", "de", "es"];

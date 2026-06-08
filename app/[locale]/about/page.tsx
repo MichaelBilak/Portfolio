@@ -37,7 +37,7 @@ export default async function AboutPage({ params }: PageProps) {
     <>
       <Navigation locale={safeLocale} t={t} />
 
-      <main className="relative pt-32">
+      <main className="relative pt-page">
         <div className="container-lux max-w-5xl pb-4">
           <Link
             href="/"

@@ -1,21 +1,22 @@
 import { AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
-import { ContactLink } from "@/components/contact-link";
 import { MailtoLink } from "@/components/mailto-link";
 import { Link } from "@/i18n/navigation";
 import { CONTACT_EMAIL, contactMailtoHref } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
+import { cn } from "@/lib/ui";
 
 interface FooterProps {
   t: TranslationSet;
+  className?: string;
 }
 
-export function Footer({ t }: FooterProps) {
+export function Footer({ t, className }: FooterProps) {
   const quickLinks: { href: string; label: string }[] = [
     { href: "/work", label: t.nav.work },
     { href: "/services", label: t.nav.services },
     { href: "/about", label: t.nav.about },
-    { href: "/#contact", label: t.nav.contact },
+    { href: "/contact", label: t.nav.contact },
   ];
 
   const socials = [
@@ -24,7 +25,7 @@ export function Footer({ t }: FooterProps) {
   ] as const;
 
   return (
-    <footer className="relative overflow-hidden border-t border-borderStrong bg-bgSecondary pt-16">
+    <footer className={cn("relative overflow-hidden border-t border-borderStrong bg-bgSecondary pt-16 pb-fab-clearance lg:pb-0", className)}>
       <div
         aria-hidden
         className="pointer-events-none absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-emerald-glow opacity-30 blur-3xl"
@@ -36,12 +37,7 @@ export function Footer({ t }: FooterProps) {
 
       <div className="container-lux relative grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-            <BrandLogo
-              priority
-              wordmarkClassName="text-3xl"
-              separatorClassName="h-[0.68em] w-px bg-borderSubtle"
-              agencyClassName="text-[9px] font-medium leading-none tracking-[0.22em] text-accentGold/70 uppercase"
-            />
+            <BrandLogo priority wordmarkClassName="text-3xl" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-textSecondary">
             {t.footer.description}
           </p>
@@ -75,25 +71,15 @@ export function Footer({ t }: FooterProps) {
             {t.footer.links}
           </p>
           <div className="mt-4 space-y-1 text-sm text-textPrimary">
-            {quickLinks.map((link) =>
-              link.href === "/#contact" ? (
-                <ContactLink
-                  key={link.href}
-                  desktopClassName="hidden md:block"
-                  className="interactive block w-fit py-1.5 hover:text-accentGold"
-                >
-                  {link.label}
-                </ContactLink>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="interactive block w-fit py-1.5 hover:text-accentGold"
-                >
-                  {link.label}
-                </Link>
-              ),
-            )}
+            {quickLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="interactive block w-fit min-h-11 py-2.5 hover:text-accentGold"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -115,8 +101,8 @@ export function Footer({ t }: FooterProps) {
       </div>
 
       <div className="relative border-t border-borderCool">
-        <div className="container-lux flex flex-col items-start justify-between gap-3 py-5 text-sm text-textMuted md:flex-row md:items-center">
-          <p>2025 © DormUp Group · {t.footer.location} · {t.footer.built}</p>
+        <div className="container-lux flex flex-col items-start justify-between gap-3 py-5 pb-safe text-sm text-textMuted md:flex-row md:items-center">
+          <p className="max-w-full text-pretty">2025 © DormUp Group · {t.footer.location} · {t.footer.built}</p>
           <a href="#" className="hover:text-accentGold">
             {t.footer.privacy}
           </a>

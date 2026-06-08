@@ -12,7 +12,7 @@ export function AuditCta({ t }: AuditCtaProps) {
   return (
     <section className="py-20 md:py-32">
       <div className="container-lux">
-        <div className="relative overflow-hidden rounded-[2rem] border border-borderStrong bg-bgCard px-6 py-16 text-center sm:px-10 sm:py-20">
+        <div className="relative overflow-hidden rounded-[2rem] border border-borderStrong bg-bgCard px-5 py-12 text-center sm:px-10 sm:py-20">
           {/* Soft edge glow only — no dot grid over copy */}
           <div
             aria-hidden
@@ -28,7 +28,7 @@ export function AuditCta({ t }: AuditCtaProps) {
           />
 
           <div className="relative z-10 mx-auto max-w-4xl">
-            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.04] px-4 py-1.5 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-accentGold backdrop-blur sm:tracking-[0.3em]">
+            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-borderSubtle bg-white/[0.04] px-3 py-2 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-accentGold backdrop-blur sm:px-4 sm:text-[10px] sm:tracking-[0.22em]">
               {t.audit.meta}
             </span>
             <h2 className="mt-7 text-fluid-title font-display font-semibold leading-[1.08] text-textPrimary text-balance">

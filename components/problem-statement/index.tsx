@@ -7,7 +7,7 @@ interface ProblemStatementProps {
 
 export function ProblemStatement({ t }: ProblemStatementProps) {
   return (
-    <section className="theme-light relative overflow-hidden bg-bgPrimary py-24 md:py-36">
+    <section className="theme-light relative overflow-hidden bg-bgPrimary py-16 md:py-36">
       {/* Gradient fade-in from the dark sections above and below */}
       <div
         aria-hidden

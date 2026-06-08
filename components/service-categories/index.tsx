@@ -104,7 +104,7 @@ export function ServiceCategories({ categories }: ServiceCategoriesProps) {
                     key={item.label}
                     className="flex items-center border-b border-borderSubtle py-4 first:border-t"
                   >
-                    <span className="min-w-0 flex-1 text-xl font-medium leading-tight tracking-tight text-textPrimary md:text-2xl">
+                    <span className="min-w-0 flex-1 text-lg font-medium leading-tight tracking-tight text-textPrimary sm:text-xl md:text-2xl">
                       {item.label}
                     </span>
                     <InfoTooltip text={item.info} />
