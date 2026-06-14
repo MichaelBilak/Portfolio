@@ -259,7 +259,7 @@ const it: TranslationSet = {
   langCode: "IT",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Ristorante sul molo · Dal 1993",
       problem:
@@ -929,7 +929,7 @@ const en: TranslationSet = {
   langCode: "EN",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Restaurant & bar on the pier",
       problem:
@@ -1597,7 +1597,7 @@ const fr: TranslationSet = {
   langCode: "FR",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Restaurant & bar sur la jetée",
       problem:
@@ -2201,7 +2201,7 @@ const ru: TranslationSet = {
   langCode: "RU",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Ресторан и бар на причале",
       problem:
@@ -2808,7 +2808,7 @@ const de: TranslationSet = {
   langCode: "DE",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Restaurant & Bar auf dem Pier",
       problem:

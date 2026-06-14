@@ -5,7 +5,7 @@ export const es: TranslationSet = {
   langCode: "ES",
   projects: [
     {
-      id: "rockisland-rimini",
+      id: "porto-sole",
       name: "Porto Sole",
       subtitle: "Restaurante y bar en el muelle",
       problem:

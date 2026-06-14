@@ -19,6 +19,25 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },
+  async redirects() {
+    const oldSlug = "rockisland-rimini";
+    const newSlug = "porto-sole";
+    const locales = ["it", "en", "fr", "ru", "de", "es"];
+    return [
+      {
+        source: `/work/${oldSlug}`,
+        destination: `/work/${newSlug}`,
+        permanent: true,
+      },
+      ...locales
+        .filter((locale) => locale !== "it")
+        .map((locale) => ({
+          source: `/${locale}/work/${oldSlug}`,
+          destination: `/${locale}/work/${newSlug}`,
+          permanent: true,
+        })),
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

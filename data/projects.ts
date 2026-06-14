@@ -17,8 +17,8 @@ export interface ProjectMeta {
 
 export const projectsMeta: ProjectMeta[] = [
   {
-    id: "rockisland-rimini",
-    slug: "rockisland-rimini",
+    id: "porto-sole",
+    slug: "porto-sole",
     index: "01",
     tag: "Concept Redesign",
     image: "/images/project-porto-sole.png",
