@@ -20,10 +20,12 @@ const nextConfig = {
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },
   async redirects() {
-    const oldSlug = "rockisland-rimini";
-    const newSlug = "porto-sole";
+    const slugRedirects = [
+      { oldSlug: "rockisland-rimini", newSlug: "porto-sole" },
+      { oldSlug: "premium-restaurant-local-concept", newSlug: "mare-vivo" },
+    ];
     const locales = ["it", "en", "fr", "ru", "de", "es"];
-    return [
+    return slugRedirects.flatMap(({ oldSlug, newSlug }) => [
       {
         source: `/work/${oldSlug}`,
         destination: `/work/${newSlug}`,
@@ -36,7 +38,7 @@ const nextConfig = {
           destination: `/${locale}/work/${newSlug}`,
           permanent: true,
         })),
-    ];
+    ]);
   },
 };
 

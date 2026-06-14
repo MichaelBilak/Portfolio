@@ -28,15 +28,16 @@ export const es: TranslationSet = {
         "Prototipo en vivo que posiciona a Aurelia del Mar como una estancia premium frente al mar y da a los huéspedes una razón clara para reservar directamente.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Página de conversión para restaurante",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Mariscos mediterraneos · Bari",
       problem:
-        "Un diseño obsoleto no lograba mostrar la atmósfera, el valor del menú ni el camino hacia la reserva en móvil.",
+        "El restaurante necesitaba una presencia online que transmitiera el pescado fresco del Adriatico, la historia familiar y un camino de reserva claro en movil.",
       solution:
-        "Lenguaje visual editorial, estructura centrada en la reserva y prueba clara de la calidad de la experiencia.",
+        "Diseno editorial costero con menu destacado, resenas de clientes, contenido bilingue EN/IT y flujo de reservas via WhatsApp y formulario directo.",
       businessImpact:
-        "Experiencia que reduce la sensibilidad al precio y aumenta las reservas directas en la primera visita.",
+        "Sitio en vivo que posiciona a Mare Vivo como cocina costera italiana autentica y convierte visitantes en reservas de mesa.",
     },
     {
       id: "podlopuhom-jewelry",

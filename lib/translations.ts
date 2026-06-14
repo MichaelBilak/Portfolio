@@ -282,15 +282,16 @@ const it: TranslationSet = {
         "Prototipo live che posiziona Aurelia del Mar come soggiorno premium sul mare e offre agli ospiti un motivo chiaro per prenotare direttamente.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Conversione per ristorante locale",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Pesce mediterraneo · Bari",
       problem:
-        "Un layout datato non valorizzava atmosfera, qualita del menu e percorso di prenotazione su mobile.",
+        "Il ristorante aveva bisogno di una presenza online che trasmettesse il pesce fresco dell'Adriatico, la storia di famiglia e un percorso di prenotazione chiaro su mobile.",
       solution:
-        "Linguaggio visivo editoriale, struttura reservation-first e prove chiare di qualita dell'esperienza.",
+        "Design editoriale costiero con menu in evidenza, recensioni ospiti, contenuti bilingue EN/IT e flusso prenotazioni con WhatsApp e form diretto.",
       businessImpact:
-        "Esperienza che riduce la sensibilita al prezzo e aumenta le prenotazioni dirette in prima visita.",
+        "Sito live che posiziona Mare Vivo come eccellenza costiera italiana e converte i visitatori in prenotazioni al tavolo.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -952,15 +953,16 @@ const en: TranslationSet = {
         "Live prototype positions Aurelia del Mar as a premium seafront stay and gives guests a clear reason to book direct.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Restaurant conversion page",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Mediterranean seafood · Bari",
       problem:
-        "Outdated layout failed to showcase atmosphere, menu value and the reservation path on mobile.",
+        "The restaurant needed a digital presence that communicated fresh Adriatic catch, the family story and an effortless reservation path on mobile.",
       solution:
-        "Editorial visual language, reservation-first structure and clear proof of experience quality.",
+        "Coastal editorial design with featured menu, guest reviews, bilingual EN/IT content and an integrated reservation flow via WhatsApp and direct booking form.",
       businessImpact:
-        "Experience that lowers price sensitivity and increases first-visit direct bookings.",
+        "Live site that positions Mare Vivo as authentic Italian coastal dining and converts first-time visitors into table reservations.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -1620,15 +1622,16 @@ const fr: TranslationSet = {
         "Prototype live qui positionne Aurelia del Mar comme sejour premium en bord de mer et donne aux clients une raison claire de reserver en direct.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Conversion pour restaurant local",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Fruits de mer mediterraneens · Bari",
       problem:
-        "Un layout depasse ne mettait pas en valeur atmosphere, qualite du menu et parcours de reservation sur mobile.",
+        "Le restaurant avait besoin d'une presence en ligne qui transmette le poisson frais de l'Adriatique, l'histoire familiale et un parcours de reservation clair sur mobile.",
       solution:
-        "Langage visuel editorial, structure centree reservation et preuves claires de la qualite de l'experience.",
+        "Design editorial cotier avec menu mis en avant, avis clients, contenu bilingue EN/IT et flux de reservation via WhatsApp et formulaire direct.",
       businessImpact:
-        "Une experience qui reduit la sensibilite au prix et augmente les reservations directes des la premiere visite.",
+        "Site live qui positionne Mare Vivo comme une adresse cotiere italienne authentique et convertit les visiteurs en reservations.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -2224,15 +2227,16 @@ const ru: TranslationSet = {
         "Живой прототип позиционирует Aurelia del Mar как премиальный отдых у моря и дает гостям понятную причину бронировать напрямую.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Конверсионная страница локального ресторана",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Средиземноморские морепродукты · Бари",
       problem:
-        "Устаревший layout не показывал атмосферу, ценность меню и путь бронирования на мобильных.",
+        "Ресторану нужен был сайт, который передавал свежий улов Адриатики, семейную историю и понятный путь бронирования на мобильных.",
       solution:
-        "Редакционный визуальный язык, структура вокруг бронирования и чёткие доказательства качества опыта.",
+        "Прибрежный editorial-дизайн с витриной меню, отзывами гостей, двуязычным контентом EN/IT и бронированием через WhatsApp и прямую форму.",
       businessImpact:
-        "Опыт, который снижает чувствительность к цене и поднимает прямые бронирования при первом визите.",
+        "Живой сайт, который позиционирует Mare Vivo как аутентичную итальянскую кухню у моря и конвертирует посетителей в бронирования.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -2831,15 +2835,16 @@ const de: TranslationSet = {
         "Live-Prototyp, der Aurelia del Mar als premium Aufenthalt am Meer positioniert und Gasten einen klaren Grund gibt, direkt zu buchen.",
     },
     {
-      id: "premium-restaurant-local-concept",
-      name: "Premium Restaurant Website",
-      subtitle: "Conversion-Seite · lokales Restaurant",
+      id: "mare-vivo",
+      name: "Mare Vivo",
+      nameTagline: "Fresh Seafood. Mediterranean Soul.",
+      subtitle: "Mediterrane Meeresfruchte · Bari",
       problem:
-        "Veraltetes Layout zeigte Atmosphare, Menu-Wert und Reservierungspfad auf Mobile nicht ausreichend.",
+        "Das Restaurant brauchte einen Online-Auftritt, der frischen Adriatik-Fang, Familiengeschichte und einen klaren Reservierungspfad auf Mobile vermittelt.",
       solution:
-        "Editoriale visuelle Sprache, reservierungsorientierte Struktur und klare Qualitatsnachweise.",
+        "Kustennahes Editorial-Design mit Menu-Highlights, Gastebewertungen, zweisprachigem EN/IT-Content und Reservierungsflow uber WhatsApp und Direktformular.",
       businessImpact:
-        "Erlebnis, das Preissensibilitat senkt und Direktbuchungen beim ersten Besuch erhoht.",
+        "Live-Site, die Mare Vivo als authentisches italienisches Kustenrestaurant positioniert und Besucher in Tischreservierungen verwandelt.",
     },
     {
       id: "podlopuhom-jewelry",
