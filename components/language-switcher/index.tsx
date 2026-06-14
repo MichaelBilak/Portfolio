@@ -114,11 +114,11 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
         {open ? (
           <motion.ul
             role="listbox"
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: shouldReduceMotion ? 0 : 0.18, ease: "easeOut" }}
-            className={`absolute z-50 max-h-[min(22rem,70dvh)] overflow-y-auto rounded-2xl border border-borderStrong bg-bgElevated/95 p-1.5 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] backdrop-blur-xl max-md:bottom-full max-md:mb-2 max-md:origin-bottom md:mt-3 ${
+            className={`absolute top-full z-50 mt-2 max-h-[min(22rem,70dvh)] origin-top overflow-y-auto rounded-2xl border border-borderStrong bg-bgElevated/95 p-1.5 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] backdrop-blur-xl ${
               variant === "full" ? "left-0 w-56" : "right-0 w-44"
             }`}
           >

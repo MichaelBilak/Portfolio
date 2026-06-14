@@ -152,10 +152,14 @@ export function Navigation({ locale, t }: NavigationProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="safe-top fixed inset-0 z-[45] flex flex-col bg-bgPrimary/96 px-6 backdrop-blur-xl pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[var(--header-offset)] lg:hidden"
+            className="fixed inset-0 z-[45] flex flex-col bg-bgPrimary/96 px-6 backdrop-blur-xl pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[calc(var(--header-height)+max(0.75rem,var(--safe-top))+1.75rem)] lg:hidden"
           >
             <div aria-hidden className="ambient-glow opacity-60" />
-            <div className="relative flex flex-col gap-5 text-[clamp(1.75rem,7vw,2.5rem)] font-display font-light">
+            <div
+              aria-hidden
+              className="relative mb-8 h-px w-full bg-gradient-to-r from-transparent via-borderStrong to-transparent"
+            />
+            <div className="relative flex flex-col gap-6 text-[clamp(1.65rem,6.5vw,2.35rem)] font-display font-light sm:gap-7">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
