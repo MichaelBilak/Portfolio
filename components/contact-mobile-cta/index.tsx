@@ -21,7 +21,7 @@ export function ContactMobileCta({ t }: ContactMobileCtaProps) {
           <Eyebrow>{t.contact.label}</Eyebrow>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="mt-4 text-fluid-title font-display font-light text-textPrimary text-balance">
+          <h2 className="mt-4 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
             {t.contact.title}
           </h2>
         </Reveal>

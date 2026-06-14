@@ -1,4 +1,4 @@
-"""Generate Bilak Studio pricing workbook from data/pricing.ts values."""
+"""Generate DormUp Group pricing workbook from data/pricing.ts values."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ except ImportError:
     raise SystemExit("Run: pip install openpyxl")
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "data" / "Bilak-Studio-Pricing.xlsx"
+OUT = ROOT / "data" / "DormUp-Group-Pricing.xlsx"
 
 # Mirrors data/pricing.ts + RU labels from translations
 MAIN_SERVICES = [
@@ -108,7 +108,7 @@ def main() -> None:
     ws1 = wb.create_sheet("Основные услуги")
     write_table(
         ws1,
-        "Bilak Studio — основные услуги (якорные цены «от»)",
+        "DormUp Group — основные услуги (якорные цены «от»)",
         ["ID", "Услуга", "Цена от", "Периодичность", "Примечание"],
         [
             (sid, name, price, period, "Итоговая смета после брифа")

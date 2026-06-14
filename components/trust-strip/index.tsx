@@ -1,4 +1,5 @@
 import { Marquee } from "@/components/ui";
+import { preventBrokenPhrases } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 
 interface TrustStripProps {
@@ -8,8 +9,8 @@ interface TrustStripProps {
 export function TrustStrip({ t }: TrustStripProps) {
   const items = t.trust.map((label, index) => (
     <span key={`${label}-${index}`} className="flex items-center">
-      <span className="font-display text-2xl font-light tracking-tight text-textPrimary/90 sm:text-3xl md:text-4xl">
-        {label}
+      <span className="font-display text-2xl font-light tracking-tight text-textPrimary/90 whitespace-nowrap sm:text-3xl md:text-4xl">
+        {preventBrokenPhrases(label)}
       </span>
       <span
         aria-hidden

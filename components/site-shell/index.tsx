@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero";
 import { Navigation } from "@/components/navigation";
+import { ProblemStatement } from "@/components/problem-statement";
 import { Proof } from "@/components/proof";
 import { TrustStrip } from "@/components/trust-strip";
 import { Locale, translations } from "@/lib/translations";
@@ -13,8 +14,8 @@ const BusinessImpact = dynamic(
   () => import("@/components/business-impact").then((m) => m.BusinessImpact),
 );
 const AuditCta = dynamic(() => import("@/components/audit-cta").then((m) => m.AuditCta));
-const ContactMobileCta = dynamic(
-  () => import("@/components/contact-mobile-cta").then((m) => m.ContactMobileCta),
+const ContactCompact = dynamic(
+  () => import("@/components/contact/contact-compact").then((m) => m.ContactCompact),
 );
 const Contact = dynamic(() => import("@/components/contact").then((m) => m.Contact));
 const Footer = dynamic(() => import("@/components/footer").then((m) => m.Footer));
@@ -33,6 +34,7 @@ export function SiteShell({ locale }: SiteShellProps) {
         <Hero t={t} />
         <TrustStrip t={t} />
         <Proof t={t} />
+        <ProblemStatement t={t} />
         <div className="section-deferred">
           <Services t={t} />
         </div>
@@ -46,7 +48,7 @@ export function SiteShell({ locale }: SiteShellProps) {
           <AuditCta t={t} />
         </div>
         <div className="section-deferred md:hidden">
-          <ContactMobileCta t={t} />
+          <ContactCompact t={t} />
         </div>
         <div className="section-deferred hidden md:block">
           <Contact t={t} />

@@ -7,11 +7,11 @@ import { BrandLogo } from "@/components/brand-logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ScrollProgress } from "@/components/ui";
 import { Link, usePathname } from "@/i18n/navigation";
+import { BRAND_FULL } from "@/lib/brand";
 import { useIsDesktop } from "@/lib/hooks/use-is-desktop";
 import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
-import { usePastHero } from "@/lib/hooks/use-past-hero";
 import { Locale, TranslationSet } from "@/lib/translations";
-import { btn, cn } from "@/lib/ui";
+import { btn } from "@/lib/ui";
 
 interface NavigationProps {
   locale: Locale;
@@ -20,43 +20,32 @@ interface NavigationProps {
 
 function OrderCtaLink({
   t,
-  compact = false,
   fullWidth = false,
   className,
   onClick,
 }: {
   t: TranslationSet;
-  compact?: boolean;
   fullWidth?: boolean;
   className?: string;
   onClick?: () => void;
 }) {
-  const label = compact ? t.hero.buyCtaShort : t.hero.buyCta;
-
   return (
-    <span
-      className={cn(
-        "order-cta-lift",
-        fullWidth ? "flex w-full" : "inline-flex shrink-0",
+    <Link
+      href="/order"
+      onClick={onClick}
+      aria-label={t.hero.buyCta}
+      className={btn(
+        "primary",
+        fullWidth ? "md" : "sm",
+        fullWidth ? `w-full ${className ?? ""}` : className,
       )}
     >
-      <Link
-        href="/order"
-        onClick={onClick}
-        aria-label={t.hero.buyCta}
-        className={btn(
-          "primary",
-          fullWidth ? "md" : "sm",
-          cn("order-cta-glow whitespace-nowrap", fullWidth && "w-full", className),
-        )}
-      >
-        <span className="relative z-10">{label}</span>
-        <ArrowUpRight
-          size={14}
-          className="relative z-10 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-        />
-      </Link>
-    </span>
+      <span className="relative z-10">{t.hero.buyCta}</span>
+      <ArrowUpRight
+        size={14}
+        className="relative z-10 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+      />
+    </Link>
   );
 }
 
@@ -65,14 +54,10 @@ export function Navigation({ locale, t }: NavigationProps) {
   const isDesktop = useIsDesktop();
   const [open, setOpen] = useState(false);
   const { direction, scrolled } = useNavScroll();
-  const pastHero = usePastHero();
   const pathname = usePathname();
   const onOrderPage = pathname === "/order" || pathname.endsWith("/order");
-  const onContactPage = pathname === "/contact" || pathname.endsWith("/contact");
   const navHidden = isDesktop && direction === "down" && scrolled && !open;
   const showOrderCta = !onOrderPage;
-  const showMobileOrderCta =
-    !onContactPage && !onOrderPage && (pastHero || pathname !== "/");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -106,7 +91,7 @@ export function Navigation({ locale, t }: NavigationProps) {
         >
           <Link
             href="/"
-            aria-label="DormUp Group | digital studio"
+            aria-label={BRAND_FULL}
             className="interactive focus-outline inline-flex min-w-0 max-w-[72vw] shrink items-center rounded-xl sm:max-w-none"
           >
             <BrandLogo
@@ -198,11 +183,11 @@ export function Navigation({ locale, t }: NavigationProps) {
               className="relative mt-auto flex flex-col gap-3 pt-8"
             >
               <Link
-                href="/contact"
+                href="/contact?intent=audit"
                 onClick={() => setOpen(false)}
-                className={btn("secondary", "md", "w-full justify-center")}
+                className={btn("primary", "md", "w-full justify-center")}
               >
-                {t.nav.contact}
+                {t.audit.cta}
                 <ArrowUpRight size={16} />
               </Link>
               <OrderCtaLink
@@ -223,27 +208,6 @@ export function Navigation({ locale, t }: NavigationProps) {
           className="pointer-events-none fixed top-5 right-5 z-[48] hidden lg:inline-flex"
         >
           <OrderCtaLink t={t} className="pointer-events-auto" />
-        </motion.span>
-      ) : null}
-
-      {showOrderCta && !open && showMobileOrderCta ? (
-        <motion.span
-          initial={false}
-          animate={{
-            opacity: pastHero || pathname !== "/" ? 1 : 0,
-            y: pastHero || pathname !== "/" ? 0 : 16,
-          }}
-          transition={{
-            duration: shouldReduceMotion ? 0 : 0.35,
-            ease: [0.22, 0.61, 0.36, 1],
-          }}
-          className={cn(
-            "pointer-events-none fixed right-4 z-[48] inline-flex lg:hidden",
-            "bottom-[max(1.25rem,env(safe-area-inset-bottom))]",
-            pastHero || pathname !== "/" ? "pointer-events-auto" : "pointer-events-none",
-          )}
-        >
-          <OrderCtaLink t={t} compact className="pointer-events-auto shadow-[0_18px_42px_-14px_rgba(0,0,0,0.65)]" />
         </motion.span>
       ) : null}
     </>

@@ -1,5 +1,6 @@
 import { AnimatedCounter, Eyebrow, Reveal } from "@/components/ui";
 import { SERVICE_OFFER_COUNT } from "@/data/pricing";
+import { preventBrokenPhrases } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 
 interface ProofProps {
@@ -7,6 +8,7 @@ interface ProofProps {
 }
 
 const SERVICE_COUNT_STAT_INDEX = 3;
+const VISIBLE_STAT_COUNT = 4;
 
 /** Keep multi-part values like "2 нед." on one line */
 function proofValue(value: string) {
@@ -19,6 +21,10 @@ export function Proof({ t }: ProofProps) {
       ? { ...item, value: String(SERVICE_OFFER_COUNT) }
       : item,
   );
+  const displayItems = [
+    ...items.slice(0, VISIBLE_STAT_COUNT),
+    { value: t.proof.footnote.value, label: t.proof.footnote.label },
+  ];
 
   return (
     <section className="relative overflow-x-clip py-14 md:py-20">
@@ -31,23 +37,27 @@ export function Proof({ t }: ProofProps) {
           <Eyebrow>{t.proof.eyebrow}</Eyebrow>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-2 justify-items-center gap-x-6 gap-y-10 sm:gap-x-8 sm:gap-y-12 lg:flex lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-5 lg:gap-y-10 xl:flex-nowrap xl:justify-between xl:gap-x-6">
-          {items.map((item, index) => (
+        <div className="mt-10 grid grid-cols-2 justify-items-center gap-x-6 gap-y-10 sm:gap-x-8 sm:gap-y-12 lg:flex lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-5 lg:gap-y-10 xl:flex-nowrap xl:justify-between xl:gap-x-4">
+          {displayItems.map((item, index) => (
             <Reveal
               key={item.label}
               delay={index * 0.08}
-              className="relative flex w-full max-w-[11rem] shrink-0 flex-col items-center text-center sm:max-w-none lg:w-auto lg:px-2 xl:px-3 [&:nth-child(5)]:col-span-2 lg:[&:nth-child(5)]:col-span-1"
+              className={`relative flex w-full max-w-[11rem] shrink-0 flex-col items-center text-center sm:max-w-none lg:w-auto lg:px-2 xl:px-2 ${
+                index === displayItems.length - 1 && displayItems.length % 2 !== 0
+                  ? "col-span-2 lg:col-span-1"
+                  : ""
+              }`}
             >
-              <span className="inline-block whitespace-nowrap font-display text-5xl font-light leading-none tracking-tight text-gradient-gold sm:text-6xl lg:text-[clamp(3rem,4.2vw,5.5rem)] xl:text-[clamp(3.5rem,4.8vw,6.25rem)] 2xl:text-7xl">
+              <span className="inline-block whitespace-nowrap font-display text-5xl font-light leading-none tracking-tight text-gradient-gold sm:text-6xl lg:text-[clamp(2.75rem,3.8vw,5rem)] xl:text-[clamp(3rem,4.2vw,5.5rem)] 2xl:text-7xl">
                 <AnimatedCounter value={proofValue(item.value)} />
               </span>
-              <span className="mt-4 max-w-[12.5rem] text-pretty text-sm leading-snug text-textSecondary sm:max-w-[13.5rem] sm:text-[0.9375rem] lg:max-w-[10.5rem] xl:max-w-[12rem]">
-                {item.label}
+              <span className="mt-4 max-w-[12.5rem] text-safe-wrap text-sm leading-snug text-textSecondary sm:max-w-[13.5rem] sm:text-[0.9375rem] lg:max-w-[10.5rem] xl:max-w-[11rem]">
+                {preventBrokenPhrases(item.label)}
               </span>
-              {index < items.length - 1 ? (
+              {index < displayItems.length - 1 ? (
                 <span
                   aria-hidden
-                  className="absolute -right-3 top-[42%] hidden h-16 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-borderStrong to-transparent sm:-right-4 lg:-right-2 lg:block xl:-right-3"
+                  className="absolute -right-3 top-[42%] hidden h-16 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-borderStrong to-transparent sm:-right-4 lg:-right-2 lg:block xl:-right-2"
                 />
               ) : null}
             </Reveal>

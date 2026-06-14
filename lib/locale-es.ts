@@ -39,17 +39,6 @@ export const es: TranslationSet = {
         "Experiencia que reduce la sensibilidad al precio y aumenta las reservas directas en la primera visita.",
     },
     {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Concepto marketplace / panel de socios",
-      problem:
-        "Los estudiantes carecían de un lugar de confianza donde descubrir descuentos locales verificados y ofertas de socios.",
-      solution:
-        "Flujo mobile-first que equilibra descubrimiento, confianza y simplicidad de onboarding para ambos lados del marketplace.",
-      businessImpact:
-        "Concepto listo para el cliente de un marketplace vertical local, escalable a nuevas categorías.",
-    },
-    {
       id: "podlopuhom-jewelry",
       name: "Pod Lopuhom",
       nameTagline: "Handmade Jewelry",
@@ -283,7 +272,7 @@ export const es: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italia",
-    headline: "La primera impresión de tu negocio\nempieza\ncon el sitio web.",
+    headline: "La primera impresión\nde tu negocio\nempieza con el sitio web.",
     subtitle: "Donde tu marca habla antes que tú",
     lead: "Creamos experiencias digitales premium para marcas y negocios que se niegan a parecer genéricos: desde instituciones locales hasta startups ambiciosas. Diseño distintivo, estrategia precisa, resultados medibles.",
     primaryCta: "Ver proyectos",
@@ -306,8 +295,8 @@ export const es: TranslationSet = {
       { value: "100%", label: "Custom para tu marca, en personal" },
       { value: "70%", label: "Juzgan un negocio por su sitio web" },
       { value: "26", label: "Servicios y módulos disponibles" },
-      { value: "2 sem", label: "Inicio medio de proyecto" },
     ],
+    footnote: { value: "2 sem", label: "Inicio medio de proyecto" },
   },
   problem: {
     eyebrow: "01 — Por qué importa",
@@ -439,6 +428,7 @@ export const es: TranslationSet = {
     label: "Empecemos",
     title: "Un entorno digital para negocios que no quieren ser como todos.",
     body: "Tras tu mensaje recibirás una respuesta clara con los siguientes pasos, plazos y viabilidad.",
+    compactTitle: "Solicita tu auditoría gratuita",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Respuesta en 1 h",
     availability: "Actualmente disponibles para nuevos clientes",
@@ -454,11 +444,15 @@ export const es: TranslationSet = {
       email: "Email",
       business: "Nombre del negocio",
       businessType: "Tipo de negocio",
+      siteUrl: "URL de tu sitio web actual",
       brief: "Describe brevemente qué buscas",
       source: "¿Cómo nos encontraste?",
       submit: "Enviar mensaje",
+      submitAudit: "Solicitar auditoría gratuita",
       submitting: "Enviando...",
       success: "Recibido. Responderemos en 1 hora.",
+      submitError: "No se pudo enviar. Escríbenos a {email} y responderemos pronto.",
+      auditBriefPlaceholder: "¿Qué no funciona en tu sitio actual? ¿Qué te gustaría mejorar?",
       optional: "opcional",
       options: {
         restaurant: "Restaurante",
@@ -472,6 +466,7 @@ export const es: TranslationSet = {
       errors: {
         required: "Campo obligatorio",
         invalidEmail: "Introduce una dirección de email válida",
+        invalidUrl: "Introduce una URL válida (ej. https://tusitio.com)",
       },
     },
   },
@@ -489,13 +484,20 @@ export const es: TranslationSet = {
     estimatedLabel: "Estimación orientativa",
     addonsSectionTitle: "Módulos adicionales",
     aboutServiceCta: "Sobre este servicio",
+    trust: {
+      timeline: "Plazo típico: 4–8 semanas",
+      deposit: "Depósito del 30% al inicio",
+      processLink: "Cómo trabajamos",
+      testimonial:
+        "«Respuesta rápida, alcance claro — exactamente el partner digital que buscábamos.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Módulos",
     title: "Amplía tu proyecto",
     subtitle:
-      "Añade capacidades al paquete base. Los módulos «+» se suman al precio principal; los elementos «desde» son proyectos independientes.",
-    footnote: "Todas las cifras son orientativas. El presupuesto final se fija tras el brief.",
+      "Añade capacidades al paquete base. Cada módulo se valora tras el brief.",
+    footnote: "El presupuesto final de cada módulo se fija tras el brief.",
     categories: [
       {
         id: "websites",
@@ -547,6 +549,37 @@ export const es: TranslationSet = {
   aboutPage: {
     backToHome: "Volver al inicio",
   },
+  privacyPage: {
+    title: "Política de privacidad",
+    lastUpdated: "Última actualización: junio 2026",
+    backToHome: "Volver al inicio",
+    sections: [
+      {
+        heading: "Responsable del tratamiento",
+        body: "DormUp Group digital studio — contacto: dormup.it@gmail.com. Región: Emilia-Romagna, Italia.",
+      },
+      {
+        heading: "Datos recopilados",
+        body: "Recopilamos los datos que envías voluntariamente mediante formularios: nombre, email, negocio, tipo de actividad, URL del sitio (si se indica), brief y servicios seleccionados.",
+      },
+      {
+        heading: "Finalidad y base legal",
+        body: "Los datos se procesan para responder consultas, preparar presupuestos y auditorías gratuitas. Base legal: medidas precontractuales y consentimiento implícito al enviar el formulario (RGPD art. 6).",
+      },
+      {
+        heading: "Conservación",
+        body: "Conservamos los datos el tiempo necesario para gestionar la solicitud, hasta 24 meses salvo obligación legal distinta.",
+      },
+      {
+        heading: "Tus derechos",
+        body: "Puedes solicitar acceso, rectificación, supresión, limitación u oposición escribiendo a dormup.it@gmail.com. Tienes derecho a reclamar ante la autoridad de protección de datos.",
+      },
+      {
+        heading: "Cookies",
+        body: "Este sitio no utiliza cookies de perfilado de terceros. Las cookies técnicas pueden usarse para el funcionamiento y la selección de idioma.",
+      },
+    ],
+  },
   footer: {
     description: "Estudio digital para marcas y negocios premium en toda Italia.",
     links: "Enlaces rápidos",
@@ -576,7 +609,7 @@ export const es: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Todos los servicios",
     pricingNote:
-      "Los precios de los paquetes principales están en la sección Precios de cada servicio. Los módulos siguientes se pueden añadir bajo solicitud.",
+      "Los precios de los paquetes principales están en las tarjetas de arriba. Los módulos adicionales — bajo solicitud, sin tarifas públicas.",
     categories: [
       {
         title: "Sitios web",

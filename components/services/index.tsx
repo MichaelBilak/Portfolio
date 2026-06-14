@@ -69,6 +69,10 @@ function CrystalItem({ meta, copy, viewServiceLabel }: CrystalItemProps) {
         {copy.title}
       </h3>
 
+      <p className="mt-2.5 max-w-[17rem] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/80 md:hidden">
+        {copy.details}
+      </p>
+
       {/* Short line — desktop only on homepage */}
       <p className="mt-2.5 hidden max-w-[17rem] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/80 md:block">
         {copy.details}
@@ -104,7 +108,7 @@ export function Services({ t }: ServicesProps) {
               <Eyebrow>{t.nav.services}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
                 {t.servicesLabel}
               </h2>
             </Reveal>

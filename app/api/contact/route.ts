@@ -7,8 +7,10 @@ interface ContactPayload {
   email?: string;
   businessName?: string;
   businessType?: string;
+  siteUrl?: string;
   brief?: string;
   source?: string;
+  intent?: string;
   selectedServices?: string[];
   selectedAddons?: string[];
 }
@@ -36,6 +38,7 @@ function buildPlainText(
   timestamp: string,
   selectedServices: string[],
   selectedAddons: string[],
+  siteUrl?: string,
 ): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
   const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
@@ -52,6 +55,10 @@ function buildPlainText(
     `Business Type:   ${businessTypeLabel}`,
     `How found us:    ${sourceLabel}`,
   ];
+
+  if (siteUrl?.trim()) {
+    lines.push(`Website URL:     ${siteUrl.trim()}`);
+  }
 
   if (selectedServices.length > 0) {
     lines.push("", "Selected Services", "------------------------------------------------");
@@ -173,19 +180,29 @@ async function appendToGoogleSheets(
 
 export async function POST(request: NextRequest) {
   const payload = (await request.json()) as ContactPayload;
+  const isAudit = payload.intent === "audit";
 
-  if (!payload.email || !payload.businessName) {
+  if (!payload.email) {
     return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
   }
+
+  if (!isAudit && !payload.businessName?.trim()) {
+    return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
+  }
+
+  const businessType = payload.businessType ?? "other";
+  const businessTypeLabel = BUSINESS_TYPE_LABELS[businessType] ?? businessType;
 
   const p: ContactFormPayload = {
     fullName: payload.fullName?.trim() || "—",
     email: payload.email,
-    businessName: payload.businessName,
-    businessType: payload.businessType ?? "other",
+    businessName: payload.businessName?.trim() || businessTypeLabel,
+    businessType,
     brief: payload.brief?.trim() || "—",
     source: payload.source ?? "other",
   };
+
+  const siteUrl = payload.siteUrl?.trim();
 
   const selectedServices = Array.isArray(payload.selectedServices)
     ? payload.selectedServices.filter((s) => typeof s === "string" && s.trim())
@@ -220,8 +237,8 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail({
       from: `"DormUp Group" <${gmailUser}>`,
       to: toEmail,
-      subject: `New audit request — ${p.businessName}`,
-      text: buildPlainText(p, timestamp, selectedServices, selectedAddons),
+      subject: `New ${isAudit ? "audit" : "contact"} request — ${p.businessName}`,
+      text: buildPlainText(p, timestamp, selectedServices, selectedAddons, siteUrl),
     });
   })();
 

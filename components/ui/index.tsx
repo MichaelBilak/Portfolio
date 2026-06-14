@@ -70,7 +70,7 @@ export function ScrollProgress() {
     <motion.div
       aria-hidden
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-accentGold via-accentWarm to-emerald-400"
+      className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-accentGold via-accentWarm to-accentWarm"
     />
   );
 }
@@ -132,7 +132,7 @@ export function Eyebrow({ children, className, withDot = true }: EyebrowProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.3em] text-accentGold sm:text-[11px]",
+        "inline-flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.3em] text-accentGold hyphens-none text-safe-wrap sm:text-[11px]",
         className,
       )}
     >
@@ -205,7 +205,7 @@ export function SectionHeading({
         </Reveal>
       ) : null}
       <Reveal delay={0.05}>
-        <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+        <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
           {title}
         </h2>
       </Reveal>

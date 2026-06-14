@@ -8,6 +8,7 @@ import { FeaturedWork } from "@/components/featured-work";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
+import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
 
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const safeLocale = locale as Locale;
   const t = translations[safeLocale];
   return {
-    title: `${t.workPage.title} · Bilak Michael Studio`,
+    title: pageTitle(t.workPage.title),
     description: t.workPage.subtitle,
   };
 }

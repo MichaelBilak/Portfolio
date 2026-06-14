@@ -1,4 +1,4 @@
-# Bilak Studio — Portfolio
+# DormUp Group — Portfolio
 
 Многоязычный сайт-портфолио на **Next.js 14 (App Router)** с поддержкой русского, английского и итальянского языков через `next-intl`. Анимации — `framer-motion`, стили — TailwindCSS.
 

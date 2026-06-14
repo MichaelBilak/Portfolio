@@ -67,6 +67,7 @@ export interface TranslationSet {
   proof: {
     eyebrow: string;
     items: { value: string; label: string }[];
+    footnote: { value: string; label: string };
   };
   problem: {
     eyebrow: string;
@@ -127,6 +128,7 @@ export interface TranslationSet {
     label: string;
     title: string;
     body: string;
+    compactTitle: string;
     emailLabel: string;
     whatsappLabel: string;
     availability: string;
@@ -142,11 +144,16 @@ export interface TranslationSet {
       email: string;
       business: string;
       businessType: string;
+      siteUrl: string;
       brief: string;
       source: string;
       submit: string;
+      submitAudit: string;
       submitting: string;
       success: string;
+      submitError: string;
+      auditBriefPlaceholder: string;
+      optional: string;
       options: {
         restaurant: string;
         hotel: string;
@@ -156,10 +163,10 @@ export interface TranslationSet {
         referral: string;
         social: string;
       };
-      optional: string;
       errors: {
         required: string;
         invalidEmail: string;
+        invalidUrl: string;
       };
     };
   };
@@ -175,6 +182,12 @@ export interface TranslationSet {
     estimatedLabel: string;
     addonsSectionTitle: string;
     aboutServiceCta: string;
+    trust: {
+      timeline: string;
+      deposit: string;
+      processLink: string;
+      testimonial: string;
+    };
   };
   pricingAddons: {
     eyebrow: string;
@@ -189,6 +202,12 @@ export interface TranslationSet {
   };
   aboutPage: {
     backToHome: string;
+  };
+  privacyPage: {
+    title: string;
+    lastUpdated: string;
+    backToHome: string;
+    sections: { heading: string; body: string }[];
   };
   footer: {
     description: string;
@@ -272,17 +291,6 @@ const it: TranslationSet = {
         "Linguaggio visivo editoriale, struttura reservation-first e prove chiare di qualita dell'esperienza.",
       businessImpact:
         "Esperienza che riduce la sensibilita al prezzo e aumenta le prenotazioni dirette in prima visita.",
-    },
-    {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Concept marketplace / dashboard partner",
-      problem:
-        "Studenti senza un luogo affidabile per le offerte locali, partner senza un modo leggero per pubblicarle.",
-      solution:
-        "Flusso mobile-first che bilancia scoperta, fiducia e semplicita di onboarding per entrambi i lati.",
-      businessImpact:
-        "Concept client-ready per un marketplace locale verticale, scalabile su nuove categorie.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -519,7 +527,7 @@ const it: TranslationSet = {
   },
   hero: {
     eyebrow: "Studio Digitale · Emilia-Romagna, Italia",
-    headline: "La prima impressione sul business\ninizia\ndal sito.",
+    headline: "La prima impressione\nsul business\ninizia dal sito.",
     subtitle: "La presenza digitale che parla al posto tuo",
     lead: "Creiamo esperienze digitali premium per brand e business che non vogliono sembrare generici: ristoranti, negozi, studi e startup con ambizioni chiare. Design distintivo, strategia concreta, risultati misurabili.",
     primaryCta: "Vedi i progetti",
@@ -542,8 +550,8 @@ const it: TranslationSet = {
       { value: "100%", label: "Custom per il tuo brand, personale" },
       { value: "70%", label: "Giudica un business dal sito" },
       { value: "26", label: "Servizi e moduli disponibili" },
-      { value: "2 sett.", label: "Avvio medio progetto" },
     ],
+    footnote: { value: "2 sett.", label: "Avvio medio progetto" },
   },
   problem: {
     eyebrow: "01 — Perche conta",
@@ -675,6 +683,7 @@ const it: TranslationSet = {
     label: "Iniziamo",
     title: "Un ambiente digitale per business che non vogliono essere come tutti.",
     body: "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
+    compactTitle: "Richiedi il tuo audit gratuito",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Rispondiamo entro 1h",
     availability: "Attualmente disponibile per nuovi clienti",
@@ -690,11 +699,15 @@ const it: TranslationSet = {
       email: "Email",
       business: "Nome del business",
       businessType: "Tipo di business",
+      siteUrl: "URL del tuo sito attuale",
       brief: "Descrivi brevemente cosa cerchi",
       source: "Come ci hai trovato?",
       submit: "Invia messaggio",
+      submitAudit: "Richiedi audit gratuito",
       submitting: "Invio in corso...",
       success: "Ricevuto. Ti rispondiamo entro 1 ora.",
+      submitError: "Invio non riuscito. Scrivici a {email} e ti rispondiamo subito.",
+      auditBriefPlaceholder: "Cosa non funziona nel sito attuale? Cosa vorresti migliorare?",
       optional: "facoltativo",
       options: {
         restaurant: "Ristorante",
@@ -708,6 +721,7 @@ const it: TranslationSet = {
       errors: {
         required: "Campo obbligatorio",
         invalidEmail: "Inserisci un'email valida",
+        invalidUrl: "Inserisci un URL valido (es. https://tuosito.it)",
       },
     },
   },
@@ -725,14 +739,21 @@ const it: TranslationSet = {
     estimatedLabel: "Stima indicativa",
     addonsSectionTitle: "Moduli aggiuntivi",
     aboutServiceCta: "Info sul servizio",
+    trust: {
+      timeline: "Tempi tipici: 4–8 settimane",
+      deposit: "Acconto 30% all'avvio",
+      processLink: "Come lavoriamo",
+      testimonial:
+        "«Risposta rapida, scope chiaro — esattamente il partner digitale che cercavamo.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Moduli",
     title: "Estendi il progetto",
     subtitle:
-      "Aggiungi funzionalita al pacchetto base. I moduli «+» si sommano al prezzo principale; quelli «da» sono progetti autonomi.",
+      "Aggiungi funzionalita al pacchetto base. I moduli si scelgono in base alle esigenze del progetto.",
     footnote:
-      "Tutti gli importi sono indicativi. Il preventivo finale viene definito dopo il brief.",
+      "Il preventivo finale per ogni modulo viene definito dopo il brief.",
     categories: [
       {
         id: "websites",
@@ -784,6 +805,37 @@ const it: TranslationSet = {
   aboutPage: {
     backToHome: "Torna alla home",
   },
+  privacyPage: {
+    title: "Informativa sulla privacy",
+    lastUpdated: "Ultimo aggiornamento: giugno 2026",
+    backToHome: "Torna alla home",
+    sections: [
+      {
+        heading: "Titolare del trattamento",
+        body: "DormUp Group digital studio — contatto: dormup.it@gmail.com. Sede operativa: Emilia-Romagna, Italia.",
+      },
+      {
+        heading: "Dati raccolti",
+        body: "Raccogliamo i dati che invii volontariamente tramite i moduli di contatto: nome, email, nome del business, tipo di attività, URL del sito (se fornito), breve descrizione del progetto e servizi selezionati.",
+      },
+      {
+        heading: "Finalità e base giuridica",
+        body: "I dati sono trattati per rispondere alle richieste, preparare preventivi e audit gratuiti. Base giuridica: esecuzione di misure precontrattuali e consenso implicito inviando il modulo (art. 6 GDPR).",
+      },
+      {
+        heading: "Conservazione",
+        body: "Conserviamo i dati per il tempo necessario a gestire la richiesta e per un massimo di 24 mesi, salvo obblighi di legge diversi.",
+      },
+      {
+        heading: "Diritti dell'interessato",
+        body: "Puoi richiedere accesso, rettifica, cancellazione, limitazione o opposizione scrivendo a dormup.it@gmail.com. Hai diritto di reclamo al Garante per la protezione dei dati personali.",
+      },
+      {
+        heading: "Cookie e analytics",
+        body: "Questo sito non utilizza cookie di profilazione di terze parti. Eventuali cookie tecnici servono al funzionamento del sito e della selezione lingua.",
+      },
+    ],
+  },
   footer: {
     description: "Studio digitale per brand e business premium in tutta Italia.",
     links: "Link rapidi",
@@ -813,7 +865,7 @@ const it: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
     pricingNote:
-      "I prezzi dei pacchetti principali sono nella sezione Tariffe di ogni servizio. I moduli sotto si aggiungono su richiesta.",
+      "I prezzi dei pacchetti principali sono nelle card sopra. I moduli aggiuntivi su richiesta — senza listino pubblico.",
     categories: [
       {
         title: "Siti web",
@@ -909,17 +961,6 @@ const en: TranslationSet = {
         "Editorial visual language, reservation-first structure and clear proof of experience quality.",
       businessImpact:
         "Experience that lowers price sensitivity and increases first-visit direct bookings.",
-    },
-    {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Marketplace / partner dashboard concept",
-      problem:
-        "Students lacked one trusted place to discover verified local discounts and partner offers.",
-      solution:
-        "Mobile-first flow balancing discovery, trust and onboarding simplicity for both sides of the marketplace.",
-      businessImpact:
-        "Client-ready concept for a local vertical marketplace, scalable to new categories.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -1155,7 +1196,7 @@ const en: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italy",
-    headline: "Your business first impression\nstarts with\nthe website.",
+    headline: "Your business\nfirst impression\nstarts with the website.",
     subtitle: "Where your brand speaks before you do",
     lead: "We craft premium digital experiences for brands and businesses that refuse to look generic—from local institutions to ambitious startups. Distinctive design, sharp strategy, measurable results.",
     primaryCta: "View projects",
@@ -1178,8 +1219,8 @@ const en: TranslationSet = {
       { value: "100%", label: "Custom for your brand, personally" },
       { value: "70%", label: "Judge a business by its website" },
       { value: "26", label: "Services & add-on modules" },
-      { value: "2 wks", label: "Average project kickoff" },
     ],
+    footnote: { value: "2 wks", label: "Average project kickoff" },
   },
   problem: {
     eyebrow: "01 — Why it matters",
@@ -1311,6 +1352,7 @@ const en: TranslationSet = {
     label: "Let's start",
     title: "A digital environment for businesses that don't want to be like everyone else.",
     body: "After your message you get a clear reply with next steps, timeline and feasibility.",
+    compactTitle: "Request your free audit",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reply within 1h",
     availability: "Currently available for new clients",
@@ -1326,11 +1368,15 @@ const en: TranslationSet = {
       email: "Email",
       business: "Business name",
       businessType: "Business type",
+      siteUrl: "Your current website URL",
       brief: "Briefly describe what you're looking for",
       source: "How did you find us?",
       submit: "Send message",
+      submitAudit: "Request free audit",
       submitting: "Sending...",
       success: "Got it. We'll reply within 1 hour.",
+      submitError: "Could not send. Email us at {email} and we'll reply shortly.",
+      auditBriefPlaceholder: "What isn't working on your current site? What would you like to improve?",
       optional: "optional",
       options: {
         restaurant: "Restaurant",
@@ -1344,6 +1390,7 @@ const en: TranslationSet = {
       errors: {
         required: "Required field",
         invalidEmail: "Enter a valid email address",
+        invalidUrl: "Enter a valid URL (e.g. https://yoursite.com)",
       },
     },
   },
@@ -1361,13 +1408,20 @@ const en: TranslationSet = {
     estimatedLabel: "Indicative estimate",
     addonsSectionTitle: "Add-on modules",
     aboutServiceCta: "About this service",
+    trust: {
+      timeline: "Typical timeline: 4–8 weeks",
+      deposit: "30% deposit to start",
+      processLink: "How we work",
+      testimonial:
+        "«Fast reply, clear scope — exactly the digital partner we were looking for.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Modules",
     title: "Extend your project",
     subtitle:
-      "Add capabilities to the base package. «+» modules stack on the main price; «from» items are standalone projects.",
-    footnote: "All figures are indicative. Final quote is set after the brief.",
+      "Add capabilities to the base package. Modules are scoped individually after your brief.",
+    footnote: "Final quote for each module is set after the brief.",
     categories: [
       {
         id: "websites",
@@ -1419,6 +1473,37 @@ const en: TranslationSet = {
   aboutPage: {
     backToHome: "Back to home",
   },
+  privacyPage: {
+    title: "Privacy Policy",
+    lastUpdated: "Last updated: June 2026",
+    backToHome: "Back to home",
+    sections: [
+      {
+        heading: "Data controller",
+        body: "DormUp Group digital studio — contact: dormup.it@gmail.com. Operating region: Emilia-Romagna, Italy.",
+      },
+      {
+        heading: "Data we collect",
+        body: "We collect data you voluntarily submit via contact forms: name, email, business name, business type, website URL (if provided), project brief and selected services.",
+      },
+      {
+        heading: "Purpose and legal basis",
+        body: "Data is processed to respond to enquiries, prepare quotes and free audits. Legal basis: pre-contractual measures and implicit consent when submitting the form (GDPR Art. 6).",
+      },
+      {
+        heading: "Retention",
+        body: "We retain data as long as needed to handle your request, up to 24 months unless legal obligations require otherwise.",
+      },
+      {
+        heading: "Your rights",
+        body: "You may request access, rectification, erasure, restriction or objection by emailing dormup.it@gmail.com. You may lodge a complaint with your local data protection authority.",
+      },
+      {
+        heading: "Cookies",
+        body: "This site does not use third-party profiling cookies. Technical cookies may be used for site operation and language selection.",
+      },
+    ],
+  },
   footer: {
     description: "Digital studio for premium brands and businesses across Italy.",
     links: "Quick links",
@@ -1448,7 +1533,7 @@ const en: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
     pricingNote:
-      "Main package prices are in each service's Pricing section. Modules below can be added on request.",
+      "Main package prices are shown above. Add-on modules are available on request — no public rate card.",
     categories: [
       {
         title: "Websites",
@@ -1544,17 +1629,6 @@ const fr: TranslationSet = {
         "Langage visuel editorial, structure centree reservation et preuves claires de la qualite de l'experience.",
       businessImpact:
         "Une experience qui reduit la sensibilite au prix et augmente les reservations directes des la premiere visite.",
-    },
-    {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Concept marketplace / dashboard partenaire",
-      problem:
-        "Les etudiants n'avaient pas un lieu fiable pour decouvrir les remises locales verifiees et les offres partenaires.",
-      solution:
-        "Flux mobile-first equilibrant decouverte, confiance et simplicite d'onboarding des deux cotes du marketplace.",
-      businessImpact:
-        "Concept pret pour le client pour un marketplace local vertical, scalable a de nouvelles categories.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -1728,7 +1802,7 @@ const fr: TranslationSet = {
   },
   hero: {
     eyebrow: "Studio Digital · Emilia-Romagna, Italie",
-    headline: "La premiere impression sur votre business\ncommence\npar le site.",
+    headline: "La première impression\nsur votre business\ncommence par le site.",
     subtitle: "La présence digitale qui parle pour vous",
     lead: "Nous concevons des expériences digitales premium pour marques et business qui refusent le générique — restaurants, commerces, studios et startups ambitieux. Design distinctif, stratégie concrète, résultats mesurables.",
     primaryCta: "Voir les projets",
@@ -1751,8 +1825,8 @@ const fr: TranslationSet = {
       { value: "100%", label: "Custom pour votre marque, en personne" },
       { value: "70%", label: "Jugent un business par son site" },
       { value: "26", label: "Services et modules disponibles" },
-      { value: "2 sem.", label: "Demarrage moyen projet" },
     ],
+    footnote: { value: "2 sem.", label: "Demarrage moyen projet" },
   },
   problem: {
     eyebrow: "01 — Pourquoi c'est important",
@@ -1884,6 +1958,7 @@ const fr: TranslationSet = {
     label: "Commencons",
     title: "Un environnement digital pour les business qui ne veulent pas ressembler a tout le monde.",
     body: "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
+    compactTitle: "Demander votre audit gratuit",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reponse sous 1h",
     availability: "Actuellement disponible pour nouveaux clients",
@@ -1899,11 +1974,15 @@ const fr: TranslationSet = {
       email: "E-mail",
       business: "Nom du business",
       businessType: "Type de business",
+      siteUrl: "URL de votre site actuel",
       brief: "Decrivez brievement ce que vous cherchez",
       source: "Comment nous avez-vous trouves?",
       submit: "Envoyer le message",
+      submitAudit: "Demander l'audit gratuit",
       submitting: "Envoi en cours...",
       success: "Bien recu. Nous repondons sous 1 heure.",
+      submitError: "Envoi echoue. Ecrivez a {email} et nous repondrons rapidement.",
+      auditBriefPlaceholder: "Qu'est-ce qui ne fonctionne pas sur votre site? Que souhaitez-vous ameliorer?",
       optional: "facultatif",
       options: {
         restaurant: "Restaurant",
@@ -1917,6 +1996,7 @@ const fr: TranslationSet = {
       errors: {
         required: "Champ obligatoire",
         invalidEmail: "Entrez une adresse e-mail valide",
+        invalidUrl: "Entrez une URL valide (ex. https://votresite.fr)",
       },
     },
   },
@@ -1934,12 +2014,19 @@ const fr: TranslationSet = {
     estimatedLabel: "Estimation indicative",
     addonsSectionTitle: "Modules additionnels",
     aboutServiceCta: "A propos du service",
+    trust: {
+      timeline: "Delai typique : 4–8 semaines",
+      deposit: "Acompte 30% au demarrage",
+      processLink: "Notre methode",
+      testimonial:
+        "«Reponse rapide, scope clair — exactement le partenaire digital qu'il nous fallait.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Modules",
     title: "Etendez votre projet",
     subtitle: "Ajoutez des fonctionnalites au forfait de base.",
-    footnote: "Montants indicatifs. Devis final apres le brief.",
+    footnote: "Le devis final de chaque module est etabli apres le brief.",
     categories: [
       {
         id: "websites",
@@ -1990,6 +2077,37 @@ const fr: TranslationSet = {
   },
   aboutPage: {
     backToHome: "Retour a l'accueil",
+  },
+  privacyPage: {
+    title: "Politique de confidentialite",
+    lastUpdated: "Derniere mise a jour : juin 2026",
+    backToHome: "Retour a l'accueil",
+    sections: [
+      {
+        heading: "Responsable du traitement",
+        body: "DormUp Group digital studio — contact : dormup.it@gmail.com. Region : Emilia-Romagna, Italie.",
+      },
+      {
+        heading: "Donnees collectees",
+        body: "Nous collectons les donnees que vous soumettez volontairement via les formulaires : nom, e-mail, business, type d'activite, URL du site (si fournie), brief et services selectionnes.",
+      },
+      {
+        heading: "Finalite et base legale",
+        body: "Les donnees sont traitees pour repondre aux demandes, preparer des devis et audits gratuits. Base legale : mesures precontractuelles et consentement implicite (RGPD art. 6).",
+      },
+      {
+        heading: "Conservation",
+        body: "Conservation le temps necessaire pour traiter la demande, jusqu'a 24 mois sauf obligation legale contraire.",
+      },
+      {
+        heading: "Vos droits",
+        body: "Vous pouvez demander acces, rectification, effacement, limitation ou opposition via dormup.it@gmail.com. Droit de reclamation aupres de la CNIL ou autorite competente.",
+      },
+      {
+        heading: "Cookies",
+        body: "Ce site n'utilise pas de cookies de profilage tiers. Des cookies techniques peuvent servir au fonctionnement et a la langue.",
+      },
+    ],
   },
   footer: {
     description: "Studio digital pour marques et business premium en Italie.",
@@ -2115,17 +2233,6 @@ const ru: TranslationSet = {
         "Редакционный визуальный язык, структура вокруг бронирования и чёткие доказательства качества опыта.",
       businessImpact:
         "Опыт, который снижает чувствительность к цене и поднимает прямые бронирования при первом визите.",
-    },
-    {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Концепт маркетплейса / dashboard партнёра",
-      problem:
-        "Студентам не хватало одного доверительного места для проверенных локальных скидок и предложений партнёров.",
-      solution:
-        "Mobile-first flow, балансирующий открываемость, доверие и простоту онбординга для обеих сторон.",
-      businessImpact:
-        "Client-ready концепт локального vertical-маркетплейса, масштабируемый на новые категории.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -2299,7 +2406,7 @@ const ru: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italia",
-    headline: "Первое впечатление\nо бизнесе\nначинается с сайта.",
+    headline: "Первое впечатление\nо бизнесе\nначинается с\u00A0сайта.",
     subtitle: "Цифровое присутствие, которое говорит за вас",
     lead: "Создаём премиум цифровые опыты для брендов и бизнесов, которые не хотят выглядеть шаблонно — от локальных проектов до амбициозных стартапов. Выразительный дизайн, чёткая стратегия, измеримый результат.",
     primaryCta: "Смотреть проекты",
@@ -2323,8 +2430,8 @@ const ru: TranslationSet = {
       { value: "100%", label: "Кастом под ваш бренд лично" },
       { value: "70%", label: "Судят о бизнесе по сайту" },
       { value: "26", label: "Услуг и модулей на выбор" },
-      { value: "2 нед.", label: "Средний старт проекта" },
     ],
+    footnote: { value: "2 нед.", label: "Средний старт проекта" },
   },
   problem: {
     eyebrow: "01 — Почему это важно",
@@ -2456,6 +2563,7 @@ const ru: TranslationSet = {
     label: "Начнём",
     title: "Цифровая среда для бизнеса, который не хочет быть как все.",
     body: "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
+    compactTitle: "Запросить бесплатный аудит",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Ответ в течение 1ч",
     availability: "Сейчас открыты для новых клиентов",
@@ -2471,11 +2579,15 @@ const ru: TranslationSet = {
       email: "Email",
       business: "Название бизнеса",
       businessType: "Тип бизнеса",
+      siteUrl: "URL вашего текущего сайта",
       brief: "Коротко опишите, что ищете",
       source: "Как вы нас нашли?",
       submit: "Отправить сообщение",
+      submitAudit: "Запросить бесплатный аудит",
       submitting: "Отправка...",
       success: "Принято. Ответим в течение 1 часа.",
+      submitError: "Не удалось отправить. Напишите на {email} — ответим в ближайшее время.",
+      auditBriefPlaceholder: "Что не устраивает в текущем сайте? Что хотите улучшить?",
       optional: "необязательно",
       options: {
         restaurant: "Ресторан",
@@ -2489,6 +2601,7 @@ const ru: TranslationSet = {
       errors: {
         required: "Обязательное поле",
         invalidEmail: "Введите корректный email",
+        invalidUrl: "Введите корректный URL (например https://vashsite.ru)",
       },
     },
   },
@@ -2506,13 +2619,20 @@ const ru: TranslationSet = {
     estimatedLabel: "Ориентировочная сумма",
     addonsSectionTitle: "Дополнительные модули",
     aboutServiceCta: "Об услуге",
+    trust: {
+      timeline: "Типичный срок: 4–8 недель",
+      deposit: "Предоплата 30% при старте",
+      processLink: "Как мы работаем",
+      testimonial:
+        "«Быстрый ответ, понятный scope — именно такого digital-партнёра мы искали.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Модули",
     title: "Расширьте проект",
     subtitle:
-      "Добавьте функции к базовому пакету. Модули «+» суммируются с основной ценой; «от» — отдельные проекты.",
-    footnote: "Все суммы ориентировочные. Итог — после брифа.",
+      "Добавьте функции к базовому пакету. Стоимость каждого модуля рассчитываем после брифа.",
+    footnote: "Итоговая цена модулей — после брифа.",
     categories: [
       {
         id: "websites",
@@ -2564,6 +2684,37 @@ const ru: TranslationSet = {
   aboutPage: {
     backToHome: "На главную",
   },
+  privacyPage: {
+    title: "Политика конфиденциальности",
+    lastUpdated: "Обновлено: июнь 2026",
+    backToHome: "На главную",
+    sections: [
+      {
+        heading: "Оператор данных",
+        body: "DormUp Group digital studio — контакт: dormup.it@gmail.com. Регион: Эмилия-Романья, Италия.",
+      },
+      {
+        heading: "Какие данные собираем",
+        body: "Данные, которые вы добровольно отправляете через формы: имя, email, название бизнеса, тип, URL сайта (если указан), описание проекта и выбранные услуги.",
+      },
+      {
+        heading: "Цель и правовое основание",
+        body: "Обработка для ответа на запросы, подготовки расчётов и бесплатных аудитов. Основание: преддоговорные меры и согласие при отправке формы (GDPR ст. 6).",
+      },
+      {
+        heading: "Хранение",
+        body: "Храним данные столько, сколько нужно для обработки запроса, до 24 месяцев, если иное не требует закон.",
+      },
+      {
+        heading: "Ваши права",
+        body: "Вы можете запросить доступ, исправление, удаление, ограничение или возражение, написав на dormup.it@gmail.com. Право на жалобу в надзорный орган.",
+      },
+      {
+        heading: "Cookies",
+        body: "Сайт не использует сторонние профилирующие cookies. Технические cookies могут использоваться для работы сайта и выбора языка.",
+      },
+    ],
+  },
   footer: {
     description: "Цифровая студия для премиум-брендов и бизнесов по всей Италии.",
     links: "Быстрые ссылки",
@@ -2593,7 +2744,7 @@ const ru: TranslationSet = {
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
     pricingNote:
-      "Цены основных пакетов — в разделе «Тарифы» каждой услуги. Модули ниже добавляются по запросу.",
+      "Цены основных пакетов — в карточках услуг выше. Дополнительные модули — по запросу, без публичных тарифов.",
     categories: [
       {
         title: "Сайты",
@@ -2689,17 +2840,6 @@ const de: TranslationSet = {
         "Editoriale visuelle Sprache, reservierungsorientierte Struktur und klare Qualitatsnachweise.",
       businessImpact:
         "Erlebnis, das Preissensibilitat senkt und Direktbuchungen beim ersten Besuch erhoht.",
-    },
-    {
-      id: "student-marketplace-rimini",
-      name: "Student Marketplace Rimini",
-      subtitle: "Marketplace- / Partner-Dashboard-Konzept",
-      problem:
-        "Studenten fehlte ein vertrauenswurdiger Ort fur gepruft lokale Rabatte und Partnerangebote.",
-      solution:
-        "Mobile-first Flow, der Entdeckung, Vertrauen und Onboarding-Einfachheit fur beide Seiten ausbalanciert.",
-      businessImpact:
-        "Client-ready Konzept fur einen lokalen Vertical-Marketplace, skalierbar auf neue Kategorien.",
     },
     {
       id: "podlopuhom-jewelry",
@@ -2872,7 +3012,7 @@ const de: TranslationSet = {
   },
   hero: {
     eyebrow: "Digitales Studio · Emilia-Romagna, Italien",
-    headline: "Der erste Eindruck uber Ihr Business\nbeginnt\nmit der Website.",
+    headline: "Der erste Eindruck\nüber Ihr Business\nbeginnt mit der Website.",
     subtitle: "Digitale Präsenz, die für Sie spricht",
     lead: "Wir bauen Premium-Digitalerlebnisse für Marken und Unternehmen, die nicht generisch wirken wollen — von lokalen Betrieben bis zu ambitionierten Startups. Ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
     primaryCta: "Projekte ansehen",
@@ -2895,8 +3035,8 @@ const de: TranslationSet = {
       { value: "100%", label: "Custom fur Ihre Marke, personlich" },
       { value: "70%", label: "Beurteilen ein Business an der Website" },
       { value: "26", label: "Leistungen und Module zur Auswahl" },
-      { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
     ],
+    footnote: { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
   },
   problem: {
     eyebrow: "01 — Warum es zahlt",
@@ -3028,6 +3168,7 @@ const de: TranslationSet = {
     label: "Lass uns starten",
     title: "Eine digitale Umgebung fur Unternehmen, die nicht wie alle sein wollen.",
     body: "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
+    compactTitle: "Kostenloses Audit anfragen",
     emailLabel: "E-Mail",
     whatsappLabel: "WhatsApp · Antwort innerhalb 1h",
     availability: "Derzeit verfugbar fur neue Kunden",
@@ -3043,11 +3184,15 @@ const de: TranslationSet = {
       email: "E-Mail",
       business: "Name des Business",
       businessType: "Art des Business",
+      siteUrl: "URL Ihrer aktuellen Website",
       brief: "Beschreiben Sie kurz, was Sie suchen",
       source: "Wie haben Sie uns gefunden?",
       submit: "Nachricht senden",
+      submitAudit: "Kostenloses Audit anfragen",
       submitting: "Wird gesendet...",
       success: "Erhalten. Wir antworten innerhalb einer Stunde.",
+      submitError: "Senden fehlgeschlagen. Schreiben Sie an {email} — wir melden uns schnell.",
+      auditBriefPlaceholder: "Was funktioniert an Ihrer Website nicht? Was mochten Sie verbessern?",
       optional: "optional",
       options: {
         restaurant: "Restaurant",
@@ -3061,6 +3206,7 @@ const de: TranslationSet = {
       errors: {
         required: "Pflichtfeld",
         invalidEmail: "Gültige E-Mail-Adresse eingeben",
+        invalidUrl: "Gültige URL eingeben (z. B. https://ihrewebsite.de)",
       },
     },
   },
@@ -3078,12 +3224,19 @@ const de: TranslationSet = {
     estimatedLabel: "Richtwert",
     addonsSectionTitle: "Zusatzmodule",
     aboutServiceCta: "Zur Leistung",
+    trust: {
+      timeline: "Typische Dauer: 4–8 Wochen",
+      deposit: "30% Anzahlung zum Start",
+      processLink: "So arbeiten wir",
+      testimonial:
+        "«Schnelle Antwort, klarer Scope — genau der Digital-Partner, den wir gesucht haben.»",
+    },
   },
   pricingAddons: {
     eyebrow: "Module",
     title: "Projekt erweitern",
     subtitle: "Funktionen zum Basispaket hinzufugen.",
-    footnote: "Alle Betrage sind Richtwerte. Endangebot nach Briefing.",
+    footnote: "Der Endpreis jedes Moduls wird nach dem Briefing festgelegt.",
     categories: [
       {
         id: "websites",
@@ -3134,6 +3287,37 @@ const de: TranslationSet = {
   },
   aboutPage: {
     backToHome: "Zur Startseite",
+  },
+  privacyPage: {
+    title: "Datenschutzerklarung",
+    lastUpdated: "Stand: Juni 2026",
+    backToHome: "Zur Startseite",
+    sections: [
+      {
+        heading: "Verantwortlicher",
+        body: "DormUp Group digital studio — Kontakt: dormup.it@gmail.com. Region: Emilia-Romagna, Italien.",
+      },
+      {
+        heading: "Erhobene Daten",
+        body: "Daten, die Sie freiwillig uber Formulare senden: Name, E-Mail, Business-Name, Typ, Website-URL (falls angegeben), Brief und gewahlte Leistungen.",
+      },
+      {
+        heading: "Zweck und Rechtsgrundlage",
+        body: "Verarbeitung zur Beantwortung von Anfragen, Angeboten und kostenlosen Audits. Rechtsgrundlage: vorvertragliche Massnahmen und implizite Einwilligung (DSGVO Art. 6).",
+      },
+      {
+        heading: "Speicherdauer",
+        body: "Speicherung so lange wie fur die Bearbeitung erforderlich, maximal 24 Monate, sofern gesetzlich nicht anders vorgeschrieben.",
+      },
+      {
+        heading: "Ihre Rechte",
+        body: "Auskunft, Berichtigung, Loschung, Einschrankung oder Widerspruch per E-Mail an dormup.it@gmail.com. Beschwerderecht bei der Aufsichtsbehorde.",
+      },
+      {
+        heading: "Cookies",
+        body: "Diese Website verwendet keine Drittanbieter-Profiling-Cookies. Technische Cookies dienen dem Betrieb und der Sprachauswahl.",
+      },
+    ],
   },
   footer: {
     description: "Digitales Studio fur Premium-Marken und Unternehmen in ganz Italien.",

@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { ContactLink } from "@/components/contact-link";
-import { Link } from "@/i18n/navigation";
+import { preventBrokenPhrases } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
@@ -20,7 +20,7 @@ export function AuditCta({ t }: AuditCtaProps) {
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-28 right-1/4 h-72 w-72 rounded-full bg-emerald-glow opacity-15 blur-3xl"
+            className="pointer-events-none absolute -bottom-28 right-1/4 h-72 w-72 rounded-full bg-gold-radial opacity-15 blur-3xl"
           />
           <div
             aria-hidden
@@ -28,20 +28,20 @@ export function AuditCta({ t }: AuditCtaProps) {
           />
 
           <div className="relative z-10 mx-auto max-w-4xl">
-            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-borderSubtle bg-white/[0.04] px-3 py-2 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-accentGold backdrop-blur sm:px-4 sm:text-[10px] sm:tracking-[0.22em]">
-              {t.audit.meta}
+            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-borderSubtle bg-white/[0.04] px-3 py-2 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-accentGold backdrop-blur hyphens-none text-safe-wrap sm:px-4 sm:text-[10px] sm:tracking-[0.22em]">
+              {preventBrokenPhrases(t.audit.meta)}
             </span>
-            <h2 className="mt-7 text-fluid-title font-display font-semibold leading-[1.08] text-textPrimary text-balance">
+            <h2 className="mt-7 text-fluid-title font-display font-semibold leading-[1.08] text-textPrimary text-safe-wrap">
               {t.audit.title.split("\n").map((line) => (
-                <span key={line} className="block">
-                  {line}
+                <span key={line} className="block text-safe-wrap">
+                  {preventBrokenPhrases(line)}
                 </span>
               ))}
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg text-textSecondary text-pretty">
               {t.audit.body}
             </p>
-            <ContactLink className={btn("primary", "lg", "amber-pulse mt-10 w-full sm:w-auto")}>
+            <ContactLink audit className={btn("primary", "lg", "amber-pulse mt-10 w-full sm:w-auto")}>
               {t.audit.cta}
               <ArrowUpRight
                 size={18}

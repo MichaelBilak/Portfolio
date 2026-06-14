@@ -1,29 +1,16 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Mail, Signal } from "lucide-react";
-import { ChangeEvent, FormEvent, Suspense, useMemo, useState } from "react";
+import { Mail, Signal } from "lucide-react";
+import { Suspense } from "react";
 import { MailtoLink } from "@/components/mailto-link";
-import { ServiceCart, useOrderCartSelection } from "@/components/service-cart";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
 import { CONTACT_EMAIL } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 import { ContactErrorBoundary } from "./contact-error-boundary";
+import { ContactForm } from "./contact-form";
 
 interface ContactProps {
   t: TranslationSet;
-}
-
-type BusinessType = "restaurant" | "hotel" | "bar" | "other";
-type SourceType = "google" | "referral" | "social" | "other";
-
-interface FormState {
-  fullName: string;
-  email: string;
-  businessName: string;
-  businessType: BusinessType;
-  brief: string;
-  source: SourceType;
 }
 
 export function Contact({ t }: ContactProps) {
@@ -40,7 +27,7 @@ export function Contact({ t }: ContactProps) {
             <Eyebrow>{t.contact.label}</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+            <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
               {t.contact.title}
             </h2>
           </Reveal>
@@ -71,7 +58,7 @@ export function Contact({ t }: ContactProps) {
         <ContactErrorBoundary>
           <Suspense fallback={null}>
             <div className="order-1 lg:order-2">
-              <ContactForm t={t} />
+              <ContactForm t={t} variant="full" />
             </div>
           </Suspense>
         </ContactErrorBoundary>
@@ -103,193 +90,5 @@ function EmailCardContent({
         </span>
       </span>
     </>
-  );
-}
-
-function ContactForm({ t }: ContactProps) {
-  const cart = useOrderCartSelection(t);
-  const [form, setForm] = useState<FormState>({
-    fullName: "",
-    email: "",
-    businessName: "",
-    businessType: "restaurant",
-    brief: "",
-    source: "google",
-  });
-  const [errors, setErrors] = useState<Record<keyof FormState, string>>({
-    fullName: "",
-    email: "",
-    businessName: "",
-    businessType: "",
-    brief: "",
-    source: "",
-  });
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-
-  const hasErrors = useMemo(
-    () => Object.values(errors).some((error) => error.length > 0),
-    [errors],
-  );
-
-  const validate = (state: FormState) => {
-    const requiredError = t.contact.form.errors.required;
-    const invalidEmailError = t.contact.form.errors.invalidEmail;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    const next: Record<keyof FormState, string> = {
-      fullName: "",
-      email: !state.email.trim()
-        ? requiredError
-        : !emailRegex.test(state.email.trim())
-          ? invalidEmailError
-          : "",
-      businessName: state.businessName.trim() ? "" : requiredError,
-      businessType: state.businessType ? "" : requiredError,
-      brief: "",
-      source: state.source ? "" : requiredError,
-    };
-    setErrors(next);
-    return Object.values(next).every((e) => e === "");
-  };
-
-  const onChange =
-    (key: keyof FormState) =>
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const value = event.target.value;
-      setForm((prev) => ({ ...prev, [key]: value }));
-      if (errors[key]) {
-        setErrors((prev) => ({ ...prev, [key]: "" }));
-      }
-    };
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!validate(form)) {
-      return;
-    }
-
-    setLoading(true);
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        selectedServices: cart.services,
-        selectedAddons: cart.addons,
-      }),
-    });
-    setLoading(false);
-
-    if (response.ok) {
-      setSent(true);
-      setForm({
-        fullName: "",
-        email: "",
-        businessName: "",
-        businessType: "restaurant",
-        brief: "",
-        source: "google",
-      });
-    }
-  };
-
-  const inputClass = (key: keyof FormState) =>
-    `focus-outline w-full rounded-xl border bg-white/[0.02] px-4 py-3 text-base text-textPrimary placeholder:text-textMuted transition-colors hover:bg-white/[0.04] sm:text-sm ${
-      errors[key] ? "border-[var(--error)]" : "border-borderCool"
-    }`;
-
-  return (
-    <form onSubmit={onSubmit} className="glass-card rounded-3xl p-5 sm:p-7">
-      <ServiceCart t={t} />
-      <div className="space-y-5">
-        <Field
-          label={`${t.contact.form.name} (${t.contact.form.optional})`}
-          error={errors.fullName}
-        >
-          <input className={inputClass("fullName")} value={form.fullName} onChange={onChange("fullName")} />
-        </Field>
-
-        <Field label={t.contact.form.email} error={errors.email}>
-          <input
-            type="email"
-            className={inputClass("email")}
-            value={form.email}
-            onChange={onChange("email")}
-          />
-        </Field>
-
-        <Field label={t.contact.form.business} error={errors.businessName}>
-          <input
-            className={inputClass("businessName")}
-            value={form.businessName}
-            onChange={onChange("businessName")}
-          />
-        </Field>
-
-        <Field label={t.contact.form.businessType} error={errors.businessType}>
-          <select className={inputClass("businessType")} value={form.businessType} onChange={onChange("businessType")}>
-            <option value="restaurant">{t.contact.form.options.restaurant}</option>
-            <option value="hotel">{t.contact.form.options.hotel}</option>
-            <option value="bar">{t.contact.form.options.bar}</option>
-            <option value="other">{t.contact.form.options.other}</option>
-          </select>
-        </Field>
-
-        <Field
-          label={`${t.contact.form.brief} (${t.contact.form.optional})`}
-          error={errors.brief}
-        >
-          <textarea className={inputClass("brief")} rows={4} value={form.brief} onChange={onChange("brief")} />
-        </Field>
-
-        <Field label={t.contact.form.source} error={errors.source}>
-          <select className={inputClass("source")} value={form.source} onChange={onChange("source")}>
-            <option value="google">{t.contact.form.options.google}</option>
-            <option value="referral">{t.contact.form.options.referral}</option>
-            <option value="social">{t.contact.form.options.social}</option>
-            <option value="other">{t.contact.form.options.other}</option>
-          </select>
-        </Field>
-      </div>
-
-      <button
-        type="submit"
-        disabled={loading || hasErrors}
-        className="focus-outline interactive mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-accentGold px-6 py-3 text-sm font-medium text-bgPrimary shadow-[0_20px_50px_-22px_rgba(252,211,77,0.65)] hover:shadow-[0_26px_60px_-22px_rgba(252,211,77,0.85)] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
-      >
-        {loading ? t.contact.form.submitting : t.contact.form.submit}
-      </button>
-
-      <AnimatePresence>
-        {sent ? (
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="mt-4 flex items-center gap-2 text-sm text-emerald-300"
-          >
-            <CheckCircle2 size={16} />
-            {t.contact.form.success}
-          </motion.p>
-        ) : null}
-      </AnimatePresence>
-    </form>
-  );
-}
-
-interface FieldProps {
-  label: string;
-  children: React.ReactNode;
-  error?: string;
-}
-
-function Field({ label, children, error }: FieldProps) {
-  return (
-    <label className="block text-sm text-textPrimary">
-      {label}
-      <div className="mt-2">{children}</div>
-      {error ? <p className="mt-1 text-xs text-red-400">{error}</p> : null}
-    </label>
   );
 }

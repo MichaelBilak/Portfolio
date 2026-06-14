@@ -6,6 +6,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
+import { SITE_URL } from "@/lib/brand";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import "../globals.css";
 
@@ -46,7 +47,7 @@ const mono = IBM_Plex_Mono({
   preload: false,
 });
 
-const siteUrl = "https://bilakstudio.it";
+const siteUrl = SITE_URL;
 const logoUrl = "/images/logo-dm-group.png";
 
 const localeMetaContent: Record<
@@ -176,7 +177,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "DormUp Group Digital Studio",
+    name: "DormUp Group digital studio",
     email: "dormup.it@gmail.com",
     image: `${siteUrl}${logoUrl}`,
     logo: `${siteUrl}${logoUrl}`,

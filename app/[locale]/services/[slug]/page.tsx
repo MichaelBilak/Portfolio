@@ -18,6 +18,7 @@ import {
   type ServiceId,
 } from "@/data/pricing";
 import { Link } from "@/i18n/navigation";
+import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
 import { btn } from "@/lib/ui";
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (index === -1) return {};
   const service = t.services[index];
   return {
-    title: `${service.title} · Bilak Michael Studio`,
+    title: pageTitle(service.title),
     description: service.description,
   };
 }
@@ -154,7 +155,7 @@ export default async function ServicePage({ params }: PageProps) {
                 {t.servicePage.deliverables}
               </p>
               <h2
-                className="mt-3 font-display font-light text-balance"
+                className="mt-3 font-display font-light text-safe-wrap"
                 style={{
                   fontSize: "clamp(1.4rem, 3.2vw, 3.5rem)",
                   lineHeight: 1.04,

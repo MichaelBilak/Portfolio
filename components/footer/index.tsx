@@ -2,6 +2,7 @@ import { AtSign, Globe } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { MailtoLink } from "@/components/mailto-link";
 import { Link } from "@/i18n/navigation";
+import { SITE_URL } from "@/lib/brand";
 import { CONTACT_EMAIL, contactMailtoHref } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 import { cn } from "@/lib/ui";
@@ -12,6 +13,8 @@ interface FooterProps {
 }
 
 export function Footer({ t, className }: FooterProps) {
+  const year = new Date().getFullYear();
+
   const quickLinks: { href: string; label: string }[] = [
     { href: "/work", label: t.nav.work },
     { href: "/services", label: t.nav.services },
@@ -19,50 +22,60 @@ export function Footer({ t, className }: FooterProps) {
     { href: "/contact", label: t.nav.contact },
   ];
 
-  const socials = [
-    { href: "#", label: "Website", Icon: Globe, mailto: false },
+  type SocialLink =
+    | { href: string; label: string; Icon: typeof Globe; external: true }
+    | { href: string; label: string; Icon: typeof AtSign; mailto: true };
+
+  const socials: SocialLink[] = [
+    { href: SITE_URL, label: "Website", Icon: Globe, external: true },
     { href: contactMailtoHref(), label: `Email: ${CONTACT_EMAIL}`, Icon: AtSign, mailto: true },
-  ] as const;
+  ];
 
   return (
     <footer className={cn("relative overflow-hidden border-t border-borderStrong bg-bgSecondary pt-16 pb-fab-clearance lg:pb-0", className)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-emerald-glow opacity-30 blur-3xl"
+        className="pointer-events-none absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-gold-radial opacity-20 blur-3xl"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 right-1/4 h-72 w-72 rounded-full bg-gold-radial opacity-20 blur-3xl"
+        className="pointer-events-none absolute -top-40 right-1/4 h-72 w-72 rounded-full bg-gold-radial opacity-15 blur-3xl"
       />
 
       <div className="container-lux relative grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-            <BrandLogo priority wordmarkClassName="text-3xl" />
+          <BrandLogo priority wordmarkClassName="text-3xl" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-textSecondary">
             {t.footer.description}
           </p>
           <div className="mt-5 flex gap-3">
-            {socials.map(({ href, label, Icon, mailto }) =>
-              mailto ? (
-                <MailtoLink
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
-                >
-                  <Icon size={16} />
-                </MailtoLink>
-              ) : (
+            {socials.map((item) => {
+              const { href, label, Icon } = item;
+              if ("mailto" in item) {
+                return (
+                  <MailtoLink
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
+                  >
+                    <Icon size={16} />
+                  </MailtoLink>
+                );
+              }
+              return (
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
                   aria-label={label}
                 >
                   <Icon size={16} />
                 </a>
-              ),
-            )}
+              );
+            })}
           </div>
         </div>
 
@@ -102,10 +115,12 @@ export function Footer({ t, className }: FooterProps) {
 
       <div className="relative border-t border-borderCool">
         <div className="container-lux flex flex-col items-start justify-between gap-3 py-5 pb-safe text-sm text-textMuted md:flex-row md:items-center">
-          <p className="max-w-full text-pretty">2025 © DormUp Group · {t.footer.location} · {t.footer.built}</p>
-          <a href="#" className="hover:text-accentGold">
+          <p className="max-w-full text-pretty">
+            {year} © DormUp Group · {t.footer.location} · {t.footer.built}
+          </p>
+          <Link href="/privacy" className="hover:text-accentGold">
             {t.footer.privacy}
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

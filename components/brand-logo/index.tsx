@@ -1,4 +1,5 @@
 import { WordmarkCore } from "@/components/brand-logo/wordmark-core";
+import { BRAND_FULL, BRAND_TAGLINE } from "@/lib/brand";
 
 interface BrandLogoProps {
   priority?: boolean;
@@ -21,7 +22,7 @@ export function BrandLogo({
 }: BrandLogoProps) {
   return (
     <span
-      aria-label="DormUp Group | digital studio"
+      aria-label={BRAND_FULL}
       className={`inline-flex min-w-0 items-center ${wordmarkClassName}`}
     >
       <WordmarkCore
@@ -38,7 +39,7 @@ export function BrandLogo({
           <span
             className={`relative -top-[0.06em] whitespace-nowrap leading-none ${agencyClassName} ${taglineClassName}`}
           >
-            digital studio
+            {BRAND_TAGLINE}
           </span>
         </>
       ) : null}

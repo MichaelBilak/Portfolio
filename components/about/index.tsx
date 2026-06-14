@@ -16,7 +16,7 @@ export function About({ t }: AboutProps) {
               <Eyebrow>{t.about.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
                 {t.about.title}
               </h2>
             </Reveal>

@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { OrderServices } from "@/components/order-services";
 import { Link } from "@/i18n/navigation";
+import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
 
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hasLocale(routing.locales, locale)) return {};
   const t = translations[locale as Locale];
   return {
-    title: `${t.orderPage.title} · Bilak Michael Studio`,
+    title: pageTitle(t.orderPage.title),
     description: t.orderPage.subtitle,
   };
 }

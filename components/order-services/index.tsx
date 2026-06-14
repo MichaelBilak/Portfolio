@@ -7,7 +7,6 @@ import { useMemo, useState } from "react";
 import { PricingAddons } from "@/components/pricing-addons";
 import { servicesMeta } from "@/data/services";
 import {
-  ADDON_CATEGORIES,
   SERVICE_BASE_PRICES,
   SERVICE_MONTHLY,
   type ServiceId,
@@ -20,14 +19,6 @@ import { btn } from "@/lib/ui";
 interface OrderServicesProps {
   t: TranslationSet;
   locale: Locale;
-}
-
-function getAddonPrice(id: string): number {
-  for (const cat of ADDON_CATEGORIES) {
-    const item = cat.items.find((i) => i.id === id);
-    if (item) return item.price;
-  }
-  return 0;
 }
 
 function parseList(value: string | null): string[] {
@@ -80,11 +71,8 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
     for (const id of Array.from(selected)) {
       total += SERVICE_BASE_PRICES[id as ServiceId] ?? 0;
     }
-    for (const id of Array.from(addons)) {
-      total += getAddonPrice(id);
-    }
     return total;
-  }, [selected, addons]);
+  }, [selected]);
 
   const params = new URLSearchParams();
   if (selectedSlugs.length > 0) params.set("services", selectedSlugs.join(","));
@@ -98,7 +86,22 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
     <>
       <section className="py-12 md:py-20">
         <div className="container-lux">
-          <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
+          <aside className="glass-card mb-8 rounded-2xl border border-borderSubtle p-5 md:p-6 lg:float-right lg:mb-0 lg:ml-8 lg:w-72 lg:sticky lg:top-[var(--header-offset)]">
+            <ul className="space-y-3 text-sm text-textSecondary">
+              <li>{op.trust.timeline}</li>
+              <li>{op.trust.deposit}</li>
+              <li>
+                <Link href="/services/premium-website#process" className="text-accentGold hover:text-accentWarm">
+                  {op.trust.processLink} →
+                </Link>
+              </li>
+            </ul>
+            <p className="mt-4 border-t border-borderCool pt-4 text-sm italic leading-relaxed text-textMuted">
+              {op.trust.testimonial}
+            </p>
+          </aside>
+
+          <div className="grid gap-5 md:grid-cols-2 lg:gap-6 lg:clear-none">
             {servicesMeta.map((meta, index) => {
               const copy = t.services[index];
               const isSelected = selected.has(meta.id);

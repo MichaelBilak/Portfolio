@@ -3,6 +3,7 @@ import { PricingAddons } from "@/components/pricing-addons";
 import { ServiceCategories } from "@/components/service-categories";
 import { ServicesCrystalGrid } from "@/components/services-crystal-grid";
 import type { Metadata } from "next";
+import { pageTitle } from "@/lib/brand";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hasLocale(routing.locales, locale)) return {};
   const t = translations[locale as Locale];
   return {
-    title: `${t.servicesPage.title} · Bilak Michael Studio`,
+    title: pageTitle(t.servicesPage.title),
     description: t.servicesPage.subtitle,
   };
 }

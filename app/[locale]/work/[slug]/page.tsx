@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { projectsMeta } from "@/data/projects";
 import { Link } from "@/i18n/navigation";
+import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
 
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const project = t.projects.find((p) => p.id === meta.id);
   if (!project) return {};
   return {
-    title: `${project.name} · Bilak Michael Studio`,
+    title: pageTitle(project.name),
     description: project.subtitle,
     openGraph: {
       title: project.name,

@@ -9,7 +9,7 @@ export type ButtonVariant = "primary" | "secondary" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const base =
-  "focus-outline interactive group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full text-center font-semibold tracking-tight text-balance disabled:cursor-not-allowed disabled:opacity-60";
+  "focus-outline interactive group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full text-center font-semibold tracking-tight hyphens-none text-safe-wrap disabled:cursor-not-allowed disabled:opacity-60";
 
 const sizes: Record<ButtonSize, string> = {
   sm: "btn-sm min-h-10 text-xs",

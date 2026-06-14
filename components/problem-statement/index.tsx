@@ -35,7 +35,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-6 text-fluid-title font-display font-light leading-[1.02] text-[#0d130f] text-balance">
+              <h2 className="mt-6 text-fluid-title font-display font-light leading-[1.02] text-[#0d130f] text-safe-wrap">
                 {t.problem.title}
               </h2>
             </Reveal>

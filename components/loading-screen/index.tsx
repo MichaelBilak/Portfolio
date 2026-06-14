@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { AnimatedWordmark } from "@/components/brand-logo/wordmark-animated";
 import { hideSplashGate, isLocaleSwitchInProgress, markSplashSeen, shouldSkipSplash } from "@/lib/splash-session";
 
-const MIN_DISPLAY_MS = 3500;
+const MIN_DISPLAY_MS = 1000;
 const WORDMARK_DONE_MS = 800;
 const EXIT_MS = 300;
 const EASE_LOAD = [0.22, 1, 0.36, 1] as const;

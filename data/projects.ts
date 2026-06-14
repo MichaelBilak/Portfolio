@@ -60,14 +60,4 @@ export const projectsMeta: ProjectMeta[] = [
     url: "#",
     displayUrl: "premium-restaurant.it",
   },
-  {
-    id: "student-marketplace-rimini",
-    slug: "student-marketplace-rimini",
-    index: "05",
-    tag: "Client-Ready Concept",
-    image: "/images/project-student-marketplace.svg",
-    tech: ["Next.js", "State Management", "Component Architecture", "UX Testing"],
-    url: "#",
-    displayUrl: "student-marketplace.it",
-  },
 ];

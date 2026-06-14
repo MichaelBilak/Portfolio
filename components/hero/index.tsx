@@ -10,10 +10,11 @@ import {
   useTransform,
   type Variants,
 } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
 import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
+import { preventBrokenPhrases } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
@@ -65,15 +66,15 @@ export function Hero({ t }: HeroProps) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accentGold opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accentGold" />
               </span>
-              <span className="min-w-0 text-[10px] leading-tight tracking-[0.08em] sm:whitespace-nowrap sm:text-[11px] sm:tracking-[0.28em]">
-                {t.hero.eyebrow}
+              <span className="max-w-full text-[10px] leading-tight tracking-[0.08em] hyphens-none sm:whitespace-nowrap sm:text-[11px] sm:tracking-[0.28em]">
+                {preventBrokenPhrases(t.hero.eyebrow)}
               </span>
             </span>
           </motion.div>
 
-          <h1 className="text-fluid-hero max-w-full font-display font-semibold text-textPrimary text-balance break-words">
+          <h1 className="text-fluid-hero max-w-full font-display font-semibold text-textPrimary text-safe-wrap">
             {headlineLines.map((line, index) => (
-              <motion.span key={line} variants={item} className="block">
+              <motion.span key={line} variants={item} className="block text-safe-wrap">
                 {index === headlineLines.length - 1 ? (
                   <span className="text-gradient-sheen">{line}</span>
                 ) : (
@@ -114,6 +115,7 @@ export function Hero({ t }: HeroProps) {
                 />
               </Link>
               <ContactLink
+                audit
                 className={btn(
                   "secondary",
                   "md",
@@ -147,7 +149,7 @@ export function Hero({ t }: HeroProps) {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-60" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </span>
-            <span className="min-w-0 text-pretty">{t.hero.socialProof}</span>
+            <span className="min-w-0 text-pretty hyphens-none">{preventBrokenPhrases(t.hero.socialProof)}</span>
           </motion.div>
         </motion.div>
 
@@ -167,6 +169,70 @@ interface HeroVisualProps {
   reduce: boolean;
 }
 
+interface FloatingChipProps {
+  reduce: boolean;
+  delay: number;
+  duration: number;
+  amplitude: number;
+  drift?: number;
+  className?: string;
+  children: ReactNode;
+}
+
+/** Entrance fade + continuous levitation on a separate layer so transforms don't fight. */
+function FloatingChip({
+  reduce,
+  delay,
+  duration,
+  amplitude,
+  drift = 0,
+  className,
+  children,
+}: FloatingChipProps) {
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 0.61, 0.36, 1] }}
+      className={className}
+    >
+      <motion.div
+        animate={
+          reduce
+            ? undefined
+            : {
+                y: [0, -amplitude, 0],
+                x: drift ? [0, drift, 0, -drift, 0] : 0,
+              }
+        }
+        transition={
+          reduce
+            ? undefined
+            : {
+                y: {
+                  duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: delay + 0.35,
+                },
+                x: drift
+                  ? {
+                      duration: duration * 1.35,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: delay + 0.5,
+                    }
+                  : undefined,
+              }
+        }
+        className="hero-float-chip-inner"
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function HeroVisual({ t, reduce }: HeroVisualProps) {
   const { scrollY } = useScroll();
   const parallax = useTransform(scrollY, [0, 700], [0, -70]);
@@ -179,22 +245,6 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
     damping: 16,
     gyroX: 7,
     gyroY: 7,
-  });
-
-  const float = (delay: number, distance = 12): Variants => ({
-    hidden: { opacity: 0, scale: 0.92, y: 16 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: reduce ? 0 : [0, -distance, 0],
-      transition: {
-        opacity: { duration: 0.6, delay },
-        scale: { duration: 0.6, delay },
-        y: reduce
-          ? { duration: 0 }
-          : { duration: 6 + distance / 4, repeat: Infinity, ease: "easeInOut", delay },
-      },
-    },
   });
 
   return (
@@ -221,6 +271,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
         style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
       >
         <ContactLink
+          audit
           aria-label={t.hero.secondaryCta}
           className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-[1.75rem] p-3 transition-all duration-300 hover:border-accentGold/50 hover:shadow-[0_28px_70px_-28px_rgba(252,211,77,0.45)]"
         >
@@ -246,40 +297,48 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
         </ContactLink>
       </motion.div>
 
-      {/* Floating UI chips — product-dashboard feel */}
-      <motion.div
-        variants={float(0.4, 10)}
-        initial="hidden"
-        animate="visible"
-        className="glass-card-strong absolute -left-3 top-[22%] hidden items-center gap-3 rounded-2xl px-4 py-3 sm:flex"
+      {/* Floating UI chips — levitate over the mockup */}
+      <FloatingChip
+        reduce={reduce}
+        delay={0.4}
+        duration={5.2}
+        amplitude={16}
+        drift={3}
+        className="absolute -left-3 top-[22%] z-10 max-sm:top-[18%]"
       >
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300">
-          <TrendingUp size={16} />
-        </span>
-        <span className="leading-tight">
-          <span className="block font-display text-xl font-medium text-textPrimary">+32%</span>
-          <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
-            direct bookings
+        <div className="glass-card-strong flex items-center gap-3 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300 max-sm:h-8 max-sm:w-8">
+            <TrendingUp size={16} />
           </span>
-        </span>
-      </motion.div>
+          <span className="leading-tight whitespace-nowrap">
+            <span className="block font-display text-xl font-medium text-textPrimary max-sm:text-lg">+32%</span>
+            <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
+              direct bookings
+            </span>
+          </span>
+        </div>
+      </FloatingChip>
 
-      <motion.div
-        variants={float(0.7, 14)}
-        initial="hidden"
-        animate="visible"
-        className="glass-card-strong absolute -right-2 bottom-[16%] hidden items-center gap-2.5 rounded-2xl px-4 py-3 sm:flex"
+      <FloatingChip
+        reduce={reduce}
+        delay={0.75}
+        duration={6.4}
+        amplitude={18}
+        drift={4}
+        className="absolute -right-2 bottom-[16%] z-10 max-sm:bottom-[12%]"
       >
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold">
-          <MapPin size={16} />
-        </span>
-        <span className="leading-tight">
-          <span className="block text-sm font-medium text-textPrimary">Emilia-Romagna, IT</span>
-          <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
-            digital studio
+        <div className="glass-card-strong flex items-center gap-2.5 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
+          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold max-sm:h-8 max-sm:w-8">
+            <MapPin size={16} />
           </span>
-        </span>
-      </motion.div>
+          <span className="leading-tight whitespace-nowrap">
+            <span className="block text-sm font-medium text-textPrimary max-sm:text-[13px]">Emilia-Romagna, IT</span>
+            <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
+              digital studio
+            </span>
+          </span>
+        </div>
+      </FloatingChip>
     </motion.div>
   );
 }

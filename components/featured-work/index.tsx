@@ -36,7 +36,7 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-20 right-1/4 h-72 w-72 rounded-full bg-emerald-glow opacity-20 blur-3xl"
+        className="pointer-events-none absolute bottom-20 right-1/4 h-72 w-72 rounded-full bg-gold-radial opacity-20 blur-3xl"
       />
 
       <div className="container-lux relative">
@@ -47,7 +47,7 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
                 <Eyebrow>{t.workPage.eyebrow}</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-balance">
+                <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
                   {t.caseStudies.label}
                 </h2>
               </Reveal>

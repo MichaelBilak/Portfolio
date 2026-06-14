@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import { pageTitle } from "@/lib/brand";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hasLocale(routing.locales, locale)) return {};
   const t = translations[locale as Locale];
   return {
-    title: `${t.about.title} · Bilak Michael Studio`,
+    title: pageTitle(t.about.title),
     description: t.about.bio.split("\n")[0],
   };
 }

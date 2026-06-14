@@ -19,10 +19,6 @@ export interface PricingTierConfig {
 
 export interface AddonModuleConfig {
   id: string;
-  price: number;
-  type: AddonPriceType;
-  /** Override: recurring monthly add-on */
-  monthly?: boolean;
 }
 
 export interface AddonCategoryConfig {
@@ -75,42 +71,42 @@ export const ADDON_CATEGORIES: AddonCategoryConfig[] = [
   {
     id: "websites",
     items: [
-      { id: "corporate", price: 1999, type: "from" },
-      { id: "promo", price: 999, type: "from" },
-      { id: "landing", price: 1299, type: "from" },
-      { id: "media-blog", price: 2499, type: "from" },
-      { id: "no-code", price: 899, type: "from" },
+      { id: "corporate" },
+      { id: "promo" },
+      { id: "landing" },
+      { id: "media-blog" },
+      { id: "no-code" },
     ],
   },
   {
     id: "products",
     items: [
-      { id: "web-service", price: 2999, type: "from" },
-      { id: "ecommerce", price: 2499, type: "from" },
-      { id: "client-portal", price: 1499, type: "from" },
-      { id: "chatbot", price: 799, type: "from" },
-      { id: "intranet", price: 3499, type: "from" },
-      { id: "mobile-app", price: 4999, type: "from" },
+      { id: "web-service" },
+      { id: "ecommerce" },
+      { id: "client-portal" },
+      { id: "chatbot" },
+      { id: "intranet" },
+      { id: "mobile-app" },
     ],
   },
   {
     id: "design",
     items: [
-      { id: "ux-ui", price: 799, type: "from" },
-      { id: "branding", price: 599, type: "from" },
-      { id: "motion-sound", price: 399, type: "plus" },
-      { id: "ux-research", price: 799, type: "from" },
+      { id: "ux-ui" },
+      { id: "branding" },
+      { id: "motion-sound" },
+      { id: "ux-research" },
     ],
   },
   {
     id: "development",
     items: [
-      { id: "cms", price: 299, type: "plus" },
-      { id: "multilingual", price: 399, type: "plus" },
-      { id: "backend", price: 1499, type: "plus" },
-      { id: "qa", price: 499, type: "plus" },
-      { id: "devops", price: 399, type: "plus" },
-      { id: "seo-extended", price: 299, type: "plus" },
+      { id: "cms" },
+      { id: "multilingual" },
+      { id: "backend" },
+      { id: "qa" },
+      { id: "devops" },
+      { id: "seo-extended" },
     ],
   },
 ];
