@@ -54,7 +54,7 @@ export const projectsMeta: ProjectMeta[] = [
     id: "mare-vivo",
     slug: "mare-vivo",
     index: "04",
-    tag: "Live Prototype",
+    tag: "Concept Redesign",
     image: "/images/project-mare-vivo.png",
     imagePosition: "top",
     tech: ["Next.js", "TypeScript", "i18n EN/IT", "Reservation Flow"],
