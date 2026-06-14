@@ -29,7 +29,7 @@ export interface AddonCategoryConfig {
 /** Starting prices for the 5 main services */
 export const SERVICE_BASE_PRICES: Record<ServiceId, number> = {
   "premium-site": 1299,
-  redesign: 1499,
+  redesign: 899,
   "booking-flow": 599,
   "monthly-support": 199,
   "photo-video": 499,
@@ -47,8 +47,8 @@ export const SERVICE_TIERS: Record<ServiceId, PricingTierConfig[]> = {
   ],
   redesign: [
     { tierId: "audit", price: 499 },
-    { tierId: "standard", price: 1499, featured: true },
-    { tierId: "full", price: 2499 },
+    { tierId: "standard", price: 899, featured: true },
+    { tierId: "full", price: 2299 },
   ],
   "booking-flow": [
     { tierId: "single", price: 599 },
