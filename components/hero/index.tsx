@@ -39,7 +39,7 @@ export function Hero({ t }: HeroProps) {
   return (
     <section
       id="top"
-      className="relative min-h-[85svh] overflow-x-clip pt-page md:min-h-screen-dvh"
+      className="relative overflow-x-clip pt-page md:min-h-screen-dvh"
     >
       {/* Calm aurora backdrop — slow drifting orbs, no busy grid */}
       <div aria-hidden className="absolute inset-0 overflow-hidden">
@@ -93,7 +93,7 @@ export function Hero({ t }: HeroProps) {
 
           <motion.p
             variants={item}
-            className="hidden max-w-xl text-base leading-relaxed text-textSecondary text-pretty sm:block sm:text-lg"
+            className="max-w-xl text-sm leading-relaxed text-textSecondary text-pretty line-clamp-4 sm:line-clamp-none sm:text-lg"
           >
             {t.hero.lead}
           </motion.p>
@@ -133,7 +133,7 @@ export function Hero({ t }: HeroProps) {
                 className={btn(
                   "ghost",
                   "md",
-                  "hidden w-full justify-center overflow-visible sm:inline-flex sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
                 )}
               >
                 {t.hero.primaryCta}
@@ -304,7 +304,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
         duration={5.2}
         amplitude={16}
         drift={3}
-        className="absolute -left-3 top-[22%] z-10 max-sm:top-[18%]"
+        className="absolute -left-3 top-[22%] z-10 max-sm:hidden"
       >
         <div className="glass-card-strong flex items-center gap-3 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
           <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300 max-sm:h-8 max-sm:w-8">
@@ -325,7 +325,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
         duration={6.4}
         amplitude={18}
         drift={4}
-        className="absolute -right-2 bottom-[16%] z-10 max-sm:bottom-[12%]"
+        className="absolute -right-2 bottom-[16%] z-10 max-sm:hidden"
       >
         <div className="glass-card-strong flex items-center gap-2.5 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
           <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold max-sm:h-8 max-sm:w-8">

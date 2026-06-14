@@ -120,7 +120,7 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
                   <button
                     type="button"
                     onClick={() => toggle(meta.id)}
-                    className="focus-outline flex flex-1 flex-col p-6 text-left md:p-7 md:pb-5"
+                    className="focus-outline flex min-h-[3.25rem] flex-1 flex-col p-5 text-left sm:p-6 md:p-7 md:pb-5"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-borderSubtle bg-bgPrimary">
@@ -133,7 +133,7 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
                         />
                       </div>
                       <span
-                        className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                        className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors ${
                           isSelected
                             ? "border-accentGold bg-accentGold text-bgPrimary"
                             : "border-borderStrong bg-white/[0.03] text-textMuted"

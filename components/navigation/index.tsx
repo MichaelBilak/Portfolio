@@ -10,6 +10,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { BRAND_FULL } from "@/lib/brand";
 import { useIsDesktop } from "@/lib/hooks/use-is-desktop";
 import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
+import { usePastHero } from "@/lib/hooks/use-past-hero";
 import { Locale, TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
@@ -55,9 +56,12 @@ export function Navigation({ locale, t }: NavigationProps) {
   const [open, setOpen] = useState(false);
   const { direction, scrolled } = useNavScroll();
   const pathname = usePathname();
+  const pastHero = usePastHero();
   const onOrderPage = pathname === "/order" || pathname.endsWith("/order");
+  const onContactPage = pathname === "/contact" || pathname.endsWith("/contact");
   const navHidden = isDesktop && direction === "down" && scrolled && !open;
   const showOrderCta = !onOrderPage;
+  const showMobileFab = showOrderCta && !open && !navHidden && pastHero && !onContactPage;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -92,13 +96,13 @@ export function Navigation({ locale, t }: NavigationProps) {
           <Link
             href="/"
             aria-label={BRAND_FULL}
-            className="interactive focus-outline inline-flex min-w-0 max-w-[72vw] shrink items-center rounded-xl sm:max-w-none"
+            className="interactive focus-outline inline-flex min-w-0 max-w-[58vw] shrink items-center rounded-xl sm:max-w-none"
           >
             <BrandLogo
               priority
               showTagline
-              wordmarkClassName="text-lg sm:text-2xl"
-              taglineClassName="hidden min-[420px]:inline"
+              wordmarkClassName="text-base sm:text-2xl"
+              taglineClassName="hidden sm:inline"
             />
           </Link>
 
@@ -210,6 +214,24 @@ export function Navigation({ locale, t }: NavigationProps) {
           <OrderCtaLink t={t} className="pointer-events-auto" />
         </motion.span>
       ) : null}
+
+      <AnimatePresence>
+        {showMobileFab ? (
+          <motion.div
+            key="mobile-order-fab"
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.92, y: 10 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
+            className="fixed bottom-[max(1rem,var(--safe-bottom))] right-4 z-40 lg:hidden"
+          >
+            <OrderCtaLink
+              t={t}
+              className="shadow-[0_16px_40px_-12px_rgba(252,211,77,0.55)]"
+            />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

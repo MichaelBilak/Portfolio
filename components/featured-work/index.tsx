@@ -29,7 +29,7 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
   const hasMore = isHome && totalCount > HOME_LIMIT;
 
   return (
-    <section id="work" className="relative py-20 md:py-32">
+    <section id="work" className="relative py-16 md:py-32">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/4 top-32 h-72 w-72 rounded-full bg-gold-radial opacity-20 blur-3xl"
@@ -181,7 +181,7 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
       onMouseMove={(e) => { onMove(e); onTiltMove(e); }}
       onMouseLeave={onTiltLeave}
       style={tiltStyle}
-      className="glass-card spotlight-card group relative flex h-full flex-col gap-6 overflow-hidden rounded-3xl p-5 transition-colors duration-300 hover:border-borderStrong md:p-6"
+      className="glass-card spotlight-card group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl p-4 transition-colors duration-300 hover:border-borderStrong sm:gap-6 sm:p-5 md:p-6"
     >
       <span
         aria-hidden
@@ -217,7 +217,7 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
       />
 
       <div className="relative space-y-2">
-        <p className="text-lg font-semibold leading-snug tracking-tight text-textPrimary md:text-xl">
+        <p className="text-base font-semibold leading-snug tracking-tight text-textPrimary sm:text-lg md:text-xl">
           {copy.subtitle}
         </p>
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-textMuted">

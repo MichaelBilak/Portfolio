@@ -48,7 +48,7 @@ export function Proof({ t }: ProofProps) {
                   : ""
               }`}
             >
-              <span className="inline-block whitespace-nowrap font-display text-5xl font-light leading-none tracking-tight text-gradient-gold sm:text-6xl lg:text-[clamp(2.75rem,3.8vw,5rem)] xl:text-[clamp(3rem,4.2vw,5.5rem)] 2xl:text-7xl">
+              <span className="inline-block font-display text-[clamp(2rem,11vw,2.75rem)] font-light leading-none tracking-tight text-gradient-gold sm:whitespace-nowrap sm:text-5xl sm:text-6xl lg:text-[clamp(2.75rem,3.8vw,5rem)] xl:text-[clamp(3rem,4.2vw,5.5rem)] 2xl:text-7xl">
                 <AnimatedCounter value={proofValue(item.value)} />
               </span>
               <span className="mt-4 max-w-[12.5rem] text-safe-wrap text-sm leading-snug text-textSecondary sm:max-w-[13.5rem] sm:text-[0.9375rem] lg:max-w-[10.5rem] xl:max-w-[11rem]">

@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               {t.workPage.backToWork}
             </Link>
 
-            <div className="mt-10 grid gap-10 lg:grid-cols-[1.05fr,0.95fr] lg:items-start">
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-start lg:gap-10">
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
@@ -96,14 +96,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 </div>
 
                 <h1 className="font-display font-light text-textPrimary">
-                  <span className="block text-fluid-hero">{project.name}</span>
+                  <span className="block text-fluid-title">{project.name}</span>
                   {project.nameTagline ? (
                     <span className="mt-2 block text-xl font-light text-textSecondary md:text-2xl">
                       {project.nameTagline}
                     </span>
                   ) : null}
                 </h1>
-                <p className="max-w-xl text-lg text-textSecondary">{project.subtitle}</p>
+                <p className="max-w-xl text-base text-textSecondary md:text-lg">{project.subtitle}</p>
                 <ul className="flex flex-wrap gap-2 pt-1">
                   {meta.tech.map((item) => (
                     <li

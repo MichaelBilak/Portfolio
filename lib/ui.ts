@@ -12,7 +12,7 @@ const base =
   "focus-outline interactive group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full text-center font-semibold tracking-tight hyphens-none text-safe-wrap disabled:cursor-not-allowed disabled:opacity-60";
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "btn-sm min-h-10 text-xs",
+  sm: "btn-sm min-h-11 sm:min-h-10 text-xs",
   md: "btn-md min-h-[3.1rem] text-sm",
   lg: "btn-lg min-h-[3.6rem] text-[0.95rem]",
 };

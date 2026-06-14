@@ -44,7 +44,7 @@ function CrystalItem({ meta, copy, viewServiceLabel }: CrystalItemProps) {
       {/* Tilt wrapper — springs driven by pointer (mouse/finger) + gyroscope */}
       <motion.div
         {...tiltHandlers}
-        className="crystal-stage relative flex h-48 w-48 touch-pan-y items-center justify-center sm:h-56 sm:w-56"
+        className="crystal-stage relative flex h-40 w-40 touch-pan-y items-center justify-center sm:h-48 sm:w-48 md:h-56 md:w-56"
         style={
           reduce
             ? undefined
@@ -73,6 +73,10 @@ function CrystalItem({ meta, copy, viewServiceLabel }: CrystalItemProps) {
         {copy.details}
       </p>
 
+      <p className="mt-2 line-clamp-2 max-w-[17rem] text-sm leading-relaxed text-textSecondary md:hidden">
+        {copy.description}
+      </p>
+
       {/* Short line — desktop only on homepage */}
       <p className="mt-2.5 hidden max-w-[17rem] font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/80 md:block">
         {copy.details}
@@ -99,7 +103,7 @@ function CrystalItem({ meta, copy, viewServiceLabel }: CrystalItemProps) {
 
 export function Services({ t }: ServicesProps) {
   return (
-    <section id="services" className="relative py-20 md:py-32">
+    <section id="services" className="relative py-16 md:py-32">
       <div className="container-lux">
         {/* Header: title left + decorative crystal right */}
         <div className="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">

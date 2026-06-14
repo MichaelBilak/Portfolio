@@ -115,8 +115,12 @@ export function Footer({ t, className }: FooterProps) {
 
       <div className="relative border-t border-borderCool">
         <div className="container-lux flex flex-col items-start justify-between gap-3 py-5 pb-safe text-sm text-textMuted md:flex-row md:items-center">
-          <p className="max-w-full text-pretty">
-            {year} © DormUp Group · {t.footer.location} · {t.footer.built}
+          <p className="max-w-full text-pretty text-xs leading-relaxed sm:text-sm">
+            <span className="block sm:inline">{year} © DormUp Group</span>
+            <span className="hidden sm:inline"> · </span>
+            <span className="block sm:inline">{t.footer.location}</span>
+            <span className="hidden sm:inline"> · </span>
+            <span className="block sm:inline">{t.footer.built}</span>
           </p>
           <Link href="/privacy" className="hover:text-accentGold">
             {t.footer.privacy}
