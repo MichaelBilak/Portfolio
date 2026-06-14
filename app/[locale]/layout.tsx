@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
 import { SITE_URL } from "@/lib/brand";
+import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import "../globals.css";
 
@@ -92,10 +93,6 @@ const localeMetaContent: Record<
   },
 };
 
-function localePath(locale: Locale): string {
-  return locale === routing.defaultLocale ? "/" : `/${locale}`;
-}
-
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -114,10 +111,7 @@ export async function generateMetadata({
     : routing.defaultLocale;
 
   const meta = localeMetaContent[safeLocale];
-  const languages: Record<string, string> = {};
-  routing.locales.forEach((code) => {
-    languages[code] = `${siteUrl}${localePath(code)}`;
-  });
+  const languages = localeAlternateLanguages();
 
   return {
     metadataBase: new URL(siteUrl),
@@ -129,11 +123,8 @@ export async function generateMetadata({
       apple: [{ url: "/icon.png", type: "image/png" }],
     },
     alternates: {
-      canonical: `${siteUrl}${localePath(safeLocale)}`,
-      languages: {
-        ...languages,
-        "x-default": `${siteUrl}/`,
-      },
+      canonical: absoluteUrl(safeLocale),
+      languages,
     },
     robots: { index: true, follow: true },
     openGraph: {
@@ -141,7 +132,7 @@ export async function generateMetadata({
       description: meta.description,
       type: "website",
       locale: meta.ogLocale,
-      url: `${siteUrl}${localePath(safeLocale)}`,
+      url: absoluteUrl(safeLocale),
       images: [
         {
           url: "/images/og-cover.svg",
@@ -181,7 +172,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     email: "dormup.it@gmail.com",
     image: `${siteUrl}${logoUrl}`,
     logo: `${siteUrl}${logoUrl}`,
-    url: `${siteUrl}${localePath(locale as Locale)}`,
+    url: absoluteUrl(locale as Locale),
     address: {
       "@type": "PostalAddress",
       addressLocality: "Rimini",
