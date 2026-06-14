@@ -28,7 +28,9 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return servicesMeta.map((s) => ({ slug: s.slug }));
+  return servicesMeta
+    .filter((s) => s.slug !== "booking-flow")
+    .map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

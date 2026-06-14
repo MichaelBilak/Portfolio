@@ -24,21 +24,38 @@ const nextConfig = {
       { oldSlug: "rockisland-rimini", newSlug: "porto-sole" },
       { oldSlug: "premium-restaurant-local-concept", newSlug: "mare-vivo" },
     ];
+    const serviceRedirects = [{ oldSlug: "booking-flow", newSlug: "services" }];
     const locales = ["it", "en", "fr", "ru", "de", "es"];
-    return slugRedirects.flatMap(({ oldSlug, newSlug }) => [
-      {
-        source: `/work/${oldSlug}`,
-        destination: `/work/${newSlug}`,
-        permanent: true,
-      },
-      ...locales
-        .filter((locale) => locale !== "it")
-        .map((locale) => ({
-          source: `/${locale}/work/${oldSlug}`,
-          destination: `/${locale}/work/${newSlug}`,
+    return [
+      ...slugRedirects.flatMap(({ oldSlug, newSlug }) => [
+        {
+          source: `/work/${oldSlug}`,
+          destination: `/work/${newSlug}`,
           permanent: true,
-        })),
-    ]);
+        },
+        ...locales
+          .filter((locale) => locale !== "it")
+          .map((locale) => ({
+            source: `/${locale}/work/${oldSlug}`,
+            destination: `/${locale}/work/${newSlug}`,
+            permanent: true,
+          })),
+      ]),
+      ...serviceRedirects.flatMap(({ oldSlug, newSlug }) => [
+        {
+          source: `/services/${oldSlug}`,
+          destination: `/${newSlug}`,
+          permanent: true,
+        },
+        ...locales
+          .filter((locale) => locale !== "it")
+          .map((locale) => ({
+            source: `/${locale}/services/${oldSlug}`,
+            destination: `/${locale}/${newSlug}`,
+            permanent: true,
+          })),
+      ]),
+    ];
   },
 };
 
