@@ -66,13 +66,14 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
     .filter((m) => selected.has(m.id))
     .map((m) => m.slug);
 
-  const estimatedTotal = useMemo(() => {
-    let total = 0;
-    for (const id of Array.from(selected)) {
-      total += SERVICE_BASE_PRICES[id as ServiceId] ?? 0;
-    }
-    return total;
-  }, [selected]);
+  const selectedTitles = useMemo(
+    () =>
+      servicesMeta
+        .map((meta, index) => ({ meta, copy: t.services[index] }))
+        .filter(({ meta }) => selected.has(meta.id))
+        .map(({ copy }) => copy.title),
+    [selected, t.services],
+  );
 
   const params = new URLSearchParams();
   if (selectedSlugs.length > 0) params.set("services", selectedSlugs.join(","));
@@ -188,17 +189,11 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
             </div>
           </section>
 
-          {estimatedTotal > 0 ? (
-            <div className="mt-8 hidden flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-borderSubtle pt-6 md:flex">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-textMuted">
-                {op.estimatedLabel}
-              </span>
-              <PriceDisplay
-                amount={estimatedTotal}
-                locale={locale}
-                prefixLabel={op.fromLabel}
-                size="md"
-              />
+          {selectedTitles.length > 0 ? (
+            <div className="mt-8 hidden border-t border-borderSubtle pt-6 md:block">
+              <p className="text-sm leading-relaxed text-textSecondary">
+                {selectedTitles.join(" · ")}
+              </p>
             </div>
           ) : null}
 
@@ -226,15 +221,9 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-borderStrong bg-[rgba(6,8,12,0.92)] backdrop-blur-xl md:hidden">
           <div className="container-lux flex items-center gap-3 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
             <div className="min-w-0 flex-1">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-textMuted">
-                {op.estimatedLabel}
+              <p className="line-clamp-2 text-sm font-medium leading-snug text-textPrimary">
+                {selectedTitles.join(" · ")}
               </p>
-              <PriceDisplay
-                amount={estimatedTotal}
-                locale={locale}
-                prefixLabel={op.fromLabel}
-                size="md"
-              />
             </div>
             <Link href={contactHref} className={btn("primary", "md", "shrink-0")}>
               {op.proceedCta}
