@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
+import {
+  buildServiceEmailLines,
+  formatEstimatedTotal,
+  parseEmailLocale,
+} from "@/lib/order-email-pricing";
 
 interface ContactPayload {
   fullName?: string;
@@ -11,7 +16,9 @@ interface ContactPayload {
   brief?: string;
   source?: string;
   intent?: string;
+  locale?: string;
   selectedServices?: string[];
+  selectedServiceSlugs?: string[];
   selectedAddons?: string[];
 }
 
@@ -37,7 +44,9 @@ function buildPlainText(
   p: ContactFormPayload,
   timestamp: string,
   selectedServices: string[],
+  selectedServiceSlugs: string[],
   selectedAddons: string[],
+  locale: ReturnType<typeof parseEmailLocale>,
   siteUrl?: string,
 ): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
@@ -62,8 +71,14 @@ function buildPlainText(
 
   if (selectedServices.length > 0) {
     lines.push("", "Selected Services", "------------------------------------------------");
-    for (const name of selectedServices) {
-      lines.push(`• ${name}`);
+    const { lines: serviceLines, total } = buildServiceEmailLines(
+      selectedServiceSlugs,
+      selectedServices,
+      locale,
+    );
+    lines.push(...serviceLines);
+    if (total > 0 && selectedServiceSlugs.length > 1) {
+      lines.push("", formatEstimatedTotal(total, locale));
     }
   }
 
@@ -207,9 +222,13 @@ export async function POST(request: NextRequest) {
   const selectedServices = Array.isArray(payload.selectedServices)
     ? payload.selectedServices.filter((s) => typeof s === "string" && s.trim())
     : [];
+  const selectedServiceSlugs = Array.isArray(payload.selectedServiceSlugs)
+    ? payload.selectedServiceSlugs.filter((s) => typeof s === "string" && s.trim())
+    : [];
   const selectedAddons = Array.isArray(payload.selectedAddons)
     ? payload.selectedAddons.filter((s) => typeof s === "string" && s.trim())
     : [];
+  const emailLocale = parseEmailLocale(payload.locale);
 
   const now = new Date();
   const timestamp = now.toLocaleString("en-GB", {
@@ -238,7 +257,15 @@ export async function POST(request: NextRequest) {
       from: `"DormUp Group" <${gmailUser}>`,
       to: toEmail,
       subject: `New ${isAudit ? "audit" : "contact"} request — ${p.businessName}`,
-      text: buildPlainText(p, timestamp, selectedServices, selectedAddons, siteUrl),
+      text: buildPlainText(
+        p,
+        timestamp,
+        selectedServices,
+        selectedServiceSlugs,
+        selectedAddons,
+        emailLocale,
+        siteUrl,
+      ),
     });
   })();
 

@@ -115,14 +115,18 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
 
     let response: Response;
     try {
+      const serviceSlugs =
+        searchParams.get("services")?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
       response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
           intent: auditMode ? "audit" : undefined,
-        siteUrl: form.siteUrl,
+          siteUrl: form.siteUrl,
+          locale: t.langCode.toLowerCase(),
           selectedServices: cart.services,
+          selectedServiceSlugs: serviceSlugs,
           selectedAddons: cart.addons,
         }),
       });
