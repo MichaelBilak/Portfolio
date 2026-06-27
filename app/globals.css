@@ -367,8 +367,23 @@ select option {
   letter-spacing: -0.03em;
 }
 
+/* Homepage hero headline — slightly smaller on desktop */
+@media (min-width: 640px) {
+  .text-fluid-hero-headline {
+    font-size: clamp(2.25rem, 5.6vw, 4.85rem);
+    line-height: 0.99;
+    letter-spacing: -0.028em;
+  }
+}
+
 @media (max-width: 639px) {
   .text-fluid-hero {
+    font-size: clamp(1.75rem, 8.2vw, 2.35rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+
+  .text-fluid-hero-headline {
     font-size: clamp(1.75rem, 8.2vw, 2.35rem);
     line-height: 1.02;
     letter-spacing: -0.025em;

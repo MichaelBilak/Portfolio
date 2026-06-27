@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DormUp Instagram · Stories Export</title>
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      .instructions {
+        max-width: 900px;
+        margin: 0 auto 40px;
+        padding: 24px;
+        border: 1px solid rgba(252, 211, 77, 0.2);
+        border-radius: 12px;
+        background: rgba(11, 17, 24, 0.9);
+        line-height: 1.6;
+        color: rgba(226, 226, 220, 0.85);
+      }
+      .instructions code { color: #fcd34d; }
+    </style>
+  </head>
+  <body>
+    <div class="instructions">
+      <h1 style="font-family: Unbounded, sans-serif; font-size: 24px; margin-bottom: 12px">
+        Stories · @dormup.studio
+      </h1>
+      <p>
+        27 story frames + 5 highlight covers. Export PNG:
+        <code>npm run export:instagram-stories</code> →
+        <code>content/instagram/export/</code>
+      </p>
+    </div>
+
+    <div class="export-grid">
+      <!-- ═══ HIGHLIGHT COVERS ═══ -->
+      <p class="section-heading">Highlight covers · upload as Edit cover</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">cover · Work</p>
+        <div class="frame frame-story" data-export="covers/work">
+          <div class="frame-inner highlight-cover">
+            <p class="eyebrow" style="margin-bottom: 48px">Portfolio</p>
+            <h1 class="headline">Work</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">cover · Services</p>
+        <div class="frame frame-story" data-export="covers/services">
+          <div class="frame-inner highlight-cover">
+            <p class="eyebrow" style="margin-bottom: 48px">Servizi</p>
+            <h1 class="headline">Services</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">cover · Audit</p>
+        <div class="frame frame-story" data-export="covers/audit">
+          <div class="frame-inner highlight-cover">
+            <p class="eyebrow" style="margin-bottom: 48px">Gratuito · Free</p>
+            <h1 class="headline">Audit</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">cover · Process</p>
+        <div class="frame frame-story" data-export="covers/process">
+          <div class="frame-inner highlight-cover">
+            <p class="eyebrow" style="margin-bottom: 48px">5 fasi</p>
+            <h1 class="headline">Process</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">cover · About</p>
+        <div class="frame frame-story" data-export="covers/about">
+          <div class="frame-inner highlight-cover">
+            <p class="eyebrow" style="margin-bottom: 48px">Rimini · Italia</p>
+            <h1 class="headline">About</h1>
+            <p class="subcopy" style="margin-top: 32px; text-align: center">Built with intention.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ WORK ═══ -->
+      <p class="section-heading">Highlight · Work · 4 stories</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">work · 01 Porto Sole</p>
+        <div class="frame frame-story" data-export="work/01-porto-sole">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Work · 01 · Concept</p>
+            <h1 class="headline headline-sm">Porto Sole</h1>
+            <p class="subcopy">Concept redesign · ristorante/bar sul molo</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/project-porto-sole.png" alt="Porto Sole" />
+            </div>
+            <p class="story-url">porto-sole.vercel.app</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">work · 02 Aurelia del Mar</p>
+        <div class="frame frame-story" data-export="work/02-aurelia">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Work · 02 · Live</p>
+            <h1 class="headline headline-sm">Aurelia del Mar</h1>
+            <p class="subcopy">Hotel · prenotazione diretta senza OTA</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/project-hotel-aurelia.png" alt="Aurelia del Mar" />
+            </div>
+            <p class="story-url">hotel-aurelia-del-mar.vercel.app</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">work · 03 Pod Lopuhom</p>
+        <div class="frame frame-story" data-export="work/03-podlopuhom">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Work · 03 · Live</p>
+            <h1 class="headline headline-sm">Pod Lopuhom</h1>
+            <p class="subcopy">E-commerce · galleria EN/RU/IT · checkout WhatsApp</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/project-podlopuhom.png" alt="Pod Lopuhom" />
+            </div>
+            <p class="story-url">podlopuhom.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">work · 04 Mare Vivo</p>
+        <div class="frame frame-story" data-export="work/04-mare-vivo">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Work · 04 · Concept · Bari</p>
+            <h1 class="headline headline-sm">Mare Vivo</h1>
+            <p class="subcopy">Seafood restaurant · identità mediterranea</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/project-mare-vivo.png" alt="Mare Vivo" />
+            </div>
+            <p class="story-url">mare-vivo.vercel.app</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SERVICES ═══ -->
+      <p class="section-heading">Highlight · Services · 5 stories</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">services · 01 Premium Website</p>
+        <div class="frame frame-story" data-export="services/01-premium-website">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Servizi · Custom Website</p>
+            <h1 class="headline headline-sm">Premium Website</h1>
+            <p class="story-price">da €1.299</p>
+            <p class="subcopy">Siti custom per ristoranti, hotel, bar. Non template.</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/service-premium-website.png" alt="Premium Website" />
+            </div>
+            <p class="story-cta">dormup-it.com/services</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">services · 02 Redesign</p>
+        <div class="frame frame-story" data-export="services/02-redesign">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Servizi · Redesign</p>
+            <h1 class="headline headline-sm">Redesign &amp; Optimization</h1>
+            <p class="story-price">da €899</p>
+            <p class="subcopy">Audit, nuova struttura, migrazione contenuti.</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/service-redesign.png" alt="Redesign" />
+            </div>
+            <p class="story-cta">dormup-it.com/services</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">services · 03 Booking</p>
+        <div class="frame frame-story" data-export="services/03-booking">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Servizi · Booking</p>
+            <h1 class="headline headline-sm">Booking &amp; Lead Flow</h1>
+            <p class="story-price">da €599</p>
+            <p class="subcopy">Prenotazioni e richieste dirette sul tuo sito.</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/service-booking-flow.png" alt="Booking flow" />
+            </div>
+            <p class="story-cta">dormup-it.com/services</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">services · 04 Monthly Support</p>
+        <div class="frame frame-story" data-export="services/04-monthly-support">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Servizi · Supporto</p>
+            <h1 class="headline headline-sm">Monthly Support</h1>
+            <p class="story-price">da €199/mese</p>
+            <p class="subcopy">Aggiornamenti, monitoraggio, ottimizzazione continua.</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/service-monthly-support.png" alt="Monthly support" />
+            </div>
+            <p class="story-cta">dormup-it.com/services</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">services · 05 Photo &amp; Video</p>
+        <div class="frame frame-story" data-export="services/05-photo-video">
+          <div class="frame-inner story-project">
+            <p class="eyebrow">Servizi · Content</p>
+            <h1 class="headline headline-sm">Photo &amp; Video</h1>
+            <p class="story-price">da €499</p>
+            <p class="subcopy">Food, interni, team · export per sito e social.</p>
+            <div class="glass-card story-mockup">
+              <img src="../../../public/images/service-photo-video.png" alt="Photo and video" />
+            </div>
+            <p class="story-cta">dormup-it.com/services</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AUDIT ═══ -->
+      <p class="section-heading">Highlight · Audit · 4 stories</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">audit · 01 Cos'è</p>
+        <div class="frame frame-story" data-export="audit/01-cose-audit">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">Audit gratuito · Free audit</p>
+            <h1 class="headline headline-sm">Cos'è l'audit?</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">
+              Analizziamo il tuo sito attuale e ti diciamo cosa migliorare — gratis e senza pressione.
+            </p>
+            <p class="subcopy" style="margin-top: 32px; color: rgba(226, 226, 220, 0.55)">
+              We review your current site and tell you exactly what to improve — free, no pressure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">audit · 02 Cosa ricevi</p>
+        <div class="frame frame-story" data-export="audit/02-cosa-ricevi">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">Audit gratuito</p>
+            <h1 class="headline headline-sm">Cosa ricevi</h1>
+            <div class="gold-line"></div>
+            <ul class="story-list">
+              <li>UX e gerarchia visiva</li>
+              <li>CTA e percorsi di conversione</li>
+              <li>Esperienza mobile</li>
+              <li>Velocità e credibilità</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">audit · 03 Gratis · 1h</p>
+        <div class="frame frame-story" data-export="audit/03-gratis-1h">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">DormUp Group</p>
+            <h1 class="headline headline-sm">Gratis · Risposta in 1h</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Richiedi l'audit dal link in bio. Decidi tu i prossimi passi.</p>
+            <p class="story-quote">Free · Reply within 1 hour</p>
+            <p class="story-cta" style="margin-top: 64px">↓ Link in bio</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">audit · 04 Poll CTA</p>
+        <div class="frame frame-story" data-export="audit/04-poll-cta">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">Domanda</p>
+            <h1 class="headline headline-sm">Il tuo sito converte?</h1>
+            <div class="story-poll">
+              <div class="story-poll-option">Sì</div>
+              <div class="story-poll-option">Non so</div>
+              <div class="story-poll-option">No</div>
+            </div>
+            <p class="story-cta">Audit gratuito · link in bio</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROCESS ═══ -->
+      <p class="section-heading">Highlight · Process · 5 stories</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">process · 01 Capire</p>
+        <div class="frame frame-story" data-export="process/01-capire">
+          <div class="frame-inner process-step">
+            <p class="step-num">01 — Processo</p>
+            <h1 class="headline headline-sm">Capire</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Business, audience, obiettivi, problemi.</p>
+            <p class="subcopy" style="margin-top: 24px; font-size: 24px">
+              Understand · Plan · Design · Build · Improve
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">process · 02 Pianificare</p>
+        <div class="frame frame-story" data-export="process/02-pianificare">
+          <div class="frame-inner process-step">
+            <p class="step-num">02 — Processo</p>
+            <h1 class="headline headline-sm">Pianificare</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Struttura, flusso, funzionalità, priorità.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">process · 03 Design</p>
+        <div class="frame frame-story" data-export="process/03-design">
+          <div class="frame-inner process-step">
+            <p class="step-num">03 — Processo</p>
+            <h1 class="headline headline-sm">Design</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Stile del brand, chiarezza, fiducia, conversione.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">process · 04 Sviluppare</p>
+        <div class="frame frame-story" data-export="process/04-sviluppare">
+          <div class="frame-inner process-step">
+            <p class="step-num">04 — Processo</p>
+            <h1 class="headline headline-sm">Sviluppare</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Sito responsive, integrazioni, performance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">process · 05 Migliorare</p>
+        <div class="frame frame-story" data-export="process/05-migliorare">
+          <div class="frame-inner process-step">
+            <p class="step-num">05 — Processo</p>
+            <h1 class="headline headline-sm">Migliorare</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">Ottimizzazione continua dopo il lancio.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ABOUT ═══ -->
+      <p class="section-heading">Highlight · About · 4 stories</p>
+
+      <div class="frame-wrap">
+        <p class="frame-label">about · 01 Rimini</p>
+        <div class="frame frame-story" data-export="about/01-rimini">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">DormUp Group · digital studio</p>
+            <h1 class="headline headline-sm">Emilia-Romagna, Italia</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">📍 Rimini — lavoriamo con brand e business in tutta Italia.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">about · 02 Built with intention</p>
+        <div class="frame frame-story" data-export="about/02-built-with-intention">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">About</p>
+            <p class="story-quote">Built with intention.</p>
+            <div class="gold-line"></div>
+            <p class="subcopy">
+              Non solo bello — tutto è orientato ai risultati di business reali.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">about · 03 Open for clients</p>
+        <div class="frame frame-story" data-export="about/03-open-for-clients">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">Studio boutique</p>
+            <h1 class="headline headline-sm">Pochi progetti, massima attenzione</h1>
+            <div class="gold-line"></div>
+            <p class="subcopy">
+              Non lavoriamo con 30 clienti insieme. 4 progetti · aperti per nuovi clienti.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame-wrap">
+        <p class="frame-label">about · 04 Contact</p>
+        <div class="frame frame-story" data-export="about/04-contact">
+          <div class="frame-inner story-text">
+            <p class="eyebrow">Contatti</p>
+            <h1 class="headline headline-sm">Parliamone</h1>
+            <div class="gold-line"></div>
+            <p class="story-url" style="margin-top: 32px">dormup.it@gmail.com</p>
+            <p class="story-cta" style="margin-top: 48px">dormup-it.com · link in bio</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

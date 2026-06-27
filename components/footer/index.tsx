@@ -1,8 +1,8 @@
-import { AtSign, Globe } from "lucide-react";
+import { AtSign, Globe, Instagram, type LucideIcon } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import { MailtoLink } from "@/components/mailto-link";
 import { Link } from "@/i18n/navigation";
-import { SITE_URL } from "@/lib/brand";
+import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
 import { CONTACT_EMAIL, contactMailtoHref } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 import { cn } from "@/lib/ui";
@@ -23,11 +23,12 @@ export function Footer({ t, className }: FooterProps) {
   ];
 
   type SocialLink =
-    | { href: string; label: string; Icon: typeof Globe; external: true }
+    | { href: string; label: string; Icon: LucideIcon; external: true }
     | { href: string; label: string; Icon: typeof AtSign; mailto: true };
 
   const socials: SocialLink[] = [
     { href: SITE_URL, label: "Website", Icon: Globe, external: true },
+    { href: INSTAGRAM_URL, label: "Instagram: @dormup.studio", Icon: Instagram, external: true },
     { href: contactMailtoHref(), label: `Email: ${CONTACT_EMAIL}`, Icon: AtSign, mailto: true },
   ];
 

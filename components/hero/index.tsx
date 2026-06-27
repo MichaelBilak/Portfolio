@@ -72,7 +72,7 @@ export function Hero({ t }: HeroProps) {
             </span>
           </motion.div>
 
-          <h1 className="text-fluid-hero max-w-full font-display font-semibold text-textPrimary text-safe-wrap">
+          <h1 className="text-fluid-hero-headline max-w-full font-display font-semibold text-textPrimary text-safe-wrap">
             {headlineLines.map((line, index) => (
               <motion.span key={line} variants={item} className="block text-safe-wrap">
                 {index === headlineLines.length - 1 ? (

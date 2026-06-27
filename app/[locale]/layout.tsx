@@ -6,7 +6,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
-import { SITE_URL } from "@/lib/brand";
+import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
 import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import "../globals.css";
@@ -180,10 +180,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     },
     description: localeMetaContent[locale as Locale].description,
     areaServed: "Italia",
-    sameAs: [
-      "https://www.instagram.com/",
-      "https://www.linkedin.com/",
-    ],
+    sameAs: [INSTAGRAM_URL],
   };
 
   return (
