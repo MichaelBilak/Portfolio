@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { DeliverablesGrid } from "@/components/deliverables-grid";
 import { OtherServicesGrid } from "@/components/other-services-grid";
-import { PriceBadge } from "@/components/pricing-tiers";
 import { ServiceHeroCrystal } from "@/components/service-hero-crystal";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -12,11 +11,6 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Process } from "@/components/process";
 import { servicesMeta } from "@/data/services";
-import {
-  SERVICE_BASE_PRICES,
-  SERVICE_MONTHLY,
-  type ServiceId,
-} from "@/data/pricing";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
@@ -60,7 +54,6 @@ export default async function ServicePage({ params }: PageProps) {
 
   const meta = servicesMeta[index];
   const service = t.services[index];
-  const serviceId = meta.id as ServiceId;
   const otherServices = servicesMeta
     .map((m, i) => ({ meta: m, copy: t.services[i] }))
     .filter((s) => s.meta.slug !== slug);
@@ -96,7 +89,7 @@ export default async function ServicePage({ params }: PageProps) {
                   {service.details}
                 </p>
 
-                <div className="mt-8 flex flex-col items-start gap-3">
+                <div className="mt-8">
                   <Link
                     href={`/contact?services=${meta.slug}`}
                     className={btn("primary", "md", "w-full justify-center sm:w-auto")}
@@ -104,13 +97,6 @@ export default async function ServicePage({ params }: PageProps) {
                     {t.servicePage.orderCta}
                     <ArrowUpRight size={16} />
                   </Link>
-                  <PriceBadge
-                    amount={SERVICE_BASE_PRICES[serviceId]}
-                    locale={safeLocale}
-                    fromLabelText={t.orderPage.fromLabel}
-                    monthly={SERVICE_MONTHLY[serviceId]}
-                    className="pl-0.5 opacity-75"
-                  />
                 </div>
 
                 {service.portfolioUrl || service.portfolioUrl2 ? (
@@ -179,16 +165,12 @@ export default async function ServicePage({ params }: PageProps) {
               </p>
             </header>
             <OtherServicesGrid
-              locale={safeLocale}
-              fromLabel={t.orderPage.fromLabel}
               items={otherServices.map(({ meta: m, copy }) => ({
                 id: m.id,
                 slug: m.slug,
                 image: m.image,
                 title: copy.title,
                 description: copy.description,
-                price: SERVICE_BASE_PRICES[m.id as ServiceId],
-                monthly: SERVICE_MONTHLY[m.id as ServiceId],
               }))}
             />
           </div>

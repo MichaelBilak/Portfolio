@@ -81,8 +81,6 @@ export default async function ServicesPage({ params }: PageProps) {
               metas={servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }))}
               titles={servicesMeta.map((_, i) => t.services[i].title)}
               viewServiceLabel={t.servicePage.viewService}
-              fromLabel={t.orderPage.fromLabel}
-              locale={safeLocale}
             />
           </div>
         </section>

@@ -6,19 +6,12 @@ import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { PricingAddons } from "@/components/pricing-addons";
 import { servicesMeta } from "@/data/services";
-import {
-  SERVICE_BASE_PRICES,
-  SERVICE_MONTHLY,
-  type ServiceId,
-} from "@/data/pricing";
-import { PriceDisplay } from "@/components/price-display";
 import { Link } from "@/i18n/navigation";
-import { Locale, TranslationSet } from "@/lib/translations";
+import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
 interface OrderServicesProps {
   t: TranslationSet;
-  locale: Locale;
 }
 
 function parseList(value: string | null): string[] {
@@ -34,7 +27,7 @@ function slugsToServiceIds(slugs: string[]): Set<string> {
   return ids;
 }
 
-export function OrderServices({ t, locale }: OrderServicesProps) {
+export function OrderServices({ t }: OrderServicesProps) {
   const searchParams = useSearchParams();
 
   const [selected, setSelected] = useState<Set<string>>(() =>
@@ -106,8 +99,6 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
             {servicesMeta.map((meta, index) => {
               const copy = t.services[index];
               const isSelected = selected.has(meta.id);
-              const base = SERVICE_BASE_PRICES[meta.id as ServiceId];
-              const monthly = SERVICE_MONTHLY[meta.id as ServiceId];
 
               return (
                 <div
@@ -153,14 +144,7 @@ export function OrderServices({ t, locale }: OrderServicesProps) {
                     </p>
                   </button>
 
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-borderSubtle px-6 py-4 md:px-7">
-                    <PriceDisplay
-                      amount={base}
-                      locale={locale}
-                      prefixLabel={op.fromLabel}
-                      monthly={monthly}
-                      size="md"
-                    />
+                  <div className="flex flex-wrap items-center justify-end gap-3 border-t border-borderSubtle px-6 py-4 md:px-7">
                     <Link
                       href={`/services/${meta.slug}`}
                       className={btn("ghost", "sm", "shrink-0")}

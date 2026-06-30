@@ -3,10 +3,8 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { PriceDisplay } from "@/components/price-display";
 import { Link } from "@/i18n/navigation";
 import { useTilt } from "@/components/ui";
-import type { Locale } from "@/lib/translations";
 
 interface OtherServiceItem {
   id: string;
@@ -14,19 +12,9 @@ interface OtherServiceItem {
   image: string;
   title: string;
   description: string;
-  price?: number;
-  monthly?: boolean;
 }
 
-function OtherServiceCard({
-  item,
-  locale,
-  fromLabel,
-}: {
-  item: OtherServiceItem;
-  locale: Locale;
-  fromLabel: string;
-}) {
+function OtherServiceCard({ item }: { item: OtherServiceItem }) {
   const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(8);
 
   return (
@@ -59,35 +47,16 @@ function OtherServiceCard({
           {item.title}
         </h3>
         <p className="flex-1 text-sm leading-relaxed text-textSecondary">{item.description}</p>
-        {item.price != null ? (
-          <div className="border-t border-borderSubtle pt-3">
-            <PriceDisplay
-              amount={item.price}
-              locale={locale}
-              prefixLabel={fromLabel}
-              monthly={item.monthly}
-              size="sm"
-            />
-          </div>
-        ) : null}
       </Link>
     </motion.div>
   );
 }
 
-export function OtherServicesGrid({
-  items,
-  locale,
-  fromLabel,
-}: {
-  items: OtherServiceItem[];
-  locale: Locale;
-  fromLabel: string;
-}) {
+export function OtherServicesGrid({ items }: { items: OtherServiceItem[] }) {
   return (
     <div className="mt-8 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
       {items.map((item) => (
-        <OtherServiceCard key={item.id} item={item} locale={locale} fromLabel={fromLabel} />
+        <OtherServiceCard key={item.id} item={item} />
       ))}
     </div>
   );

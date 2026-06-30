@@ -63,7 +63,7 @@ export default async function OrderPage({ params }: PageProps) {
         </section>
 
         <Suspense fallback={null}>
-          <OrderServices t={t} locale={safeLocale} />
+          <OrderServices t={t} />
         </Suspense>
         <AuditCta t={t} />
       </main>

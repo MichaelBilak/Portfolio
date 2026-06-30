@@ -475,7 +475,7 @@ export const es: TranslationSet = {
     eyebrow: "Pedido",
     title: "Elige tus servicios",
     subtitle:
-      "Selecciona una o más opciones — recibirás un presupuesto a medida en 1 hora. Los precios son puntos de partida y dependen del alcance y los plazos.",
+      "Selecciona una o más opciones — recibirás un presupuesto a medida en 1 hora.",
     fromLabel: "desde",
     plusLabel: "+",
     selectHint: "Selecciona al menos un servicio para continuar, o escríbenos directamente.",
@@ -610,7 +610,7 @@ export const es: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Todos los servicios",
     pricingNote:
-      "Los precios de los paquetes principales están en las tarjetas de arriba. Los módulos adicionales — bajo solicitud, sin tarifas públicas.",
+      "Cada proyecto se presupuesta a medida tras el brief. Los módulos adicionales se eligen según las necesidades del proyecto.",
     categories: [
       {
         title: "Sitios web",

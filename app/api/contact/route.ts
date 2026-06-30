@@ -3,8 +3,6 @@ import nodemailer from "nodemailer";
 import { google } from "googleapis";
 import {
   buildServiceEmailLines,
-  formatEstimatedTotal,
-  parseEmailLocale,
 } from "@/lib/order-email-pricing";
 
 interface ContactPayload {
@@ -46,7 +44,6 @@ function buildPlainText(
   selectedServices: string[],
   selectedServiceSlugs: string[],
   selectedAddons: string[],
-  locale: ReturnType<typeof parseEmailLocale>,
   siteUrl?: string,
 ): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
@@ -71,15 +68,7 @@ function buildPlainText(
 
   if (selectedServices.length > 0) {
     lines.push("", "Selected Services", "------------------------------------------------");
-    const { lines: serviceLines, total } = buildServiceEmailLines(
-      selectedServiceSlugs,
-      selectedServices,
-      locale,
-    );
-    lines.push(...serviceLines);
-    if (total > 0 && selectedServiceSlugs.length > 1) {
-      lines.push("", formatEstimatedTotal(total, locale));
-    }
+    lines.push(...buildServiceEmailLines(selectedServiceSlugs, selectedServices));
   }
 
   if (selectedAddons.length > 0) {
@@ -228,7 +217,6 @@ export async function POST(request: NextRequest) {
   const selectedAddons = Array.isArray(payload.selectedAddons)
     ? payload.selectedAddons.filter((s) => typeof s === "string" && s.trim())
     : [];
-  const emailLocale = parseEmailLocale(payload.locale);
 
   const now = new Date();
   const timestamp = now.toLocaleString("en-GB", {
@@ -263,7 +251,6 @@ export async function POST(request: NextRequest) {
         selectedServices,
         selectedServiceSlugs,
         selectedAddons,
-        emailLocale,
         siteUrl,
       ),
     });

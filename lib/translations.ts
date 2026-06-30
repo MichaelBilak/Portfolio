@@ -730,7 +730,7 @@ const it: TranslationSet = {
     eyebrow: "Ordine",
     title: "Scegli i servizi",
     subtitle:
-      "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora. I prezzi sono indicativi e dipendono da scope e tempistiche.",
+      "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora.",
     fromLabel: "da",
     plusLabel: "+",
     selectHint: "Seleziona almeno un servizio per continuare, oppure scrivici direttamente.",
@@ -866,7 +866,7 @@ const it: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
     pricingNote:
-      "I prezzi dei pacchetti principali sono nelle card sopra. I moduli aggiuntivi su richiesta — senza listino pubblico.",
+      "Ogni progetto viene quotato su misura dopo il brief. I moduli aggiuntivi si scelgono in base alle esigenze del progetto.",
     categories: [
       {
         title: "Siti web",
@@ -1400,7 +1400,7 @@ const en: TranslationSet = {
     eyebrow: "Order",
     title: "Choose your services",
     subtitle:
-      "Select one or more options — you'll get a tailored quote within 1 hour. Prices are starting points and depend on scope and timeline.",
+      "Select one or more options — you'll get a tailored quote within 1 hour.",
     fromLabel: "from",
     plusLabel: "+",
     selectHint: "Select at least one service to continue, or message us directly.",
@@ -1535,7 +1535,7 @@ const en: TranslationSet = {
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
     pricingNote:
-      "Main package prices are shown above. Add-on modules are available on request — no public rate card.",
+      "Every project is quoted individually after the brief. Add-on modules are selected based on your needs.",
     categories: [
       {
         title: "Websites",
@@ -2007,7 +2007,7 @@ const fr: TranslationSet = {
     eyebrow: "Commande",
     title: "Choisissez vos services",
     subtitle:
-      "Selectionnez une ou plusieurs options — vous recevrez un devis personnalise sous 1 heure. Les prix sont indicatifs et dependent du scope et des delais.",
+      "Selectionnez une ou plusieurs options — vous recevrez un devis personnalise sous 1 heure.",
     fromLabel: "a partir de",
     selectHint: "Selectionnez au moins un service pour continuer, ou ecrivez-nous directement.",
     proceedCta: "Demander un devis",
@@ -2140,7 +2140,8 @@ const fr: TranslationSet = {
     subtitle: "Du site vitrine à la plateforme numérique complète.",
     techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tous les services",
-    pricingNote: "Les tarifs des forfaits principaux sont dans la section Tarifs de chaque service.",
+    pricingNote:
+      "Chaque projet fait l'objet d'un devis sur mesure apres le brief. Les modules complementaires s'ajoutent selon vos besoins.",
     categories: [
       {
         title: "Sites web",
@@ -2613,7 +2614,7 @@ const ru: TranslationSet = {
     eyebrow: "Заказ",
     title: "Выберите услуги",
     subtitle:
-      "Отметьте одну или несколько опций — персональный расчёт пришлём в течение 1 часа. Цены указаны «от» и зависят от объёма и сроков.",
+      "Отметьте одну или несколько опций — персональный расчёт пришлём в течение 1 часа.",
     fromLabel: "от",
     selectHint: "Выберите хотя бы одну услугу или напишите нам напрямую.",
     proceedCta: "Запросить расчёт",
@@ -2748,7 +2749,7 @@ const ru: TranslationSet = {
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
     pricingNote:
-      "Цены основных пакетов — в карточках услуг выше. Дополнительные модули — по запросу, без публичных тарифов.",
+      "Каждый проект оценивается индивидуально после брифа. Дополнительные модули подбираются под ваши задачи.",
     categories: [
       {
         title: "Сайты",
@@ -3219,7 +3220,7 @@ const de: TranslationSet = {
     eyebrow: "Bestellung",
     title: "Leistungen auswahlen",
     subtitle:
-      "Wahlen Sie eine oder mehrere Optionen — Sie erhalten innerhalb einer Stunde ein individuelles Angebot. Preise sind Startwerte und hangen von Umfang und Zeitplan ab.",
+      "Wahlen Sie eine oder mehrere Optionen — Sie erhalten innerhalb einer Stunde ein individuelles Angebot.",
     fromLabel: "ab",
     selectHint: "Wahlen Sie mindestens eine Leistung oder schreiben Sie uns direkt.",
     proceedCta: "Angebot anfragen",
@@ -3352,7 +3353,8 @@ const de: TranslationSet = {
     subtitle: "Vom Präsentationssite bis zur vollständigen digitalen Plattform.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Alle Leistungen",
-    pricingNote: "Hauptpaket-Preise finden Sie im Bereich Preise jeder Leistung.",
+    pricingNote:
+      "Jedes Projekt wird nach dem Briefing individuell kalkuliert. Zusatzmodule wahlen Sie nach Bedarf.",
     categories: [
       {
         title: "Websites",
