@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# lead lists (purchased CSV + exports)
+/content/leads/import/
+/content/leads/export/*.csv
+/content/leads/export/*.xlsx

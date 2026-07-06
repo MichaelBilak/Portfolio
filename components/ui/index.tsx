@@ -19,20 +19,23 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "@/lib/ui";
+import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 
 /* ── useTilt: pointer-driven 3D press-into-screen effect ───── */
 
 export function useTilt(intensity = 8) {
   const reduce = useReducedMotion();
+  const liteMode = useLiteMode();
+  const disabled = reduce || liteMode;
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const rotateX = useSpring(rx, { stiffness: 200, damping: 18 });
   const rotateY = useSpring(ry, { stiffness: 200, damping: 18 });
 
-  const tiltStyle = reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 };
+  const tiltStyle = disabled ? undefined : { rotateX, rotateY, transformPerspective: 900 };
 
   function onTiltMove(e: MouseEvent<HTMLElement>) {
-    if (reduce) return;
+    if (disabled) return;
     const rect = e.currentTarget.getBoundingClientRect();
     ry.set(((e.clientX - rect.left) / rect.width - 0.5) * intensity);
     rx.set(-((e.clientY - rect.top) / rect.height - 0.5) * intensity);
@@ -60,16 +63,17 @@ export function useSpotlight() {
 /* ── Scroll progress bar (top of viewport) ─────────────────── */
 
 export function ScrollProgress() {
+  const liteMode = useLiteMode();
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  });
+
+  if (liteMode) {
+    return null;
+  }
+
   return (
     <motion.div
       aria-hidden
-      style={{ scaleX }}
+      style={{ scaleX: scrollYProgress }}
       className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-accentGold via-accentWarm to-accentWarm"
     />
   );
@@ -99,9 +103,10 @@ interface RevealProps {
 
 export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
   const shouldReduceMotion = useReducedMotion();
+  const liteMode = useLiteMode();
   const MotionTag = motion[as];
 
-  if (shouldReduceMotion) {
+  if (shouldReduceMotion || liteMode) {
     const Tag = as;
     return <Tag className={className}>{children}</Tag>;
   }

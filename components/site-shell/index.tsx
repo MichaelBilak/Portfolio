@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { DeferredSection } from "@/components/deferred-section";
 import { Hero } from "@/components/hero";
 import { Navigation } from "@/components/navigation";
 import { ProblemStatement } from "@/components/problem-statement";
@@ -36,25 +37,39 @@ export function SiteShell({ locale }: SiteShellProps) {
         <Proof t={t} />
         <ProblemStatement t={t} />
         <div className="section-deferred">
-          <Services t={t} />
+          <DeferredSection>
+            <Services t={t} />
+          </DeferredSection>
         </div>
         <div className="section-deferred">
-          <FeaturedWork t={t} />
+          <DeferredSection>
+            <FeaturedWork t={t} />
+          </DeferredSection>
         </div>
         <div className="section-deferred">
-          <BusinessImpact t={t} />
+          <DeferredSection>
+            <BusinessImpact t={t} />
+          </DeferredSection>
         </div>
         <div className="section-deferred">
-          <AuditCta t={t} />
+          <DeferredSection>
+            <AuditCta t={t} />
+          </DeferredSection>
         </div>
         <div className="section-deferred md:hidden">
-          <ContactCompact t={t} />
+          <DeferredSection>
+            <ContactCompact t={t} />
+          </DeferredSection>
         </div>
         <div className="section-deferred hidden md:block">
-          <Contact t={t} />
+          <DeferredSection>
+            <Contact t={t} />
+          </DeferredSection>
         </div>
       </main>
-      <Footer t={t} />
+      <DeferredSection>
+        <Footer t={t} />
+      </DeferredSection>
     </>
   );
 }

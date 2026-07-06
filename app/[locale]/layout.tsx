@@ -15,10 +15,10 @@ import "../globals.css";
 // Red Collar-style impact. Used sparingly. Supports Cyrillic.
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600"],
   variable: "--font-display",
   display: "swap",
-  preload: false,
+  preload: true,
 });
 
 // Brand wordmark only — neutral product grotesque (rest of UI unchanged).

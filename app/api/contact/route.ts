@@ -5,6 +5,25 @@ import {
   buildServiceEmailLines,
 } from "@/lib/order-email-pricing";
 
+// ── Validation constants ──────────────────────────────────────
+const FIELD_LIMITS = {
+  fullName: 200,
+  email: 320,
+  businessName: 300,
+  brief: 5000,
+  siteUrl: 500,
+} as const;
+
+const VALID_BUSINESS_TYPES = ["restaurant", "hotel", "bar", "other"] as const;
+const VALID_SOURCES = ["google", "referral", "social", "other"] as const;
+const VALID_INTENTS = ["audit", "contact"] as const;
+
+// RFC 5321 compliant, rejects newlines (email injection prevention)
+const EMAIL_RE = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
+
+const MAX_ARRAY_LENGTH = 20;
+const MAX_ARRAY_ITEM_LENGTH = 200;
+
 interface ContactPayload {
   fullName?: string;
   email?: string;
@@ -100,7 +119,13 @@ async function appendToGoogleSheets(
 
   if (!spreadsheetId || !credentialsJson) return;
 
-  const credentials = JSON.parse(credentialsJson) as object;
+  let credentials: object;
+  try {
+    credentials = JSON.parse(credentialsJson) as object;
+  } catch {
+    console.error("[contact] Invalid GOOGLE_SHEETS_CREDENTIALS_JSON — skipping Sheets");
+    return;
+  }
 
   const auth = new google.auth.GoogleAuth({
     credentials,
@@ -120,11 +145,11 @@ async function appendToGoogleSheets(
   const existingRows = meta.data.values?.length ?? 1;
   const nextId = existingRows; // row 1 = header, so row 2 = ID #1, etc.
 
-  // Append the new row
+  // Append the new row — RAW prevents formula injection from user input
   const appendResult = await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: "Sheet1!A:H",
-    valueInputOption: "USER_ENTERED",
+    valueInputOption: "RAW",
     includeValuesInResponse: true,
     requestBody: {
       values: [
@@ -182,41 +207,92 @@ async function appendToGoogleSheets(
   });
 }
 
+function bad(message: string, status = 400) {
+  return NextResponse.json({ message }, { status });
+}
+
+function safeArray(value: unknown, maxItems = MAX_ARRAY_LENGTH): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((s): s is string => typeof s === "string")
+    .slice(0, maxItems)
+    .map((s) => s.slice(0, MAX_ARRAY_ITEM_LENGTH).trim())
+    .filter(Boolean);
+}
+
 export async function POST(request: NextRequest) {
-  const payload = (await request.json()) as ContactPayload;
-  const isAudit = payload.intent === "audit";
-
-  if (!payload.email) {
-    return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
+  // ── Parse ──────────────────────────────────────────────────
+  let payload: ContactPayload;
+  try {
+    payload = (await request.json()) as ContactPayload;
+  } catch {
+    return bad("Invalid JSON");
   }
 
+  // ── Validate email (required, max length, no injection) ────
+  const rawEmail = typeof payload.email === "string" ? payload.email : "";
+  const cleanEmail = rawEmail.replace(/[\r\n\t]/g, "").trim();
+
+  if (!cleanEmail) {
+    return bad("Email is required");
+  }
+  if (cleanEmail.length > FIELD_LIMITS.email) {
+    return bad("Email too long");
+  }
+  if (!EMAIL_RE.test(cleanEmail)) {
+    return bad("Invalid email");
+  }
+
+  // ── Validate field lengths ─────────────────────────────────
+  if (payload.fullName && payload.fullName.length > FIELD_LIMITS.fullName) {
+    return bad("Name too long");
+  }
+  if (payload.businessName && payload.businessName.length > FIELD_LIMITS.businessName) {
+    return bad("Business name too long");
+  }
+  if (payload.brief && payload.brief.length > FIELD_LIMITS.brief) {
+    return bad("Brief too long");
+  }
+  if (payload.siteUrl && payload.siteUrl.length > FIELD_LIMITS.siteUrl) {
+    return bad("URL too long");
+  }
+
+  // ── Whitelist enum fields ──────────────────────────────────
+  const intent = VALID_INTENTS.includes(payload.intent as typeof VALID_INTENTS[number])
+    ? payload.intent
+    : undefined;
+  const isAudit = intent === "audit";
+
+  const businessType = VALID_BUSINESS_TYPES.includes(payload.businessType as typeof VALID_BUSINESS_TYPES[number])
+    ? (payload.businessType as typeof VALID_BUSINESS_TYPES[number])
+    : "other";
+
+  const source = VALID_SOURCES.includes(payload.source as typeof VALID_SOURCES[number])
+    ? (payload.source as typeof VALID_SOURCES[number])
+    : "other";
+
+  // ── Validate arrays ────────────────────────────────────────
+  const selectedServices = safeArray(payload.selectedServices);
+  const selectedServiceSlugs = safeArray(payload.selectedServiceSlugs);
+  const selectedAddons = safeArray(payload.selectedAddons);
+
+  // ── Business logic validation ──────────────────────────────
   if (!isAudit && !payload.businessName?.trim()) {
-    return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
+    return bad("Business name is required");
   }
 
-  const businessType = payload.businessType ?? "other";
-  const businessTypeLabel = BUSINESS_TYPE_LABELS[businessType] ?? businessType;
+  const businessTypeLabel = BUSINESS_TYPE_LABELS[businessType];
 
   const p: ContactFormPayload = {
-    fullName: payload.fullName?.trim() || "—",
-    email: payload.email,
-    businessName: payload.businessName?.trim() || businessTypeLabel,
+    fullName: payload.fullName?.trim().slice(0, FIELD_LIMITS.fullName) || "—",
+    email: cleanEmail,
+    businessName: payload.businessName?.trim().slice(0, FIELD_LIMITS.businessName) || businessTypeLabel,
     businessType,
-    brief: payload.brief?.trim() || "—",
-    source: payload.source ?? "other",
+    brief: payload.brief?.trim().slice(0, FIELD_LIMITS.brief) || "—",
+    source,
   };
 
-  const siteUrl = payload.siteUrl?.trim();
-
-  const selectedServices = Array.isArray(payload.selectedServices)
-    ? payload.selectedServices.filter((s) => typeof s === "string" && s.trim())
-    : [];
-  const selectedServiceSlugs = Array.isArray(payload.selectedServiceSlugs)
-    ? payload.selectedServiceSlugs.filter((s) => typeof s === "string" && s.trim())
-    : [];
-  const selectedAddons = Array.isArray(payload.selectedAddons)
-    ? payload.selectedAddons.filter((s) => typeof s === "string" && s.trim())
-    : [];
+  const siteUrl = payload.siteUrl?.trim().slice(0, FIELD_LIMITS.siteUrl);
 
   const now = new Date();
   const timestamp = now.toLocaleString("en-GB", {

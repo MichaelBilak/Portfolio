@@ -7,6 +7,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
+import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 
 /* ── Shared gyroscope source ─────────────────────────────────────────
    A single `deviceorientation` listener feeds every mounted crystal so we
@@ -116,6 +117,8 @@ export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
   const gy = gyroY ?? angleY * 0.6;
 
   const reduce = useReducedMotion();
+  const liteMode = useLiteMode();
+  const disabled = reduce || liteMode;
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const rotateX = useSpring(rx, { stiffness, damping });
@@ -123,7 +126,7 @@ export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
   const interacting = useRef(false);
 
   useEffect(() => {
-    if (reduce || typeof window === "undefined") return;
+    if (disabled || typeof window === "undefined") return;
 
     const onGyro = (t: GyroTilt) => {
       if (interacting.current) return;
@@ -149,11 +152,11 @@ export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
       gyroListeners.delete(onGyro);
       window.removeEventListener("touchstart", kick);
     };
-  }, [reduce, rx, ry, gx, gy]);
+  }, [disabled, rx, ry, gx, gy]);
 
   const onPointerMove = useCallback(
     (event: React.PointerEvent<HTMLElement>) => {
-      if (reduce) return;
+      if (disabled) return;
       interacting.current = true;
       const rect = event.currentTarget.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width - 0.5;
@@ -161,15 +164,15 @@ export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
       ry.set(px * angleY);
       rx.set(py * -angleX);
     },
-    [reduce, rx, ry, angleX, angleY],
+    [disabled, rx, ry, angleX, angleY],
   );
 
   const release = useCallback(() => {
     interacting.current = false;
-    if (reduce) return;
+    if (disabled) return;
     rx.set(0);
     ry.set(0);
-  }, [reduce, rx, ry]);
+  }, [disabled, rx, ry]);
 
   return {
     rotateX,

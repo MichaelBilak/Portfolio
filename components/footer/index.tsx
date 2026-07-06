@@ -1,4 +1,5 @@
-import { AtSign, Globe, Instagram, type LucideIcon } from "lucide-react";
+import { AtSign, Globe, type LucideIcon } from "lucide-react";
+import type { SVGProps } from "react";
 import { BrandLogo } from "@/components/brand-logo";
 import { MailtoLink } from "@/components/mailto-link";
 import { Link } from "@/i18n/navigation";
@@ -10,6 +11,27 @@ import { cn } from "@/lib/ui";
 interface FooterProps {
   t: TranslationSet;
   className?: string;
+}
+
+function InstagramIcon({ size = 16, ...props }: SVGProps<SVGSVGElement> & { size?: number }) {
+  return (
+    <svg
+      aria-hidden
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  );
 }
 
 export function Footer({ t, className }: FooterProps) {
@@ -24,11 +46,12 @@ export function Footer({ t, className }: FooterProps) {
 
   type SocialLink =
     | { href: string; label: string; Icon: LucideIcon; external: true }
+    | { href: string; label: string; Icon: typeof InstagramIcon; external: true }
     | { href: string; label: string; Icon: typeof AtSign; mailto: true };
 
   const socials: SocialLink[] = [
     { href: SITE_URL, label: "Website", Icon: Globe, external: true },
-    { href: INSTAGRAM_URL, label: "Instagram: @dormup.studio", Icon: Instagram, external: true },
+    { href: INSTAGRAM_URL, label: "Instagram: @dormup.studio", Icon: InstagramIcon, external: true },
     { href: contactMailtoHref(), label: `Email: ${CONTACT_EMAIL}`, Icon: AtSign, mailto: true },
   ];
 

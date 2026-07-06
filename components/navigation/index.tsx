@@ -9,6 +9,7 @@ import { ScrollProgress } from "@/components/ui";
 import { Link, usePathname } from "@/i18n/navigation";
 import { BRAND_FULL } from "@/lib/brand";
 import { useIsDesktop } from "@/lib/hooks/use-is-desktop";
+import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
 import { usePastHero } from "@/lib/hooks/use-past-hero";
 import { Locale, TranslationSet } from "@/lib/translations";
@@ -52,9 +53,10 @@ function OrderCtaLink({
 
 export function Navigation({ locale, t }: NavigationProps) {
   const shouldReduceMotion = useReducedMotion();
+  const liteMode = useLiteMode();
   const isDesktop = useIsDesktop();
   const [open, setOpen] = useState(false);
-  const { direction, scrolled } = useNavScroll();
+  const { direction, scrolled } = useNavScroll(24);
   const pathname = usePathname();
   const pastHero = usePastHero();
   const onOrderPage = pathname === "/order" || pathname.endsWith("/order");
@@ -79,7 +81,7 @@ export function Navigation({ locale, t }: NavigationProps) {
 
   return (
     <>
-      <ScrollProgress />
+      {!liteMode ? <ScrollProgress /> : null}
       <motion.header
         initial={false}
         animate={{ y: navHidden ? -120 : 0 }}
@@ -89,7 +91,7 @@ export function Navigation({ locale, t }: NavigationProps) {
         <nav
           className={`interactive mx-auto flex h-16 w-full max-w-[88rem] items-center justify-between rounded-2xl px-4 md:h-[4.25rem] md:px-6 ${
             scrolled
-              ? "border border-borderCool bg-[rgba(6,8,12,0.72)] shadow-[0_24px_60px_-34px_rgba(0,0,0,0.85)] backdrop-blur-2xl"
+              ? "nav-scrolled-blur border border-borderCool bg-[rgba(6,8,12,0.72)] shadow-[0_24px_60px_-34px_rgba(0,0,0,0.85)] backdrop-blur-2xl"
               : "border border-transparent bg-transparent"
           }`}
         >
@@ -152,7 +154,7 @@ export function Navigation({ locale, t }: NavigationProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="fixed inset-0 z-[45] flex flex-col bg-bgPrimary/96 px-6 backdrop-blur-xl pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[calc(var(--header-height)+max(0.75rem,var(--safe-top))+1.75rem)] lg:hidden"
+            className="nav-mobile-menu fixed inset-0 z-[49] flex flex-col bg-bgPrimary/96 px-6 backdrop-blur-xl pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[calc(var(--header-height)+max(0.75rem,var(--safe-top))+1.75rem)] lg:hidden"
           >
             <div aria-hidden className="ambient-glow opacity-60" />
             <div

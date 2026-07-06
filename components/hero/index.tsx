@@ -12,6 +12,7 @@ import {
 } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
+import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
 import { preventBrokenPhrases } from "@/lib/format-text";
@@ -234,10 +235,42 @@ function FloatingChip({
 }
 
 function HeroVisual({ t, reduce }: HeroVisualProps) {
+  const liteMode = useLiteMode();
+  const simplified = reduce || liteMode;
+
+  if (simplified) {
+    return <HeroVisualStatic t={t} />;
+  }
+
+  return <HeroVisualAnimated t={t} />;
+}
+
+function HeroVisualStatic({ t }: { t: TranslationSet }) {
+  return (
+    <div className="relative mx-auto w-full max-w-xl">
+      <ContactLink
+        audit
+        aria-label={t.hero.secondaryCta}
+        className="group focus-outline interactive glass-card-strong relative block overflow-hidden rounded-[1.75rem] p-3"
+      >
+        <div className="relative mb-3 flex items-center gap-1.5 px-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+          <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
+            your.perfect.business.card.it
+          </span>
+        </div>
+        <HeroSiteCarousel reduce />
+      </ContactLink>
+    </div>
+  );
+}
+
+function HeroVisualAnimated({ t }: { t: TranslationSet }) {
   const { scrollY } = useScroll();
   const parallax = useTransform(scrollY, [0, 700], [0, -70]);
 
-  // Pointer (mouse/touch) + gyroscope tilt on the product card
   const { rotateX, rotateY, tiltHandlers } = useCrystalTilt({
     angleX: 10,
     angleY: 10,
@@ -249,16 +282,16 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
 
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, x: 32 }}
-      animate={reduce ? undefined : { opacity: 1, x: 0 }}
+      initial={{ opacity: 0, x: 32 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1], delay: 0.15 }}
-      style={reduce ? undefined : { y: parallax }}
+      style={{ y: parallax }}
       className="relative mx-auto w-full max-w-xl"
     >
       <span
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accentGold/15"
-        style={reduce ? undefined : { animation: "spinSlow 60s linear infinite" }}
+        style={{ animation: "spinSlow 60s linear infinite" }}
       />
       <span
         aria-hidden
@@ -268,7 +301,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
       <motion.div
         {...tiltHandlers}
         className="touch-pan-y"
-        style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
+        style={{ rotateX, rotateY, transformPerspective: 900 }}
       >
         <ContactLink
           audit
@@ -293,13 +326,13 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
             </span>
           </div>
 
-          <HeroSiteCarousel reduce={reduce} />
+          <HeroSiteCarousel reduce={false} />
         </ContactLink>
       </motion.div>
 
       {/* Floating UI chips — levitate over the mockup */}
       <FloatingChip
-        reduce={reduce}
+        reduce={false}
         delay={0.4}
         duration={5.2}
         amplitude={16}
@@ -320,7 +353,7 @@ function HeroVisual({ t, reduce }: HeroVisualProps) {
       </FloatingChip>
 
       <FloatingChip
-        reduce={reduce}
+        reduce={false}
         delay={0.75}
         duration={6.4}
         amplitude={18}
@@ -354,6 +387,7 @@ const SITE_IMAGES = [
 
 function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
   const [index, setIndex] = useState(0);
+  const staticImage = SITE_IMAGES[0];
 
   useEffect(() => {
     if (reduce) return;
@@ -388,11 +422,33 @@ function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
   }, [reduce]);
 
   useEffect(() => {
+    if (reduce) return;
     SITE_IMAGES.slice(1).forEach((src) => {
       const img = new window.Image();
       img.src = src;
     });
-  }, []);
+  }, [reduce]);
+
+  if (reduce) {
+    return (
+      <div className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary">
+        <Image
+          src={staticImage}
+          alt=""
+          aria-hidden
+          fill
+          sizes="(max-width: 1024px) 90vw, 40vw"
+          className="scale-[1.12] object-cover blur-[8px]"
+          priority
+        />
+        <span aria-hidden className="pointer-events-none absolute inset-0 bg-[#06080c]/35" />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06080c]/75 via-transparent to-[#06080c]/15"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary">

@@ -81,7 +81,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   background: var(--bg-primary);
   color-scheme: dark;
   scroll-padding-top: var(--header-offset);
@@ -113,6 +113,95 @@ body {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Lite mode: cheaper visuals on touch / slow devices ───── */
+html.lite-mode .glass-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(15, 22, 32, 0.92);
+}
+
+html.lite-mode .glass-card-strong {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(15, 22, 32, 0.96);
+}
+
+html.lite-mode .theme-light .glass-card {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+html.lite-mode .theme-light .glass-card-strong {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+html.lite-mode .hero-orb {
+  filter: blur(40px);
+  will-change: auto;
+}
+
+html.lite-mode .hero-orb-gold,
+html.lite-mode .hero-orb-emerald {
+  animation: none;
+}
+
+html.lite-mode .ambient-glow::before,
+html.lite-mode .ambient-glow::after {
+  animation: none;
+  filter: blur(50px);
+  will-change: auto;
+}
+
+html.lite-mode .marquee {
+  animation: none;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  gap: 0.5rem 0;
+}
+
+html.lite-mode .text-gradient-sheen {
+  animation: none;
+}
+
+html.lite-mode .hero-float-chip-inner {
+  animation: none;
+}
+
+@media (max-width: 1023px) {
+  .nav-scrolled-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(6, 8, 12, 0.92) !important;
+  }
+}
+
+html.lite-mode .nav-scrolled-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(6, 8, 12, 0.92) !important;
+}
+
+html.lite-mode .nav-mobile-menu {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--bg-primary) !important;
+}
+
+@keyframes splashProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 
@@ -525,7 +614,6 @@ select option {
   border-radius: 999px;
   filter: blur(110px);
   pointer-events: none;
-  will-change: transform;
 }
 
 .hero-orb-gold {
@@ -741,8 +829,29 @@ select option {
   }
 
   .section-deferred {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 720px;
+    contain-intrinsic-size: auto 900px;
+  }
+
+  @media (min-width: 1024px) {
+    .section-deferred {
+      content-visibility: auto;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .section-deferred {
+      content-visibility: visible;
+    }
+  }
+
+  .section-deferred-placeholder {
+    min-height: 720px;
+  }
+
+  @media (min-width: 768px) {
+    .section-deferred-placeholder {
+      min-height: 900px;
+    }
   }
 
   #splash-gate {

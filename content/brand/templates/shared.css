@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Unbounded:wght@500;600;700&display=swap");
+
+:root {
+  --bg-primary: #06080c;
+  --bg-secondary: #0b1118;
+  --accent-gold: #fcd34d;
+  --accent-emerald: #34d399;
+  --text-primary: #f6f5f1;
+  --text-secondary: rgba(226, 226, 220, 0.74);
+  --border-subtle: rgba(252, 211, 77, 0.16);
+  --card-w: 1050px;
+  --card-h: 600px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  background: #1a1a1a;
+  color: var(--text-primary);
+  padding: 32px;
+}
+
+.export-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.asset-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.asset-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  max-width: var(--card-w);
+}
+
+.asset-hint {
+  font-size: 12px;
+  color: rgba(246, 245, 241, 0.45);
+  max-width: var(--card-w);
+  line-height: 1.4;
+}
+
+.section-heading {
+  width: 100%;
+  margin: 24px 0 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(252, 211, 77, 0.5);
+}
+
+/* Card background — full bleed */
+.asset-bg-card {
+  width: var(--card-w);
+  height: var(--card-h);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.asset-bg-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.asset-bg-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-subtle);
+  pointer-events: none;
+}
+
+/* Decorative glow blobs — export with transparent outside */
+.asset-glow {
+  position: relative;
+  background: transparent;
+}
+
+.asset-glow-gold-tl {
+  width: 420px;
+  height: 420px;
+}
+
+.asset-glow-gold-tl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(252, 211, 77, 0.22) 0%, rgba(252, 211, 77, 0.06) 42%, transparent 72%);
+}
+
+.asset-glow-gold-br {
+  width: 360px;
+  height: 360px;
+}
+
+.asset-glow-gold-br::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(252, 211, 77, 0.14) 0%, transparent 68%);
+}
+
+/* Logo D mark */
+.asset-logo-d {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  background: transparent;
+}
+
+.asset-logo-d img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 28px rgba(252, 211, 77, 0.45)) drop-shadow(0 0 64px rgba(252, 211, 77, 0.18));
+}
+
+/* Dividers */
+.asset-line-v {
+  width: 2px;
+  height: 72px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(252, 211, 77, 0.55) 50%,
+    transparent 100%
+  );
+}
+
+.asset-line-h {
+  width: 520px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(252, 211, 77, 0.45) 0%,
+    rgba(252, 211, 77, 0.12) 100%
+  );
+}
+
+.asset-line-h-short {
+  width: 280px;
+}
+
+.asset-dot-emerald {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 16px rgba(52, 211, 153, 0.55);
+}
+
+/* Text layers — pre-rendered for Canva (no custom fonts needed) */
+.asset-text {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.asset-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  white-space: nowrap;
+  font-family: "Unbounded", sans-serif;
+  font-weight: 600;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.asset-wordmark img {
+  height: 1em;
+  width: auto;
+  margin-right: -2px;
+  vertical-align: baseline;
+  filter: drop-shadow(0 0 12px rgba(252, 211, 77, 0.35));
+}
+
+.asset-wordmark .gold {
+  color: var(--accent-gold);
+}
+
+.asset-wordmark .group {
+  font-size: 0.68em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(246, 245, 241, 0.9);
+}
+
+.asset-wordmark .pipe {
+  display: inline-block;
+  width: 1px;
+  height: 1.28em;
+  margin: 0 20px;
+  vertical-align: middle;
+  background: linear-gradient(180deg, transparent, rgba(252, 211, 77, 0.55), transparent);
+}
+
+.asset-wordmark .tagline {
+  font-size: 0.52em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(246, 245, 241, 0.7);
+}
+
+.asset-mono-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(252, 211, 77, 0.65);
+}
+
+.asset-mono-label-bright {
+  color: var(--accent-gold);
+  letter-spacing: 0.18em;
+}
+
+.asset-body {
+  font-family: "Manrope", sans-serif;
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  max-width: 520px;
+}
+
+.asset-contact-line {
+  font-family: "Manrope", sans-serif;
+  font-size: 24px;
+  line-height: 1.9;
+  color: var(--text-primary);
+}
+
+.asset-contact-line .gold {
+  color: var(--accent-gold);
+}
+
+.asset-location {
+  font-family: "Manrope", sans-serif;
+  font-size: 18px;
+  color: rgba(246, 245, 241, 0.55);
+}
+
+.asset-cta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(252, 211, 77, 0.85);
+}
+
+/* Reference compositions — full card layouts */
+.asset-compose {
+  width: var(--card-w);
+  height: var(--card-h);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.asset-compose::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.asset-compose::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border-subtle);
+  pointer-events: none;
+}
+
+.compose-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+}
+
+.compose-front-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.compose-front-logo {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+}
+
+.compose-front-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(252, 211, 77, 0.4));
+}
+
+.compose-front-bottom {
+  margin-top: auto;
+}
+
+.compose-back-contacts {
+  margin-top: 28px;
+}
+
+.compose-back-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}

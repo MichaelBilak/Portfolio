@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export:instagram-stories": "node content/instagram/scripts/export-stories.mjs"
+    "export:instagram-stories": "node content/instagram/scripts/export-stories.mjs",
+    "export:business-card-canva": "node content/brand/scripts/export-canva.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "export:rimini-leads": "node content/leads/scripts/normalize-leads.mjs",
+    "scrape:rimini-restaurants": "node content/leads/scripts/scrape-rimini-restaurants.mjs",
+    "scrape:rimini-leads": "node content/leads/scripts/scrape-rimini-restaurants.mjs && node content/leads/scripts/normalize-leads.mjs --input content/leads/import/scraped-google-maps-latest.csv"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
@@ -30,6 +35,7 @@
     "postcss": "^8",
     "puppeteer": "^25.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "xlsx": "^0.18.5"
   }
 }

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ScrollDirection } from "./use-scroll-direction";
 
 /** Single rAF-throttled scroll listener for nav hide/show and scrolled styling. */
-export function useNavScroll(threshold = 10) {
+export function useNavScroll(threshold = 24) {
   const [direction, setDirection] = useState<ScrollDirection>("up");
   const [scrolled, setScrolled] = useState(false);
   const lastY = useRef(0);

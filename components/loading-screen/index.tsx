@@ -3,17 +3,17 @@
 import { useLayoutEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { AnimatedWordmark } from "@/components/brand-logo/wordmark-animated";
+import { detectLiteMode } from "@/lib/lite-mode";
 import { hideSplashGate, isLocaleSwitchInProgress, markSplashSeen, shouldSkipSplash } from "@/lib/splash-session";
 
-const MIN_DISPLAY_MS = 1000;
-const WORDMARK_DONE_MS = 800;
-const EXIT_MS = 300;
+const MIN_DISPLAY_MS = 300;
+const WORDMARK_DONE_MS = 400;
+const EXIT_MS = 200;
 const EASE_LOAD = [0.22, 1, 0.36, 1] as const;
 
 export function LoadingScreen() {
   const reduceMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useLayoutEffect(() => {
     if (shouldSkipSplash()) {
@@ -22,27 +22,19 @@ export function LoadingScreen() {
       return;
     }
 
+    const liteMode = detectLiteMode();
+    if (liteMode || reduceMotion) {
+      markSplashSeen();
+      hideSplashGate();
+      return;
+    }
+
     setVisible(true);
     const start = Date.now();
 
-    // Animate the progress bar smoothly to ~90 % on its own,
-    // then snap to 100 % once the page is actually ready.
-    let raf: number;
-    const tick = () => {
-      const elapsed = Date.now() - start;
-      // ease-out curve that slows down near 90%
-      const natural = Math.min(90, (elapsed / MIN_DISPLAY_MS) * 100 * 0.9);
-      setProgress(natural);
-      if (natural < 90) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
     const finish = () => {
-      cancelAnimationFrame(raf);
-      setProgress(100);
       const elapsed = Date.now() - start;
-      const minTotal = reduceMotion ? 0 : MIN_DISPLAY_MS;
-      const remaining = minTotal - elapsed;
+      const remaining = MIN_DISPLAY_MS - elapsed;
       setTimeout(() => {
         markSplashSeen();
         setVisible(false);
@@ -53,12 +45,8 @@ export function LoadingScreen() {
       finish();
     } else {
       window.addEventListener("load", finish, { once: true });
+      return () => window.removeEventListener("load", finish);
     }
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("load", finish);
-    };
   }, [reduceMotion]);
 
   return (
@@ -68,8 +56,8 @@ export function LoadingScreen() {
           key="loading-screen"
           className="loading-screen"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.03 }}
-          transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ opacity: 0, scale: 1.02 }}
+          transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
           style={{
             position: "fixed",
             inset: 0,
@@ -82,69 +70,10 @@ export function LoadingScreen() {
             overflow: "hidden",
           }}
         >
-          {/* ── ambient orbs ── */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-              overflow: "hidden",
-            }}
-          >
-            {/* gold orb top-left */}
-            <motion.div
-              animate={{ scale: [1, 1.18, 1], opacity: [0.18, 0.32, 0.18] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                position: "absolute",
-                top: "-15%",
-                left: "-10%",
-                width: "55vw",
-                height: "55vw",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(252,211,77,0.22) 0%, transparent 70%)",
-                filter: "blur(60px)",
-              }}
-            />
-            {/* emerald orb bottom-right */}
-            <motion.div
-              animate={{ scale: [1, 1.14, 1], opacity: [0.14, 0.26, 0.14] }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.2,
-              }}
-              style={{
-                position: "absolute",
-                bottom: "-12%",
-                right: "-8%",
-                width: "50vw",
-                height: "50vw",
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(52,211,153,0.18) 0%, transparent 70%)",
-                filter: "blur(70px)",
-              }}
-            />
-            {/* grain overlay */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-                opacity: 0.5,
-              }}
-            />
-          </div>
-
-          {/* ── center content ── */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: reduceMotion ? 0 : 0.35, ease: EASE_LOAD }}
+            transition={{ duration: 0.3, ease: EASE_LOAD }}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -154,37 +83,19 @@ export function LoadingScreen() {
               zIndex: 1,
             }}
           >
-            {/* wordmark */}
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-              <motion.div
-                aria-label="DormUp Group"
-                animate={{
-                  filter: [
-                    "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
-                    "drop-shadow(0 0 28px rgba(252,211,77,0.65))",
-                    "drop-shadow(0 0 12px rgba(252,211,77,0.35))",
-                  ],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: reduceMotion ? 0 : WORDMARK_DONE_MS / 1000,
-                }}
-              >
-                <AnimatedWordmark
-                  priority
-                  className="text-[clamp(3rem,9vw,5.35rem)]"
-                  groupClassName="text-[0.46em] font-medium tracking-[0.01em] text-textPrimary/90"
-                />
-              </motion.div>
+              <AnimatedWordmark
+                priority
+                className="text-[clamp(3rem,9vw,5.35rem)]"
+                groupClassName="text-[0.46em] font-medium tracking-[0.01em] text-textPrimary/90"
+              />
 
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  duration: reduceMotion ? 0 : 0.45,
-                  delay: reduceMotion ? 0 : WORDMARK_DONE_MS / 1000,
+                  duration: 0.35,
+                  delay: WORDMARK_DONE_MS / 1000,
                   ease: EASE_LOAD,
                 }}
                 style={{
@@ -223,7 +134,6 @@ export function LoadingScreen() {
             </div>
           </motion.div>
 
-          {/* ── progress bar ── */}
           <div
             style={{
               position: "absolute",
@@ -231,14 +141,9 @@ export function LoadingScreen() {
               left: "50%",
               transform: "translateX(-50%)",
               width: "min(280px, 70vw)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "0.6rem",
               zIndex: 1,
             }}
           >
-            {/* track */}
             <div
               style={{
                 width: "100%",
@@ -248,32 +153,20 @@ export function LoadingScreen() {
                 overflow: "hidden",
               }}
             >
-              <motion.div
+              <div
+                className="splash-progress-bar"
                 style={{
                   height: "100%",
+                  width: "100%",
                   background:
                     "linear-gradient(90deg, #fcd34d 0%, #fde68a 60%, #34d399 100%)",
                   borderRadius: "99px",
                   boxShadow: "0 0 8px rgba(252,211,77,0.6)",
+                  transformOrigin: "left center",
+                  animation: `splashProgress ${MIN_DISPLAY_MS}ms ease-out forwards`,
                 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.4, ease: "linear" }}
               />
             </div>
-
-            {/* percentage */}
-            <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.2em",
-                color: "rgba(246,245,241,0.35)",
-              }}
-            >
-              {Math.round(progress)}%
-            </motion.span>
           </div>
         </motion.div>
       )}
