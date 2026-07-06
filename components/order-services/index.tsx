@@ -83,7 +83,6 @@ export function OrderServices({ t }: OrderServicesProps) {
           <aside className="glass-card mb-8 rounded-2xl border border-borderSubtle p-5 md:p-6 lg:float-right lg:mb-0 lg:ml-8 lg:w-72 lg:sticky lg:top-[var(--header-offset)]">
             <ul className="space-y-3 text-sm text-textSecondary">
               <li>{op.trust.timeline}</li>
-              <li>{op.trust.deposit}</li>
               <li>
                 <Link href="/services/premium-website#process" className="text-accentGold hover:text-accentWarm">
                   {op.trust.processLink} →
