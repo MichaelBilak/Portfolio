@@ -242,9 +242,13 @@ interface AnimatedCounterProps {
     and animates only the numeric part. */
 export function AnimatedCounter({ value, className, durationMs = 1500 }: AnimatedCounterProps) {
   const shouldReduceMotion = useReducedMotion();
+  const liteMode = useLiteMode();
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [display, setDisplay] = useState(shouldReduceMotion ? value : "");
+
+  // Always start with the real value so SSR / crawlers / social previews
+  // see the correct number — not a zero placeholder.
+  const [display, setDisplay] = useState(value);
 
   const match = value.match(/^(\D*)(\d[\d.,]*)(.*)$/);
   const prefix = match?.[1] ?? "";
@@ -254,10 +258,8 @@ export function AnimatedCounter({ value, className, durationMs = 1500 }: Animate
   const hasNumber = match !== null && Number.isFinite(target);
 
   useEffect(() => {
-    if (!inView || shouldReduceMotion || !hasNumber) {
-      if (shouldReduceMotion || !hasNumber) setDisplay(value);
-      return;
-    }
+    if (!inView || shouldReduceMotion || liteMode || !hasNumber) return;
+    setDisplay(`${prefix}0${suffix}`);
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
@@ -270,11 +272,11 @@ export function AnimatedCounter({ value, className, durationMs = 1500 }: Animate
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, shouldReduceMotion, hasNumber, target, durationMs, prefix, suffix, value]);
+  }, [inView, shouldReduceMotion, liteMode, hasNumber, target, durationMs, prefix, suffix, value]);
 
   return (
     <span ref={ref} className={className}>
-      {display || (hasNumber ? `${prefix}0${suffix}` : value)}
+      {display}
     </span>
   );
 }
