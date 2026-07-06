@@ -168,6 +168,19 @@ html.lite-mode .marquee {
   gap: 0.5rem 0;
 }
 
+/* Remove the side-fade mask so wrapped text isn't clipped on mobile */
+html.lite-mode .mask-fade-x {
+  -webkit-mask-image: none;
+  mask-image: none;
+  overflow: visible;
+}
+
+/* Hide the duplicated (aria-hidden) items in lite-mode — they're only
+   needed for the seamless scroll loop */
+html.lite-mode .marquee [aria-hidden="true"] {
+  display: none;
+}
+
 html.lite-mode .text-gradient-sheen {
   animation: none;
 }
