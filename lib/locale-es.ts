@@ -273,9 +273,9 @@ export const es: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Studio · Emilia-Romagna, Italia",
-    headline: "La primera impresión\nde tu negocio\nempieza con el sitio web.",
-    subtitle: "Donde tu marca habla antes que tú",
-    lead: "Creamos experiencias digitales premium para marcas y negocios que se niegan a parecer genéricos: desde instituciones locales hasta startups ambiciosas. Diseño distintivo, estrategia precisa, resultados medibles.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    subtitle: "",
+    lead: "Digital systems, process automation, websites and content production.",
     primaryCta: "Ver proyectos",
     secondaryCta: "Solicitar auditoría gratis",
     buyCta: "Pedir servicios",
@@ -557,7 +557,7 @@ export const es: TranslationSet = {
     sections: [
       {
         heading: "Responsable del tratamiento",
-        body: "DormUp Group digital studio — contacto: dormup.it@gmail.com. Región: Emilia-Romagna, Italia.",
+        body: "DormUp Studio digital studio — contacto: dormup.it@gmail.com. Región: Emilia-Romagna, Italia.",
       },
       {
         heading: "Datos recopilados",

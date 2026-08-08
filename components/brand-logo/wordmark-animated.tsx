@@ -76,7 +76,7 @@ export function AnimatedWordmark({
         animate={{ opacity: 1, x: 0 }}
         transition={step(3)}
       >
-        {" Group"}
+        {" Studio"}
       </motion.span>
     </span>
   );

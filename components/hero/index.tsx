@@ -85,12 +85,14 @@ export function Hero({ t }: HeroProps) {
             ))}
           </h1>
 
-          <motion.p
-            variants={item}
-            className="font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted"
-          >
-            {t.hero.subtitle}
-          </motion.p>
+          {t.hero.subtitle ? (
+            <motion.p
+              variants={item}
+              className="font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted"
+            >
+              {t.hero.subtitle}
+            </motion.p>
+          ) : null}
 
           <motion.p
             variants={item}

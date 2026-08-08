@@ -30,7 +30,7 @@ export function AboutLogoMark() {
         >
           <Image
             src={LOGO_D_SRC}
-            alt="DormUp Group"
+            alt="DormUp Studio"
             width={LOGO_WIDTH}
             height={LOGO_HEIGHT}
             sizes="(max-width: 640px) 40vw, 176px"

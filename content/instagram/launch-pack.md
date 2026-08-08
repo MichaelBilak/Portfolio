@@ -1,6 +1,6 @@
 # Instagram Launch Pack · @dormup.studio
 
-Полный комплект для запуска профиля DormUp Group. Визуалы: [`templates/posts-export.html`](templates/posts-export.html).
+Полный комплект для запуска профиля DormUp Studio. Визуалы: [`templates/posts-export.html`](templates/posts-export.html).
 
 ---
 
@@ -12,11 +12,11 @@
 ### Аватар
 - Файл: [`LogoDMGroup_glow_profile.gif`](../../LogoDMGroup_glow_profile.gif) или [`LogoDMGroup_black_bg.png`](../../LogoDMGroup_black_bg.png)
 - Crop: центр на букве **D** + золотой glow
-- Не использовать полный wordmark — текст «Group» на 110px не читается
+- Не использовать полный wordmark — текст «Studio» на 110px не читается
 
 ### Name (поле имени)
 ```
-DormUp Group · Digital Studio
+DormUp Studio · Digital Studio
 ```
 
 ### Bio
@@ -127,9 +127,9 @@ HTML-источник: [`templates/stories-export.html`](../templates/stories-ex
 
 **Caption:**
 ```
-Siamo DormUp Group — digital studio in Emilia-Romagna. Creiamo siti premium per ristoranti, hotel e brand locali che non vogliono sembrare «template». Design che converte, strategia chiara, risultati misurabili.
+Siamo DormUp Studio — digital studio in Emilia-Romagna. Creiamo siti premium per ristoranti, hotel e brand locali che non vogliono sembrare «template». Design che converte, strategia chiara, risultati misurabili.
 
-We're DormUp Group — a boutique digital studio in Emilia-Romagna. Premium websites for restaurants, hotels & local brands that refuse to look generic.
+We're DormUp Studio — a boutique digital studio in Emilia-Romagna. Premium websites for restaurants, hotels & local brands that refuse to look generic.
 
 Audit gratuito · link in bio ↓
 

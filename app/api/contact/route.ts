@@ -70,7 +70,7 @@ function buildPlainText(
 
   const lines = [
     "================================================",
-    "  NEW AUDIT REQUEST  —  DormUp Group",
+    "  NEW AUDIT REQUEST  —  DormUp Studio",
     "================================================",
     "",
     `Date / Time:     ${timestamp}`,
@@ -318,7 +318,7 @@ export async function POST(request: NextRequest) {
       auth: { user: gmailUser, pass: gmailPass },
     });
     await transporter.sendMail({
-      from: `"DormUp Group" <${gmailUser}>`,
+      from: `"DormUp Studio" <${gmailUser}>`,
       to: toEmail,
       subject: `New ${isAudit ? "audit" : "contact"} request — ${p.businessName}`,
       text: buildPlainText(

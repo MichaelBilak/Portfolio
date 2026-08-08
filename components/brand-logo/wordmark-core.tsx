@@ -10,7 +10,7 @@ const D_HEIGHT = 615;
 
 interface WordmarkCoreProps {
   className?: string;
-  showGroup?: boolean;
+  showStudio?: boolean;
   groupClassName?: string;
   priority?: boolean;
   style?: React.CSSProperties;
@@ -18,7 +18,7 @@ interface WordmarkCoreProps {
 
 export function WordmarkCore({
   className = "",
-  showGroup = true,
+  showStudio = true,
   groupClassName = "text-[0.68em] font-medium tracking-[0.01em] text-textPrimary/90",
   priority = false,
   style,
@@ -39,7 +39,7 @@ export function WordmarkCore({
       />
       <span aria-hidden className="leading-none">
         orm<span className="text-accentGold">Up</span>
-        {showGroup ? <span className={groupClassName}> Group</span> : null}
+        {showStudio ? <span className={groupClassName}> Studio</span> : null}
       </span>
     </span>
   );

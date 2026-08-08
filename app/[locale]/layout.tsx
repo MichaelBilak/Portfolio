@@ -56,37 +56,37 @@ const localeMetaContent: Record<
   { title: string; description: string; ogLocale: string }
 > = {
   it: {
-    title: "DormUp Group · Studio Digitale",
+    title: "DormUp Studio · Studio Digitale",
     description:
       "Studio digitale a Rimini, Italia. Creiamo siti ed esperienze digitali premium per brand e business che vogliono distinguersi: design distintivo, strategia concreta, risultati misurabili.",
     ogLocale: "it_IT",
   },
   en: {
-    title: "DormUp Group · Digital Studio",
+    title: "DormUp Studio · Digital Studio",
     description:
       "Digital studio in Rimini, Italy. We craft premium websites and digital experiences for brands and businesses that want to stand out—distinctive design, sharp strategy, measurable results.",
     ogLocale: "en_US",
   },
   fr: {
-    title: "DormUp Group · Studio Digital",
+    title: "DormUp Studio · Studio Digital",
     description:
       "Studio digital à Rimini, Italie. Nous créons des sites et expériences digitales premium pour marques et business qui veulent se démarquer — design distinctif, stratégie concrète, résultats mesurables.",
     ogLocale: "fr_FR",
   },
   ru: {
-    title: "DormUp Group · Диджитал Студия",
+    title: "DormUp Studio · Диджитал Студия",
     description:
       "Диджитал-студия в Римини, Италия. Создаём премиум-сайты и цифровые решения для брендов и бизнесов, которым важно выделяться — выразительный дизайн, чёткая стратегия, измеримый результат.",
     ogLocale: "ru_RU",
   },
   de: {
-    title: "DormUp Group · Digitalstudio",
+    title: "DormUp Studio · Digitalstudio",
     description:
       "Digitalstudio in Rimini, Italien. Wir gestalten Premium-Websites und digitale Erlebnisse für Marken und Unternehmen, die herausstechen wollen — ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
     ogLocale: "de_DE",
   },
   es: {
-    title: "DormUp Group · Estudio Digital",
+    title: "DormUp Studio · Estudio Digital",
     description:
       "Estudio digital en Rímini, Italia. Creamos sitios web y experiencias digitales premium para marcas y negocios que quieren destacar — diseño distintivo, estrategia clara, resultados medibles.",
     ogLocale: "es_ES",
@@ -168,7 +168,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "DormUp Group digital studio",
+    name: "DormUp Studio digital studio",
     email: "dormup.it@gmail.com",
     image: `${siteUrl}${logoUrl}`,
     logo: `${siteUrl}${logoUrl}`,
