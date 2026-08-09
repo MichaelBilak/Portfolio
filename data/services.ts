@@ -8,19 +8,19 @@ export interface ServiceMeta {
   image: string;
 }
 
-/** Homepage / catalog order: websites → automation → systems upgrade → content → care */
+/** Homepage / catalog order: automation → websites → systems upgrade → content → care */
 export const servicesMeta: ServiceMeta[] = [
-  {
-    id: "premium-site",
-    slug: "premium-website",
-    icon: Monitor,
-    image: "/images/service-premium-website.png",
-  },
   {
     id: "booking-flow",
     slug: "booking-flow",
     icon: CalendarCheck,
     image: "/images/service-booking-flow.png",
+  },
+  {
+    id: "premium-site",
+    slug: "premium-website",
+    icon: Monitor,
+    image: "/images/service-premium-website.png",
   },
   {
     id: "redesign",
