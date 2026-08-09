@@ -3,7 +3,7 @@ import Image from "next/image";
 interface BrowserMockupProps {
   image: string;
   alt: string;
-  displayUrl: string;
+  displayUrl?: string;
   imagePosition?: "top" | "center";
   priority?: boolean;
   sizes?: string;
@@ -41,13 +41,15 @@ export function BrowserMockup({
         <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
         <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-        <span
-          className={`ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted transition-colors duration-500 ${
-            interactive ? "group-hover:text-accentGold/80" : ""
-          }`}
-        >
-          {displayUrl}
-        </span>
+        {displayUrl ? (
+          <span
+            className={`ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted transition-colors duration-500 ${
+              interactive ? "group-hover:text-accentGold/80" : ""
+            }`}
+          >
+            {displayUrl}
+          </span>
+        ) : null}
       </div>
 
       <div className="relative aspect-[16/10] overflow-hidden">
@@ -57,7 +59,7 @@ export function BrowserMockup({
             target="_blank"
             rel="noopener noreferrer"
             className="absolute inset-0 z-20"
-            aria-label={linkLabel ?? `Open ${displayUrl}`}
+            aria-label={linkLabel ?? (displayUrl ? `Open ${displayUrl}` : alt)}
           />
         ) : null}
 

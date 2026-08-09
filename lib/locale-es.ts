@@ -272,16 +272,19 @@ export const es: TranslationSet = {
     about: "Sobre nosotros",
   },
   hero: {
-    eyebrow: "Digital Studio · Emilia-Romagna, Italia",
+    eyebrow: "Digital Studio",
     headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
-    lead: "Digital systems, process automation, websites and content production.",
+    lead: "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos.",
     primaryCta: "Ver proyectos",
     secondaryCta: "Solicitar auditoría gratis",
     buyCta: "Pedir servicios",
     buyCtaShort: "Pedir",
-    socialProof: "4 proyectos · Emilia-Romagna e Italia · Disponibles para nuevos clientes",
+    socialProof: "4 proyectos · Disponibles para nuevos clientes",
     mockupCaption: "Tu mejor tarjeta de visita",
+    chipHighlight: "Llave en mano",
+    chipAvailability: "Waiting for you",
+    chipAvailabilitySub: "digital studio",
   },
   trust: [
     "Sistemas digitales que conectan",
@@ -293,8 +296,8 @@ export const es: TranslationSet = {
     eyebrow: "En cifras",
     items: [
       { value: "1h", label: "Tiempo medio de respuesta" },
-      { value: "100%", label: "Custom para tu marca, en personal" },
-      { value: "4", label: "Pilares: sistemas · automatización · web · contenido" },
+      { value: "100%", label: "enfoque único" },
+      { value: "4", label: "direcciones distintas\nsistemas · automatización · web · contenido" },
       { value: "26", label: "Servicios y módulos disponibles" },
     ],
     footnote: { value: "2 sem", label: "Inicio medio de proyecto" },
@@ -302,8 +305,8 @@ export const es: TranslationSet = {
   problem: {
     eyebrow: "01 — Por qué importa",
     title:
-      "La mayoría de los negocios tienen herramientas. Casi ninguno tiene un sistema digital que funcione de verdad.",
-    body: "Canales dispersos, procesos manuales, una presencia web débil y contenido que no vende: esa brecha cuesta tiempo y clientes. Conectamos sistemas digitales, automatizamos procesos, construimos sitios y producimos contenido para que el negocio funcione mejor y se vea a la altura.",
+      "La mayoría de los negocios tienen herramientas.\nCasi ninguno tiene un sistema digital que funcione de verdad.",
+    body: "Canales dispersos, procesos manuales, una presencia web débil y contenido que no vende: esa brecha cuesta tiempo y clientes.\n\nConectamos sistemas digitales, automatizamos procesos, construimos sitios y producimos contenido para que el negocio funcione mejor y se vea a la altura.",
   },
   caseStudies: {
     label: "Trabajo seleccionado",
@@ -425,16 +428,17 @@ export const es: TranslationSet = {
     ],
   },
   audit: {
-    title: "¿Quieres saber\nqué frena tu setup digital?",
-    body: "Revisamos sistemas, procesos, sitio y contenido — y te decimos exactamente qué mejorar. Gratis, sin presión.",
-    cta: "Solicita tu auditoría gratis",
+    title: "¿Quieres saber qué\nfrena tu negocio?",
+    body: "Revisamos sistemas, procesos, sitio y contenido — y te decimos exactamente qué mejorar.",
+    cta: "Solicita tu auditoría",
     meta: "Respuesta en 1 hora · Gratis · Tú decides los siguientes pasos",
+    freeBadge: "FREE",
   },
   about: {
     eyebrow: "Sobre nosotros",
-    title: "Sistemas, diseño y delivery",
-    bio: "Somos un pequeño estudio digital con base en Emilia-Romagna. Construimos el entorno digital que tu negocio necesita: sistemas y plataformas, automatización de procesos, sitios e interfaces, más contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
-    pills: ["Emilia-Romagna, Italia", "Disponibles para nuevos proyectos"],
+    title: "¿Quiénes somos?",
+    bio: "Somos un pequeño estudio digital. Construimos el entorno digital que tu negocio necesita: sistemas y plataformas, automatización de procesos, sitios e interfaces, más contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
+    pills: ["Disponibles para nuevos proyectos"],
   },
   contact: {
     label: "Empecemos",
@@ -456,7 +460,7 @@ export const es: TranslationSet = {
       email: "Email",
       business: "Nombre del negocio",
       businessType: "Tipo de negocio",
-      siteUrl: "URL del sitio o producto (opcional)",
+      siteUrl: "URL del sitio o producto",
       brief: "Describe brevemente qué buscas",
       source: "¿Cómo nos encontraste?",
       submit: "Enviar mensaje",
@@ -568,7 +572,7 @@ export const es: TranslationSet = {
     sections: [
       {
         heading: "Responsable del tratamiento",
-        body: "DormUp Studio digital studio — contacto: dormup.it@gmail.com. Región: Emilia-Romagna, Italia.",
+        body: "DormUp Studio digital studio — contacto: dormup.it@gmail.com.",
       },
       {
         heading: "Datos recopilados",
@@ -593,9 +597,9 @@ export const es: TranslationSet = {
     ],
   },
   footer: {
-    description: "Estudio digital para sistemas, automatización, sitios y contenido en Italia.",
+    description: "Estudio digital para sistemas, automatización, sitios y contenido.",
     links: "Enlaces rápidos",
-    location: "Emilia-Romagna, Italia",
+    location: "Digital Studio",
     status: "Disponibles para nuevos clientes",
     privacy: "Política de privacidad",
     built: "Construido con intención.",

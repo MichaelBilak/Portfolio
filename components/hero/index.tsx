@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight, MapPin, TrendingUp } from "lucide-react";
+import { ArrowUpRight, TrendingUp } from "lucide-react";
 import {
   AnimatePresence,
   motion,
+  useInView,
   useReducedMotion,
   useScroll,
   useTransform,
   type Variants,
 } from "framer-motion";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
 import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { ContactLink } from "@/components/contact-link";
@@ -143,17 +144,6 @@ export function Hero({ t }: HeroProps) {
               </Link>
             </div>
           </motion.div>
-
-          <motion.div
-            variants={item}
-            className="flex min-w-0 items-center gap-3 text-sm text-textSecondary"
-          >
-            <span className="relative inline-flex h-2.5 w-2.5 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/80 opacity-60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-            </span>
-            <span className="min-w-0 text-pretty hyphens-none">{preventBrokenPhrases(t.hero.socialProof)}</span>
-          </motion.div>
         </motion.div>
 
         <HeroVisual t={t} reduce={!!shouldReduceMotion} />
@@ -260,7 +250,7 @@ function HeroVisualStatic({ t }: { t: TranslationSet }) {
           <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
           <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
-            your.digital.system.it
+            your.digital.system.com
           </span>
         </div>
         <HeroSiteCarousel reduce />
@@ -324,7 +314,7 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
             <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
-              your.digital.system.it
+              your.digital.system.com
             </span>
           </div>
 
@@ -345,11 +335,8 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
           <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300 max-sm:h-8 max-sm:w-8">
             <TrendingUp size={16} />
           </span>
-          <span className="leading-tight whitespace-nowrap">
-            <span className="block font-display text-xl font-medium text-textPrimary max-sm:text-lg">4</span>
-            <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
-              digital pillars
-            </span>
+          <span className="whitespace-nowrap text-sm font-normal tracking-tight text-textPrimary max-sm:text-[13px]">
+            {t.hero.chipHighlight}
           </span>
         </div>
       </FloatingChip>
@@ -364,12 +351,14 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
       >
         <div className="glass-card-strong flex items-center gap-2.5 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
           <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold max-sm:h-8 max-sm:w-8">
-            <MapPin size={16} />
+            <TrendingUp size={16} />
           </span>
           <span className="leading-tight whitespace-nowrap">
-            <span className="block text-sm font-medium text-textPrimary max-sm:text-[13px]">Emilia-Romagna, IT</span>
+            <span className="block text-sm font-normal tracking-tight text-textPrimary max-sm:text-[13px]">
+              {t.hero.chipAvailability}
+            </span>
             <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
-              digital studio
+              {t.hero.chipAvailabilitySub}
             </span>
           </span>
         </div>
@@ -389,10 +378,12 @@ const SITE_IMAGES = [
 
 function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
   const [index, setIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isVisible = useInView(carouselRef, { amount: 0.2 });
   const staticImage = SITE_IMAGES[0];
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !isVisible) return;
 
     let id: number | undefined;
 
@@ -421,7 +412,7 @@ function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
       stop();
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [reduce]);
+  }, [reduce, isVisible]);
 
   useEffect(() => {
     if (reduce) return;
@@ -453,7 +444,10 @@ function HeroSiteCarousel({ reduce }: { reduce: boolean }) {
   }
 
   return (
-    <div className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary">
+    <div
+      ref={carouselRef}
+      className="relative aspect-[900/680] overflow-hidden rounded-2xl bg-bgPrimary"
+    >
       <AnimatePresence initial={false}>
         <motion.div
           key={index}

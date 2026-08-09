@@ -65,11 +65,8 @@ export default async function ServicesPage({ params }: PageProps) {
             <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
               {sp.title}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg text-textSecondary">
+            <p className="mt-5 whitespace-nowrap text-[clamp(0.8rem,2.4vw,1.125rem)] leading-snug text-textSecondary">
               {sp.subtitle}
-            </p>
-            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-textMuted">
-              {sp.techStack}
             </p>
           </div>
         </section>
@@ -91,7 +88,9 @@ export default async function ServicesPage({ params }: PageProps) {
 
         {/* ── Capability categories ── */}
         <div className="container-lux border-t border-borderSubtle py-10">
-          <p className="max-w-2xl text-sm leading-relaxed text-textMuted">{sp.pricingNote}</p>
+          <p className="mx-auto max-w-3xl text-center text-sm leading-relaxed text-textMuted">
+            {sp.pricingNote}
+          </p>
         </div>
         <ServiceCategories categories={sp.categories} />
 

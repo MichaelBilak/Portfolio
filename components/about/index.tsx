@@ -16,7 +16,7 @@ export function About({ t }: AboutProps) {
               <Eyebrow>{t.about.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
+              <h2 className="mt-5 whitespace-nowrap font-display text-fluid-title font-light text-textPrimary">
                 {t.about.title}
               </h2>
             </Reveal>
@@ -24,18 +24,6 @@ export function About({ t }: AboutProps) {
               <p className="mt-6 whitespace-pre-line text-lg leading-relaxed text-textSecondary text-pretty">
                 {t.about.bio}
               </p>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {t.about.pills.map((pill) => (
-                  <span
-                    key={pill}
-                    className="rounded-full border border-borderSubtle bg-white/[0.03] px-4 py-2 text-sm text-textPrimary"
-                  >
-                    {pill}
-                  </span>
-                ))}
-              </div>
             </Reveal>
           </div>
 

@@ -1,3 +1,5 @@
+export const LITE_MODE_CLASS = "lite-mode";
+
 export function detectLiteMode(): boolean {
   if (typeof window === "undefined") return false;
 
@@ -29,3 +31,6 @@ export function detectLiteMode(): boolean {
 
   return false;
 }
+
+/** Synchronous before paint — avoids mounting the heavy carousel on touch devices. */
+export const LITE_MODE_BOOTSTRAP_SCRIPT = `(function(){try{var m=window.matchMedia;if(!m)return;if(m("(prefers-reduced-motion: reduce)").matches||m("(pointer: coarse)").matches){document.documentElement.classList.add("${LITE_MODE_CLASS}");return;}var c=navigator.connection;if(c&&(c.saveData||["slow-2g","2g","3g"].indexOf(c.effectiveType||"")>=0)){document.documentElement.classList.add("${LITE_MODE_CLASS}");return;}var d=navigator.deviceMemory;if(typeof d==="number"&&d<=4){document.documentElement.classList.add("${LITE_MODE_CLASS}");return;}var h=navigator.hardwareConcurrency;if(typeof h==="number"&&h<=4){document.documentElement.classList.add("${LITE_MODE_CLASS}");}}catch(e){}})();`;

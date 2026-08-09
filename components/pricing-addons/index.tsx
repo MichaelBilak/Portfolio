@@ -102,7 +102,7 @@ export function PricingAddons({
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
             {t.eyebrow}
           </p>
-          <h2 className="mt-3 max-w-2xl text-fluid-title font-display font-light text-textPrimary">
+          <h2 className="mt-3 whitespace-nowrap text-fluid-title font-display font-light text-textPrimary">
             {t.title}
           </h2>
           <p className="mt-4 max-w-2xl text-base text-textSecondary">{t.subtitle}</p>

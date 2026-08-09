@@ -27,15 +27,15 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
       />
 
       <div className="container-lux relative">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <div>
+        <div className="grid gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-14">
+          <div className="min-w-0">
             <Reveal>
               <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accentDeep">
                 {t.problem.eyebrow}
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-6 text-fluid-title font-display font-light leading-[1.02] text-[#0d130f] text-safe-wrap">
+              <h2 className="mt-6 whitespace-pre-line font-display text-[clamp(1.7rem,3.1vw,3.05rem)] font-light leading-[1.12] tracking-[-0.025em] text-[#0d130f] text-safe-wrap">
                 {t.problem.title}
               </h2>
             </Reveal>
@@ -51,7 +51,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
               </span>
             </Reveal>
             <Reveal delay={0.15}>
-              <p className="mt-2 text-xl leading-relaxed text-[#0d130f]/75 text-pretty md:text-2xl">
+              <p className="mt-2 whitespace-pre-line text-xl leading-relaxed text-[#0d130f]/75 text-pretty md:text-2xl">
                 {t.problem.body}
               </p>
             </Reveal>

@@ -22,7 +22,7 @@ DormUp Studio · Digital Studio
 ### Bio
 ```
 Widespread digital services for local brands, hotels & restaurants 
-Siti web su misura · Emilia-Romagna, Italia
+Siti web su misura · Digital Studio
 ↓ Free audit · Audit gratuito
 ```
 
@@ -64,10 +64,10 @@ HTML-источник: [`templates/stories-export.html`](../templates/stories-ex
 | **Services** | 5 услуг: Premium, Redesign, Booking, Support, Photo/Video | dormup-it.com/services |
 | **Audit** | «Cos'è l'audit» · «Gratis» · «Risposta in 1h» · CTA sticker | bio link |
 | **Process** | 5 slides из Post 10 | — |
-| **About** | Bio студии · Rimini · «Built with intention.» | dormup-it.com/about |
+| **About** | Bio студии · «Built with intention.» | dormup-it.com/about |
 
 Текст About (IT):
-> Siamo una piccola digital studio in Emilia-Romagna. Non lavoriamo con 30 clienti insieme — prendiamo pochi progetti e trattiamo ogni business come nostro.
+> Siamo una piccola digital studio. Non lavoriamo con 30 clienti insieme — prendiamo pochi progetti e trattiamo ogni business come nostro.
 
 ---
 
@@ -127,9 +127,9 @@ HTML-источник: [`templates/stories-export.html`](../templates/stories-ex
 
 **Caption:**
 ```
-Siamo DormUp Studio — digital studio in Emilia-Romagna. Creiamo siti premium per ristoranti, hotel e brand locali che non vogliono sembrare «template». Design che converte, strategia chiara, risultati misurabili.
+Siamo DormUp Studio — digital studio. Creiamo siti premium per ristoranti, hotel e brand locali che non vogliono sembrare «template». Design che converte, strategia chiara, risultati misurabili.
 
-We're DormUp Studio — a boutique digital studio in Emilia-Romagna. Premium websites for restaurants, hotels & local brands that refuse to look generic.
+We're DormUp Studio — a boutique digital studio. Premium websites for restaurants, hotels & local brands that refuse to look generic.
 
 Audit gratuito · link in bio ↓
 
@@ -356,7 +356,7 @@ Audit gratuito · link in bio
 5 stories = 5 slides Post 10
 
 ### About
-1. Map pin Rimini · Emilia-Romagna
+1. Open for projects
 2. Quote: «Built with intention.»
 3. «4 progetti · aperti per nuovi clienti»
 4. Email sticker: dormup.it@gmail.com

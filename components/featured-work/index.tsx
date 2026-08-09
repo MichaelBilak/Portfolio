@@ -42,20 +42,20 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
       <div className="container-lux relative">
         {!hideHeading && (
           <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl">
+            <div className="min-w-0 shrink-0">
               <Reveal>
                 <Eyebrow>{t.workPage.eyebrow}</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
+                <h2 className="mt-5 whitespace-nowrap text-fluid-title font-display font-light text-textPrimary">
                   {t.caseStudies.label}
                 </h2>
               </Reveal>
             </div>
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} className="shrink-0">
               <Link
                 href="/work"
-                className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
+                className="group inline-flex whitespace-nowrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
               >
                 {t.workPage.viewAll}
                 <ArrowUpRight
@@ -84,7 +84,6 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
               meta={meta}
               copy={t.projects.find((p) => p.id === meta.id)!}
               viewCta={t.caseStudies.viewCaseStudy}
-              liveStatus={t.workPage.liveStatus}
             />
           ))}
         </motion.div>
@@ -110,7 +109,6 @@ interface ViewAllCardProps {
 }
 
 function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardProps) {
-  const formattedCount = String(count).padStart(2, "0");
   const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(5);
   return (
     <motion.div
@@ -134,19 +132,13 @@ function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardP
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-amber-gradient opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60"
         />
-        <div className="relative flex items-center gap-5 md:gap-8">
-          <span className="font-display text-5xl font-light leading-none text-gradient-gold transition-transform duration-300 group-hover:-translate-y-1 md:text-6xl">
-            {formattedCount}
+        <div className="relative flex flex-col gap-1.5">
+          <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-accentGold">
+            {eyebrow}
           </span>
-          <span aria-hidden className="hidden h-14 w-px bg-borderCool md:block" />
-          <div className="flex flex-col gap-1.5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-accentGold">
-              {eyebrow}
-            </span>
-            <span className="font-display text-xl font-light leading-tight text-textPrimary md:text-2xl">
-              {title}
-            </span>
-          </div>
+          <span className="font-display text-xl font-light leading-tight text-textPrimary md:text-2xl">
+            {title}
+          </span>
         </div>
 
         <span className="relative inline-flex h-12 w-12 shrink-0 items-center justify-center self-end rounded-full border border-borderCool bg-white/[0.03] text-textPrimary transition-all duration-300 group-hover:border-accentGold group-hover:bg-accentGold/10 group-hover:text-accentGold sm:h-14 sm:w-14 md:h-16 md:w-16">
@@ -165,10 +157,9 @@ interface ProjectCardProps {
   meta: ProjectMeta;
   copy: LocalizedProject;
   viewCta: string;
-  liveStatus: string;
 }
 
-function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
+function ProjectCard({ meta, copy, viewCta }: ProjectCardProps) {
   const [loaded, setLoaded] = useState(false);
   const onMove = useSpotlight();
   const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(7);
@@ -188,28 +179,13 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
         className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-amber-gradient opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-70"
       />
 
-      <header className="relative flex items-start justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center rounded-full border border-accentGold/30 bg-accentGold/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-accentGold">
-            {meta.tag}
-          </span>
-          {meta.isLive ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-emerald-300">
-              <span
-                aria-hidden
-                className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]"
-              />
-              {liveStatus}
-            </span>
-          ) : null}
-        </div>
+      <header className="relative flex items-start justify-end">
         <span className="font-mono text-xs text-textMuted/70">{meta.index}</span>
       </header>
 
       <BrowserMockup
         image={meta.image}
         alt={`${copy.name} — ${copy.subtitle}`}
-        displayUrl={meta.displayUrl}
         imagePosition={meta.imagePosition ?? "top"}
         loaded={loaded}
         onLoad={() => setLoaded(true)}
@@ -225,16 +201,13 @@ function ProjectCard({ meta, copy, viewCta, liveStatus }: ProjectCardProps) {
         </p>
       </div>
 
-      <div className="relative mt-auto flex items-center justify-between gap-4 border-t border-borderCool pt-4">
-        <span className="inline-flex items-center gap-2 text-sm text-accentGold transition-colors group-hover:text-accentWarm">
+      <div className="relative mt-auto flex items-center border-t border-borderCool pt-4">
+        <span className="inline-flex whitespace-nowrap items-center gap-2 text-sm text-accentGold transition-colors group-hover:text-accentWarm">
           {viewCta}
           <ArrowUpRight
             size={14}
-            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            className="shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           />
-        </span>
-        <span className="hidden max-w-[55%] text-right font-mono text-[10px] uppercase tracking-[0.14em] text-textMuted md:inline">
-          {meta.tech.join(" · ")}
         </span>
       </div>
     </MotionLink>

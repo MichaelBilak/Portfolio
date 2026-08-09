@@ -121,7 +121,7 @@ export function LoadingScreen() {
                     color: "rgba(252,211,77,0.7)",
                   }}
                 >
-                  Digital Studio · Emilia-Romagna
+                  Digital Studio
                 </span>
                 <span
                   style={{

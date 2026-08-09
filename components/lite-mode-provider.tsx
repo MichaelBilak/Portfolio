@@ -8,18 +8,22 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { detectLiteMode } from "@/lib/lite-mode";
-
-const LITE_MODE_CLASS = "lite-mode";
+import { detectLiteMode, LITE_MODE_CLASS } from "@/lib/lite-mode";
 
 type LiteModeContextValue = {
   liteMode: boolean;
 };
 
+function readInitialLiteMode(): boolean {
+  if (typeof document === "undefined") return false;
+  if (document.documentElement.classList.contains(LITE_MODE_CLASS)) return true;
+  return detectLiteMode();
+}
+
 const LiteModeContext = createContext<LiteModeContextValue>({ liteMode: false });
 
 export function LiteModeProvider({ children }: { children: ReactNode }) {
-  const [liteMode, setLiteMode] = useState(false);
+  const [liteMode, setLiteMode] = useState(readInitialLiteMode);
 
   useEffect(() => {
     const lite = detectLiteMode();

@@ -1,5 +1,3 @@
-"use client";
-
 import { Eyebrow, Reveal } from "@/components/ui";
 import { TranslationSet } from "@/lib/translations";
 
@@ -9,10 +7,10 @@ interface BusinessImpactProps {
 
 export function BusinessImpact({ t }: BusinessImpactProps) {
   return (
-    <section className="relative overflow-hidden bg-bgElevated py-20 md:py-32">
+    <section className="relative overflow-hidden py-20 md:py-32">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gold-radial opacity-20 blur-3xl"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bgPrimary from-0% via-bgElevated via-24% to-bgPrimary to-100%"
       />
       <div className="container-lux relative">
         <Reveal>

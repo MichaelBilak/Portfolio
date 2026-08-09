@@ -8,6 +8,7 @@ import { ClientProviders } from "@/components/client-providers";
 import { Locale } from "@/lib/translations";
 import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
 import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
+import { LITE_MODE_BOOTSTRAP_SCRIPT } from "@/lib/lite-mode";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import "../globals.css";
 
@@ -58,37 +59,37 @@ const localeMetaContent: Record<
   it: {
     title: "DormUp Studio · Studio Digitale",
     description:
-      "Studio digitale a Rimini, Italia. Sistemi digitali, automazione dei processi, siti web e produzione contenuti per business che vogliono funzionare meglio e distinguersi.",
+      "Studio digitale. Sistemi digitali, automazione dei processi, siti web e produzione contenuti per business che vogliono funzionare meglio e distinguersi.",
     ogLocale: "it_IT",
   },
   en: {
     title: "DormUp Studio · Digital Studio",
     description:
-      "Digital studio in Rimini, Italy. Digital systems, process automation, websites and content production for businesses that need to work better and stand out.",
+      "Digital studio. Digital systems, process automation, websites and content production for businesses that need to work better and stand out.",
     ogLocale: "en_US",
   },
   fr: {
     title: "DormUp Studio · Studio Digital",
     description:
-      "Studio digital à Rimini, Italie. Systemes digitaux, automatisation des processus, sites web et production de contenus pour les business qui doivent mieux fonctionner et se demarquer.",
+      "Studio digital. Systemes digitaux, automatisation des processus, sites web et production de contenus pour les business qui doivent mieux fonctionner et se demarquer.",
     ogLocale: "fr_FR",
   },
   ru: {
     title: "DormUp Studio · Диджитал Студия",
     description:
-      "Диджитал-студия в Римини, Италия. Цифровые системы, автоматизация процессов, сайты и производство контента — чтобы бизнес работал лучше и выделялся.",
+      "Диджитал-студия. Цифровые системы, автоматизация процессов, сайты и производство контента — чтобы бизнес работал лучше и выделялся.",
     ogLocale: "ru_RU",
   },
   de: {
     title: "DormUp Studio · Digitalstudio",
     description:
-      "Digitalstudio in Rimini, Italien. Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion für Unternehmen, die besser funktionieren und herausstechen wollen.",
+      "Digitalstudio. Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion für Unternehmen, die besser funktionieren und herausstechen wollen.",
     ogLocale: "de_DE",
   },
   es: {
     title: "DormUp Studio · Estudio Digital",
     description:
-      "Estudio digital en Rímini, Italia. Sistemas digitales, automatización de procesos, sitios web y producción de contenidos para negocios que necesitan funcionar mejor y destacar.",
+      "Estudio digital. Sistemas digitales, automatización de procesos, sitios web y producción de contenidos para negocios que necesitan funcionar mejor y destacar.",
     ogLocale: "es_ES",
   },
 };
@@ -165,21 +166,15 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   setRequestLocale(locale);
   const messages = await getMessages();
 
-  const localBusinessSchema = {
+  const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "DormUp Studio digital studio",
+    "@type": "Organization",
+    name: "DormUp Studio",
     email: "dormup.it@gmail.com",
     image: `${siteUrl}${logoUrl}`,
     logo: `${siteUrl}${logoUrl}`,
     url: absoluteUrl(locale as Locale),
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Rimini",
-      addressCountry: "IT",
-    },
     description: localeMetaContent[locale as Locale].description,
-    areaServed: "Italia",
     sameAs: [INSTAGRAM_URL],
   };
 
@@ -189,6 +184,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         <script
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: SPLASH_BOOTSTRAP_SCRIPT }}
+        />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: LITE_MODE_BOOTSTRAP_SCRIPT }}
         />
       </head>
       <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
@@ -201,7 +200,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </body>
     </html>

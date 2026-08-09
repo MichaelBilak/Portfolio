@@ -79,22 +79,6 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-start lg:gap-10">
               <div className="space-y-6">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
-                    {meta.tag}
-                  </span>
-                  {meta.isLive ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300">
-                      <span
-                        aria-hidden
-                        className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]"
-                      />
-                      {t.workPage.liveStatus}
-                    </span>
-                  ) : null}
-                  <span className="font-mono text-xs text-textMuted/70">{meta.index}</span>
-                </div>
-
                 <h1 className="font-display font-light text-textPrimary">
                   <span className="block text-fluid-title">{project.name}</span>
                   {project.nameTagline ? (

@@ -117,8 +117,9 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Keep auto — smooth scroll fights scroll-linked animations */
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
   }
 }
 
@@ -187,6 +188,15 @@ html.lite-mode .text-gradient-sheen {
 
 html.lite-mode .hero-float-chip-inner {
   animation: none;
+}
+
+html.lite-mode .crystal-halo,
+html.lite-mode .services-carousel-item .crystal-halo {
+  display: none;
+}
+
+html.lite-mode .services-carousel-item {
+  will-change: auto;
 }
 
 @media (max-width: 1023px) {
@@ -735,6 +745,29 @@ select option {
   grid-template-rows: 1fr;
   opacity: 1;
   margin-top: 0.85rem;
+}
+
+/* Homepage services carousel — one foreshortened circular trajectory.
+   Crystals remain camera-facing; size and light alone communicate depth. */
+.services-carousel-scene {
+  --carousel-radius-x: 8.5rem;
+  --carousel-radius-y: 5.5rem;
+}
+@media (min-width: 640px) {
+  .services-carousel-scene {
+    --carousel-radius-x: 13rem;
+    --carousel-radius-y: 7.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .services-carousel-scene {
+    --carousel-radius-x: 17rem;
+    --carousel-radius-y: 9rem;
+  }
+}
+.services-carousel-item .crystal-figure {
+  /* Keep gem lighting readable while orbiting; still allow hover lift */
+  filter: drop-shadow(0 14px 30px rgba(252, 211, 77, 0.2));
 }
 
 @media (prefers-reduced-motion: reduce) {
