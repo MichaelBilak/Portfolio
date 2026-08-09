@@ -118,7 +118,7 @@ export function Services({ t }: ServicesProps) {
             </Reveal>
             <Reveal delay={0.1}>
               <span className="mt-4 block font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted">
-                {String(servicesMeta.length).padStart(2, "0")} — capabilities
+                {t.servicesLead}
               </span>
             </Reveal>
           </div>
@@ -127,7 +127,8 @@ export function Services({ t }: ServicesProps) {
 
         <div className="mt-14 flex flex-wrap justify-center gap-x-8 gap-y-12 md:mt-20 md:gap-x-10 md:gap-y-16">
           {servicesMeta.map((meta, index) => {
-            const copy = t.services[index];
+            const copy = t.services.find((s) => s.id === meta.id);
+            if (!copy) return null;
             return (
               <Reveal
                 key={meta.id}

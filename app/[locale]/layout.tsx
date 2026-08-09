@@ -58,37 +58,37 @@ const localeMetaContent: Record<
   it: {
     title: "DormUp Studio · Studio Digitale",
     description:
-      "Studio digitale a Rimini, Italia. Creiamo siti ed esperienze digitali premium per brand e business che vogliono distinguersi: design distintivo, strategia concreta, risultati misurabili.",
+      "Studio digitale a Rimini, Italia. Sistemi digitali, automazione dei processi, siti web e produzione contenuti per business che vogliono funzionare meglio e distinguersi.",
     ogLocale: "it_IT",
   },
   en: {
     title: "DormUp Studio · Digital Studio",
     description:
-      "Digital studio in Rimini, Italy. We craft premium websites and digital experiences for brands and businesses that want to stand out—distinctive design, sharp strategy, measurable results.",
+      "Digital studio in Rimini, Italy. Digital systems, process automation, websites and content production for businesses that need to work better and stand out.",
     ogLocale: "en_US",
   },
   fr: {
     title: "DormUp Studio · Studio Digital",
     description:
-      "Studio digital à Rimini, Italie. Nous créons des sites et expériences digitales premium pour marques et business qui veulent se démarquer — design distinctif, stratégie concrète, résultats mesurables.",
+      "Studio digital à Rimini, Italie. Systemes digitaux, automatisation des processus, sites web et production de contenus pour les business qui doivent mieux fonctionner et se demarquer.",
     ogLocale: "fr_FR",
   },
   ru: {
     title: "DormUp Studio · Диджитал Студия",
     description:
-      "Диджитал-студия в Римини, Италия. Создаём премиум-сайты и цифровые решения для брендов и бизнесов, которым важно выделяться — выразительный дизайн, чёткая стратегия, измеримый результат.",
+      "Диджитал-студия в Римини, Италия. Цифровые системы, автоматизация процессов, сайты и производство контента — чтобы бизнес работал лучше и выделялся.",
     ogLocale: "ru_RU",
   },
   de: {
     title: "DormUp Studio · Digitalstudio",
     description:
-      "Digitalstudio in Rimini, Italien. Wir gestalten Premium-Websites und digitale Erlebnisse für Marken und Unternehmen, die herausstechen wollen — ausdrucksstarkes Design, klare Strategie, messbare Ergebnisse.",
+      "Digitalstudio in Rimini, Italien. Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion für Unternehmen, die besser funktionieren und herausstechen wollen.",
     ogLocale: "de_DE",
   },
   es: {
     title: "DormUp Studio · Estudio Digital",
     description:
-      "Estudio digital en Rímini, Italia. Creamos sitios web y experiencias digitales premium para marcas y negocios que quieren destacar — diseño distintivo, estrategia clara, resultados medibles.",
+      "Estudio digital en Rímini, Italia. Sistemas digitales, automatización de procesos, sitios web y producción de contenidos para negocios que necesitan funcionar mejor y destacar.",
     ogLocale: "es_ES",
   },
 };

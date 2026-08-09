@@ -79,7 +79,9 @@ export default async function ServicesPage({ params }: PageProps) {
           <div className="container-lux">
             <ServicesCrystalGrid
               metas={servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }))}
-              titles={servicesMeta.map((_, i) => t.services[i].title)}
+              titles={servicesMeta.map(
+                (meta) => t.services.find((s) => s.id === meta.id)?.title ?? meta.id,
+              )}
               viewServiceLabel={t.servicePage.viewService}
             />
           </div>

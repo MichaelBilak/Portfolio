@@ -26,7 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   for (const service of servicesMeta) {
-    if (service.slug === "booking-flow") continue;
     entries.push(sitemapEntry(`/services/${service.slug}`));
   }
 

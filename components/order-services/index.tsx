@@ -62,9 +62,9 @@ export function OrderServices({ t }: OrderServicesProps) {
   const selectedTitles = useMemo(
     () =>
       servicesMeta
-        .map((meta, index) => ({ meta, copy: t.services[index] }))
-        .filter(({ meta }) => selected.has(meta.id))
-        .map(({ copy }) => copy.title),
+        .filter((meta) => selected.has(meta.id))
+        .map((meta) => t.services.find((s) => s.id === meta.id)?.title)
+        .filter((title): title is string => Boolean(title)),
     [selected, t.services],
   );
 
@@ -95,8 +95,9 @@ export function OrderServices({ t }: OrderServicesProps) {
           </aside>
 
           <div className="grid gap-5 md:grid-cols-2 lg:gap-6 lg:clear-none">
-            {servicesMeta.map((meta, index) => {
-              const copy = t.services[index];
+            {servicesMeta.map((meta) => {
+              const copy = t.services.find((s) => s.id === meta.id);
+              if (!copy) return null;
               const isSelected = selected.has(meta.id);
 
               return (

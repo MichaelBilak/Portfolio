@@ -55,9 +55,9 @@ export const es: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Sitios web y productos digitales",
       description:
-        "Diseño y desarrollo completo para restaurantes, hoteles y bares. Mobile-first, rápido, optimizado para convertir.",
+        "Sitios y productos web a medida — del site de marca a experiencias orientadas a conversión. Mobile-first, rápidos, hechos para funcionar.",
       details: "Del wireframe al lanzamiento · CMS opcional · SEO base incluido",
       whatYouGet: [
         "Diseño premium e identidad visual",
@@ -89,9 +89,9 @@ export const es: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Redesign & Optimization",
+      title: "Upgrade de sistemas y redesign",
       description:
-        "Convertimos sitios existentes en activos digitales de calidad. Nuevo aspecto, nueva estructura, nuevos resultados.",
+        "Evolucionamos la presencia digital existente hacia un sistema más claro — estructura, UX, rendimiento y rutas de conversión.",
       details: "Auditoría · Estrategia · Implementación",
       whatYouGet: [
         "Auditoría completa de tu sitio actual",
@@ -123,10 +123,10 @@ export const es: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking & Lead Flow",
+      title: "Automatización de procesos",
       description:
-        "Construimos flujos de reserva directa y consultas en tu sitio que aumentan la conversión.",
-      details: "Integración de reservas · Formularios inteligentes · Lógica A/B",
+        "Automatizamos reservas, consultas y flujos repetitivos para que los leads no se pierdan en chats y calendarios.",
+      details: "Flujos · Integraciones · Formularios inteligentes · Reporting",
       whatYouGet: [
         "Análisis de tu embudo de reservas actual",
         "Integración del sistema de reservas",
@@ -157,9 +157,9 @@ export const es: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Monthly Support",
+      title: "Crecimiento continuo y cuidado",
       description:
-        "Actualizaciones, optimización continua, soporte prioritario. Tu sitio crece con tu negocio.",
+        "Actualizaciones, optimización y soporte prioritario en todo tu stack digital — para que los sistemas sigan el ritmo del negocio.",
       details: "Desde 2 h/mes · Prioridad garantizada · Informe mensual",
       whatYouGet: [
         "Actualizaciones técnicas y de contenido",
@@ -190,9 +190,9 @@ export const es: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Photo & video with a professional videographer",
+      title: "Producción de contenidos",
       description:
-        "Rodajes in situ y postproducción a cargo de un videógrafo dedicado: comida, interiores, equipo y material listo para redes. Servicio independiente de los proyectos web, con sus propios niveles de precio.",
+        "Producción de foto y vídeo para web, campañas y redes — brief, rodaje, edición y entregables listos para usar.",
       details: "Sesiones in situ · Audio cuando haga falta · Entregables para web y redes",
       whatYouGet: [
         "Brief creativo y lista de planos alineados con tus objetivos",
@@ -231,14 +231,14 @@ export const es: TranslationSet = {
       title: "Understand",
       summary: "Negocio, audiencia, objetivos, problemas.",
       description:
-        "Estudiamos el negocio, la audiencia, los objetivos y los problemas actuales para entender qué debe lograr el sitio web.",
+        "Estudiamos el negocio, la audiencia, los objetivos y los problemas actuales para entender qué debe lograr el sistema digital: sitios e integraciones.",
     },
     {
       id: "plan",
       title: "Plan",
-      summary: "Estructura, flujo, funciones, prioridades.",
+      summary: "Estructura, flujos, sistemas, prioridades.",
       description:
-        "Definimos la estructura, el flujo de usuario y las funciones clave según las necesidades específicas del cliente.",
+        "Definimos la estructura, los flujos de usuario, los sistemas y las funciones clave según las necesidades específicas del cliente.",
     },
     {
       id: "design",
@@ -250,9 +250,9 @@ export const es: TranslationSet = {
     {
       id: "build",
       title: "Build",
-      summary: "Sitio responsive, integraciones, rendimiento.",
+      summary: "Sitios, sistemas, integraciones, rendimiento.",
       description:
-        "Desarrollamos un sitio web responsive, rápido y funcional con las herramientas e integraciones adecuadas.",
+        "Desarrollamos sitios e integraciones responsive, rápidos y funcionales con las herramientas adecuadas.",
     },
     {
       id: "improve",
@@ -284,17 +284,17 @@ export const es: TranslationSet = {
     mockupCaption: "Tu mejor tarjeta de visita",
   },
   trust: [
-    "Diseño que convierte",
-    "Hecho para marcas que destacan",
-    "Reservas directas y leads",
-    "Perfecto en el móvil",
+    "Sistemas digitales que conectan",
+    "Automatización que ahorra tiempo",
+    "Sitios que convierten",
+    "Contenido que genera confianza",
   ],
   proof: {
     eyebrow: "En cifras",
     items: [
       { value: "1h", label: "Tiempo medio de respuesta" },
       { value: "100%", label: "Custom para tu marca, en personal" },
-      { value: "70%", label: "Juzgan un negocio por su sitio web" },
+      { value: "4", label: "Pilares: sistemas · automatización · web · contenido" },
       { value: "26", label: "Servicios y módulos disponibles" },
     ],
     footnote: { value: "2 sem", label: "Inicio medio de proyecto" },
@@ -302,8 +302,8 @@ export const es: TranslationSet = {
   problem: {
     eyebrow: "01 — Por qué importa",
     title:
-      "La mayoría de los negocios locales tienen un sitio web. Casi ninguno tiene una primera impresión digital.",
-    body: "La mayoría de los sitios locales no generan confianza. Muestran información pero no comunican calidad. Un sitio premium orientado a la conversión puede amortizarse en pocos meses. Por eso ayudamos a los negocios italianos a ganar clientes directamente.",
+      "La mayoría de los negocios tienen herramientas. Casi ninguno tiene un sistema digital que funcione de verdad.",
+    body: "Canales dispersos, procesos manuales, una presencia web débil y contenido que no vende: esa brecha cuesta tiempo y clientes. Conectamos sistemas digitales, automatizamos procesos, construimos sitios y producimos contenido para que el negocio funcione mejor y se vea a la altura.",
   },
   caseStudies: {
     label: "Trabajo seleccionado",
@@ -389,11 +389,12 @@ export const es: TranslationSet = {
     ],
   },
   servicesLabel: "Qué construimos",
+  servicesLead: "Sistemas · Automatización · Sitios · Contenido",
   processSection: {
     eyebrow: "Proceso",
-    title: "Cómo convertimos un sitio web débil en un activo de negocio",
+    title: "Cómo convertimos el caos digital en un activo de negocio",
     subtitle:
-      "Visual, estrategia y resultado en un solo método orientado al negocio. No solo diseño.",
+      "Sistemas, automatización, web y contenido en un solo método orientado al negocio — no solo un sitio bonito.",
     stepLabel: "Paso",
     footerNote:
       "Cada proyecto es flexible: el proceso, el diseño y la funcionalidad se adaptan a las necesidades reales de cada cliente.",
@@ -402,27 +403,37 @@ export const es: TranslationSet = {
     label: "Por qué importa",
     items: [
       {
-        title: "El 70 % juzga un negocio por su sitio web",
-        body: "Antes de contactarte, los clientes ya han formado una opinión en línea. Un sitio débil pierde confianza y conversiones.",
-        note: "Stanford Web Credibility Research",
+        title: "Sistemas que conectan las operaciones",
+        body: "Portales, dashboards y superficies de producto que sacan el trabajo de chats y hojas de cálculo.",
+        note: "Sistemas digitales",
       },
       {
-        title: "Un sitio premium se amortiza solo",
-        body: "Más consultas directas desde tu sitio pueden cubrir la inversión en pocos meses — cuando el camino es claro.",
-        note: "Estimación orientativa para hostelería y negocios locales",
+        title: "Automatización que ahorra horas",
+        body: "Reservas, consultas y flujos repetitivos con caminos claros — menos leads perdidos, menos seguimiento manual.",
+        note: "Automatización de procesos",
+      },
+      {
+        title: "Sitios que convierten",
+        body: "Una presencia web sólida sigue generando confianza. Creamos y mejoramos sitios que convierten atención en acción.",
+        note: "Sitios web",
+      },
+      {
+        title: "Contenido que genera confianza",
+        body: "Foto, vídeo y assets listos para web y campañas — para que la marca se vea tan sólida como opera.",
+        note: "Producción de contenidos",
       },
     ],
   },
   audit: {
-    title: "¿Quieres saber\nqué frena tu sitio web?",
-    body: "Analizamos tu sitio actual y te decimos exactamente qué mejorar. Gratis, sin presión.",
+    title: "¿Quieres saber\nqué frena tu setup digital?",
+    body: "Revisamos sistemas, procesos, sitio y contenido — y te decimos exactamente qué mejorar. Gratis, sin presión.",
     cta: "Solicita tu auditoría gratis",
     meta: "Respuesta en 1 hora · Gratis · Tú decides los siguientes pasos",
   },
   about: {
     eyebrow: "Sobre nosotros",
-    title: "Diseño y desarrollo",
-    bio: "Somos un pequeño estudio digital con base en Emilia-Romagna. Construimos un entorno digital para tu negocio: desde sitios web e interfaces hasta automatización de consultas, contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
+    title: "Sistemas, diseño y delivery",
+    bio: "Somos un pequeño estudio digital con base en Emilia-Romagna. Construimos el entorno digital que tu negocio necesita: sistemas y plataformas, automatización de procesos, sitios e interfaces, más contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
     pills: ["Emilia-Romagna, Italia", "Disponibles para nuevos proyectos"],
   },
   contact: {
@@ -445,7 +456,7 @@ export const es: TranslationSet = {
       email: "Email",
       business: "Nombre del negocio",
       businessType: "Tipo de negocio",
-      siteUrl: "URL de tu sitio web actual",
+      siteUrl: "URL del sitio o producto (opcional)",
       brief: "Describe brevemente qué buscas",
       source: "¿Cómo nos encontraste?",
       submit: "Enviar mensaje",
@@ -453,13 +464,13 @@ export const es: TranslationSet = {
       submitting: "Enviando...",
       success: "Recibido. Responderemos en 1 hora.",
       submitError: "No se pudo enviar. Escríbenos a {email} y responderemos pronto.",
-      auditBriefPlaceholder: "¿Qué no funciona en tu sitio actual? ¿Qué te gustaría mejorar?",
+      auditBriefPlaceholder: "¿Qué no funciona en tu setup digital — sistemas, procesos, sitio o contenido?",
       optional: "opcional",
       options: {
-        restaurant: "Restaurante",
+        restaurant: "Restaurante / hospitality",
         hotel: "Hotel",
-        bar: "Bar",
-        other: "Otro",
+        bar: "Bar / local",
+        other: "Otro / servicios",
         google: "Google",
         referral: "Boca a boca",
         social: "Redes sociales",
@@ -513,7 +524,7 @@ export const es: TranslationSet = {
       },
       {
         id: "products",
-        title: "Productos digitales",
+        title: "Sistemas digitales",
         items: [
           { id: "web-service", label: "Servicios web", info: "Dashboards, motores de reserva, marketplaces." },
           { id: "ecommerce", label: "E-commerce", info: "Tienda con carrito, pagos e inventario." },
@@ -582,7 +593,7 @@ export const es: TranslationSet = {
     ],
   },
   footer: {
-    description: "Estudio digital para marcas y negocios premium en toda Italia.",
+    description: "Estudio digital para sistemas, automatización, sitios y contenido en Italia.",
     links: "Enlaces rápidos",
     location: "Emilia-Romagna, Italia",
     status: "Disponibles para nuevos clientes",
@@ -606,7 +617,7 @@ export const es: TranslationSet = {
   servicesPage: {
     eyebrow: "Servicios",
     title: "Qué construimos",
-    subtitle: "Desde un sitio de presentación hasta una plataforma digital completa.",
+    subtitle: "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos — de punta a punta.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Todos los servicios",
     pricingNote:
@@ -623,7 +634,7 @@ export const es: TranslationSet = {
         ],
       },
       {
-        title: "Productos digitales",
+        title: "Sistemas digitales",
         items: [
           { label: "Servicios web", info: "Herramientas en el navegador: dashboards, motores de reserva, marketplaces." },
           { label: "Apps móviles", info: "Apps iOS y Android con React Native o Flutter." },

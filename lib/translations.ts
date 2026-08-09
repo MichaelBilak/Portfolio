@@ -101,6 +101,7 @@ export interface TranslationSet {
     }[];
   };
   servicesLabel: string;
+  servicesLead: string;
   processSection: {
     eyebrow: string;
     title: string;
@@ -309,9 +310,9 @@ const it: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Siti web e prodotti digitali",
       description:
-        "Design e sviluppo completo per ristoranti, hotel, bar. Mobile-first, veloce, ottimizzato per convertire.",
+        "Siti e prodotti web su misura — dal brand site alle esperienze orientate alla conversione. Mobile-first, veloci, costruiti per funzionare.",
       details: "Da wireframe a produzione · CMS opzionale · SEO base incluso",
       whatYouGet: [
         "Design e identita visiva premium",
@@ -343,9 +344,9 @@ const it: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Redesign & Ottimizzazione",
+      title: "Upgrade sistemi e redesign",
       description:
-        "Trasformiamo siti esistenti in asset digitali di qualita. Nuovo look, nuova struttura, nuovi risultati.",
+        "Portiamo la presenza digitale esistente a un sistema piu chiaro — struttura, UX, performance e percorsi di conversione.",
       details: "Audit · Strategia · Implementazione",
       whatYouGet: [
         "Audit completo del sito attuale",
@@ -377,10 +378,10 @@ const it: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking & Lead Flow",
+      title: "Automazione dei processi",
       description:
-        "Costruiamo flussi di prenotazione e richiesta diretta dal sito che aumentano le conversioni.",
-      details: "Integrazione booking · Form intelligenti · A/B logic",
+        "Automatizziamo prenotazioni, richieste e workflow ripetitivi perche i lead non si perdano in chat e calendari.",
+      details: "Flussi · Integrazioni · Form intelligenti · Report",
       whatYouGet: [
         "Analisi del funnel di prenotazione attuale",
         "Integrazione del sistema di booking",
@@ -411,9 +412,9 @@ const it: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Supporto Mensile",
+      title: "Crescita continua e cura",
       description:
-        "Aggiornamenti, ottimizzazioni continue, supporto prioritario. Il tuo sito cresce con il tuo business.",
+        "Aggiornamenti, ottimizzazione e supporto prioritario su tutto lo stack digitale — cosi i sistemi restano al passo del business.",
       details: "Da 2h/mese · Priorita garantita · Report mensile",
       whatYouGet: [
         "Aggiornamenti tecnici e di contenuto",
@@ -445,10 +446,10 @@ const it: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Foto & video con videografo professionista",
+      title: "Produzione contenuti",
       description:
-        "Riprese e post-produzione affidate a un videografo dedicato: food, interni, team e contenuti per social. Servizio separato dai progetti web, con piani tariffari dedicati.",
-      details: "Sessioni in location · Audio dove serve · Export per sito e social",
+        "Produzione foto e video per web, campagne e social — brief, riprese, editing e deliverable pronti all'uso.",
+      details: "Sessioni in location · Audio dove serve · Export per web e social",
       whatYouGet: [
         "Brief con shot list e tempistiche chiare",
         "Riprese foto e video con videografo professionista",
@@ -539,17 +540,17 @@ const it: TranslationSet = {
     mockupCaption: "Il tuo miglior biglietto da visita",
   },
   trust: [
-    "Design che converte",
-    "Pensato per brand ambiziosi",
-    "Prenotazioni e lead diretti",
-    "Ottimo su smartphone",
+    "Sistemi digitali che collegano",
+    "Automazione che fa risparmiare tempo",
+    "Siti che convertono",
+    "Contenuti che costruiscono fiducia",
   ],
   proof: {
     eyebrow: "In numeri",
     items: [
       { value: "1h", label: "Tempo di risposta medio" },
       { value: "100%", label: "Custom per il tuo brand, personale" },
-      { value: "70%", label: "Giudica un business dal sito" },
+      { value: "4", label: "Pilastri: sistemi · automazione · web · contenuti" },
       { value: "26", label: "Servizi e moduli disponibili" },
     ],
     footnote: { value: "2 sett.", label: "Avvio medio progetto" },
@@ -557,8 +558,8 @@ const it: TranslationSet = {
   problem: {
     eyebrow: "01 — Perche conta",
     title:
-      "Quasi tutti i business locali hanno un sito. Quasi nessuno ha una vera prima impressione digitale.",
-    body: "La maggior parte dei siti locali non costruisce fiducia. Mostra informazioni, ma non comunica qualita. Un sito premium orientato alla conversione puo ripagarsi in pochi mesi: per questo aiutiamo i business italiani a conquistare clienti diretti.",
+      "Quasi tutti i business hanno strumenti. Quasi nessuno ha un sistema digitale che funziona davvero.",
+    body: "Canali sparsi, processi manuali, una presenza web debole e contenuti che non vendono: questo gap costa tempo e clienti. Colleghiamo sistemi digitali, automatizziamo i processi, costruiamo siti e produciamo contenuti perche il business funzioni meglio e comunichi al livello giusto.",
   },
   caseStudies: {
     label: "Lavori selezionati",
@@ -644,11 +645,12 @@ const it: TranslationSet = {
     ],
   },
   servicesLabel: "Cosa costruiamo",
+  servicesLead: "Sistemi · Automazione · Siti · Contenuti",
   processSection: {
     eyebrow: "Processo",
-    title: "Come trasformiamo un sito debole in un asset di business",
+    title: "Come trasformiamo il caos digitale in un asset di business",
     subtitle:
-      "Visuale, strategia e risultato in un unico metodo guidato dal business. Non solo design.",
+      "Sistemi, automazione, web e contenuti in un unico metodo guidato dal business — non solo un bel sito.",
     stepLabel: "Step",
     footerNote:
       "Ogni progetto è flessibile: processo, design e funzionalità si adattano alle esigenze reali di ogni cliente.",
@@ -657,27 +659,37 @@ const it: TranslationSet = {
     label: "Perche conta",
     items: [
       {
-        title: "Il 70% giudica un business dal sito",
-        body: "Prima di contattarti, i clienti ti hanno gia valutato online. Un sito debole perde fiducia e conversioni.",
-        note: "Stanford Web Credibility Research",
+        title: "Sistemi che collegano le operazioni",
+        body: "Portali, dashboard e prodotti digitali che tolgono il lavoro da chat e fogli di calcolo.",
+        note: "Sistemi digitali",
       },
       {
-        title: "Un sito premium si ripaga",
-        body: "Piu richieste dirette dal sito possono coprire l'investimento in pochi mesi — se il percorso e chiaro.",
-        note: "Stima indicativa per il settore hospitality e locale",
+        title: "Automazione che fa risparmiare ore",
+        body: "Prenotazioni, richieste e flussi ripetitivi gestiti in modo chiaro — meno lead persi, meno follow-up manuale.",
+        note: "Automazione dei processi",
+      },
+      {
+        title: "Siti che convertono",
+        body: "La presenza web costruisce ancora fiducia. Progettiamo e aggiorniamo siti che trasformano attenzione in azione.",
+        note: "Siti web",
+      },
+      {
+        title: "Contenuti che costruiscono fiducia",
+        body: "Foto, video e asset pronti per web e campagne — cosi il brand appare solido quanto opera.",
+        note: "Produzione contenuti",
       },
     ],
   },
   audit: {
-    title: "Vuoi sapere\ncosa frena il tuo sito?",
-    body: "Analizziamo il tuo sito attuale e ti diciamo esattamente cosa migliorare. Gratuito, senza pressione.",
+    title: "Vuoi sapere\ncosa frena il tuo setup digitale?",
+    body: "Analizziamo sistemi, processi, sito e contenuti — e ti diciamo esattamente cosa migliorare. Gratuito, senza pressione.",
     cta: "Richiedi il tuo audit gratuito",
     meta: "Rispondiamo entro 1 ora · Gratuito · Decidi tu i prossimi passi",
   },
   about: {
     eyebrow: "Chi siamo",
-    title: "Design e sviluppo",
-    bio: "Siamo un piccolo studio digitale in Emilia-Romagna. Creiamo un ambiente digitale per il business: dai siti e le interfacce all'automazione delle richieste, ai contenuti visivi e allo sviluppo continuo del prodotto. Non solo belli — tutto e costruito per risultati di business concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
+    title: "Sistemi, design e delivery",
+    bio: "Siamo un piccolo studio digitale in Emilia-Romagna. Creiamo l'ambiente digitale di cui il business ha bisogno: sistemi e piattaforme, automazione dei processi, siti e interfacce, piu contenuti visivi e sviluppo continuo del prodotto. Non solo belli — tutto e costruito per risultati di business concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
     pills: ["Emilia-Romagna, Italia", "Disponibile per nuovi progetti"],
   },
   contact: {
@@ -700,7 +712,7 @@ const it: TranslationSet = {
       email: "Email",
       business: "Nome del business",
       businessType: "Tipo di business",
-      siteUrl: "URL del tuo sito attuale",
+      siteUrl: "URL sito o prodotto (opzionale)",
       brief: "Descrivi brevemente cosa cerchi",
       source: "Come ci hai trovato?",
       submit: "Invia messaggio",
@@ -708,13 +720,13 @@ const it: TranslationSet = {
       submitting: "Invio in corso...",
       success: "Ricevuto. Ti rispondiamo entro 1 ora.",
       submitError: "Invio non riuscito. Scrivici a {email} e ti rispondiamo subito.",
-      auditBriefPlaceholder: "Cosa non funziona nel sito attuale? Cosa vorresti migliorare?",
+      auditBriefPlaceholder: "Cosa non funziona nel tuo setup digitale — sistemi, processi, sito o contenuti?",
       optional: "facoltativo",
       options: {
-        restaurant: "Ristorante",
+        restaurant: "Ristorazione / hospitality",
         hotel: "Hotel",
-        bar: "Bar",
-        other: "Altro",
+        bar: "Bar / locale",
+        other: "Altro / servizi",
         google: "Google",
         referral: "Passaparola",
         social: "Social",
@@ -838,7 +850,7 @@ const it: TranslationSet = {
     ],
   },
   footer: {
-    description: "Studio digitale per brand e business premium in tutta Italia.",
+    description: "Studio digitale per sistemi, automazione, siti e contenuti in Italia.",
     links: "Link rapidi",
     location: "Emilia-Romagna, Italia",
     status: "Disponibile per nuovi clienti",
@@ -862,7 +874,7 @@ const it: TranslationSet = {
   servicesPage: {
     eyebrow: "Servizi",
     title: "Cosa costruiamo",
-    subtitle: "Dal sito di presentazione alla piattaforma digitale completa.",
+    subtitle: "Sistemi digitali, automazione dei processi, siti web e produzione contenuti — end to end.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
     pricingNote:
@@ -980,9 +992,9 @@ const en: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Websites & web products",
       description:
-        "Full design and development for restaurants, hotels and bars. Mobile-first, fast, optimized to convert.",
+        "Custom websites and web products — from brand sites to conversion-focused experiences. Mobile-first, fast, built to work.",
       details: "From wireframe to launch · Optional CMS · Base SEO included",
       whatYouGet: [
         "Premium design and visual identity",
@@ -1014,9 +1026,9 @@ const en: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Redesign & Optimization",
+      title: "Systems upgrade & redesign",
       description:
-        "We turn existing sites into quality digital assets. New look, new structure, new results.",
+        "We upgrade existing digital presence into a clearer system — structure, UX, performance and conversion paths.",
       details: "Audit · Strategy · Implementation",
       whatYouGet: [
         "Full audit of your current site",
@@ -1048,10 +1060,10 @@ const en: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking & Lead Flow",
+      title: "Process automation",
       description:
-        "We build direct booking and enquiry flows on your site that increase conversion.",
-      details: "Booking integration · Smart forms · A/B logic",
+        "We automate bookings, enquiries and repeat workflows so leads don't get lost in chats and calendars.",
+      details: "Flows · Integrations · Smart forms · Reporting",
       whatYouGet: [
         "Analysis of your current booking funnel",
         "Booking system integration",
@@ -1082,9 +1094,9 @@ const en: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Monthly Support",
+      title: "Ongoing growth & care",
       description:
-        "Updates, continuous optimization, priority support. Your site grows with your business.",
+        "Updates, optimization and priority support across your digital stack — so systems keep pace with the business.",
       details: "From 2h/month · Priority guaranteed · Monthly report",
       whatYouGet: [
         "Technical and content updates",
@@ -1115,10 +1127,10 @@ const en: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Photo & video with a professional videographer",
+      title: "Content production",
       description:
-        "Location shoots and post-production handled by a dedicated videographer—food, interiors, team, and social-ready assets. Separate from web projects, with its own pricing tiers.",
-      details: "On-location sessions · Audio when needed · Deliverables for web and social",
+        "Photo and video production for web, campaigns and social — brief, shoot, edit and deliverables ready to use.",
+      details: "On-location sessions · Audio when needed · Web & social deliverables",
       whatYouGet: [
         "Creative brief and shot list aligned with your goals",
         "Professional photo and video capture",
@@ -1209,17 +1221,17 @@ const en: TranslationSet = {
     mockupCaption: "Your best business card",
   },
   trust: [
-    "Design that converts",
-    "Built for brands that stand out",
-    "Direct bookings & leads",
-    "Great on phones",
+    "Digital systems that connect",
+    "Process automation that saves time",
+    "Websites that convert",
+    "Content that builds trust",
   ],
   proof: {
     eyebrow: "By the numbers",
     items: [
       { value: "1h", label: "Average response time" },
       { value: "100%", label: "Custom for your brand, personally" },
-      { value: "70%", label: "Judge a business by its website" },
+      { value: "4", label: "Pillars: systems · automation · web · content" },
       { value: "26", label: "Services & add-on modules" },
     ],
     footnote: { value: "2 wks", label: "Average project kickoff" },
@@ -1227,8 +1239,8 @@ const en: TranslationSet = {
   problem: {
     eyebrow: "01 — Why it matters",
     title:
-      "Most local businesses have a website. Almost none of them have a digital first impression.",
-    body: "Most local sites don't build trust. They display information but don't communicate quality. A premium, conversion-focused site can pay for itself within a few months. That's why we help Italian businesses win customers directly.",
+      "Most businesses have tools. Almost none have a digital system that works.",
+    body: "Scattered channels, manual processes, a weak web presence and content that doesn't sell — that gap costs time and customers. We connect digital systems, automate processes, build websites and produce content so your business runs better and looks the part.",
   },
   caseStudies: {
     label: "Selected work",
@@ -1314,11 +1326,12 @@ const en: TranslationSet = {
     ],
   },
   servicesLabel: "What we build",
+  servicesLead: "Systems · Automation · Websites · Content",
   processSection: {
     eyebrow: "Process",
-    title: "How we turn a weak website into a business asset",
+    title: "How we turn digital chaos into a business asset",
     subtitle:
-      "Visual, strategy and outcome in a single business-driven method. Not just design.",
+      "Systems, automation, web and content in one business-driven method — not just a pretty site.",
     stepLabel: "Step",
     footerNote:
       "Every project is flexible — the process, design, and functionality are customized around the real needs of each client.",
@@ -1327,32 +1340,42 @@ const en: TranslationSet = {
     label: "Why it matters",
     items: [
       {
-        title: "70% judge a business by its website",
-        body: "Before they contact you, customers have already formed an opinion online. A weak site loses trust and conversions.",
-        note: "Stanford Web Credibility Research",
+        title: "Systems that connect operations",
+        body: "Portals, dashboards and product surfaces that stop work from living in chats and spreadsheets.",
+        note: "Digital systems",
       },
       {
-        title: "A premium site pays for itself",
-        body: "More direct enquiries from your site can cover the investment within months — when the path is clear.",
-        note: "Indicative estimate for hospitality and local businesses",
+        title: "Automation that saves hours",
+        body: "Booking, enquiries and repeat workflows handled by clear flows — fewer lost leads, less manual follow-up.",
+        note: "Process automation",
+      },
+      {
+        title: "Websites that convert",
+        body: "A strong web presence still closes trust. We build and upgrade sites that turn attention into action.",
+        note: "Websites",
+      },
+      {
+        title: "Content that builds trust",
+        body: "Photo, video and assets ready for web and campaigns — so the brand looks as solid as it operates.",
+        note: "Content production",
       },
     ],
   },
   audit: {
-    title: "Want to know\nwhat's holding your site back?",
-    body: "We analyze your current website and tell you exactly what to improve. Free, no pressure.",
+    title: "Want to know\nwhat's holding your digital setup back?",
+    body: "We review your systems, processes, website and content — and tell you exactly what to improve. Free, no pressure.",
     cta: "Request your free audit",
     meta: "Reply within 1 hour · Free · You decide the next steps",
   },
   about: {
     eyebrow: "About us",
-    title: "Design & development",
-    bio: "We're a small digital studio based in Emilia-Romagna. We build a digital environment for your business—from websites and interfaces to enquiry automation, visual content and ongoing product development. Not just polished looks: everything is built for real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
+    title: "Systems, design & delivery",
+    bio: "We're a small digital studio based in Emilia-Romagna. We build the digital environment your business needs—systems and platforms, process automation, websites and interfaces, plus visual content and ongoing product development. Not just polished looks: everything is built for real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
     pills: ["Emilia-Romagna, Italy", "Available for new projects"],
   },
   contact: {
     label: "Let's start",
-    title: "A digital environment for businesses that don't want to be like everyone else.",
+    title: "A digital environment for businesses that refuse to look generic.",
     body: "After your message you get a clear reply with next steps, timeline and feasibility.",
     compactTitle: "Request your free audit",
     emailLabel: "Email",
@@ -1370,7 +1393,7 @@ const en: TranslationSet = {
       email: "Email",
       business: "Business name",
       businessType: "Business type",
-      siteUrl: "Your current website URL",
+      siteUrl: "Website or product URL (optional)",
       brief: "Briefly describe what you're looking for",
       source: "How did you find us?",
       submit: "Send message",
@@ -1378,13 +1401,13 @@ const en: TranslationSet = {
       submitting: "Sending...",
       success: "Got it. We'll reply within 1 hour.",
       submitError: "Could not send. Email us at {email} and we'll reply shortly.",
-      auditBriefPlaceholder: "What isn't working on your current site? What would you like to improve?",
+      auditBriefPlaceholder: "What isn't working in your digital setup — systems, processes, website or content?",
       optional: "optional",
       options: {
-        restaurant: "Restaurant",
+        restaurant: "Restaurant / hospitality",
         hotel: "Hotel",
-        bar: "Bar",
-        other: "Other",
+        bar: "Bar / venue",
+        other: "Other / services",
         google: "Google",
         referral: "Word of mouth",
         social: "Social",
@@ -1507,7 +1530,7 @@ const en: TranslationSet = {
     ],
   },
   footer: {
-    description: "Digital studio for premium brands and businesses across Italy.",
+    description: "Digital studio for systems, automation, websites and content across Italy.",
     links: "Quick links",
     location: "Emilia-Romagna, Italy",
     status: "Available for new clients",
@@ -1531,7 +1554,7 @@ const en: TranslationSet = {
   servicesPage: {
     eyebrow: "Services",
     title: "What we build",
-    subtitle: "From a presentation site to a full digital platform.",
+    subtitle: "Digital systems, process automation, websites and content production — end to end.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
     pricingNote:
@@ -1649,9 +1672,9 @@ const fr: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Sites web et produits digitaux",
       description:
-        "Design et developpement complets pour restaurants, hotels, bars. Mobile-first, rapide, optimise pour la conversion.",
+        "Sites et produits web sur mesure — du site de marque aux experiences orientees conversion. Mobile-first, rapide, concu pour fonctionner.",
       details: "Du wireframe a la production · CMS optionnel · SEO de base inclus",
       whatYouGet: [
         "Design et identite visuelle premium",
@@ -1671,9 +1694,9 @@ const fr: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Redesign et Optimisation",
+      title: "Upgrade systemes et redesign",
       description:
-        "Nous transformons des sites existants en actifs digitaux de qualite. Nouveau look, nouvelle structure, nouveaux resultats.",
+        "Nous faisons evoluer la presence digitale existante en un systeme plus clair — structure, UX, performance et parcours de conversion.",
       details: "Audit · Strategie · Implementation",
       whatYouGet: [
         "Audit complet du site actuel",
@@ -1692,10 +1715,10 @@ const fr: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking et Lead Flow",
+      title: "Automatisation des processus",
       description:
-        "Nous construisons des flux de reservation et de demande directe sur votre site qui augmentent les conversions.",
-      details: "Integration booking · Formulaires intelligents · Logique A/B",
+        "Nous automatisons reservations, demandes et workflows repetitifs pour que les leads ne se perdent plus dans les chats et agendas.",
+      details: "Flux · Integrations · Formulaires intelligents · Reporting",
       whatYouGet: [
         "Analyse du funnel de booking actuel",
         "Integration du systeme de booking",
@@ -1713,9 +1736,9 @@ const fr: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Support Mensuel",
+      title: "Croissance continue et accompagnement",
       description:
-        "Mises a jour, optimisations continues, support prioritaire. Votre site evolue avec votre business.",
+        "Mises a jour, optimisation et support prioritaire sur votre stack digital — pour que les systemes suivent le rythme du business.",
       details: "A partir de 2h/mois · Priorite garantie · Rapport mensuel",
       whatYouGet: [
         "Mises a jour techniques et de contenu",
@@ -1734,10 +1757,10 @@ const fr: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Photo & video avec vidéaste professionnel",
+      title: "Production de contenus",
       description:
-        "Prises de vue et post-production avec un vidéaste dédié : platings, lieux, équipe et contenus social. Service distinct des projets web, avec grilles tarifaires dédiées.",
-      details: "Séances sur site · Audio si besoin · Livrables web et social",
+        "Production photo et video pour le web, les campagnes et les reseaux — brief, shoot, montage et livrables prets a l'emploi.",
+      details: "Seances sur site · Audio si besoin · Livrables web et social",
       whatYouGet: [
         "Brief créatif et liste de plans",
         "Prises de vue photo et video professionnelles",
@@ -1763,14 +1786,14 @@ const fr: TranslationSet = {
       title: "Comprendre",
       summary: "Business, audience, objectifs, freins.",
       description:
-        "Nous etudions le business, le public, les objectifs et les problemes actuels pour definir ce que le site doit accomplir.",
+        "Nous etudions le business, le public, les objectifs et les freins actuels pour definir ce que le systeme digital — sites et integrations — doit accomplir.",
     },
     {
       id: "plan",
       title: "Planifier",
-      summary: "Structure, parcours, fonctionnalites, priorites.",
+      summary: "Structure, parcours, systemes, priorites.",
       description:
-        "Nous definissons la structure, le flux utilisateur et les fonctionnalites cles selon les besoins reels du client.",
+        "Nous definissons la structure, les parcours, les systemes et les fonctionnalites cles selon les besoins reels du client.",
     },
     {
       id: "design",
@@ -1782,9 +1805,9 @@ const fr: TranslationSet = {
     {
       id: "build",
       title: "Construire",
-      summary: "Site responsive, integrations, performance.",
+      summary: "Sites, systemes, integrations, performance.",
       description:
-        "Nous developpons un site reactif, rapide et fonctionnel, avec les bons outils et integrations.",
+        "Nous developpons des sites et integrations responsives, rapides et fonctionnels, avec les bons outils connectes.",
     },
     {
       id: "improve",
@@ -1816,17 +1839,17 @@ const fr: TranslationSet = {
     mockupCaption: "Votre meilleure carte de visite",
   },
   trust: [
-    "Design qui convertit",
-    "Pensé pour les marques ambitieuses",
-    "Reservations et leads directs",
-    "Parfait sur smartphone",
+    "Systemes digitaux qui connectent",
+    "Automatisation qui fait gagner du temps",
+    "Sites qui convertissent",
+    "Contenus qui construisent la confiance",
   ],
   proof: {
     eyebrow: "En chiffres",
     items: [
       { value: "1h", label: "Temps de reponse moyen" },
       { value: "100%", label: "Custom pour votre marque, en personne" },
-      { value: "70%", label: "Jugent un business par son site" },
+      { value: "4", label: "Piliers : systemes · automatisation · web · contenus" },
       { value: "26", label: "Services et modules disponibles" },
     ],
     footnote: { value: "2 sem.", label: "Demarrage moyen projet" },
@@ -1834,8 +1857,8 @@ const fr: TranslationSet = {
   problem: {
     eyebrow: "01 — Pourquoi c'est important",
     title:
-      "Presque tous les business locaux ont un site. Presque aucun n'a une vraie premiere impression digitale.",
-    body: "La majorite des sites locaux n'inspire pas confiance. Ils montrent des infos mais ne communiquent pas la qualite. Un site premium oriente conversion peut s'amortir en quelques mois. C'est pourquoi nous aidons les business italiens a gagner des clients en direct.",
+      "La plupart des entreprises ont des outils. Presque aucune n'a un systeme digital qui fonctionne.",
+    body: "Canaux eparpilles, processus manuels, presence web faible et contenus qui ne vendent pas — cela coute du temps et des clients. Nous connectons les systemes, automatisons les processus, construisons des sites et produisons des contenus.",
   },
   caseStudies: {
     label: "Projets selectionnes",
@@ -1921,11 +1944,12 @@ const fr: TranslationSet = {
     ],
   },
   servicesLabel: "Ce que nous construisons",
+  servicesLead: "Systemes · Automatisation · Sites · Contenus",
   processSection: {
     eyebrow: "Processus",
-    title: "Comment nous transformons un site faible en actif business",
+    title: "Comment nous transformons le chaos digital en actif business",
     subtitle:
-      "Visuel, strategie et resultat dans une seule methode pilotee par le business. Pas juste du design.",
+      "Systemes, automatisation, web et contenus dans une seule methode pilotee par le business — pas juste un beau site.",
     stepLabel: "Etape",
     footerNote:
       "Chaque projet est flexible : processus, design et fonctionnalites s adaptent aux besoins reels de chaque client.",
@@ -1934,27 +1958,37 @@ const fr: TranslationSet = {
     label: "Pourquoi c'est important",
     items: [
       {
-        title: "70% jugent un business par son site",
-        body: "Avant de vous contacter, vos clients vous ont deja evalue en ligne. Un site faible perd confiance et conversions.",
-        note: "Stanford Web Credibility Research",
+        title: "Des systemes qui connectent les operations",
+        body: "Portails, dashboards et surfaces produit qui sortent le travail des chats et des tableurs.",
+        note: "Systemes digitaux",
       },
       {
-        title: "Un site premium se rembourse",
-        body: "Plus de demandes directes depuis votre site peuvent couvrir l'investissement en quelques mois — si le parcours est clair.",
-        note: "Estimation indicative pour l'hospitality et le local",
+        title: "Une automatisation qui fait gagner des heures",
+        body: "Reservations, demandes et workflows repetitifs geres par des flux clairs — moins de leads perdus, moins de suivi manuel.",
+        note: "Automatisation des processus",
+      },
+      {
+        title: "Des sites qui convertissent",
+        body: "Une presence web solide construit encore la confiance. Nous creons et ameliorons des sites qui transforment l'attention en action.",
+        note: "Sites web",
+      },
+      {
+        title: "Des contenus qui construisent la confiance",
+        body: "Photo, video et assets prets pour le web et les campagnes — pour que la marque paraisse aussi solide qu'elle opere.",
+        note: "Production de contenus",
       },
     ],
   },
   audit: {
-    title: "Vous voulez savoir\nce qui freine votre site?",
-    body: "Nous analysons votre site actuel et nous vous disons exactement ce qu'il faut ameliorer. Gratuit, sans pression.",
+    title: "Vous voulez savoir\nce qui freine votre setup digital?",
+    body: "Nous analysons systemes, processus, site et contenus — et vous disons exactement quoi ameliorer. Gratuit, sans pression.",
     cta: "Demander votre audit gratuit",
     meta: "Reponse sous 1h · Gratuit · Vous decidez des prochaines etapes",
   },
   about: {
     eyebrow: "Qui sommes-nous",
-    title: "Design & développement",
-    bio: "Nous sommes un petit studio digital en Emilia-Romagna. Nous creons un environnement digital pour le business : des sites et interfaces a l'automatisation des demandes, au contenu visuel et au developpement continu du produit. Pas seulement beau — tout est pense pour des resultats business concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
+    title: "Systemes, design et delivery",
+    bio: "Nous sommes un petit studio digital en Emilia-Romagna. Nous creons l'environnement digital dont le business a besoin : systemes et plateformes, automatisation des processus, sites et interfaces, plus contenus visuels et developpement continu du produit. Pas seulement beau — tout est pense pour des resultats business concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
     pills: ["Emilia-Romagna, Italie", "Disponible pour nouveaux projets"],
   },
   contact: {
@@ -1977,7 +2011,7 @@ const fr: TranslationSet = {
       email: "E-mail",
       business: "Nom du business",
       businessType: "Type de business",
-      siteUrl: "URL de votre site actuel",
+      siteUrl: "URL du site ou du produit (optionnel)",
       brief: "Decrivez brievement ce que vous cherchez",
       source: "Comment nous avez-vous trouves?",
       submit: "Envoyer le message",
@@ -1985,13 +2019,13 @@ const fr: TranslationSet = {
       submitting: "Envoi en cours...",
       success: "Bien recu. Nous repondons sous 1 heure.",
       submitError: "Envoi echoue. Ecrivez a {email} et nous repondrons rapidement.",
-      auditBriefPlaceholder: "Qu'est-ce qui ne fonctionne pas sur votre site? Que souhaitez-vous ameliorer?",
+      auditBriefPlaceholder: "Qu'est-ce qui ne fonctionne pas dans votre setup digital — systemes, processus, site ou contenus?",
       optional: "facultatif",
       options: {
-        restaurant: "Restaurant",
+        restaurant: "Restaurant / hospitality",
         hotel: "Hotel",
-        bar: "Bar",
-        other: "Autre",
+        bar: "Bar / lieu",
+        other: "Autre / services",
         google: "Google",
         referral: "Bouche a oreille",
         social: "Reseaux sociaux",
@@ -2044,7 +2078,7 @@ const fr: TranslationSet = {
       },
       {
         id: "products",
-        title: "Produits numeriques",
+        title: "Systemes digitaux",
         items: [
           { id: "web-service", label: "Services web", info: "Dashboards, booking, marketplaces." },
           { id: "ecommerce", label: "E-commerce", info: "Boutique avec panier et paiements." },
@@ -2113,7 +2147,7 @@ const fr: TranslationSet = {
     ],
   },
   footer: {
-    description: "Studio digital pour marques et business premium en Italie.",
+    description: "Studio digital pour systemes, automatisation, sites et contenus — en Italie et au-dela.",
     links: "Liens rapides",
     location: "Emilia-Romagna, Italie",
     status: "Disponible pour nouveaux clients",
@@ -2137,7 +2171,7 @@ const fr: TranslationSet = {
   servicesPage: {
     eyebrow: "Services",
     title: "Ce que nous créons",
-    subtitle: "Du site vitrine à la plateforme numérique complète.",
+    subtitle: "Systemes digitaux, automatisation des processus, sites et production de contenus — de bout en bout.",
     techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tous les services",
     pricingNote:
@@ -2154,7 +2188,7 @@ const fr: TranslationSet = {
         ],
       },
       {
-        title: "Produits numériques",
+        title: "Systemes digitaux",
         items: [
           { label: "Services web", info: "Outils web interactifs : tableaux de bord, réservations, marketplaces." },
           { label: "Applications mobiles", info: "Apps iOS et Android natives avec React Native ou Flutter." },
@@ -2255,9 +2289,9 @@ const ru: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Сайты и веб-продукты",
       description:
-        "Полный дизайн и разработка для ресторанов, отелей, баров. Mobile-first, быстрый, заточенный под конверсию.",
+        "Кастомные сайты и веб-продукты — от бренд-сайтов до опытов под конверсию. Mobile-first, быстро, сделано чтобы работать.",
       details: "От wireframe до продукта · Опциональный CMS · Базовый SEO включён",
       whatYouGet: [
         "Премиум дизайн и визуальная идентичность",
@@ -2277,9 +2311,9 @@ const ru: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Редизайн и оптимизация",
+      title: "Апгрейд систем и редизайн",
       description:
-        "Превращаем существующие сайты в качественные цифровые активы. Новый вид, новая структура, новые результаты.",
+        "Усиливаем существующее цифровое присутствие: яснее система — структура, UX, производительность и пути конверсии.",
       details: "Аудит · Стратегия · Внедрение",
       whatYouGet: [
         "Полный аудит текущего сайта",
@@ -2298,10 +2332,10 @@ const ru: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking и lead-flow",
+      title: "Автоматизация процессов",
       description:
-        "Строим прямые бронирования и заявки с сайта, которые поднимают конверсию.",
-      details: "Интеграция booking · Умные формы · A/B логика",
+        "Автоматизируем бронирования, заявки и повторяющиеся сценарии — чтобы лиды не терялись в чатах и календарях.",
+      details: "Потоки · Интеграции · Умные формы · Отчётность",
       whatYouGet: [
         "Анализ текущего booking-funnel",
         "Интеграция booking-системы",
@@ -2319,9 +2353,9 @@ const ru: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Ежемесячная поддержка",
+      title: "Рост и сопровождение",
       description:
-        "Обновления, постоянная оптимизация, приоритетная поддержка. Ваш сайт растёт вместе с бизнесом.",
+        "Обновления, оптимизация и приоритетная поддержка по всему цифровому стеку — чтобы системы не отставали от бизнеса.",
       details: "От 2ч/мес · Гарантированный приоритет · Месячный отчёт",
       whatYouGet: [
         "Технические и контентные обновления",
@@ -2340,9 +2374,9 @@ const ru: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Фото и видео с профессиональным оператором",
+      title: "Производство контента",
       description:
-        "Съёмка и постпродакшн — отдельная услуга с выездным оператором: еда, интерьеры, команда, контент для соцсетей. Не смешивается с веб-пакетами; тарифы свои.",
+        "Фото и видео для сайта, кампаний и соцсетей — бриф, съёмка, монтаж и готовые материалы к использованию.",
       details: "Выезд на объект · При необходимости звук · Файлы под сайт и соцсети",
       whatYouGet: [
         "Бриф и shot list под задачу",
@@ -2369,14 +2403,14 @@ const ru: TranslationSet = {
       title: "Понимание",
       summary: "Бизнес, аудитория, цели, проблемы.",
       description:
-        "Изучаем бизнес, аудиторию, цели и текущие ограничения — чтобы понять, какую задачу должен решать сайт.",
+        "Изучаем бизнес, аудиторию, цели и текущие ограничения — чтобы понять, какую задачу должен решать цифровой стек: системы, сайты и интеграции.",
     },
     {
       id: "plan",
       title: "План",
-      summary: "Структура, сценарий, функции, приоритеты.",
+      summary: "Структура, сценарии, системы, приоритеты.",
       description:
-        "Определяем структуру, пользовательский поток и ключевые функции под конкретные задачи клиента.",
+        "Определяем структуру, пользовательские потоки, системы и ключевые функции под конкретные задачи клиента.",
     },
     {
       id: "design",
@@ -2388,9 +2422,9 @@ const ru: TranslationSet = {
     {
       id: "build",
       title: "Разработка",
-      summary: "Адаптивный сайт, интеграции, производительность.",
+      summary: "Сайты, системы, интеграции, производительность.",
       description:
-        "Собираем быстрый отзывчивый сайт с нужными инструментами и интеграциями.",
+        "Собираем быстрые адаптивные сайты и интеграции с нужными инструментами.",
     },
     {
       id: "improve",
@@ -2423,17 +2457,17 @@ const ru: TranslationSet = {
     mockupCaptionSm: true,
   },
   trust: [
-    "Дизайн, который конвертирует",
-    "Для брендов, которые выделяются",
-    "Прямые заявки и бронирования",
-    "Удобно со смартфона",
+    "Цифровые системы, которые связывают",
+    "Автоматизация процессов, которая экономит время",
+    "Сайты, которые конвертируют",
+    "Контент, который строит доверие",
   ],
   proof: {
     eyebrow: "В цифрах",
     items: [
       { value: "1h", label: "Среднее время ответа" },
       { value: "100%", label: "Кастом под ваш бренд лично" },
-      { value: "70%", label: "Судят о бизнесе по сайту" },
+      { value: "4", label: "Столпа: системы · автоматизация · web · контент" },
       { value: "26", label: "Услуг и модулей на выбор" },
     ],
     footnote: { value: "2 нед.", label: "Средний старт проекта" },
@@ -2441,8 +2475,8 @@ const ru: TranslationSet = {
   problem: {
     eyebrow: "01 — Почему это важно",
     title:
-      "Почти у всех локальных бизнесов есть сайт. Почти ни у кого нет настоящего цифрового первого впечатления.",
-    body: "Большинство локальных сайтов не строит доверие. Они показывают информацию, но не передают качество. Премиум-сайт, сделанный под конверсию, может окупиться за несколько месяцев. Именно поэтому мы помогаем итальянским бизнесам получать клиентов напрямую.",
+      "У большинства бизнесов есть инструменты. Почти ни у кого нет цифровой системы, которая реально работает.",
+    body: "Разрозненные каналы, ручные процессы, слабое веб-присутствие и контент, который не продаёт — это стоит времени и клиентов. Мы связываем системы, автоматизируем процессы, делаем сайты и производим контент.",
   },
   caseStudies: {
     label: "Избранные работы",
@@ -2528,11 +2562,12 @@ const ru: TranslationSet = {
     ],
   },
   servicesLabel: "Что мы делаем",
+  servicesLead: "Системы · Автоматизация · Сайты · Контент",
   processSection: {
     eyebrow: "Процесс",
-    title: "Как мы превращаем слабый сайт в бизнес-актив",
+    title: "Как мы превращаем цифровой хаос в бизнес-актив",
     subtitle:
-      "Визуал, стратегия и результат в одном бизнес-ориентированном методе. Не просто дизайн.",
+      "Системы, автоматизация, web и контент в одном бизнес-методе — не просто красивый сайт.",
     stepLabel: "Этап",
     footerNote:
       "Каждый проект гибкий: процесс, дизайн и функциональность подстраиваются под реальные задачи клиента.",
@@ -2541,27 +2576,37 @@ const ru: TranslationSet = {
     label: "Почему это важно",
     items: [
       {
-        title: "70% судят о бизнесе по сайту",
-        body: "Ещё до обращения клиенты уже оценили вас онлайн. Слабый сайт теряет доверие и заявки.",
-        note: "Stanford Web Credibility Research",
+        title: "Системы, которые связывают операции",
+        body: "Порталы, дашборды и продуктовые поверхности — чтобы работа не жила в чатах и таблицах.",
+        note: "Цифровые системы",
       },
       {
-        title: "Премиум-сайт себя окупает",
-        body: "Больше прямых заявок с сайта может покрыть вложения за несколько месяцев — если путь понятен.",
-        note: "Ориентир для отелей и локального бизнеса",
+        title: "Автоматизация, которая экономит часы",
+        body: "Бронирования, заявки и повторяющиеся сценарии в понятных потоках — меньше потерянных лидов и ручного follow-up.",
+        note: "Автоматизация процессов",
+      },
+      {
+        title: "Сайты, которые конвертируют",
+        body: "Сильное веб-присутствие по-прежнему закрывает доверие. Мы делаем и обновляем сайты, которые превращают внимание в действие.",
+        note: "Сайты",
+      },
+      {
+        title: "Контент, который строит доверие",
+        body: "Фото, видео и материалы для сайта и кампаний — чтобы бренд выглядел так же уверенно, как работает.",
+        note: "Производство контента",
       },
     ],
   },
   audit: {
-    title: "Хотите узнать,\nчто мешает вашему сайту?",
-    body: "Мы проанализируем ваш текущий сайт и скажем точно, что улучшить. Бесплатно, без давления.",
+    title: "Хотите узнать,\nчто тормозит ваш цифровой сетап?",
+    body: "Разберём системы, процессы, сайт и контент — и скажем точно, что улучшить. Бесплатно, без давления.",
     cta: "Запросить свой бесплатный аудит",
     meta: "Отвечаем в течение 1 часа · Бесплатно · Решение за вами",
   },
   about: {
     eyebrow: "О нас",
-    title: "Дизайн и разработка",
-    bio: "Мы небольшая цифровая студия в Эмилия-Романье. Создаём цифровую среду для бизнеса: от сайтов и интерфейсов до автоматизации заявок, визуального контента и постоянного развития продукта. Не просто красиво — всё заточено под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
+    title: "Системы, дизайн и delivery",
+    bio: "Мы небольшая цифровая студия в Эмилия-Романье. Создаём цифровую среду, которая нужна бизнесу: системы и платформы, автоматизация процессов, сайты и интерфейсы, плюс визуальный контент и постоянное развитие продукта. Не просто красиво — всё заточено под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
     pills: ["Эмилия-Романья, Италия", "Открыты для новых проектов"],
   },
   contact: {
@@ -2584,7 +2629,7 @@ const ru: TranslationSet = {
       email: "Email",
       business: "Название бизнеса",
       businessType: "Тип бизнеса",
-      siteUrl: "URL вашего текущего сайта",
+      siteUrl: "URL сайта или продукта (необязательно)",
       brief: "Коротко опишите, что ищете",
       source: "Как вы нас нашли?",
       submit: "Отправить сообщение",
@@ -2592,13 +2637,13 @@ const ru: TranslationSet = {
       submitting: "Отправка...",
       success: "Принято. Ответим в течение 1 часа.",
       submitError: "Не удалось отправить. Напишите на {email} — ответим в ближайшее время.",
-      auditBriefPlaceholder: "Что не устраивает в текущем сайте? Что хотите улучшить?",
+      auditBriefPlaceholder: "Что не работает в цифровом сетапе — системы, процессы, сайт или контент?",
       optional: "необязательно",
       options: {
-        restaurant: "Ресторан",
+        restaurant: "Ресторан / hospitality",
         hotel: "Отель",
-        bar: "Бар",
-        other: "Другое",
+        bar: "Бар / площадка",
+        other: "Другое / услуги",
         google: "Google",
         referral: "Сарафанное радио",
         social: "Соцсети",
@@ -2652,7 +2697,7 @@ const ru: TranslationSet = {
       },
       {
         id: "products",
-        title: "Продукты",
+        title: "Цифровые системы",
         items: [
           { id: "web-service", label: "Веб-сервисы", info: "Дашборды, booking, маркетплейсы." },
           { id: "ecommerce", label: "Интернет-магазины", info: "Корзина, оплата, каталог." },
@@ -2721,7 +2766,7 @@ const ru: TranslationSet = {
     ],
   },
   footer: {
-    description: "Цифровая студия для премиум-брендов и бизнесов по всей Италии.",
+    description: "Цифровая студия для систем, автоматизации, сайтов и контента — по всей Италии и дальше.",
     links: "Быстрые ссылки",
     location: "Эмилия-Романья, Италия",
     status: "Открыты для новых клиентов",
@@ -2745,7 +2790,7 @@ const ru: TranslationSet = {
   servicesPage: {
     eyebrow: "Услуги",
     title: "Что мы создаём",
-    subtitle: "От сайта-визитки до полноценной цифровой платформы.",
+    subtitle: "Цифровые системы, автоматизация процессов, сайты и производство контента — под ключ.",
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
     pricingNote:
@@ -2762,7 +2807,7 @@ const ru: TranslationSet = {
         ],
       },
       {
-        title: "Продукты",
+        title: "Цифровые системы",
         items: [
           { label: "Веб-сервисы", info: "Браузерные инструменты: дашборды, движки бронирования, маркетплейсы." },
           { label: "Мобильные приложения", info: "iOS и Android приложения на React Native или Flutter." },
@@ -2863,9 +2908,9 @@ const de: TranslationSet = {
   services: [
     {
       id: "premium-site",
-      title: "Custom Website Dev",
+      title: "Websites & Webprodukte",
       description:
-        "Komplettes Design und Entwicklung fur Restaurants, Hotels und Bars. Mobile-first, schnell, conversion-orientiert.",
+        "Individuelle Websites und Webprodukte — von Markenseiten bis conversion-starken Erlebnissen. Mobile-first, schnell, gebaut zum Funktionieren.",
       details: "Vom Wireframe bis zum Launch · Optionales CMS · Basis-SEO inklusive",
       whatYouGet: [
         "Premium-Design und visuelle Identitat",
@@ -2884,9 +2929,9 @@ const de: TranslationSet = {
     },
     {
       id: "redesign",
-      title: "Redesign und Optimierung",
+      title: "System-Upgrade & Redesign",
       description:
-        "Wir verwandeln bestehende Websites in hochwertige digitale Assets. Neuer Look, neue Struktur, neue Ergebnisse.",
+        "Wir entwickeln die bestehende digitale Präsenz zu einem klareren System weiter — Struktur, UX, Performance und Conversion-Pfade.",
       details: "Audit · Strategie · Umsetzung",
       whatYouGet: [
         "Vollstandiges Audit der aktuellen Website",
@@ -2905,10 +2950,10 @@ const de: TranslationSet = {
     },
     {
       id: "booking-flow",
-      title: "Booking und Lead-Flow",
+      title: "Prozessautomatisierung",
       description:
-        "Wir bauen Direktbuchungs- und Anfrage-Flows auf Ihrer Website, die Conversion steigern.",
-      details: "Booking-Integration · Smarte Formulare · A/B-Logik",
+        "Wir automatisieren Buchungen, Anfragen und wiederkehrende Workflows — damit Leads nicht in Chats und Kalendern verloren gehen.",
+      details: "Flows · Integrationen · Smarte Formulare · Reporting",
       whatYouGet: [
         "Analyse des aktuellen Booking-Funnels",
         "Integration des Buchungssystems",
@@ -2926,9 +2971,9 @@ const de: TranslationSet = {
     },
     {
       id: "monthly-support",
-      title: "Monatlicher Support",
+      title: "Laufendes Wachstum & Betreuung",
       description:
-        "Updates, laufende Optimierung, priorisierter Support. Ihre Website wachst mit Ihrem Business.",
+        "Updates, Optimierung und priorisierter Support uber Ihren digitalen Stack — damit Systeme mit dem Business mithalten.",
       details: "Ab 2h/Monat · Prioritat garantiert · Monatsreport",
       whatYouGet: [
         "Technische und Content-Updates",
@@ -2947,9 +2992,9 @@ const de: TranslationSet = {
     },
     {
       id: "photo-video",
-      title: "Foto & Video mit professionellem Videografen",
+      title: "Content-Produktion",
       description:
-        "Drehs und Postproduktion mit festem Videografen: Food, Raume, Team und Social-Assets. Eigenstandiger Service neben Webprojekten, mit eigenen Tarifen.",
+        "Foto- und Videoproduktion für Web, Kampagnen und Social — Briefing, Dreh, Schnitt und einsatzbereite Deliverables.",
       details: "Location-Drehs · Audio bei Bedarf · Deliverables fur Web und Social",
       whatYouGet: [
         "Briefing und Shotliste mit klarem Zeitplan",
@@ -2976,14 +3021,14 @@ const de: TranslationSet = {
       title: "Verstehen",
       summary: "Business, Zielgruppe, Ziele, Probleme.",
       description:
-        "Wir analysieren Business, Zielgruppe, Ziele und aktuelle Herausforderungen — damit klar ist, was die Website leisten muss.",
+        "Wir analysieren Business, Zielgruppe, Ziele und aktuelle Herausforderungen — damit klar ist, was das digitale System aus Sites und Integrationen leisten muss.",
     },
     {
       id: "plan",
       title: "Planen",
-      summary: "Struktur, Flow, Features, Prioritäten.",
+      summary: "Struktur, Flows, Systeme, Prioritäten.",
       description:
-        "Wir definieren Informationsarchitektur, Nutzerfluss und Kernfunktionen passend zu den Anforderungen.",
+        "Wir definieren Struktur, Nutzerflusse, Systeme und Kernfunktionen passend zu den Anforderungen.",
     },
     {
       id: "design",
@@ -2995,9 +3040,9 @@ const de: TranslationSet = {
     {
       id: "build",
       title: "Umsetzen",
-      summary: "Responsive Website, Integrationen, Performance.",
+      summary: "Sites, Systeme, Integrationen, Performance.",
       description:
-        "Wir entwickeln eine schnelle, responsive Website mit den passenden Tools und Anbindungen.",
+        "Wir entwickeln schnelle, responsive Sites und Integrationen mit den passenden Tools.",
     },
     {
       id: "improve",
@@ -3029,17 +3074,17 @@ const de: TranslationSet = {
     mockupCaption: "Ihre beste Visitenkarte",
   },
   trust: [
-    "Design, das konvertiert",
-    "Fur Marken, die herausstechen",
-    "Direkte Buchungen und Anfragen",
-    "Perfekt auf dem Smartphone",
+    "Digitale Systeme, die verbinden",
+    "Prozessautomatisierung, die Zeit spart",
+    "Websites, die konvertieren",
+    "Content, der Vertrauen aufbaut",
   ],
   proof: {
     eyebrow: "In Zahlen",
     items: [
       { value: "1h", label: "Durchschnittliche Reaktionszeit" },
       { value: "100%", label: "Custom fur Ihre Marke, personlich" },
-      { value: "70%", label: "Beurteilen ein Business an der Website" },
+      { value: "4", label: "Säulen: Systeme · Automatisierung · Web · Content" },
       { value: "26", label: "Leistungen und Module zur Auswahl" },
     ],
     footnote: { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
@@ -3047,8 +3092,8 @@ const de: TranslationSet = {
   problem: {
     eyebrow: "01 — Warum es zahlt",
     title:
-      "Fast jedes lokale Unternehmen hat eine Website. Fast keines hat einen echten digitalen ersten Eindruck.",
-    body: "Die meisten lokalen Websites schaffen kein Vertrauen. Sie zeigen Informationen, vermitteln aber keine Qualitat. Eine Premium-Website mit Conversion-Fokus kann sich in wenigen Monaten amortisieren. Genau deshalb helfen wir italienischen Unternehmen, Kunden direkt zu gewinnen.",
+      "Die meisten Unternehmen haben Tools. Fast keines hat ein digitales System, das wirklich funktioniert.",
+    body: "Verstreute Kanale, manuelle Prozesse, schwache Webprasenz und Content, der nicht verkauft — das kostet Zeit und Kunden. Wir verbinden Systeme, automatisieren Prozesse, bauen Websites und produzieren Content.",
   },
   caseStudies: {
     label: "Ausgewahlte Arbeiten",
@@ -3134,11 +3179,12 @@ const de: TranslationSet = {
     ],
   },
   servicesLabel: "Was wir bauen",
+  servicesLead: "Systeme · Automatisierung · Websites · Content",
   processSection: {
     eyebrow: "Prozess",
-    title: "Wie wir aus einer schwachen Website ein Business-Asset machen",
+    title: "Wie wir digitales Chaos in ein Business-Asset verwandeln",
     subtitle:
-      "Visuelles, Strategie und Ergebnis in einer einzigen business-getriebenen Methode. Nicht nur Design.",
+      "Systeme, Automatisierung, Web und Content in einer business-getriebenen Methode — nicht nur eine schöne Site.",
     stepLabel: "Schritt",
     footerNote:
       "Jedes Projekt ist flexibel — Prozess, Design und Funktionalität orientieren sich an den realen Bedürfnissen des Kunden.",
@@ -3147,27 +3193,37 @@ const de: TranslationSet = {
     label: "Warum es zahlt",
     items: [
       {
-        title: "70% beurteilen ein Business an der Website",
-        body: "Bevor Kunden Sie kontaktieren, haben sie Sie online schon bewertet. Eine schwache Website verliert Vertrauen und Anfragen.",
-        note: "Stanford Web Credibility Research",
+        title: "Systeme, die Operationen verbinden",
+        body: "Portale, Dashboards und Produktflächen, die Arbeit aus Chats und Tabellen holen.",
+        note: "Digitale Systeme",
       },
       {
-        title: "Eine Premium-Website rechnet sich",
-        body: "Mehr direkte Anfragen uber Ihre Website konnen die Investition in wenigen Monaten decken — wenn der Weg klar ist.",
-        note: "Indikativ fur Hospitality und lokale Businesses",
+        title: "Automatisierung, die Stunden spart",
+        body: "Buchungen, Anfragen und wiederkehrende Workflows in klaren Flows — weniger verlorene Leads, weniger manuelles Follow-up.",
+        note: "Prozessautomatisierung",
+      },
+      {
+        title: "Websites, die konvertieren",
+        body: "Eine starke Webprasenz schafft weiter Vertrauen. Wir bauen und verbessern Sites, die Aufmerksamkeit in Aktion verwandeln.",
+        note: "Websites",
+      },
+      {
+        title: "Content, der Vertrauen aufbaut",
+        body: "Foto, Video und Assets fur Web und Kampagnen — damit die Marke so solid wirkt, wie sie arbeitet.",
+        note: "Content-Produktion",
       },
     ],
   },
   audit: {
-    title: "Wollen Sie wissen,\nwas Ihre Website bremst?",
-    body: "Wir analysieren Ihre aktuelle Website und sagen Ihnen genau, was zu verbessern ist. Kostenlos, ohne Druck.",
+    title: "Wollen Sie wissen,\nwas Ihr digitales Setup bremst?",
+    body: "Wir prufen Systeme, Prozesse, Website und Content — und sagen Ihnen genau, was zu verbessern ist. Kostenlos, ohne Druck.",
     cta: "Ihr kostenloses Audit anfragen",
     meta: "Antwort innerhalb einer Stunde · Kostenlos · Sie entscheiden uber die nachsten Schritte",
   },
   about: {
     eyebrow: "Uber uns",
-    title: "Design & Entwicklung",
-    bio: "Wir sind ein kleines Digital-Studio in der Emilia-Romagna. Wir schaffen eine digitale Umgebung fur Ihr Business — von Websites und Interfaces bis zur Automatisierung von Anfragen, visuellem Content und kontinuierlicher Produktentwicklung. Nicht nur schon — alles ist auf echte Business-Ergebnisse ausgelegt.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
+    title: "Systeme, Design & Delivery",
+    bio: "Wir sind ein kleines Digital-Studio in der Emilia-Romagna. Wir bauen die digitale Umgebung, die Ihr Business braucht: Systeme und Plattformen, Prozessautomatisierung, Websites und Interfaces sowie visuellen Content und laufende Produktentwicklung. Nicht nur schon — alles ist auf echte Business-Ergebnisse ausgelegt.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
     pills: ["Emilia-Romagna, Italien", "Verfugbar fur neue Projekte"],
   },
   contact: {
@@ -3190,7 +3246,7 @@ const de: TranslationSet = {
       email: "E-Mail",
       business: "Name des Business",
       businessType: "Art des Business",
-      siteUrl: "URL Ihrer aktuellen Website",
+      siteUrl: "Website- oder Produkt-URL (optional)",
       brief: "Beschreiben Sie kurz, was Sie suchen",
       source: "Wie haben Sie uns gefunden?",
       submit: "Nachricht senden",
@@ -3198,13 +3254,13 @@ const de: TranslationSet = {
       submitting: "Wird gesendet...",
       success: "Erhalten. Wir antworten innerhalb einer Stunde.",
       submitError: "Senden fehlgeschlagen. Schreiben Sie an {email} — wir melden uns schnell.",
-      auditBriefPlaceholder: "Was funktioniert an Ihrer Website nicht? Was mochten Sie verbessern?",
+      auditBriefPlaceholder: "Was funktioniert in Ihrem digitalen Setup nicht — Systeme, Prozesse, Website oder Content?",
       optional: "optional",
       options: {
-        restaurant: "Restaurant",
+        restaurant: "Restaurant / Hospitality",
         hotel: "Hotel",
-        bar: "Bar",
-        other: "Andere",
+        bar: "Bar / Location",
+        other: "Sonstiges / Services",
         google: "Google",
         referral: "Empfehlung",
         social: "Social Media",
@@ -3257,7 +3313,7 @@ const de: TranslationSet = {
       },
       {
         id: "products",
-        title: "Digitale Produkte",
+        title: "Digitale Systeme",
         items: [
           { id: "web-service", label: "Web-Services", info: "Dashboards und Booking." },
           { id: "ecommerce", label: "E-Commerce", info: "Shop mit Warenkorb." },
@@ -3326,7 +3382,7 @@ const de: TranslationSet = {
     ],
   },
   footer: {
-    description: "Digitales Studio fur Premium-Marken und Unternehmen in ganz Italien.",
+    description: "Digitales Studio für Systeme, Automatisierung, Websites und Content — in Italien und darüber hinaus.",
     links: "Schnellzugriff",
     location: "Emilia-Romagna, Italien",
     status: "Verfugbar fur neue Kunden",
@@ -3350,7 +3406,7 @@ const de: TranslationSet = {
   servicesPage: {
     eyebrow: "Leistungen",
     title: "Was wir bauen",
-    subtitle: "Vom Präsentationssite bis zur vollständigen digitalen Plattform.",
+    subtitle: "Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion — end to end.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Alle Leistungen",
     pricingNote:
@@ -3367,7 +3423,7 @@ const de: TranslationSet = {
         ],
       },
       {
-        title: "Digitale Produkte",
+        title: "Digitale Systeme",
         items: [
           { label: "Web-Services", info: "Browserbasierte Tools: Dashboards, Buchungstools, Marktplätze." },
           { label: "Mobile Apps", info: "iOS- und Android-Apps mit React Native oder Flutter." },

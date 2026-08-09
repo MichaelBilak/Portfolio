@@ -29,9 +29,10 @@ export function resolveOrderCartItems(
 ): ResolvedOrderCartItems {
   const services = serviceSlugs
     .map((slug) => {
-      const index = servicesMeta.findIndex((m) => m.slug === slug);
-      if (index < 0) return { slug, title: slug };
-      return { slug, title: t.services[index].title };
+      const meta = servicesMeta.find((m) => m.slug === slug);
+      if (!meta) return { slug, title: slug };
+      const copy = t.services.find((s) => s.id === meta.id);
+      return { slug, title: copy?.title ?? slug };
     })
     .filter((item) => item.slug);
 

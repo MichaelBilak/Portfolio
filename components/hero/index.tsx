@@ -260,7 +260,7 @@ function HeroVisualStatic({ t }: { t: TranslationSet }) {
           <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
           <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
-            your.perfect.business.card.it
+            your.digital.system.it
           </span>
         </div>
         <HeroSiteCarousel reduce />
@@ -324,7 +324,7 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
             <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             <span className="ml-3 inline-flex flex-1 items-center justify-center truncate rounded-md bg-bgPrimary/60 px-3 py-1 font-mono text-[10px] tracking-[0.04em] text-textMuted">
-              your.perfect.business.card.it
+              your.digital.system.it
             </span>
           </div>
 
@@ -346,9 +346,9 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
             <TrendingUp size={16} />
           </span>
           <span className="leading-tight whitespace-nowrap">
-            <span className="block font-display text-xl font-medium text-textPrimary max-sm:text-lg">+32%</span>
+            <span className="block font-display text-xl font-medium text-textPrimary max-sm:text-lg">4</span>
             <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">
-              direct bookings
+              digital pillars
             </span>
           </span>
         </div>

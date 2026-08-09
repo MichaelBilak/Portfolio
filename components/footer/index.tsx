@@ -50,7 +50,7 @@ export function Footer({ t, className }: FooterProps) {
     | { href: string; label: string; Icon: typeof AtSign; mailto: true };
 
   const socials: SocialLink[] = [
-    { href: SITE_URL, label: "Website", Icon: Globe, external: true },
+    { href: SITE_URL, label: "Web", Icon: Globe, external: true },
     { href: INSTAGRAM_URL, label: "Instagram: @dormup.studio", Icon: InstagramIcon, external: true },
     { href: contactMailtoHref(), label: `Email: ${CONTACT_EMAIL}`, Icon: AtSign, mailto: true },
   ];

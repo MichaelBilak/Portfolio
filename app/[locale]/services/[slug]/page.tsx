@@ -22,9 +22,7 @@ interface PageProps {
 }
 
 export function generateStaticParams() {
-  return servicesMeta
-    .filter((s) => s.slug !== "booking-flow")
-    .map((s) => ({ slug: s.slug }));
+  return servicesMeta.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -32,9 +30,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!hasLocale(routing.locales, locale)) return {};
   const safeLocale = locale as Locale;
   const t = translations[safeLocale];
-  const index = servicesMeta.findIndex((s) => s.slug === slug);
-  if (index === -1) return {};
-  const service = t.services[index];
+  const meta = servicesMeta.find((s) => s.slug === slug);
+  if (!meta) return {};
+  const service = t.services.find((s) => s.id === meta.id);
+  if (!service) return {};
   return {
     title: pageTitle(service.title),
     description: service.description,
@@ -49,14 +48,19 @@ export default async function ServicePage({ params }: PageProps) {
   const safeLocale = locale as Locale;
   const t = translations[safeLocale];
 
-  const index = servicesMeta.findIndex((s) => s.slug === slug);
-  if (index === -1) notFound();
+  const meta = servicesMeta.find((s) => s.slug === slug);
+  if (!meta) notFound();
 
-  const meta = servicesMeta[index];
-  const service = t.services[index];
+  const service = t.services.find((s) => s.id === meta.id);
+  if (!service) notFound();
+
   const otherServices = servicesMeta
-    .map((m, i) => ({ meta: m, copy: t.services[i] }))
-    .filter((s) => s.meta.slug !== slug);
+    .filter((m) => m.slug !== slug)
+    .map((m) => ({
+      meta: m,
+      copy: t.services.find((s) => s.id === m.id)!,
+    }))
+    .filter((s) => s.copy);
 
   return (
     <>
