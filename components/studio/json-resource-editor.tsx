@@ -29,7 +29,6 @@ const LABELS: Record<string, string> = {
   addon_items: "Дополнительные опции",
   addon_item_i18n: "Переводы опции",
   process_step_i18n: "Переводы",
-  before_after_i18n: "Переводы",
   default_title: "Заголовок страницы по умолчанию",
   default_description: "Описание по умолчанию",
   og_image_path: "Картинка для соцсетей",

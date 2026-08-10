@@ -18,7 +18,7 @@
 app/[locale]/          # локализованные страницы (главная, услуги, работы)
 app/api/contact/       # API-роут контактной формы
 components/            # UI-блоки (hero, services, contact, footer и т.д.)
-data/                  # контент: проекты, услуги, кейсы before/after, процесс
+data/                  # контент: проекты, услуги и процесс
 i18n/                  # конфигурация next-intl (routing, request, navigation)
 lib/                   # хелперы, кастомные хуки, анимации, переводы
 public/images/         # SVG/PNG-иллюстрации и мокапы

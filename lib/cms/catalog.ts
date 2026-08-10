@@ -11,7 +11,6 @@ import {
   type ServiceId,
 } from "@/data/pricing";
 import { processStepsMeta } from "@/data/process";
-import { beforeAfterCasesMeta } from "@/data/before-after-cases";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 
 export type CmsProject = ProjectMeta & {
@@ -302,59 +301,6 @@ export async function getProcessSteps(locale: Locale = "it") {
   }
 }
 
-export async function getBeforeAfterCases(locale: Locale = "it") {
-  const fallback = beforeAfterCasesMeta.map((m, index) => {
-    const copy = translations[locale].beforeAfter.cases[index];
-    return {
-      ...m,
-      sortOrder: index,
-      published: true,
-      tab: copy?.tab || m.id,
-      headline: copy?.headline || "",
-      changes: copy?.changes || [],
-      beforeAlt: copy?.beforeAlt || "",
-      afterAlt: copy?.afterAlt || "",
-    };
-  });
-
-  if (!isSupabaseConfigured()) return fallback;
-
-  try {
-    const sb = createAdminClient();
-    const { data: rows, error } = await sb
-      .from("before_after_cases")
-      .select("*, before_after_i18n(*)")
-      .eq("published", true)
-      .order("sort_order", { ascending: true });
-
-    if (error || !rows?.length) return fallback;
-
-    return rows.map((doc) => {
-      const i18n =
-        (doc.before_after_i18n as Array<Record<string, unknown>> | null)?.find(
-          (r) => r.locale === locale,
-        ) ||
-        (doc.before_after_i18n as Array<Record<string, unknown>> | null)?.find(
-          (r) => r.locale === "it",
-        );
-      return {
-        id: String(doc.case_id),
-        beforeSrc: String(doc.before_src),
-        afterSrc: String(doc.after_src),
-        sortOrder: Number(doc.sort_order) || 0,
-        published: true,
-        tab: String(i18n?.tab || doc.case_id),
-        headline: String(i18n?.headline || ""),
-        changes: Array.isArray(i18n?.changes) ? (i18n!.changes as string[]) : [],
-        beforeAlt: String(i18n?.before_alt || ""),
-        afterAlt: String(i18n?.after_alt || ""),
-      };
-    });
-  } catch {
-    return fallback;
-  }
-}
-
 export async function getSeoDefaults(locale: Locale = "it") {
   const envFallback = {
     gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || undefined,
@@ -478,18 +424,6 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
         ...(bySection.pricingAddons as object),
       } as TranslationSet["pricingAddons"];
     }
-    if (bySection.beforeAfter && typeof bySection.beforeAfter === "object") {
-      const settings = bySection.beforeAfterShowOnSite;
-      overlay.beforeAfter = {
-        ...translations[locale].beforeAfter,
-        ...(bySection.beforeAfter as object),
-        showOnSite: Boolean(
-          typeof settings === "boolean"
-            ? settings
-            : (bySection.beforeAfter as { showOnSite?: boolean }).showOnSite,
-        ),
-      } as TranslationSet["beforeAfter"];
-    }
     if (bySection.privacyPage && typeof bySection.privacyPage === "object") {
       const privacy = bySection.privacyPage as {
         title?: string;
@@ -524,13 +458,12 @@ export async function getSiteContent(locale: Locale): Promise<{
   basePrices: Record<string, number>;
 }> {
   const base = translations[locale];
-  const [projects, services, addons, siteCopy, processSteps, beforeAfter] = await Promise.all([
+  const [projects, services, addons, siteCopy, processSteps] = await Promise.all([
     getProjects(locale),
     getServices(locale),
     getAddonCategories(locale),
     getSiteCopyOverlay(locale),
     getProcessSteps(locale),
-    getBeforeAfterCases(locale),
   ]);
 
   const projectLocalized =
@@ -547,16 +480,6 @@ export async function getSiteContent(locale: Locale): Promise<{
       summary: s.summary,
       description: s.description,
     })),
-    beforeAfter: {
-      ...(siteCopy.beforeAfter || base.beforeAfter),
-      cases: beforeAfter.map((c) => ({
-        tab: c.tab,
-        headline: c.headline,
-        changes: c.changes,
-        beforeAlt: c.beforeAlt,
-        afterAlt: c.afterAlt,
-      })),
-    },
     pricingAddons: {
       ...base.pricingAddons,
       ...(siteCopy.pricingAddons || {}),

@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   BriefcaseBusiness,
-  GitCompareArrows,
   ListPlus,
   Route,
   Sparkles,
@@ -33,12 +32,6 @@ const SECTIONS = [
     title: "Процесс работы",
     description: "Шаги работы, показанные на сайте",
     icon: Route,
-  },
-  {
-    href: "/before-after",
-    title: "До / После",
-    description: "Визуальные сравнения проектов",
-    icon: GitCompareArrows,
   },
 ];
 

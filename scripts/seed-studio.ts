@@ -15,7 +15,6 @@ import {
   type ServiceId,
 } from "../data/pricing";
 import { processStepsMeta } from "../data/process";
-import { beforeAfterCasesMeta } from "../data/before-after-cases";
 import { translations, type Locale } from "../lib/translations";
 import { BRAND_NAME, BRAND_TAGLINE, INSTAGRAM_BIO_LINK, INSTAGRAM_URL, SITE_URL } from "../lib/brand";
 import { CONTACT_EMAIL } from "../lib/contact-email";
@@ -43,8 +42,6 @@ const COPY_SECTIONS = [
   "impact",
   "audit",
   "processSection",
-  "beforeAfter",
-  "beforeAfterShowOnSite",
   "about",
   "aboutPage",
   "contact",
@@ -330,49 +327,6 @@ async function main() {
   }
   console.log("process steps");
 
-  // Before/after
-  for (const [index, meta] of beforeAfterCasesMeta.entries()) {
-    const { data: existing } = await client
-      .from("before_after_cases")
-      .select("id")
-      .eq("case_id", meta.id)
-      .maybeSingle();
-
-    const row = {
-      case_id: meta.id,
-      sort_order: index,
-      published: true,
-      before_src: meta.beforeSrc,
-      after_src: meta.afterSrc,
-    };
-    let caseUuid = existing?.id as string | undefined;
-    if (caseUuid) {
-      await client.from("before_after_cases").update(row).eq("id", caseUuid);
-    } else {
-      const { data, error } = await client.from("before_after_cases").insert(row).select("id").single();
-      if (error) throw error;
-      caseUuid = data.id;
-    }
-
-    for (const locale of LOCALES) {
-      const locCase = translations[locale].beforeAfter.cases[index];
-      if (!locCase) continue;
-      await client.from("before_after_i18n").upsert(
-        {
-          case_id: caseUuid,
-          locale,
-          tab: locCase.tab,
-          headline: locCase.headline,
-          changes: locCase.changes,
-          before_alt: locCase.beforeAlt,
-          after_alt: locCase.afterAlt,
-        },
-        { onConflict: "case_id,locale" },
-      );
-    }
-  }
-  console.log("before/after");
-
   // Redirects
   for (const r of [
     { from_path: "/work/rockisland-rimini", to_path: "/work/porto-sole" },
@@ -424,17 +378,6 @@ async function main() {
       impact: t.impact,
       audit: t.audit,
       processSection: t.processSection,
-      beforeAfter: {
-        eyebrow: t.beforeAfter.eyebrow,
-        title: t.beforeAfter.title,
-        subtitle: t.beforeAfter.subtitle,
-        beforeBadge: t.beforeAfter.beforeBadge,
-        afterBadge: t.beforeAfter.afterBadge,
-        dragHint: t.beforeAfter.dragHint,
-        changesTitle: t.beforeAfter.changesTitle,
-        footerNote: t.beforeAfter.footerNote,
-      },
-      beforeAfterShowOnSite: false,
       about: t.about,
       aboutPage: t.aboutPage,
       contact: t.contact,
