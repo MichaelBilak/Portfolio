@@ -11,7 +11,7 @@ import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
 import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
 import { LITE_MODE_BOOTSTRAP_SCRIPT } from "@/lib/lite-mode";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
-import { getPayloadClient } from "@/lib/payload";
+import { getSeoDefaults } from "@/lib/cms/catalog";
 import "../globals.css";
 
 // Expressive display (hero + section accents + big numbers) — bold, modern,
@@ -171,14 +171,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   let gaId: string | undefined;
   let plausibleDomain: string | undefined;
   try {
-    const payload = await getPayloadClient();
-    const seo = await payload.findGlobal({
-      slug: "seo-defaults",
-      locale: locale as Locale,
-      overrideAccess: true,
-    });
-    gaId = seo.gaMeasurementId || undefined;
-    plausibleDomain = seo.plausibleDomain || undefined;
+    const seo = await getSeoDefaults(locale as Locale);
+    gaId = seo.gaMeasurementId;
+    plausibleDomain = seo.plausibleDomain;
   } catch {
     // CMS optional at first boot
   }

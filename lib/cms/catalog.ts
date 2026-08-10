@@ -1,7 +1,7 @@
 import type { Locale, LocalizedProject, LocalizedService, TranslationSet } from "@/lib/translations";
 import { translations } from "@/lib/translations";
 import { projectsMeta, type ProjectMeta } from "@/data/projects";
-import { servicesMeta, type ServiceMeta } from "@/data/services";
+import { servicesMeta } from "@/data/services";
 import {
   ADDON_CATEGORIES,
   SERVICE_BASE_PRICES,
@@ -10,96 +10,103 @@ import {
   type AddonCategoryConfig,
   type ServiceId,
 } from "@/data/pricing";
-import { getPayloadClient } from "@/lib/payload";
+import { processStepsMeta } from "@/data/process";
+import { beforeAfterCasesMeta } from "@/data/before-after-cases";
+import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 
 export type CmsProject = ProjectMeta & {
   featured?: boolean;
   localized?: LocalizedProject;
 };
 
-export type CmsServiceMeta = Omit<ServiceMeta, "icon"> & {
-  iconName: string;
-  basePrice: number;
-  isMonthly: boolean;
+const SERVICE_ICON_BY_ID: Record<string, string> = {
+  "booking-flow": "CalendarCheck",
+  "premium-site": "Monitor",
+  redesign: "RefreshCw",
+  "photo-video": "Video",
+  "monthly-support": "Wrench",
 };
 
-async function safePayload() {
-  try {
-    return await getPayloadClient();
-  } catch (err) {
-    console.warn("[cms] Payload unavailable, using static fallback:", err);
-    return null;
-  }
+const LOCALES: Locale[] = ["it", "en", "fr", "ru", "de", "es"];
+
+function staticProjects(locale: Locale): CmsProject[] {
+  return projectsMeta.map((p) => ({
+    ...p,
+    featured: true,
+    localized: translations[locale].projects.find((x) => x.id === p.id),
+  }));
 }
 
-function mediaUrl(doc: { url?: string | null } | number | null | undefined, fallback: string) {
-  if (!doc || typeof doc === "number") return fallback;
-  return doc.url || fallback;
+function staticServices(locale: Locale) {
+  return {
+    metas: servicesMeta.map((m) => ({
+      id: m.id,
+      slug: m.slug,
+      image: m.image,
+      iconName: SERVICE_ICON_BY_ID[m.id] || "Monitor",
+    })),
+    localized: translations[locale].services,
+    basePrices: { ...SERVICE_BASE_PRICES } as Record<string, number>,
+    monthly: { ...SERVICE_MONTHLY } as Record<string, boolean>,
+  };
+}
+
+function staticAddons(locale: Locale) {
+  return {
+    structure: ADDON_CATEGORIES,
+    localized: translations[locale].pricingAddons.categories,
+  };
 }
 
 export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> {
-  const payload = await safePayload();
-  if (!payload) {
-    return projectsMeta.map((p) => ({
-      ...p,
-      featured: true,
-      localized: translations[locale].projects.find((x) => x.id === p.id),
-    }));
-  }
+  if (!isSupabaseConfigured()) return staticProjects(locale);
 
   try {
-    const result = await payload.find({
-      collection: "projects",
-      locale,
-      where: { published: { equals: true } },
-      sort: "sortOrder",
-      limit: 100,
-      depth: 1,
-      overrideAccess: true,
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("projects")
+      .select("*, project_i18n(*)")
+      .eq("published", true)
+      .order("sort_order", { ascending: true });
+
+    if (error || !rows?.length) return staticProjects(locale);
+
+    return rows.map((doc) => {
+      const i18n =
+        (doc.project_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === locale,
+        ) ||
+        (doc.project_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === "it",
+        );
+      return {
+        id: String(doc.project_id),
+        slug: String(doc.slug),
+        index: String(doc.index_label),
+        tag: String(doc.tag),
+        image: String(doc.image_path || `/images/project-${doc.project_id}.png`),
+        imagePosition: (doc.image_position as "top" | "center" | undefined) ?? "top",
+        tech: Array.isArray(doc.tech) ? (doc.tech as string[]) : [],
+        url: String(doc.url),
+        displayUrl: String(doc.display_url),
+        isLive: Boolean(doc.is_live),
+        featured: doc.featured !== false,
+        localized: i18n
+          ? {
+              id: String(doc.project_id),
+              name: String(i18n.name || ""),
+              nameTagline: i18n.name_tagline ? String(i18n.name_tagline) : undefined,
+              subtitle: String(i18n.subtitle || ""),
+              problem: String(i18n.problem || ""),
+              solution: String(i18n.solution || ""),
+              businessImpact: String(i18n.business_impact || ""),
+            }
+          : translations[locale].projects.find((x) => x.id === doc.project_id),
+      };
     });
-
-    if (!result.docs.length) {
-      return projectsMeta.map((p) => ({
-        ...p,
-        featured: true,
-        localized: translations[locale].projects.find((x) => x.id === p.id),
-      }));
-    }
-
-    return result.docs.map((doc) => ({
-      id: String(doc.projectId),
-      slug: String(doc.slug),
-      index: String(doc.index),
-      tag: String(doc.tag),
-      image: mediaUrl(
-        doc.image as { url?: string } | null,
-        String(doc.imagePath || `/images/project-${doc.projectId}.png`),
-      ),
-      imagePosition: (doc.imagePosition as "top" | "center" | undefined) ?? "top",
-      tech: ((doc.tech as { label?: string }[] | null) || []).map(
-        (row: { label?: string }) => String(row.label),
-      ),
-      url: String(doc.url),
-      displayUrl: String(doc.displayUrl),
-      isLive: Boolean(doc.isLive),
-      featured: doc.featured !== false,
-      localized: {
-        id: String(doc.projectId),
-        name: String(doc.name),
-        nameTagline: doc.nameTagline ? String(doc.nameTagline) : undefined,
-        subtitle: String(doc.subtitle),
-        problem: String(doc.problem),
-        solution: String(doc.solution),
-        businessImpact: String(doc.businessImpact),
-      },
-    }));
   } catch (err) {
     console.warn("[cms] getProjects failed:", err);
-    return projectsMeta.map((p) => ({
-      ...p,
-      featured: true,
-      localized: translations[locale].projects.find((x) => x.id === p.id),
-    }));
+    return staticProjects(locale);
   }
 }
 
@@ -109,93 +116,77 @@ export async function getServices(locale: Locale = "it"): Promise<{
   basePrices: Record<string, number>;
   monthly: Record<string, boolean>;
 }> {
-  const fallback = {
-    metas: servicesMeta.map((m) => ({
-      id: m.id,
-      slug: m.slug,
-      image: m.image,
-      iconName: m.icon.displayName || m.id,
-    })),
-    localized: translations[locale].services,
-    basePrices: { ...SERVICE_BASE_PRICES } as Record<string, number>,
-    monthly: { ...SERVICE_MONTHLY } as Record<string, boolean>,
-  };
-
-  // Fix icon names from known map
-  const iconById: Record<string, string> = {
-    "booking-flow": "CalendarCheck",
-    "premium-site": "Monitor",
-    redesign: "RefreshCw",
-    "photo-video": "Video",
-    "monthly-support": "Wrench",
-  };
-  fallback.metas = servicesMeta.map((m) => ({
-    id: m.id,
-    slug: m.slug,
-    image: m.image,
-    iconName: iconById[m.id] || "Monitor",
-  }));
-
-  const payload = await safePayload();
-  if (!payload) return fallback;
+  const fallback = staticServices(locale);
+  if (!isSupabaseConfigured()) return fallback;
 
   try {
-    const result = await payload.find({
-      collection: "services",
-      locale,
-      where: { published: { equals: true } },
-      sort: "sortOrder",
-      limit: 50,
-      depth: 1,
-      overrideAccess: true,
-    });
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("services")
+      .select("*, service_i18n(*), service_tiers(*, service_tier_i18n(*))")
+      .eq("published", true)
+      .order("sort_order", { ascending: true });
 
-    if (!result.docs.length) return fallback;
+    if (error || !rows?.length) return fallback;
 
-    const metas = result.docs.map((doc) => ({
-      id: String(doc.serviceId),
+    const metas = rows.map((doc) => ({
+      id: String(doc.service_id),
       slug: String(doc.slug),
-      image: mediaUrl(
-        doc.image as { url?: string } | null,
-        String(doc.imagePath || `/images/service-${doc.slug}.png`),
-      ),
-      iconName: String(doc.icon),
+      image: String(doc.image_path || `/images/service-${doc.slug}.png`),
+      iconName: String(doc.icon || SERVICE_ICON_BY_ID[String(doc.service_id)] || "Monitor"),
     }));
 
-    const localized: LocalizedService[] = result.docs.map((doc) => ({
-      id: String(doc.serviceId),
-      title: String(doc.title),
-      description: String(doc.description),
-      details: String(doc.details || ""),
-      whatYouGet: ((doc.whatYouGet as { item?: string }[] | null) || []).map(
-        (w: { item?: string }) => String(w.item),
-      ),
-      portfolioUrl: doc.portfolioUrl ? String(doc.portfolioUrl) : undefined,
-      portfolioLinkLabel: doc.portfolioLinkLabel
-        ? String(doc.portfolioLinkLabel)
-        : undefined,
-      portfolioUrl2: doc.portfolioUrl2 ? String(doc.portfolioUrl2) : undefined,
-      portfolioLinkLabel2: doc.portfolioLinkLabel2
-        ? String(doc.portfolioLinkLabel2)
-        : undefined,
-      pricingSectionTitle: doc.pricingSectionTitle
-        ? String(doc.pricingSectionTitle)
-        : undefined,
-      pricingFootnote: doc.pricingFootnote ? String(doc.pricingFootnote) : undefined,
-      pricingTiers: ((doc.tiers as { tierId?: string; name?: string; detail?: string }[] | null) || []).map(
-        (tier: { tierId?: string; name?: string; detail?: string }) => ({
-          tierId: String(tier.tierId),
-          name: String(tier.name),
-          detail: String(tier.detail || ""),
+    const localized: LocalizedService[] = rows.map((doc) => {
+      const i18n =
+        (doc.service_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === locale,
+        ) ||
+        (doc.service_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === "it",
+        );
+      const tiers = (doc.service_tiers as Array<Record<string, unknown>> | null) || [];
+      return {
+        id: String(doc.service_id),
+        title: String(i18n?.title || doc.service_id),
+        description: String(i18n?.description || ""),
+        details: String(i18n?.details || ""),
+        whatYouGet: Array.isArray(i18n?.what_you_get)
+          ? (i18n!.what_you_get as string[])
+          : [],
+        portfolioUrl: i18n?.portfolio_url ? String(i18n.portfolio_url) : undefined,
+        portfolioLinkLabel: i18n?.portfolio_link_label
+          ? String(i18n.portfolio_link_label)
+          : undefined,
+        portfolioUrl2: i18n?.portfolio_url_2 ? String(i18n.portfolio_url_2) : undefined,
+        portfolioLinkLabel2: i18n?.portfolio_link_label_2
+          ? String(i18n.portfolio_link_label_2)
+          : undefined,
+        pricingSectionTitle: i18n?.pricing_section_title
+          ? String(i18n.pricing_section_title)
+          : undefined,
+        pricingFootnote: i18n?.pricing_footnote ? String(i18n.pricing_footnote) : undefined,
+        pricingTiers: tiers.map((tier) => {
+          const ti =
+            (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
+              (r) => r.locale === locale,
+            ) ||
+            (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
+              (r) => r.locale === "it",
+            );
+          return {
+            tierId: String(tier.tier_id),
+            name: String(ti?.name || tier.tier_id),
+            detail: String(ti?.detail || ""),
+          };
         }),
-      ),
-    }));
+      };
+    });
 
     const basePrices: Record<string, number> = {};
     const monthly: Record<string, boolean> = {};
-    for (const doc of result.docs) {
-      basePrices[String(doc.serviceId)] = Number(doc.basePrice) || 0;
-      if (doc.isMonthly) monthly[String(doc.serviceId)] = true;
+    for (const doc of rows) {
+      basePrices[String(doc.service_id)] = Number(doc.base_price) || 0;
+      if (doc.is_monthly) monthly[String(doc.service_id)] = true;
     }
 
     return { metas, localized, basePrices, monthly };
@@ -209,48 +200,318 @@ export async function getAddonCategories(locale: Locale = "it"): Promise<{
   structure: AddonCategoryConfig[];
   localized: TranslationSet["pricingAddons"]["categories"];
 }> {
-  const fallback = {
-    structure: ADDON_CATEGORIES,
-    localized: translations[locale].pricingAddons.categories,
-  };
-
-  const payload = await safePayload();
-  if (!payload) return fallback;
+  const fallback = staticAddons(locale);
+  if (!isSupabaseConfigured()) return fallback;
 
   try {
-    const result = await payload.find({
-      collection: "addon-categories",
-      locale,
-      sort: "sortOrder",
-      limit: 50,
-      depth: 0,
-      overrideAccess: true,
-    });
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("addon_categories")
+      .select("*, addon_category_i18n(*), addon_items(*, addon_item_i18n(*))")
+      .order("sort_order", { ascending: true });
 
-    if (!result.docs.length) return fallback;
+    if (error || !rows?.length) return fallback;
 
     return {
-      structure: result.docs.map((doc) => ({
-        id: String(doc.categoryId),
-        items: ((doc.items as { enabled?: boolean; itemId?: string }[] | null) || [])
-          .filter((i: { enabled?: boolean }) => i.enabled !== false)
-          .map((i: { itemId?: string }) => ({ id: String(i.itemId) })),
+      structure: rows.map((doc) => ({
+        id: String(doc.category_id),
+        items: ((doc.addon_items as Array<Record<string, unknown>> | null) || [])
+          .filter((i) => i.enabled !== false)
+          .map((i) => ({ id: String(i.item_id) })),
       })),
-      localized: result.docs.map((doc) => ({
-        id: String(doc.categoryId),
-        title: String(doc.title),
-        items: ((doc.items as { enabled?: boolean; itemId?: string; label?: string; info?: string }[] | null) || [])
-          .filter((i: { enabled?: boolean }) => i.enabled !== false)
-          .map((i: { itemId?: string; label?: string; info?: string }) => ({
-            id: String(i.itemId),
-            label: String(i.label),
-            info: String(i.info || ""),
-          })),
-      })),
+      localized: rows.map((doc) => {
+        const ci =
+          (doc.addon_category_i18n as Array<Record<string, unknown>> | null)?.find(
+            (r) => r.locale === locale,
+          ) ||
+          (doc.addon_category_i18n as Array<Record<string, unknown>> | null)?.find(
+            (r) => r.locale === "it",
+          );
+        return {
+          id: String(doc.category_id),
+          title: String(ci?.title || doc.category_id),
+          items: ((doc.addon_items as Array<Record<string, unknown>> | null) || [])
+            .filter((i) => i.enabled !== false)
+            .map((i) => {
+              const ii =
+                (i.addon_item_i18n as Array<Record<string, unknown>> | null)?.find(
+                  (r) => r.locale === locale,
+                ) ||
+                (i.addon_item_i18n as Array<Record<string, unknown>> | null)?.find(
+                  (r) => r.locale === "it",
+                );
+              return {
+                id: String(i.item_id),
+                label: String(ii?.label || i.item_id),
+                info: String(ii?.info || ""),
+              };
+            }),
+        };
+      }),
     };
   } catch (err) {
     console.warn("[cms] getAddonCategories failed:", err);
     return fallback;
+  }
+}
+
+export async function getProcessSteps(locale: Locale = "it") {
+  const fallback = processStepsMeta.map((m, index) => {
+    const copy = translations[locale].process.find((p) => p.id === m.id);
+    return {
+      ...m,
+      sortOrder: index,
+      iconName: ["Search", "Compass", "Brush", "Code2", "TrendingUp"][index] || "Search",
+      title: copy?.title || m.id,
+      summary: copy?.summary || "",
+      description: copy?.description || "",
+    };
+  });
+
+  if (!isSupabaseConfigured()) return fallback;
+
+  try {
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("process_steps")
+      .select("*, process_step_i18n(*)")
+      .order("sort_order", { ascending: true });
+
+    if (error || !rows?.length) return fallback;
+
+    return rows.map((doc) => {
+      const i18n =
+        (doc.process_step_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === locale,
+        ) ||
+        (doc.process_step_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === "it",
+        );
+      return {
+        id: String(doc.step_id),
+        number: String(doc.number_label),
+        sortOrder: Number(doc.sort_order) || 0,
+        iconName: String(doc.icon || "Search"),
+        title: String(i18n?.title || doc.step_id),
+        summary: String(i18n?.summary || ""),
+        description: String(i18n?.description || ""),
+      };
+    });
+  } catch {
+    return fallback;
+  }
+}
+
+export async function getBeforeAfterCases(locale: Locale = "it") {
+  const fallback = beforeAfterCasesMeta.map((m, index) => {
+    const copy = translations[locale].beforeAfter.cases[index];
+    return {
+      ...m,
+      sortOrder: index,
+      published: true,
+      tab: copy?.tab || m.id,
+      headline: copy?.headline || "",
+      changes: copy?.changes || [],
+      beforeAlt: copy?.beforeAlt || "",
+      afterAlt: copy?.afterAlt || "",
+    };
+  });
+
+  if (!isSupabaseConfigured()) return fallback;
+
+  try {
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("before_after_cases")
+      .select("*, before_after_i18n(*)")
+      .eq("published", true)
+      .order("sort_order", { ascending: true });
+
+    if (error || !rows?.length) return fallback;
+
+    return rows.map((doc) => {
+      const i18n =
+        (doc.before_after_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === locale,
+        ) ||
+        (doc.before_after_i18n as Array<Record<string, unknown>> | null)?.find(
+          (r) => r.locale === "it",
+        );
+      return {
+        id: String(doc.case_id),
+        beforeSrc: String(doc.before_src),
+        afterSrc: String(doc.after_src),
+        sortOrder: Number(doc.sort_order) || 0,
+        published: true,
+        tab: String(i18n?.tab || doc.case_id),
+        headline: String(i18n?.headline || ""),
+        changes: Array.isArray(i18n?.changes) ? (i18n!.changes as string[]) : [],
+        beforeAlt: String(i18n?.before_alt || ""),
+        afterAlt: String(i18n?.after_alt || ""),
+      };
+    });
+  } catch {
+    return fallback;
+  }
+}
+
+export async function getSeoDefaults(locale: Locale = "it") {
+  const envFallback = {
+    gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || undefined,
+    plausibleDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN || undefined,
+    defaultTitle: undefined as string | undefined,
+    defaultDescription: undefined as string | undefined,
+    ogImagePath: "/images/og-cover.svg",
+  };
+
+  if (!isSupabaseConfigured()) return envFallback;
+
+  try {
+    const sb = createAdminClient();
+    const { data, error } = await sb
+      .from("seo_defaults")
+      .select("*")
+      .eq("locale", locale)
+      .maybeSingle();
+
+    if (error || !data) return envFallback;
+
+    return {
+      gaMeasurementId: data.ga_measurement_id || envFallback.gaMeasurementId,
+      plausibleDomain: data.plausible_domain || envFallback.plausibleDomain,
+      defaultTitle: data.default_title || undefined,
+      defaultDescription: data.default_description || undefined,
+      ogImagePath: data.og_image_path || envFallback.ogImagePath,
+    };
+  } catch {
+    return envFallback;
+  }
+}
+
+export async function getRedirectMatch(path: string) {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const sb = createAdminClient();
+    const { data, error } = await sb
+      .from("redirects")
+      .select("to_path, permanent")
+      .eq("from_path", path)
+      .eq("enabled", true)
+      .maybeSingle();
+    if (error || !data) return null;
+    return { toPath: data.to_path as string, permanent: data.permanent !== false };
+  } catch {
+    return null;
+  }
+}
+
+async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSet>> {
+  if (!isSupabaseConfigured()) return {};
+
+  try {
+    const sb = createAdminClient();
+    const { data: rows, error } = await sb
+      .from("site_copy")
+      .select("section, data")
+      .eq("locale", locale);
+
+    if (error || !rows?.length) return {};
+
+    const overlay: Partial<TranslationSet> = {};
+    const bySection = Object.fromEntries(rows.map((r) => [r.section, r.data]));
+
+    const mergeObj = <K extends keyof TranslationSet>(key: K, section = String(key)) => {
+      const raw = bySection[section];
+      if (raw && typeof raw === "object") {
+        (overlay as Record<string, unknown>)[key] = {
+          ...(translations[locale][key] as object),
+          ...(raw as object),
+        };
+      }
+    };
+
+    mergeObj("nav");
+    mergeObj("hero");
+    mergeObj("problem");
+    mergeObj("caseStudies");
+    mergeObj("impact");
+    mergeObj("processSection");
+    mergeObj("contact");
+    mergeObj("aboutPage");
+    mergeObj("langSelector");
+    mergeObj("footer");
+    mergeObj("audit");
+    mergeObj("orderPage");
+    mergeObj("workPage");
+    mergeObj("servicesPage");
+    mergeObj("servicePage");
+
+    if (Array.isArray(bySection.trust) && bySection.trust.length) {
+      overlay.trust = (bySection.trust as unknown[]).map((x) =>
+        typeof x === "string" ? x : String((x as { item?: string })?.item || ""),
+      );
+    }
+    if (typeof bySection.servicesLabel === "string") {
+      overlay.servicesLabel = bySection.servicesLabel;
+    }
+    if (typeof bySection.servicesLead === "string") {
+      overlay.servicesLead = bySection.servicesLead;
+    }
+    if (bySection.about && typeof bySection.about === "object") {
+      const about = bySection.about as {
+        eyebrow?: string;
+        title?: string;
+        bio?: string;
+        pills?: Array<string | { item?: string }>;
+      };
+      overlay.about = {
+        ...translations[locale].about,
+        ...about,
+        pills: about.pills?.length
+          ? about.pills.map((p) => (typeof p === "string" ? p : String(p.item || "")))
+          : translations[locale].about.pills,
+      };
+    }
+    if (bySection.pricingAddons && typeof bySection.pricingAddons === "object") {
+      overlay.pricingAddons = {
+        ...translations[locale].pricingAddons,
+        ...(bySection.pricingAddons as object),
+      } as TranslationSet["pricingAddons"];
+    }
+    if (bySection.beforeAfter && typeof bySection.beforeAfter === "object") {
+      const settings = bySection.beforeAfterShowOnSite;
+      overlay.beforeAfter = {
+        ...translations[locale].beforeAfter,
+        ...(bySection.beforeAfter as object),
+        showOnSite: Boolean(
+          typeof settings === "boolean"
+            ? settings
+            : (bySection.beforeAfter as { showOnSite?: boolean }).showOnSite,
+        ),
+      } as TranslationSet["beforeAfter"];
+    }
+    if (bySection.privacyPage && typeof bySection.privacyPage === "object") {
+      const privacy = bySection.privacyPage as {
+        title?: string;
+        lastUpdated?: string;
+        backToHome?: string;
+        sections?: { heading?: string; body?: string }[];
+      };
+      overlay.privacyPage = {
+        ...translations[locale].privacyPage,
+        ...privacy,
+        sections:
+          privacy.sections?.map((s) => ({
+            heading: String(s.heading || ""),
+            body: String(s.body || ""),
+          })) ?? translations[locale].privacyPage.sections,
+      };
+    }
+
+    void LOCALES;
+    return overlay;
+  } catch {
+    return {};
   }
 }
 
@@ -263,11 +524,13 @@ export async function getSiteContent(locale: Locale): Promise<{
   basePrices: Record<string, number>;
 }> {
   const base = translations[locale];
-  const [projects, services, addons, siteCopy] = await Promise.all([
+  const [projects, services, addons, siteCopy, processSteps, beforeAfter] = await Promise.all([
     getProjects(locale),
     getServices(locale),
     getAddonCategories(locale),
     getSiteCopyOverlay(locale),
+    getProcessSteps(locale),
+    getBeforeAfterCases(locale),
   ]);
 
   const projectLocalized =
@@ -278,6 +541,22 @@ export async function getSiteContent(locale: Locale): Promise<{
     ...siteCopy,
     projects: projectLocalized.length ? projectLocalized : base.projects,
     services: services.localized.length ? services.localized : base.services,
+    process: processSteps.map((s) => ({
+      id: s.id,
+      title: s.title,
+      summary: s.summary,
+      description: s.description,
+    })),
+    beforeAfter: {
+      ...(siteCopy.beforeAfter || base.beforeAfter),
+      cases: beforeAfter.map((c) => ({
+        tab: c.tab,
+        headline: c.headline,
+        changes: c.changes,
+        beforeAlt: c.beforeAlt,
+        afterAlt: c.afterAlt,
+      })),
+    },
     pricingAddons: {
       ...base.pricingAddons,
       ...(siteCopy.pricingAddons || {}),
@@ -296,111 +575,32 @@ export async function getSiteContent(locale: Locale): Promise<{
   };
 }
 
-async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSet>> {
-  const payload = await safePayload();
-  if (!payload) return {};
-
-  try {
-    const doc = await payload.findGlobal({
-      slug: "site-copy",
-      locale,
-      overrideAccess: true,
-    });
-
-    if (!doc || typeof doc !== "object") return {};
-
-    const overlay: Partial<TranslationSet> = {};
-
-    if (doc.nav && typeof doc.nav === "object") {
-      overlay.nav = { ...translations[locale].nav, ...(doc.nav as object) } as TranslationSet["nav"];
-    }
-    if (doc.hero && typeof doc.hero === "object") {
-      overlay.hero = { ...translations[locale].hero, ...(doc.hero as object) } as TranslationSet["hero"];
-    }
-    if (Array.isArray(doc.trust) && doc.trust.length) {
-      overlay.trust = doc.trust.map((x: { item?: string }) => String(x.item || ""));
-    }
-    if (doc.servicesLabel) overlay.servicesLabel = String(doc.servicesLabel);
-    if (doc.servicesLead) overlay.servicesLead = String(doc.servicesLead);
-    if (doc.about && typeof doc.about === "object") {
-      const about = doc.about as {
-        eyebrow?: string;
-        title?: string;
-        bio?: string;
-        pills?: { item?: string }[];
-      };
-      overlay.about = {
-        ...translations[locale].about,
-        ...about,
-        pills: about.pills?.map((p) => String(p.item || "")) ?? translations[locale].about.pills,
-      };
-    }
-    if (doc.footer && typeof doc.footer === "object") {
-      overlay.footer = {
-        ...translations[locale].footer,
-        ...(doc.footer as object),
-      } as TranslationSet["footer"];
-    }
-    if (doc.audit && typeof doc.audit === "object") {
-      overlay.audit = {
-        ...translations[locale].audit,
-        ...(doc.audit as object),
-      } as TranslationSet["audit"];
-    }
-    if (doc.orderPage && typeof doc.orderPage === "object") {
-      overlay.orderPage = {
-        ...translations[locale].orderPage,
-        ...(doc.orderPage as object),
-      } as TranslationSet["orderPage"];
-    }
-    if (doc.pricingAddons && typeof doc.pricingAddons === "object") {
-      overlay.pricingAddons = {
-        ...translations[locale].pricingAddons,
-        ...(doc.pricingAddons as object),
-      } as TranslationSet["pricingAddons"];
-    }
-    if (doc.workPage && typeof doc.workPage === "object") {
-      overlay.workPage = {
-        ...translations[locale].workPage,
-        ...(doc.workPage as object),
-      } as TranslationSet["workPage"];
-    }
-    if (doc.servicesPage && typeof doc.servicesPage === "object") {
-      overlay.servicesPage = {
-        ...translations[locale].servicesPage,
-        ...(doc.servicesPage as object),
-      } as TranslationSet["servicesPage"];
-    }
-    if (doc.servicePage && typeof doc.servicePage === "object") {
-      overlay.servicePage = {
-        ...translations[locale].servicePage,
-        ...(doc.servicePage as object),
-      } as TranslationSet["servicePage"];
-    }
-    if (doc.privacyPage && typeof doc.privacyPage === "object") {
-      const privacy = doc.privacyPage as {
-        title?: string;
-        lastUpdated?: string;
-        backToHome?: string;
-        sections?: { heading?: string; body?: string }[];
-      };
-      overlay.privacyPage = {
-        ...translations[locale].privacyPage,
-        ...privacy,
-        sections:
-          privacy.sections?.map((s) => ({
-            heading: String(s.heading || ""),
-            body: String(s.body || ""),
-          })) ?? translations[locale].privacyPage.sections,
-      };
-    }
-
-    return overlay;
-  } catch {
-    return {};
-  }
-}
-
 export function getStaticTierPrice(serviceId: ServiceId, tierId: string): number | undefined {
   return SERVICE_TIERS[serviceId]?.find((t) => t.tierId === tierId)?.price;
+}
+
+export async function getTierPrice(
+  serviceId: ServiceId,
+  tierId: string,
+): Promise<number | undefined> {
+  if (!isSupabaseConfigured()) return getStaticTierPrice(serviceId, tierId);
+  try {
+    const sb = createAdminClient();
+    const { data: service } = await sb
+      .from("services")
+      .select("id")
+      .eq("service_id", serviceId)
+      .maybeSingle();
+    if (!service) return getStaticTierPrice(serviceId, tierId);
+    const { data: tier } = await sb
+      .from("service_tiers")
+      .select("price")
+      .eq("service_id", service.id)
+      .eq("tier_id", tierId)
+      .maybeSingle();
+    if (tier?.price != null) return Number(tier.price);
+  } catch {
+    /* fall through */
+  }
+  return getStaticTierPrice(serviceId, tierId);
 }

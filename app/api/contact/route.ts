@@ -350,31 +350,29 @@ export async function POST(request: NextRequest) {
 
   const leadPromise = (async () => {
     try {
-      const { getPayloadClient } = await import("@/lib/payload");
-      const cms = await getPayloadClient();
-      await cms.create({
-        collection: "leads",
-        overrideAccess: true,
-        data: {
-          status: "new",
-          priority: "normal",
-          fullName: p.fullName,
-          email: p.email,
-          businessName: p.businessName,
-          businessType,
-          siteUrl: siteUrl || undefined,
-          brief: p.brief,
-          source,
-          intent: isAudit ? "audit" : "contact",
-          locale,
-          selectedServices: selectedServices.map((value) => ({ value })),
-          selectedServiceSlugs: selectedServiceSlugs.map((value) => ({ value })),
-          selectedAddons: selectedAddons.map((value) => ({ value })),
-          ip,
-          userAgent,
-          rawPayload: payload as unknown as Record<string, unknown>,
-        },
+      const { isSupabaseConfigured, createAdminClient } = await import("@/lib/supabase/admin");
+      if (!isSupabaseConfigured()) return;
+      const sb = createAdminClient();
+      const { error } = await sb.from("leads").insert({
+        status: "new",
+        priority: "normal",
+        full_name: p.fullName,
+        email: p.email,
+        business_name: p.businessName,
+        business_type: businessType,
+        site_url: siteUrl || null,
+        brief: p.brief,
+        source,
+        intent: isAudit ? "audit" : "contact",
+        locale,
+        selected_services: selectedServices,
+        selected_service_slugs: selectedServiceSlugs,
+        selected_addons: selectedAddons,
+        ip: ip || null,
+        user_agent: userAgent || null,
+        raw_payload: payload as unknown as Record<string, unknown>,
       });
+      if (error) throw error;
     } catch (err) {
       console.error("[contact] Failed to persist lead:", err);
     }

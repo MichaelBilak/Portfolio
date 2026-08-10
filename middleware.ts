@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-
-// ── Rate limiting for /api/contact ───────────────────────────
-// Prefer Upstash when configured; otherwise in-memory (resets on cold start).
+import { updateStudioSession } from "./lib/supabase/middleware";
 
 const rateMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 5;
@@ -62,19 +60,19 @@ const intlMiddleware = createMiddleware(routing);
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip i18n for Payload admin + Payload REST/GraphQL (except contact rate-limit)
+  if (pathname.startsWith("/studio")) {
+    return updateStudioSession(request);
+  }
+
   if (
-    pathname.startsWith("/admin") ||
-    pathname.startsWith("/api/graphql") ||
-    (pathname.startsWith("/api/") &&
-      pathname !== "/api/contact" &&
-      !pathname.startsWith("/api/contact/"))
+    pathname.startsWith("/api/") &&
+    pathname !== "/api/contact" &&
+    !pathname.startsWith("/api/contact/")
   ) {
     return NextResponse.next();
   }
 
-  // CMS-managed redirects (static next.config redirects still apply)
-  if (!pathname.startsWith("/api") && !pathname.startsWith("/admin")) {
+  if (!pathname.startsWith("/api")) {
     try {
       const redirectRes = await fetch(
         new URL(`/api/site-redirects?path=${encodeURIComponent(pathname)}`, request.url),
@@ -93,7 +91,7 @@ export default async function middleware(request: NextRequest) {
         }
       }
     } catch {
-      // ignore redirect lookup failures
+      // ignore
     }
   }
 

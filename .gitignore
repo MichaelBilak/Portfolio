@@ -40,8 +40,17 @@ next-env.d.ts
 /content/leads/export/*.csv
 /content/leads/export/*.xlsx
 
-# Payload CMS
+# Payload CMS (legacy local DB / uploads)
 /payload.db
 /payload.db-*
 /media
 npm-install.log
+
+# local check / seed scratch files
+/build-log.txt
+/build-check.txt
+/db-check.txt
+/seed-out.txt
+/seed-err.txt
+/seed-test-out.txt
+/debug-*.log
