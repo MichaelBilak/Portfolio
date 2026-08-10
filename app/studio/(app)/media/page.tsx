@@ -8,8 +8,8 @@ export default async function MediaAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Media</h1>
-      <p className="st-sub">Uploads go to Supabase Storage bucket `media`.</p>
+      <h1 className="st-h1">Медиа</h1>
+      <p className="st-sub">Загрузка картинок в облако Supabase (bucket media).</p>
       <MediaUploader />
       <table className="st-table" style={{ marginTop: "1.25rem" }}>
         <thead>

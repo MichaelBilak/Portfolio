@@ -32,8 +32,8 @@ const LOCALES = ["it", "en", "fr", "ru", "de", "es"] as const;
 export default function SiteCopyIndexPage() {
   return (
     <>
-      <h1 className="st-h1">Site copy</h1>
-      <p className="st-sub">Localized marketing sections (JSON per locale).</p>
+      <h1 className="st-h1">Тексты сайта</h1>
+      <p className="st-sub">Hero, меню, контакты и другие блоки — по языкам.</p>
       <div className="st-cards">
         {SECTIONS.map((section) => (
           <Link key={section} href={`${studioPath(`/copy/${section}`)}?locale=it`} className="st-card">

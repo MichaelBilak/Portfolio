@@ -11,8 +11,8 @@ export default async function ProjectsAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Projects</h1>
-      <p className="st-sub">Portfolio catalog. Edit JSON for meta + all locales.</p>
+      <h1 className="st-h1">Портфолио</h1>
+      <p className="st-sub">Проекты на сайте.</p>
       <table className="st-table">
         <thead>
           <tr>

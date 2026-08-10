@@ -17,7 +17,7 @@ export function StudioSignOut() {
         router.refresh();
       }}
     >
-      Sign out
+      Выйти
     </button>
   );
 }

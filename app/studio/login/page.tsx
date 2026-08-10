@@ -36,9 +36,9 @@ export default function StudioLoginPage() {
     <div className="st-login">
       <div className="st-login-card">
         <div className="st-brand" style={{ paddingLeft: 0 }}>
-          DormUp Studio
+          DormUp
         </div>
-        <p className="st-sub">Sign in to manage content & leads</p>
+        <p className="st-sub">Вход в панель управления</p>
         <form className="st-form" onSubmit={onSubmit}>
           <label className="st-label">
             Email
@@ -52,7 +52,7 @@ export default function StudioLoginPage() {
             />
           </label>
           <label className="st-label">
-            Password
+            Пароль
             <input
               className="st-input"
               type="password"
@@ -64,7 +64,7 @@ export default function StudioLoginPage() {
           </label>
           {error ? <p className="st-error">{error}</p> : null}
           <button className="st-btn primary" type="submit" disabled={loading}>
-            {loading ? "Signing in…" : "Sign in"}
+            {loading ? "Входим…" : "Войти"}
           </button>
         </form>
       </div>

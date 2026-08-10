@@ -24,7 +24,7 @@ export function JsonResourceEditor({
     try {
       parsed = JSON.parse(text);
     } catch {
-      setError("Invalid JSON");
+      setError("Неверный JSON");
       return;
     }
     const res = await fetch(endpoint, {
@@ -34,10 +34,10 @@ export function JsonResourceEditor({
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setError(data.error || "Save failed");
+      setError(data.error || "Ошибка сохранения");
       return;
     }
-    setMsg("Saved");
+    setMsg("Сохранено");
     await fetch("/api/studio/revalidate", { method: "POST" });
     router.refresh();
   }
@@ -53,7 +53,7 @@ export function JsonResourceEditor({
       />
       <div className="st-row">
         <button type="button" className="st-btn primary" onClick={save}>
-          Save
+          Сохранить
         </button>
       </div>
       {error ? <p className="st-error">{error}</p> : null}

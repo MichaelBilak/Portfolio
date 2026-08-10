@@ -10,7 +10,8 @@ export default async function BeforeAfterAdminPage() {
     .order("sort_order");
   return (
     <>
-      <h1 className="st-h1">Before / After</h1>
+      <h1 className="st-h1">До / После</h1>
+      <p className="st-sub">Слайдеры сравнения.</p>
       <table className="st-table">
         <thead>
           <tr>

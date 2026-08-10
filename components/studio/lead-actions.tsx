@@ -25,11 +25,11 @@ export function LeadActions({
       body: JSON.stringify(body),
     });
     if (!res.ok) {
-      setMsg((await res.json()).error || "Failed");
+      setMsg((await res.json()).error || "Ошибка сохранения");
       return;
     }
     router.refresh();
-    setMsg("Saved");
+    setMsg("Сохранено");
   }
 
   async function addNote() {
@@ -43,57 +43,55 @@ export function LeadActions({
   }
 
   async function gdprDelete() {
-    if (!confirm("Permanently delete this lead (GDPR)?")) return;
+    if (!confirm("Удалить заявку навсегда (GDPR)?")) return;
     const res = await fetch(`/api/studio/leads/${leadId}/gdpr`, { method: "DELETE" });
     if (res.ok) router.push(studioPath("/leads"));
-    else setMsg("Delete failed");
+    else setMsg("Не удалось удалить");
   }
 
   return (
     <div className="st-form" style={{ maxWidth: 640 }}>
       <div className="st-row">
         <label className="st-label" style={{ flex: 1 }}>
-          Status
+          Статус
           <select
             className="st-select"
             defaultValue={status}
             onChange={(e) => patch({ status: e.target.value })}
           >
-            {["new", "in_progress", "won", "lost", "spam"].map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
+            <option value="new">Новая</option>
+            <option value="in_progress">В работе</option>
+            <option value="won">Выиграна</option>
+            <option value="lost">Отказ</option>
+            <option value="spam">Спам</option>
           </select>
         </label>
         <label className="st-label" style={{ flex: 1 }}>
-          Priority
+          Приоритет
           <select
             className="st-select"
             defaultValue={priority}
             onChange={(e) => patch({ priority: e.target.value })}
           >
-            {["low", "normal", "high"].map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
+            <option value="low">Низкий</option>
+            <option value="normal">Обычный</option>
+            <option value="high">Высокий</option>
           </select>
         </label>
       </div>
       <label className="st-label">
-        Add note
+        Заметка
         <textarea className="st-textarea" value={note} onChange={(e) => setNote(e.target.value)} />
       </label>
       <div className="st-row">
         <button type="button" className="st-btn primary" onClick={addNote}>
-          Save note
+          Сохранить заметку
         </button>
         <button type="button" className="st-btn" onClick={gdprExport}>
-          GDPR export
+          Экспорт (GDPR)
         </button>
         <button type="button" className="st-btn danger" onClick={gdprDelete}>
-          GDPR delete
+          Удалить
         </button>
       </div>
       {msg ? <p className="st-ok">{msg}</p> : null}

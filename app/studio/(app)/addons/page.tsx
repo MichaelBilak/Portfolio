@@ -11,8 +11,8 @@ export default async function AddonsAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Addons</h1>
-      <p className="st-sub">Pricing addon categories and items.</p>
+      <h1 className="st-h1">Доп. модули</h1>
+      <p className="st-sub">Опции к заказу.</p>
       <table className="st-table">
         <thead>
           <tr>

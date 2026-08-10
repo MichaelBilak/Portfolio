@@ -6,8 +6,8 @@ export default async function SettingsAdminPage() {
   const { data } = await sb.from("site_settings").select("*").eq("id", 1).maybeSingle();
   return (
     <>
-      <h1 className="st-h1">Settings</h1>
-      <p className="st-sub">Brand name, contact, social links.</p>
+      <h1 className="st-h1">Бренд и контакты</h1>
+      <p className="st-sub">Основные данные студии на сайте.</p>
       <JsonResourceEditor
         endpoint="/api/studio/settings"
         initial={

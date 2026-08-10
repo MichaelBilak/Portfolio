@@ -18,8 +18,8 @@ export default async function SeoAdminPage({
 
   return (
     <>
-      <h1 className="st-h1">SEO defaults · {locale}</h1>
-      <p className="st-sub">Default title/description, OG, analytics IDs.</p>
+      <h1 className="st-h1">SEO · {locale.toUpperCase()}</h1>
+      <p className="st-sub">Заголовки, описания и счётчики аналитики.</p>
       <div className="st-tabs">
         {LOCALES.map((l) => (
           <a key={l} href={`${studioPath("/seo")}?locale=${l}`} className={`st-tab${l === locale ? " active" : ""}`}>

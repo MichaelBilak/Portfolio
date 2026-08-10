@@ -7,8 +7,8 @@ export default async function ProcessAdminPage() {
   const { data } = await sb.from("process_steps").select("id, step_id, number_label, sort_order").order("sort_order");
   return (
     <>
-      <h1 className="st-h1">Process</h1>
-      <p className="st-sub">Homepage process steps.</p>
+      <h1 className="st-h1">Процесс работы</h1>
+      <p className="st-sub">Шаги на главной странице.</p>
       <table className="st-table">
         <thead>
           <tr>

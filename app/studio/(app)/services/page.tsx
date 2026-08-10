@@ -11,8 +11,8 @@ export default async function ServicesAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Services</h1>
-      <p className="st-sub">Catalog, prices, tiers, localized copy.</p>
+      <h1 className="st-h1">Услуги и цены</h1>
+      <p className="st-sub">Каталог услуг на сайте.</p>
       <table className="st-table">
         <thead>
           <tr>

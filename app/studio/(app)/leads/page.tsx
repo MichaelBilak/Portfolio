@@ -2,6 +2,14 @@ import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { studioPath } from "@/lib/studio/path";
 
+const STATUS_LABEL: Record<string, string> = {
+  new: "Новая",
+  in_progress: "В работе",
+  won: "Выиграна",
+  lost: "Отказ",
+  spam: "Спам",
+};
+
 export default async function LeadsListPage({
   searchParams,
 }: {
@@ -22,48 +30,58 @@ export default async function LeadsListPage({
 
   return (
     <>
-      <h1 className="st-h1">Leads</h1>
-      <p className="st-sub">CRM inbox from the contact form.</p>
+      <h1 className="st-h1">Заявки</h1>
+      <p className="st-sub">Входящие с формы на сайте. Меняйте статус и добавляйте заметки.</p>
       <form className="st-row" style={{ marginBottom: "1rem" }}>
-        <select className="st-select" name="status" defaultValue={sp.status || ""} style={{ width: 160 }}>
-          <option value="">All statuses</option>
-          <option value="new">new</option>
-          <option value="in_progress">in_progress</option>
-          <option value="won">won</option>
-          <option value="lost">lost</option>
-          <option value="spam">spam</option>
+        <select className="st-select" name="status" defaultValue={sp.status || ""} style={{ width: 180 }}>
+          <option value="">Все статусы</option>
+          <option value="new">Новые</option>
+          <option value="in_progress">В работе</option>
+          <option value="won">Выиграны</option>
+          <option value="lost">Отказ</option>
+          <option value="spam">Спам</option>
         </select>
-        <input className="st-input" name="q" placeholder="Search…" defaultValue={sp.q || ""} style={{ width: 220 }} />
+        <input
+          className="st-input"
+          name="q"
+          placeholder="Поиск по имени / email…"
+          defaultValue={sp.q || ""}
+          style={{ width: 240 }}
+        />
         <button className="st-btn" type="submit">
-          Filter
+          Найти
         </button>
       </form>
-      <table className="st-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Business</th>
-            <th>Status</th>
-            <th>Locale</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(leads || []).map((lead) => (
-            <tr key={lead.id}>
-              <td>{new Date(lead.created_at).toLocaleString()}</td>
-              <td>
-                <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
-              </td>
-              <td>{lead.business_name}</td>
-              <td>
-                <span className="st-badge">{lead.status}</span>
-              </td>
-              <td>{lead.locale}</td>
+      {(leads || []).length === 0 ? (
+        <p className="st-empty">Заявок пока нет.</p>
+      ) : (
+        <table className="st-table">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Клиент</th>
+              <th>Бизнес</th>
+              <th>Статус</th>
+              <th>Язык</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {(leads || []).map((lead) => (
+              <tr key={lead.id}>
+                <td>{new Date(lead.created_at).toLocaleString("ru-RU")}</td>
+                <td>
+                  <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
+                </td>
+                <td>{lead.business_name}</td>
+                <td>
+                  <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
+                </td>
+                <td>{lead.locale}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 }
