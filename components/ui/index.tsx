@@ -15,7 +15,6 @@ import {
   useEffect,
   useRef,
   useState,
-  type MouseEvent,
   type ReactNode,
 } from "react";
 import { cn } from "@/lib/ui";
@@ -34,7 +33,7 @@ export function useTilt(intensity = 8) {
 
   const tiltStyle = disabled ? undefined : { rotateX, rotateY, transformPerspective: 900 };
 
-  function onTiltMove(e: MouseEvent<HTMLElement>) {
+  function onTiltMove(e: { currentTarget: HTMLElement; clientX: number; clientY: number }) {
     if (disabled) return;
     const rect = e.currentTarget.getBoundingClientRect();
     ry.set(((e.clientX - rect.left) / rect.width - 0.5) * intensity);
@@ -46,7 +45,20 @@ export function useTilt(intensity = 8) {
     ry.set(0);
   }
 
-  return { tiltStyle, onTiltMove, onTiltLeave };
+  return {
+    tiltStyle,
+    onTiltMove,
+    onTiltLeave,
+    /** Prefer these for mouse + touch (press / drag). */
+    tiltHandlers: disabled
+      ? {}
+      : {
+          onPointerMove: onTiltMove,
+          onPointerLeave: onTiltLeave,
+          onPointerUp: onTiltLeave,
+          onPointerCancel: onTiltLeave,
+        },
+  };
 }
 
 /* ── Spotlight: cursor-following glow for cards (pairs with .spotlight-card) ── */

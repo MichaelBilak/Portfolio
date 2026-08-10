@@ -15,10 +15,10 @@ interface OtherServiceItem {
 }
 
 function OtherServiceCard({ item }: { item: OtherServiceItem }) {
-  const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(8);
+  const { tiltStyle, tiltHandlers } = useTilt(8);
 
   return (
-    <motion.div onMouseMove={onTiltMove} onMouseLeave={onTiltLeave} style={tiltStyle}>
+    <motion.div {...tiltHandlers} style={tiltStyle}>
       <Link
         href={`/services/${item.slug}`}
         className="glass-card group flex h-full flex-col gap-4 rounded-2xl p-6 hover:border-borderStrong"

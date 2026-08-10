@@ -9,12 +9,11 @@ interface DeliverablesGridProps {
 }
 
 function DeliverableCard({ item }: { item: string }) {
-  const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(10);
+  const { tiltStyle, tiltHandlers } = useTilt(10);
 
   return (
     <motion.li
-      onMouseMove={onTiltMove}
-      onMouseLeave={onTiltLeave}
+      {...tiltHandlers}
       style={tiltStyle}
       className="glass-card flex items-start gap-3 rounded-2xl p-5 transition-colors hover:border-borderStrong"
     >

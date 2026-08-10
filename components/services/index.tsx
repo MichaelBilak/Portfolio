@@ -16,8 +16,6 @@ import { memo, useEffect, useMemo, useRef, useState, type PointerEvent as ReactP
 import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow, Reveal } from "@/components/ui";
-import { useIsDesktop } from "@/lib/hooks/use-is-desktop";
-import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { TranslationSet } from "@/lib/translations";
 
 interface ServicesProps {
@@ -62,15 +60,12 @@ export function Services({ t, serviceMetas }: ServicesProps) {
   const metas = serviceMetas ?? servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }));
   const items = useServiceItems(t, metas);
   const reduce = useReducedMotion();
-  const lite = useLiteMode();
-  const isDesktop = useIsDesktop();
-  // Scroll-hijack carousel only on desktop; phones/tablets get tap + autoplay.
-  const simplified = Boolean(reduce || lite || !isDesktop);
   const [active, setActive] = useState(0);
 
-  return (
-    <section id="services" className="relative py-16 md:py-28">
-      {simplified ? (
+  // Scroll-linked ring for everyone; reduced-motion gets tap/autoplay fallback.
+  if (reduce) {
+    return (
+      <section id="services" className="relative py-16 md:py-28">
         <div className="container-lux">
           <ServicesIntro t={t} />
           <div className="mt-10 md:mt-12">
@@ -81,14 +76,36 @@ export function Services({ t, serviceMetas }: ServicesProps) {
             />
           </div>
         </div>
-      ) : (
-        <ScrollCarousel
-          items={items}
-          active={active}
-          onActiveChange={setActive}
-          t={t}
-        />
-      )}
+        <div className="container-lux mt-10 md:mt-16">
+          <ServiceList
+            items={items}
+            viewServiceLabel={t.servicePage.viewService}
+          />
+          <Reveal delay={0.12} className="mt-10 flex justify-center md:mt-12">
+            <Link
+              href="/services"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-borderStrong bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-textPrimary backdrop-blur-sm transition-all duration-300 hover:border-accentGold/40 hover:text-accentGold"
+            >
+              {t.servicesPage.viewAll}
+              <ArrowUpRight
+                size={15}
+                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="services" className="relative py-16 md:py-28">
+      <ScrollCarousel
+        items={items}
+        active={active}
+        onActiveChange={setActive}
+        t={t}
+      />
 
       <div className="container-lux mt-10 md:mt-16">
         <ServiceList

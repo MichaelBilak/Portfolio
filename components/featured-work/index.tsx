@@ -115,7 +115,7 @@ interface ViewAllCardProps {
 }
 
 function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardProps) {
-  const { tiltStyle, onTiltMove, onTiltLeave } = useTilt(5);
+  const { tiltStyle, tiltHandlers } = useTilt(5);
   return (
     <motion.div
       initial={shouldReduceMotion ? false : "hidden"}
@@ -124,11 +124,7 @@ function ViewAllCard({ count, eyebrow, title, shouldReduceMotion }: ViewAllCardP
       variants={fadeUp}
       className="mt-12 md:mt-16"
     >
-      <motion.div
-        onMouseMove={onTiltMove}
-        onMouseLeave={onTiltLeave}
-        style={tiltStyle}
-      >
+      <motion.div {...tiltHandlers} style={tiltStyle}>
       <Link
         href="/work"
         aria-label={`${title} (${count})`}
@@ -175,8 +171,13 @@ function ProjectCard({ meta, copy, viewCta }: ProjectCardProps) {
       variants={fadeUp}
       href={`/work/${meta.slug}`}
       aria-label={`${copy.name} — ${viewCta}`}
-      onMouseMove={(e) => { onMove(e); onTiltMove(e); }}
-      onMouseLeave={onTiltLeave}
+      onPointerMove={(e) => {
+        onMove(e as unknown as React.MouseEvent<HTMLElement>);
+        onTiltMove(e);
+      }}
+      onPointerLeave={onTiltLeave}
+      onPointerUp={onTiltLeave}
+      onPointerCancel={onTiltLeave}
       style={tiltStyle}
       className="glass-card spotlight-card group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl p-4 transition-colors duration-300 hover:border-borderStrong sm:gap-6 sm:p-5 md:p-6"
     >

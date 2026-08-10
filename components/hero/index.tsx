@@ -13,7 +13,6 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
-import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { ContactLink } from "@/components/contact-link";
 import { Link } from "@/i18n/navigation";
 import { preventBrokenPhrases } from "@/lib/format-text";
@@ -234,10 +233,8 @@ function FloatingChip({
 }
 
 function HeroVisual({ t, reduce }: HeroVisualProps) {
-  const liteMode = useLiteMode();
-  const simplified = reduce || liteMode;
-
-  if (simplified) {
+  // Full animated mockup + chips unless the user prefers reduced motion.
+  if (reduce) {
     return <HeroVisualStatic t={t} />;
   }
 
@@ -336,13 +333,13 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
         duration={5.2}
         amplitude={16}
         drift={3}
-        className="absolute -left-3 top-[22%] z-10 max-sm:hidden"
+        className="absolute -left-1 top-[18%] z-10 scale-[0.86] sm:-left-3 sm:top-[22%] sm:scale-100"
       >
-        <div className="glass-card-strong flex items-center gap-3 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300 max-sm:h-8 max-sm:w-8">
+        <div className="glass-card-strong flex items-center gap-3 rounded-2xl px-3 py-2.5 sm:px-4 sm:py-3">
+          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-400/15 text-emerald-300 sm:h-9 sm:w-9">
             <TrendingUp size={16} />
           </span>
-          <span className="whitespace-nowrap text-sm font-normal tracking-tight text-textPrimary max-sm:text-[13px]">
+          <span className="whitespace-nowrap text-[13px] font-normal tracking-tight text-textPrimary sm:text-sm">
             {t.hero.chipHighlight}
           </span>
         </div>
@@ -354,14 +351,14 @@ function HeroVisualAnimated({ t }: { t: TranslationSet }) {
         duration={6.4}
         amplitude={18}
         drift={4}
-        className="absolute -right-2 bottom-[16%] z-10 max-sm:hidden"
+        className="absolute -right-1 bottom-[14%] z-10 scale-[0.86] sm:-right-2 sm:bottom-[16%] sm:scale-100"
       >
-        <div className="glass-card-strong flex items-center gap-2.5 rounded-2xl px-4 py-3 max-sm:px-3 max-sm:py-2.5">
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold max-sm:h-8 max-sm:w-8">
+        <div className="glass-card-strong flex items-center gap-2.5 rounded-2xl px-3 py-2.5 sm:px-4 sm:py-3">
+          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-accentGold/15 text-accentGold sm:h-9 sm:w-9">
             <TrendingUp size={16} />
           </span>
           <span className="leading-tight whitespace-nowrap">
-            <span className="block text-sm font-normal tracking-tight text-textPrimary max-sm:text-[13px]">
+            <span className="block text-[13px] font-normal tracking-tight text-textPrimary sm:text-sm">
               {t.hero.chipAvailability}
             </span>
             <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-textMuted">

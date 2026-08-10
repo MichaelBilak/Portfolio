@@ -117,6 +117,7 @@ export function useCrystalTilt(opts: TiltOptions = {}): CrystalTilt {
   const gy = gyroY ?? angleY * 0.6;
 
   const reduce = useReducedMotion();
+  // Keep tilt/press on touch devices — lite mode is only for a11y / data-saver now.
   const liteMode = useLiteMode();
   const disabled = reduce || liteMode;
   const rx = useMotionValue(0);
