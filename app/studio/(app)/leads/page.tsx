@@ -51,9 +51,11 @@ export default async function LeadsListPage({
           <tr>
             <th>Дата</th>
             <th>Клиент</th>
+            <th>Email</th>
             <th>Бизнес</th>
             <th>Статус</th>
             <th>Язык</th>
+            <th aria-label="Действия" />
           </tr>
         </thead>
         <tbody>
@@ -63,11 +65,22 @@ export default async function LeadsListPage({
               <td>
                 <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
               </td>
+              <td>
+                <a href={`mailto:${lead.email}`}>{lead.email}</a>
+              </td>
               <td>{lead.business_name}</td>
               <td>
                 <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
               </td>
               <td>{lead.locale}</td>
+              <td>
+                <Link
+                  className="st-btn subtle"
+                  href={studioPath(`/leads/${lead.id}`)}
+                >
+                  Открыть дело
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -15,6 +15,9 @@ type LeadRow = {
   created_at: string;
 };
 
+const TIMELINES = [7, 14, 30, 90] as const;
+type TimelineDays = (typeof TIMELINES)[number];
+
 function titleCase(value: string) {
   const labels: Record<string, string> = {
     new: "Новые",
@@ -44,7 +47,17 @@ function countBy(rows: LeadRow[], key: "status" | "source" | "locale") {
     .sort((a, b) => b.value - a.value);
 }
 
-export default async function StudioDashboardPage() {
+export default async function StudioDashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ days?: string }>;
+}) {
+  const params = await searchParams;
+  const requestedDays = Number(params.days);
+  const days: TimelineDays = TIMELINES.includes(requestedDays as TimelineDays)
+    ? (requestedDays as TimelineDays)
+    : 14;
+
   if (!isSupabaseConfigured()) {
     return (
       <>
@@ -59,7 +72,7 @@ export default async function StudioDashboardPage() {
 
   const sb = createAdminClient();
   const since = new Date();
-  since.setDate(since.getDate() - 30);
+  since.setDate(since.getDate() - days * 2);
   const [
     leadsResult,
     projectCount,
@@ -78,31 +91,36 @@ export default async function StudioDashboardPage() {
     sb.from("project_i18n").select("*", { count: "exact", head: true }),
     sb.from("service_i18n").select("*", { count: "exact", head: true }),
   ]);
-  const leads = (leadsResult.data || []) as LeadRow[];
+  const allLeads = (leadsResult.data || []) as LeadRow[];
+  const periodBoundary = new Date();
+  periodBoundary.setDate(periodBoundary.getDate() - days);
+  const leads = allLeads.filter(
+    (lead) => new Date(lead.created_at) >= periodBoundary,
+  );
+  const previousLeads = allLeads.filter((lead) => {
+    const created = new Date(lead.created_at);
+    return created < periodBoundary && created >= since;
+  });
   const newCount = leads.filter((lead) => lead.status === "new").length;
   const activeCount = leads.filter((lead) => lead.status === "in_progress").length;
   const wonCount = leads.filter((lead) => lead.status === "won").length;
   const conversion = leads.length ? Math.round((wonCount / leads.length) * 100) : 0;
-  const previousBoundary = new Date();
-  previousBoundary.setDate(previousBoundary.getDate() - 14);
-  const recentCount = leads.filter(
-    (lead) => new Date(lead.created_at) >= previousBoundary,
-  ).length;
-  const priorCount = leads.length - recentCount;
+  const recentCount = leads.length;
+  const priorCount = previousLeads.length;
   const growth = priorCount
     ? Math.round(((recentCount - priorCount) / priorCount) * 100)
     : recentCount
       ? 100
       : 0;
 
-  const trend = Array.from({ length: 14 }, (_, index) => {
+  const trend = Array.from({ length: days }, (_, index) => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - (13 - index));
+    date.setDate(date.getDate() - (days - 1 - index));
     const next = new Date(date);
     next.setDate(next.getDate() + 1);
     return {
-      label: date.toLocaleDateString("en", { day: "numeric", month: "short" }),
+      label: date.toLocaleDateString("ru-RU", { day: "numeric", month: "short" }),
       value: leads.filter((lead) => {
         const created = new Date(lead.created_at);
         return created >= date && created < next;
@@ -124,7 +142,7 @@ export default async function StudioDashboardPage() {
         <div>
           <p className="st-eyebrow">Обзор бизнеса</p>
           <h1 className="st-h1">Добрый день</h1>
-          <p className="st-sub">Главные показатели за последние 30 дней.</p>
+          <p className="st-sub">Главные показатели за последние {days} дней.</p>
         </div>
         <Link className="st-btn primary" href={studioPath("/leads")}>
           <Inbox size={16} /> Открыть заявки
@@ -138,7 +156,7 @@ export default async function StudioDashboardPage() {
             <small>Всего заявок</small>
             <strong>{leads.length}</strong>
             <em className={growth >= 0 ? "positive" : "negative"}>
-              {growth >= 0 ? "+" : ""}{growth}% к прошлым 14 дням
+              {growth >= 0 ? "+" : ""}{growth}% к прошлому периоду
             </em>
           </div>
         </div>
@@ -173,9 +191,24 @@ export default async function StudioDashboardPage() {
           <div className="st-panel-head">
             <div>
               <h2>Динамика заявок</h2>
-              <p>Новые обращения за последние 14 дней</p>
+              <p>Новые обращения за последние {days} дней</p>
             </div>
-            <span className="st-panel-total">{recentCount} заявок</span>
+            <div className="st-panel-actions">
+              <span className="st-panel-total">{recentCount} заявок</span>
+              <nav className="st-timeline" aria-label="Период графика">
+                {TIMELINES.map((value) => (
+                  <Link
+                    key={value}
+                    href={`${studioPath()}?days=${value}`}
+                    className={value === days ? "active" : undefined}
+                    aria-current={value === days ? "page" : undefined}
+                    scroll={false}
+                  >
+                    {value}д
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
           <LeadsTrendChart points={trend} />
         </section>

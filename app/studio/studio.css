@@ -575,6 +575,41 @@ body {
   font-weight: 600;
 }
 
+.st-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.st-timeline {
+  display: inline-flex;
+  padding: 0.18rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.st-timeline a {
+  min-width: 35px;
+  padding: 0.3rem 0.45rem;
+  border-radius: 6px;
+  color: var(--st-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.st-timeline a:hover {
+  color: var(--st-text);
+  text-decoration: none;
+}
+
+.st-timeline a.active {
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--st-gold);
+}
+
 .st-chart-wrap {
   overflow: hidden;
 }
@@ -1086,6 +1121,15 @@ body {
 
   .st-page-header {
     display: grid;
+  }
+
+  .st-panel-head,
+  .st-panel-actions {
+    display: grid;
+  }
+
+  .st-panel-actions {
+    justify-items: end;
   }
 
   .st-breakdown-row {

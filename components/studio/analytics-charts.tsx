@@ -16,6 +16,8 @@ export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
   }));
   const line = coordinates.map((point) => `${point.x},${point.y}`).join(" ");
   const area = `${padX},${height - padY} ${line} ${width - padX},${height - padY}`;
+  const dotStride = Math.max(1, Math.ceil(points.length / 14));
+  const labelStride = Math.max(1, Math.ceil(points.length / 6));
 
   return (
     <div className="st-chart-wrap">
@@ -23,7 +25,7 @@ export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
         className="st-line-chart"
         viewBox={`0 0 ${width} ${height}`}
         role="img"
-        aria-label="Leads received in the last 14 days"
+        aria-label={`Заявки за последние ${points.length} дней`}
       >
         {[0, 0.5, 1].map((fraction) => (
           <line
@@ -43,16 +45,21 @@ export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
         </defs>
         <polygon points={area} fill="url(#leadArea)" />
         <polyline points={line} className="st-chart-line" />
-        {coordinates.map((point) => (
-          <g key={point.label}>
-            <circle cx={point.x} cy={point.y} r="4" className="st-chart-dot" />
-            <title>{point.label}: {point.value}</title>
-          </g>
-        ))}
+        {coordinates.map((point, index) =>
+          point.value > 0 || index % dotStride === 0 || index === points.length - 1 ? (
+            <g key={point.label}>
+              <circle cx={point.x} cy={point.y} r="4" className="st-chart-dot" />
+              <title>{point.label}: {point.value}</title>
+            </g>
+          ) : null,
+        )}
       </svg>
-      <div className="st-chart-labels">
+      <div
+        className="st-chart-labels"
+        style={{ gridTemplateColumns: `repeat(${points.length}, 1fr)` }}
+      >
         {points.map((point, index) =>
-          index % 3 === 0 || index === points.length - 1 ? (
+          index % labelStride === 0 || index === points.length - 1 ? (
             <span key={point.label}>{point.label}</span>
           ) : <span key={point.label} />,
         )}
