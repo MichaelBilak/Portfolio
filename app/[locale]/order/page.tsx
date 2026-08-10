@@ -10,8 +10,9 @@ import { Navigation } from "@/components/navigation";
 import { OrderServices } from "@/components/order-services";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
-import { Locale, translations } from "@/lib/translations";
+import { Locale } from "@/lib/translations";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -20,7 +21,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const t = translations[locale as Locale];
+  const { t } = await getSiteContent(locale as Locale);
   return {
     title: pageTitle(t.orderPage.title),
     description: t.orderPage.subtitle,
@@ -33,7 +34,7 @@ export default async function OrderPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t, serviceMetas, addonStructure } = await getSiteContent(safeLocale);
   const op = t.orderPage;
 
   return (
@@ -63,7 +64,11 @@ export default async function OrderPage({ params }: PageProps) {
         </section>
 
         <Suspense fallback={null}>
-          <OrderServices t={t} />
+          <OrderServices
+            t={t}
+            serviceMetas={serviceMetas}
+            addonCategories={addonStructure}
+          />
         </Suspense>
         <AuditCta t={t} />
       </main>

@@ -122,6 +122,7 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          website: "", // honeypot
           intent: auditMode ? "audit" : undefined,
           siteUrl: form.siteUrl,
           locale: t.langCode.toLowerCase(),
@@ -138,6 +139,11 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
     setLoading(false);
 
     if (response.ok) {
+      const { trackEvent } = await import("@/components/analytics");
+      trackEvent("contact_submit", {
+        intent: auditMode ? "audit" : "contact",
+        locale: t.langCode.toLowerCase(),
+      });
       setSent(true);
       setForm({
         fullName: "",
@@ -172,6 +178,17 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
       onSubmit={onSubmit}
       className={compact ? "glass-card rounded-3xl p-5" : "glass-card rounded-3xl p-5 sm:p-7"}
     >
+      {/* Honeypot — hidden from users */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+        defaultValue=""
+      />
+
       {!compact ? <ServiceCart t={t} /> : null}
 
       <div className="space-y-5">

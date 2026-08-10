@@ -51,7 +51,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
               </span>
             </Reveal>
             <Reveal delay={0.15}>
-              <p className="mt-2 whitespace-pre-line text-xl leading-relaxed text-[#0d130f]/75 text-pretty md:text-2xl">
+              <p className="mt-2 whitespace-pre-line text-base leading-relaxed text-[#0d130f]/75 text-pretty sm:text-xl md:text-2xl">
                 {t.problem.body}
               </p>
             </Reveal>

@@ -37,6 +37,9 @@ interface ContactPayload {
   selectedServices?: string[];
   selectedServiceSlugs?: string[];
   selectedAddons?: string[];
+  turnstileToken?: string;
+  /** Honeypot — must stay empty */
+  website?: string;
 }
 
 type ContactFormPayload = Required<
@@ -229,6 +232,32 @@ export async function POST(request: NextRequest) {
     return bad("Invalid JSON");
   }
 
+  // Honeypot
+  if (payload.website && String(payload.website).trim()) {
+    return NextResponse.json({ ok: true }, { status: 200 });
+  }
+
+  // Cloudflare Turnstile (when configured)
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+  if (turnstileSecret) {
+    const token = typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
+    if (!token) return bad("Captcha required");
+    try {
+      const verify = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: turnstileSecret,
+          response: token,
+        }),
+      });
+      const result = (await verify.json()) as { success?: boolean };
+      if (!result.success) return bad("Captcha failed");
+    } catch {
+      return bad("Captcha verification error", 502);
+    }
+  }
+
   // ── Validate email (required, max length, no injection) ────
   const rawEmail = typeof payload.email === "string" ? payload.email : "";
   const cleanEmail = rawEmail.replace(/[\r\n\t]/g, "").trim();
@@ -293,6 +322,11 @@ export async function POST(request: NextRequest) {
   };
 
   const siteUrl = payload.siteUrl?.trim().slice(0, FIELD_LIMITS.siteUrl);
+  const locale =
+    typeof payload.locale === "string" &&
+    ["it", "en", "fr", "ru", "de", "es"].includes(payload.locale)
+      ? payload.locale
+      : "it";
 
   const now = new Date();
   const timestamp = now.toLocaleString("en-GB", {
@@ -307,6 +341,44 @@ export async function POST(request: NextRequest) {
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;
   const toEmail = process.env.CONTACT_TO_EMAIL ?? "dormup.it@gmail.com";
+
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("x-real-ip") ??
+    undefined;
+  const userAgent = request.headers.get("user-agent") ?? undefined;
+
+  const leadPromise = (async () => {
+    try {
+      const { getPayloadClient } = await import("@/lib/payload");
+      const cms = await getPayloadClient();
+      await cms.create({
+        collection: "leads",
+        overrideAccess: true,
+        data: {
+          status: "new",
+          priority: "normal",
+          fullName: p.fullName,
+          email: p.email,
+          businessName: p.businessName,
+          businessType,
+          siteUrl: siteUrl || undefined,
+          brief: p.brief,
+          source,
+          intent: isAudit ? "audit" : "contact",
+          locale,
+          selectedServices: selectedServices.map((value) => ({ value })),
+          selectedServiceSlugs: selectedServiceSlugs.map((value) => ({ value })),
+          selectedAddons: selectedAddons.map((value) => ({ value })),
+          ip,
+          userAgent,
+          rawPayload: payload as unknown as Record<string, unknown>,
+        },
+      });
+    } catch (err) {
+      console.error("[contact] Failed to persist lead:", err);
+    }
+  })();
 
   const emailPromise = (async () => {
     if (!gmailUser || !gmailPass) {
@@ -337,7 +409,8 @@ export async function POST(request: NextRequest) {
     console.error("[contact] Google Sheets error:", msg);
   });
 
-  await Promise.all([emailPromise, sheetsPromise]);
+  await Promise.all([leadPromise, emailPromise, sheetsPromise]);
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }
+

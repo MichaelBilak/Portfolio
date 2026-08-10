@@ -5,7 +5,8 @@ import { Navigation } from "@/components/navigation";
 import { ProblemStatement } from "@/components/problem-statement";
 import { Proof } from "@/components/proof";
 import { TrustStrip } from "@/components/trust-strip";
-import { Locale, translations } from "@/lib/translations";
+import { getSiteContent } from "@/lib/cms/catalog";
+import { Locale } from "@/lib/translations";
 
 const Services = dynamic(() => import("@/components/services").then((m) => m.Services));
 const FeaturedWork = dynamic(
@@ -25,8 +26,8 @@ interface SiteShellProps {
   locale: Locale;
 }
 
-export function SiteShell({ locale }: SiteShellProps) {
-  const t = translations[locale];
+export async function SiteShell({ locale }: SiteShellProps) {
+  const { t, projects, serviceMetas } = await getSiteContent(locale);
 
   return (
     <>
@@ -38,12 +39,12 @@ export function SiteShell({ locale }: SiteShellProps) {
         <ProblemStatement t={t} />
         <div className="section-deferred">
           <DeferredSection>
-            <Services t={t} />
+            <Services t={t} serviceMetas={serviceMetas} />
           </DeferredSection>
         </div>
         <div className="section-deferred">
           <DeferredSection>
-            <FeaturedWork t={t} />
+            <FeaturedWork t={t} projects={projects} />
           </DeferredSection>
         </div>
         <div className="section-deferred">

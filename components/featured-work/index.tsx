@@ -18,14 +18,20 @@ interface FeaturedWorkProps {
   t: TranslationSet;
   variant?: "home" | "all";
   hideHeading?: boolean;
+  projects?: ProjectMeta[];
 }
 
-export function FeaturedWork({ t, variant = "home", hideHeading = false }: FeaturedWorkProps) {
+export function FeaturedWork({
+  t,
+  variant = "home",
+  hideHeading = false,
+  projects = projectsMeta,
+}: FeaturedWorkProps) {
   const shouldReduceMotion = useReducedMotion();
   const isHome = variant === "home";
 
-  const totalCount = projectsMeta.length;
-  const visibleProjects = isHome ? projectsMeta.slice(0, HOME_LIMIT) : projectsMeta;
+  const totalCount = projects.length;
+  const visibleProjects = isHome ? projects.slice(0, HOME_LIMIT) : projects;
   const hasMore = isHome && totalCount > HOME_LIMIT;
 
   return (
@@ -41,13 +47,13 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
 
       <div className="container-lux relative">
         {!hideHeading && (
-          <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
-            <div className="min-w-0 shrink-0">
+          <div className="mb-12 flex flex-col gap-4 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-6">
+            <div className="min-w-0">
               <Reveal>
                 <Eyebrow>{t.workPage.eyebrow}</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 whitespace-nowrap text-fluid-title font-display font-light text-textPrimary">
+                <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
                   {t.caseStudies.label}
                 </h2>
               </Reveal>
@@ -55,7 +61,7 @@ export function FeaturedWork({ t, variant = "home", hideHeading = false }: Featu
             <Reveal delay={0.1} className="shrink-0">
               <Link
                 href="/work"
-                className="group inline-flex whitespace-nowrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
+                className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-accentGold transition-colors hover:text-accentWarm"
               >
                 {t.workPage.viewAll}
                 <ArrowUpRight

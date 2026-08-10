@@ -20,6 +20,7 @@ import { TranslationSet } from "@/lib/translations";
 
 interface ServicesProps {
   t: TranslationSet;
+  serviceMetas?: Array<{ id: string; slug: string; image: string }>;
 }
 
 interface CarouselItem {
@@ -31,29 +32,33 @@ interface CarouselItem {
   description: string;
 }
 
-function useServiceItems(t: TranslationSet): CarouselItem[] {
+function useServiceItems(
+  t: TranslationSet,
+  metas: Array<{ id: string; slug: string; image: string }>,
+): CarouselItem[] {
   return useMemo(
     () =>
-      servicesMeta
-    .map((meta) => {
-      const copy = t.services.find((s) => s.id === meta.id);
-      if (!copy) return null;
-      return {
-        id: meta.id,
-        slug: meta.slug,
-        image: meta.image,
-        title: copy.title,
-        details: copy.details,
-        description: copy.description,
-      };
-    })
-    .filter((item): item is CarouselItem => Boolean(item)),
-    [t.services],
+      metas
+        .map((meta) => {
+          const copy = t.services.find((s) => s.id === meta.id);
+          if (!copy) return null;
+          return {
+            id: meta.id,
+            slug: meta.slug,
+            image: meta.image,
+            title: copy.title,
+            details: copy.details,
+            description: copy.description,
+          };
+        })
+        .filter((item): item is CarouselItem => Boolean(item)),
+    [t, metas],
   );
 }
 
-export function Services({ t }: ServicesProps) {
-  const items = useServiceItems(t);
+export function Services({ t, serviceMetas }: ServicesProps) {
+  const metas = serviceMetas ?? servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }));
+  const items = useServiceItems(t, metas);
   const reduce = useReducedMotion();
   const lite = useLiteMode();
   const simplified = Boolean(reduce || lite);
@@ -107,7 +112,7 @@ function ServicesIntro({ t }: { t: TranslationSet }) {
       <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
         {t.servicesLabel}
       </h2>
-      <span className="mt-4 block font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted">
+      <span className="mt-4 block max-w-full font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-textMuted text-pretty sm:tracking-[0.24em]">
         {t.servicesLead}
       </span>
     </div>
@@ -185,10 +190,10 @@ function ScrollCarousel({
               <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-accentGold/80">
                 {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
               </p>
-              <h3 className="mt-2 whitespace-nowrap font-display text-xl font-semibold tracking-tight text-textPrimary sm:text-2xl md:text-3xl">
+              <h3 className="mt-2 px-1 font-display text-xl font-semibold tracking-tight text-textPrimary text-safe-wrap sm:text-2xl md:whitespace-nowrap md:text-3xl">
                 {activeItem.title}
               </h3>
-              <p className="mt-2 whitespace-nowrap font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-accentWarm/75">
+              <p className="mt-2 px-1 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-accentWarm/75 text-pretty sm:tracking-[0.16em] md:whitespace-nowrap">
                 {activeItem.details}
               </p>
             </div>
@@ -214,10 +219,10 @@ function StaticCarousel({
       <CarouselStage items={items} active={active} rotateZ={rotateZ} />
       {activeItem ? (
         <div className="mt-20 w-full max-w-4xl px-4 text-center sm:mt-24 sm:px-6">
-          <h3 className="whitespace-nowrap font-display text-xl font-semibold tracking-tight text-textPrimary sm:text-2xl md:text-3xl">
+          <h3 className="px-1 font-display text-xl font-semibold tracking-tight text-textPrimary text-safe-wrap sm:text-2xl md:whitespace-nowrap md:text-3xl">
             {activeItem.title}
           </h3>
-          <p className="mt-2 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.16em] text-accentWarm/75">
+          <p className="mt-2 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-accentWarm/75 text-pretty sm:tracking-[0.16em] md:whitespace-nowrap">
             {activeItem.details}
           </p>
         </div>
@@ -377,10 +382,10 @@ function ServiceList({
               {String(index + 1).padStart(2, "0")}
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block whitespace-nowrap text-base font-semibold tracking-tight sm:text-lg">
+              <span className="block text-base font-semibold tracking-tight text-safe-wrap sm:text-lg">
                 {item.title}
               </span>
-              <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.14em] text-textMuted line-clamp-1">
+              <span className="mt-1 block font-mono text-[10px] uppercase leading-snug tracking-[0.12em] text-textMuted text-pretty line-clamp-2 sm:tracking-[0.14em] sm:line-clamp-1">
                 {item.details}
               </span>
             </span>

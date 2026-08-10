@@ -39,3 +39,9 @@ next-env.d.ts
 /content/leads/import/
 /content/leads/export/*.csv
 /content/leads/export/*.xlsx
+
+# Payload CMS
+/payload.db
+/payload.db-*
+/media
+npm-install.log

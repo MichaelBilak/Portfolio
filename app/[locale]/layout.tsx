@@ -5,11 +5,13 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
+import { AnalyticsScripts } from "@/components/analytics";
 import { Locale } from "@/lib/translations";
 import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
 import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
 import { LITE_MODE_BOOTSTRAP_SCRIPT } from "@/lib/lite-mode";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
+import { getPayloadClient } from "@/lib/payload";
 import "../globals.css";
 
 // Expressive display (hero + section accents + big numbers) — bold, modern,
@@ -166,6 +168,21 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  let gaId: string | undefined;
+  let plausibleDomain: string | undefined;
+  try {
+    const payload = await getPayloadClient();
+    const seo = await payload.findGlobal({
+      slug: "seo-defaults",
+      locale: locale as Locale,
+      overrideAccess: true,
+    });
+    gaId = seo.gaMeasurementId || undefined;
+    plausibleDomain = seo.plausibleDomain || undefined;
+  } catch {
+    // CMS optional at first boot
+  }
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -197,6 +214,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
             {children}
           </NextIntlClientProvider>
         </ClientProviders>
+        <AnalyticsScripts gaId={gaId} plausibleDomain={plausibleDomain} />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

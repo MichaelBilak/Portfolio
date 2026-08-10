@@ -55,12 +55,12 @@ export function Hero({ t }: HeroProps) {
       />
       <div className="grain-overlay absolute inset-0" aria-hidden />
 
-      <div className="container-wide relative grid min-h-hero min-w-0 items-center gap-12 py-8 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+      <div className="container-wide relative grid min-h-hero min-w-0 items-center gap-8 py-6 sm:gap-12 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         <motion.div
           variants={container}
           initial="hidden"
           animate="visible"
-          className="min-w-0 space-y-6 sm:space-y-9"
+          className="min-w-0 space-y-5 sm:space-y-9"
         >
           <motion.div variants={item} className="max-w-full">
             <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-2.5 py-1.5 font-mono uppercase text-accentGold backdrop-blur sm:gap-2.5 sm:px-4">
@@ -137,12 +137,19 @@ export function Hero({ t }: HeroProps) {
                 className={btn(
                   "ghost",
                   "md",
-                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                  "hidden justify-center overflow-visible sm:inline-flex sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
                 )}
               >
                 {t.hero.primaryCta}
               </Link>
             </div>
+            <Link
+              href="/work"
+              className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-textMuted transition-colors hover:text-accentGold sm:hidden"
+            >
+              {t.hero.primaryCta}
+              <ArrowUpRight size={12} className="shrink-0" />
+            </Link>
           </motion.div>
         </motion.div>
 

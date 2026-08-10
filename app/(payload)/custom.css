@@ -1,0 +1,45 @@
+/* DormUp white-label overrides for Payload Admin */
+
+:root {
+  --dormup-gold: #fcd34d;
+  --dormup-gold-soft: rgba(252, 211, 77, 0.18);
+}
+
+/* Login card accents */
+.login__brand {
+  margin-bottom: 0.5rem;
+}
+
+/* Primary buttons / focus — warm gold instead of default blue */
+html[data-theme="dark"] .btn--style-primary,
+html[data-theme="light"] .btn--style-primary {
+  background: var(--dormup-gold) !important;
+  border-color: var(--dormup-gold) !important;
+  color: #0b0d10 !important;
+}
+
+html[data-theme="dark"] .btn--style-primary:hover,
+html[data-theme="light"] .btn--style-primary:hover {
+  filter: brightness(0.95);
+}
+
+/* Links on login (Forgot password) */
+.login a,
+.template-minimal a {
+  color: var(--dormup-gold) !important;
+}
+
+/* Nav active / highlight */
+.nav .nav__link:hover,
+.nav .nav__link.active {
+  color: var(--dormup-gold);
+}
+
+/* Soft gold focus rings on inputs */
+input:focus,
+textarea:focus,
+select:focus {
+  outline-color: var(--dormup-gold) !important;
+  border-color: var(--dormup-gold) !important;
+  box-shadow: 0 0 0 1px var(--dormup-gold-soft);
+}

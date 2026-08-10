@@ -10,12 +10,13 @@ import { AuditCta } from "@/components/audit-cta";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Process } from "@/components/process";
-import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
-import { Locale, translations } from "@/lib/translations";
+import { Locale } from "@/lib/translations";
 import { btn } from "@/lib/ui";
+import { servicesMeta } from "@/data/services";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -28,9 +29,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
-  const meta = servicesMeta.find((s) => s.slug === slug);
+  const { t, serviceMetas } = await getSiteContent(locale as Locale);
+  const meta = serviceMetas.find((s) => s.slug === slug);
   if (!meta) return {};
   const service = t.services.find((s) => s.id === meta.id);
   if (!service) return {};
@@ -46,15 +46,15 @@ export default async function ServicePage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t, serviceMetas } = await getSiteContent(safeLocale);
 
-  const meta = servicesMeta.find((s) => s.slug === slug);
+  const meta = serviceMetas.find((s) => s.slug === slug);
   if (!meta) notFound();
 
   const service = t.services.find((s) => s.id === meta.id);
   if (!service) notFound();
 
-  const otherServices = servicesMeta
+  const otherServices = serviceMetas
     .filter((m) => m.slug !== slug)
     .map((m) => ({
       meta: m,

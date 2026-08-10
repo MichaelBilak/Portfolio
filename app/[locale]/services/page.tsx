@@ -10,10 +10,10 @@ import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
-import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { Locale, translations } from "@/lib/translations";
+import { getSiteContent } from "@/lib/cms/catalog";
+import { Locale } from "@/lib/translations";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -22,7 +22,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const t = translations[locale as Locale];
+  const { t } = await getSiteContent(locale as Locale);
   return {
     title: pageTitle(t.servicesPage.title),
     description: t.servicesPage.subtitle,
@@ -35,7 +35,7 @@ export default async function ServicesPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t, serviceMetas, addonStructure } = await getSiteContent(safeLocale);
   const sp = t.servicesPage;
 
   return (
@@ -43,7 +43,6 @@ export default async function ServicesPage({ params }: PageProps) {
       <Navigation locale={safeLocale} t={t} />
 
       <main className="relative pt-page">
-        {/* ── Hero header ── */}
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div
@@ -71,12 +70,11 @@ export default async function ServicesPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* ── Crystal service grid ── */}
         <section className="py-16 md:py-24">
           <div className="container-lux">
             <ServicesCrystalGrid
-              metas={servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }))}
-              titles={servicesMeta.map(
+              metas={serviceMetas.map(({ id, slug, image }) => ({ id, slug, image }))}
+              titles={serviceMetas.map(
                 (meta) => t.services.find((s) => s.id === meta.id)?.title ?? meta.id,
               )}
               viewServiceLabel={t.servicePage.viewService}
@@ -84,9 +82,8 @@ export default async function ServicesPage({ params }: PageProps) {
           </div>
         </section>
 
-        <PricingAddons t={t.pricingAddons} />
+        <PricingAddons t={t.pricingAddons} categories={addonStructure} />
 
-        {/* ── Capability categories ── */}
         <div className="container-lux border-t border-borderSubtle py-10">
           <p className="mx-auto max-w-3xl text-center text-sm leading-relaxed text-textMuted">
             {sp.pricingNote}

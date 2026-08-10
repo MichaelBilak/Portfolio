@@ -5,30 +5,46 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { PricingAddons } from "@/components/pricing-addons";
+import { ADDON_CATEGORIES, type AddonCategoryConfig } from "@/data/pricing";
 import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
+interface ServiceMetaLite {
+  id: string;
+  slug: string;
+  image: string;
+}
+
 interface OrderServicesProps {
   t: TranslationSet;
+  serviceMetas?: ServiceMetaLite[];
+  addonCategories?: AddonCategoryConfig[];
 }
 
 function parseList(value: string | null): string[] {
   return value?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
 }
 
-function slugsToServiceIds(slugs: string[]): Set<string> {
-  const ids = new Set<string>();
-  for (const slug of slugs) {
-    const meta = servicesMeta.find((m) => m.slug === slug);
-    if (meta) ids.add(meta.id);
-  }
-  return ids;
-}
-
-export function OrderServices({ t }: OrderServicesProps) {
+export function OrderServices({
+  t,
+  serviceMetas,
+  addonCategories = ADDON_CATEGORIES,
+}: OrderServicesProps) {
+  const metas =
+    serviceMetas ??
+    servicesMeta.map(({ id, slug, image }) => ({ id, slug, image }));
   const searchParams = useSearchParams();
+
+  function slugsToServiceIds(slugs: string[]): Set<string> {
+    const ids = new Set<string>();
+    for (const slug of slugs) {
+      const meta = metas.find((m) => m.slug === slug);
+      if (meta) ids.add(meta.id);
+    }
+    return ids;
+  }
 
   const [selected, setSelected] = useState<Set<string>>(() =>
     slugsToServiceIds(parseList(searchParams.get("services"))),
@@ -55,17 +71,15 @@ export function OrderServices({ t }: OrderServicesProps) {
     });
   }
 
-  const selectedSlugs = servicesMeta
-    .filter((m) => selected.has(m.id))
-    .map((m) => m.slug);
+  const selectedSlugs = metas.filter((m) => selected.has(m.id)).map((m) => m.slug);
 
   const selectedTitles = useMemo(
     () =>
-      servicesMeta
+      metas
         .filter((meta) => selected.has(meta.id))
         .map((meta) => t.services.find((s) => s.id === meta.id)?.title)
         .filter((title): title is string => Boolean(title)),
-    [selected, t.services],
+    [selected, t.services, metas],
   );
 
   const params = new URLSearchParams();
@@ -95,7 +109,7 @@ export function OrderServices({ t }: OrderServicesProps) {
           </aside>
 
           <div className="grid gap-5 md:grid-cols-2 lg:gap-6 lg:clear-none">
-            {servicesMeta.map((meta) => {
+            {metas.map((meta) => {
               const copy = t.services.find((s) => s.id === meta.id);
               if (!copy) return null;
               const isSelected = selected.has(meta.id);
@@ -169,6 +183,7 @@ export function OrderServices({ t }: OrderServicesProps) {
                 selected={addons}
                 onToggle={toggleAddon}
                 embedded
+                categories={addonCategories}
               />
             </div>
           </section>
@@ -186,6 +201,11 @@ export function OrderServices({ t }: OrderServicesProps) {
             <Link
               href={contactHref}
               className={btn("primary", "lg", "w-full md:w-auto")}
+              onClick={() => {
+                void import("@/components/analytics").then(({ trackEvent }) =>
+                  trackEvent("order_proceed", { count: selected.size }),
+                );
+              }}
             >
               {op.proceedCta}
               <ArrowUpRight size={18} />

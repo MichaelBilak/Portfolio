@@ -9,12 +9,12 @@ interface TrustStripProps {
 export function TrustStrip({ t }: TrustStripProps) {
   const items = t.trust.map((label, index) => (
     <span key={`${label}-${index}`} className="flex items-center">
-      <span className="font-display text-2xl font-light tracking-tight text-textPrimary/90 whitespace-nowrap sm:text-3xl md:text-4xl">
+      <span className="font-display text-xl font-light tracking-tight text-textPrimary/90 whitespace-nowrap sm:text-3xl md:text-4xl">
         {preventBrokenPhrases(label)}
       </span>
       <span
         aria-hidden
-        className="mx-7 inline-block h-2 w-2 rotate-45 bg-accentGold/70 md:mx-10"
+        className="mx-5 inline-block h-2 w-2 rotate-45 bg-accentGold/70 sm:mx-7 md:mx-10"
       />
     </span>
   ));

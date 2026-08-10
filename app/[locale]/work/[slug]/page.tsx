@@ -10,8 +10,9 @@ import { Navigation } from "@/components/navigation";
 import { projectsMeta } from "@/data/projects";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
-import { Locale, translations } from "@/lib/translations";
+import { Locale } from "@/lib/translations";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -24,12 +25,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
-  const index = projectsMeta.findIndex((p) => p.slug === slug);
-  if (index === -1) return {};
-  const meta = projectsMeta[index];
-  const project = t.projects.find((p) => p.id === meta.id);
+  const { t, projects } = await getSiteContent(locale as Locale);
+  const meta = projects.find((p) => p.slug === slug);
+  if (!meta) return {};
+  const project = meta.localized || t.projects.find((p) => p.id === meta.id);
   if (!project) return {};
   return {
     title: pageTitle(project.name),
@@ -48,17 +47,20 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t, projects } = await getSiteContent(safeLocale);
 
-  const index = projectsMeta.findIndex((p) => p.slug === slug);
-  if (index === -1) notFound();
+  const meta = projects.find((p) => p.slug === slug);
+  if (!meta) notFound();
 
-  const meta = projectsMeta[index];
-  const project = t.projects.find((p) => p.id === meta.id)!;
+  const project = meta.localized || t.projects.find((p) => p.id === meta.id);
+  if (!project) notFound();
   const hasLiveSite = meta.url.startsWith("http");
-  const otherProjects = projectsMeta
-    .map((m) => ({ meta: m, copy: t.projects.find((p) => p.id === m.id)! }))
-    .filter((p) => p.meta.slug !== slug)
+  const otherProjects = projects
+    .map((m) => ({
+      meta: m,
+      copy: m.localized || t.projects.find((p) => p.id === m.id)!,
+    }))
+    .filter((p) => p.meta.slug !== slug && p.copy)
     .slice(0, 3);
 
   return (

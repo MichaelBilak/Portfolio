@@ -1,3 +1,4 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
@@ -10,6 +11,12 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
   },
   modularizeImports: {
     "lucide-react": {
@@ -18,6 +25,13 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ["framer-motion", "lucide-react"],
+  },
+  webpack: (config, { dev }) => {
+    // Surface real minify errors instead of WebpackError constructor crash on some Windows setups
+    if (!dev && process.env.DISABLE_MINIFY === "1") {
+      config.optimization = { ...config.optimization, minimize: false };
+    }
+    return config;
   },
   async headers() {
     return [
@@ -28,6 +42,10 @@ const nextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
         ],
       },
     ];
@@ -72,4 +90,4 @@ const nextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withPayload(withNextIntl(nextConfig));

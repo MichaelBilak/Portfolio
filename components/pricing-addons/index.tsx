@@ -11,6 +11,7 @@ interface PricingAddonsProps {
   onToggle?: (id: string) => void;
   /** Skip outer section/container/header — for embedding inside order page */
   embedded?: boolean;
+  categories?: typeof ADDON_CATEGORIES;
 }
 
 function AddonGrid({
@@ -18,11 +19,12 @@ function AddonGrid({
   selectable,
   selected,
   onToggle,
+  categories = ADDON_CATEGORIES,
 }: Omit<PricingAddonsProps, "embedded">) {
   return (
     <>
       <div className="grid gap-12 md:grid-cols-2 md:gap-x-16">
-        {ADDON_CATEGORIES.map((cat, catIndex) => {
+        {categories.map((cat, catIndex) => {
           const localized = t.categories.find((c) => c.id === cat.id);
           if (!localized) return null;
 
@@ -88,10 +90,17 @@ export function PricingAddons({
   selected,
   onToggle,
   embedded = false,
+  categories,
 }: PricingAddonsProps) {
   if (embedded) {
     return (
-      <AddonGrid t={t} selectable={selectable} selected={selected} onToggle={onToggle} />
+      <AddonGrid
+        t={t}
+        selectable={selectable}
+        selected={selected}
+        onToggle={onToggle}
+        categories={categories}
+      />
     );
   }
 
@@ -102,14 +111,20 @@ export function PricingAddons({
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
             {t.eyebrow}
           </p>
-          <h2 className="mt-3 whitespace-nowrap text-fluid-title font-display font-light text-textPrimary">
+          <h2 className="mt-3 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
             {t.title}
           </h2>
           <p className="mt-4 max-w-2xl text-base text-textSecondary">{t.subtitle}</p>
         </Reveal>
 
         <div className="mt-12">
-          <AddonGrid t={t} selectable={selectable} selected={selected} onToggle={onToggle} />
+          <AddonGrid
+            t={t}
+            selectable={selectable}
+            selected={selected}
+            onToggle={onToggle}
+            categories={categories}
+          />
         </div>
       </div>
     </section>

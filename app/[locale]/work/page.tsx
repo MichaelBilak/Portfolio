@@ -9,8 +9,9 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
-import { Locale, translations } from "@/lib/translations";
+import { Locale } from "@/lib/translations";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -19,8 +20,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
-  const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t } = await getSiteContent(locale as Locale);
   return {
     title: pageTitle(t.workPage.title),
     description: t.workPage.subtitle,
@@ -33,7 +33,7 @@ export default async function WorkPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const safeLocale = locale as Locale;
-  const t = translations[safeLocale];
+  const { t, projects } = await getSiteContent(safeLocale);
 
   return (
     <>
@@ -67,7 +67,7 @@ export default async function WorkPage({ params }: PageProps) {
           </div>
         </section>
 
-        <FeaturedWork t={t} variant="all" hideHeading />
+        <FeaturedWork t={t} variant="all" hideHeading projects={projects} />
 
         <AuditCta t={t} />
       </main>

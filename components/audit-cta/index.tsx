@@ -32,7 +32,7 @@ export function AuditCta({ t }: AuditCtaProps) {
             </span>
             <h2 className="mt-7 text-fluid-title font-display font-semibold leading-[1.12] text-textPrimary text-safe-wrap">
               {t.audit.title.split("\n").map((line) => (
-                <span key={line} className="block whitespace-nowrap text-safe-wrap">
+                <span key={line} className="block text-safe-wrap sm:whitespace-nowrap">
                   {preventBrokenPhrases(line)}
                 </span>
               ))}
