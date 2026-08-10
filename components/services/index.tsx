@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import {
+  animate,
   motion,
   useMotionValue,
   useMotionValueEvent,
@@ -11,10 +12,11 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { useIsDesktop } from "@/lib/hooks/use-is-desktop";
 import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { TranslationSet } from "@/lib/translations";
 
@@ -61,7 +63,9 @@ export function Services({ t, serviceMetas }: ServicesProps) {
   const items = useServiceItems(t, metas);
   const reduce = useReducedMotion();
   const lite = useLiteMode();
-  const simplified = Boolean(reduce || lite);
+  const isDesktop = useIsDesktop();
+  // Scroll-hijack carousel only on desktop; phones/tablets get tap + autoplay.
+  const simplified = Boolean(reduce || lite || !isDesktop);
   const [active, setActive] = useState(0);
 
   return (
@@ -70,7 +74,11 @@ export function Services({ t, serviceMetas }: ServicesProps) {
         <div className="container-lux">
           <ServicesIntro t={t} />
           <div className="mt-10 md:mt-12">
-            <StaticCarousel items={items} active={0} />
+            <InteractiveCarousel
+              items={items}
+              active={active}
+              onActiveChange={setActive}
+            />
           </div>
         </div>
       ) : (
@@ -204,27 +212,112 @@ function ScrollCarousel({
   );
 }
 
-function StaticCarousel({
+/** Touch / lite-mode carousel — autoplay + tap/swipe, no scroll hijack. */
+function InteractiveCarousel({
   items,
   active,
+  onActiveChange,
 }: {
   items: CarouselItem[];
   active: number;
+  onActiveChange: (index: number) => void;
 }) {
+  const reduce = useReducedMotion();
+  const count = items.length;
+  const step = 360 / Math.max(count, 1);
   const rotateZ = useMotionValue(0);
+  const pauseUntilRef = useRef(0);
+  const activeRef = useRef(active);
+  const pointerStartX = useRef<number | null>(null);
   const activeItem = items[active] ?? items[0];
+  activeRef.current = active;
+
+  useEffect(() => {
+    const target = -active * step;
+    if (reduce) {
+      rotateZ.set(target);
+      return;
+    }
+    const controls = animate(rotateZ, target, {
+      type: "spring",
+      stiffness: 70,
+      damping: 18,
+      mass: 0.85,
+    });
+    return () => controls.stop();
+  }, [active, step, reduce, rotateZ]);
+
+  useEffect(() => {
+    if (reduce || count <= 1) return;
+    const id = window.setInterval(() => {
+      if (Date.now() < pauseUntilRef.current) return;
+      onActiveChange((activeRef.current + 1) % count);
+    }, 3400);
+    return () => window.clearInterval(id);
+  }, [count, onActiveChange, reduce]);
+
+  function select(index: number) {
+    if (index === active) return;
+    pauseUntilRef.current = Date.now() + 7000;
+    onActiveChange(index);
+  }
+
+  function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    pointerStartX.current = event.clientX;
+  }
+
+  function onPointerUp(event: ReactPointerEvent<HTMLDivElement>) {
+    if (pointerStartX.current == null || count <= 1) return;
+    const delta = event.clientX - pointerStartX.current;
+    pointerStartX.current = null;
+    if (Math.abs(delta) < 42) return;
+    pauseUntilRef.current = Date.now() + 7000;
+    if (delta < 0) onActiveChange((active + 1) % count);
+    else onActiveChange((active - 1 + count) % count);
+  }
 
   return (
-    <div className="flex flex-col items-center">
-      <CarouselStage items={items} active={active} rotateZ={rotateZ} />
+    <div
+      className="flex touch-pan-y flex-col items-center"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        pointerStartX.current = null;
+      }}
+    >
+      <CarouselStage
+        items={items}
+        active={active}
+        rotateZ={rotateZ}
+        onSelectIndex={select}
+      />
       {activeItem ? (
-        <div className="mt-20 w-full max-w-4xl px-4 text-center sm:mt-24 sm:px-6">
-          <h3 className="px-1 font-display text-xl font-semibold tracking-tight text-textPrimary text-safe-wrap sm:text-2xl md:whitespace-nowrap md:text-3xl">
+        <div className="mt-16 w-full max-w-4xl px-4 text-center sm:mt-20 sm:px-6">
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-accentGold/80">
+            {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          </p>
+          <h3 className="mt-2 px-1 font-display text-xl font-semibold tracking-tight text-textPrimary text-safe-wrap sm:text-2xl md:whitespace-nowrap md:text-3xl">
             {activeItem.title}
           </h3>
           <p className="mt-2 px-1 font-mono text-[10px] uppercase tracking-[0.14em] text-accentWarm/75 text-pretty sm:tracking-[0.16em] md:whitespace-nowrap">
             {activeItem.details}
           </p>
+          <div className="mt-5 flex items-center justify-center gap-2" aria-hidden>
+            {items.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                tabIndex={-1}
+                aria-label={item.title}
+                onClick={() => select(index)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === active
+                    ? "w-6 bg-accentGold"
+                    : "w-1.5 bg-borderStrong hover:bg-accentGold/50"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
@@ -235,10 +328,12 @@ function CarouselStage({
   items,
   active,
   rotateZ,
+  onSelectIndex,
 }: {
   items: CarouselItem[];
   active: number;
   rotateZ: MotionValue<number>;
+  onSelectIndex?: (index: number) => void;
 }) {
   const count = items.length;
   const step = 360 / Math.max(count, 1);
@@ -256,6 +351,7 @@ function CarouselStage({
             ringRotateZ={rotateZ}
             radiusX={radii.x}
             radiusY={radii.y}
+            onSelect={onSelectIndex ? () => onSelectIndex(index) : undefined}
           />
         ))}
       </div>
@@ -290,6 +386,7 @@ const CarouselCrystal = memo(function CarouselCrystal({
   ringRotateZ,
   radiusX,
   radiusY,
+  onSelect,
 }: {
   item: CarouselItem;
   angle: number;
@@ -297,6 +394,7 @@ const CarouselCrystal = memo(function CarouselCrystal({
   ringRotateZ: MotionValue<number>;
   radiusX: number;
   radiusY: number;
+  onSelect?: () => void;
 }) {
   // Numeric px positions — CSS calc()/vars break Framer Motion x/y.
   // Orbit around the crystal's visual center (not its top-left).
@@ -321,6 +419,27 @@ const CarouselCrystal = memo(function CarouselCrystal({
   const opacity = useTransform(depth, [0, 0.35, 1], [1, 0.28, 0.08]);
   const zIndex = useTransform(depth, (value) => Math.round((1 - value) * 50));
 
+  const figure = (
+    <>
+      <span
+        aria-hidden
+        className={`crystal-halo pointer-events-none absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[40px] sm:h-36 sm:w-36 ${
+          isFront ? "bg-accentGold/25 opacity-80" : "hidden"
+        }`}
+      />
+      <Image
+        src={item.image}
+        alt=""
+        width={460}
+        height={460}
+        sizes="(max-width: 640px) 42vw, 220px"
+        priority={isFront}
+        loading={isFront ? "eager" : "lazy"}
+        className="crystal-figure relative h-36 w-36 object-contain sm:h-44 sm:w-44 md:h-52 md:w-52"
+      />
+    </>
+  );
+
   return (
     <motion.div
       className="services-carousel-item absolute left-1/2 top-1/2 will-change-transform"
@@ -335,30 +454,26 @@ const CarouselCrystal = memo(function CarouselCrystal({
         `translate(-50%, -50%) translate3d(${tx}, ${ty}, 0) scale(${s})`
       }
     >
-      <Link
-        href={`/services/${item.slug}`}
-        aria-label={item.title}
-        aria-current={isFront ? "true" : undefined}
-        className="group crystal-stage focus-outline relative block"
-        tabIndex={isFront ? 0 : -1}
-      >
-        <span
-          aria-hidden
-          className={`crystal-halo pointer-events-none absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[40px] sm:h-36 sm:w-36 ${
-            isFront ? "bg-accentGold/25 opacity-80" : "hidden"
-          }`}
-        />
-        <Image
-          src={item.image}
-          alt=""
-          width={460}
-          height={460}
-          sizes="(max-width: 640px) 42vw, 220px"
-          priority={isFront}
-          loading={isFront ? "eager" : "lazy"}
-          className="crystal-figure relative h-36 w-36 object-contain sm:h-44 sm:w-44 md:h-52 md:w-52"
-        />
-      </Link>
+      {onSelect && !isFront ? (
+        <button
+          type="button"
+          aria-label={item.title}
+          onClick={onSelect}
+          className="group crystal-stage focus-outline relative block cursor-pointer"
+        >
+          {figure}
+        </button>
+      ) : (
+        <Link
+          href={`/services/${item.slug}`}
+          aria-label={item.title}
+          aria-current={isFront ? "true" : undefined}
+          className="group crystal-stage focus-outline relative block"
+          tabIndex={isFront ? 0 : -1}
+        >
+          {figure}
+        </Link>
+      )}
     </motion.div>
   );
 });

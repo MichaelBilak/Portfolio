@@ -161,26 +161,8 @@ html.lite-mode .ambient-glow::after {
   will-change: auto;
 }
 
-html.lite-mode .marquee {
-  animation: none;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: center;
-  gap: 0.5rem 0;
-}
-
-/* Remove the side-fade mask so wrapped text isn't clipped on mobile */
-html.lite-mode .mask-fade-x {
-  -webkit-mask-image: none;
-  mask-image: none;
-  overflow: visible;
-}
-
-/* Hide the duplicated (aria-hidden) items in lite-mode — they're only
-   needed for the seamless scroll loop */
-html.lite-mode .marquee [aria-hidden="true"] {
-  display: none;
-}
+/* Keep trust-strip marquee scrolling in lite-mode — CSS translate is cheap.
+   prefers-reduced-motion still kills it via the global reduce rules above. */
 
 html.lite-mode .text-gradient-sheen {
   animation: none;
