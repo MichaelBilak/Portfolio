@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { studioPath } from "@/lib/studio/path";
 
 const SECTIONS = [
   "nav",
@@ -35,7 +36,7 @@ export default function SiteCopyIndexPage() {
       <p className="st-sub">Localized marketing sections (JSON per locale).</p>
       <div className="st-cards">
         {SECTIONS.map((section) => (
-          <Link key={section} href={`/studio/copy/${section}?locale=it`} className="st-card">
+          <Link key={section} href={`${studioPath(`/copy/${section}`)}?locale=it`} className="st-card">
             <strong style={{ fontSize: "1rem" }}>{section}</strong>
             <span>Edit · {LOCALES.join("/")}</span>
           </Link>

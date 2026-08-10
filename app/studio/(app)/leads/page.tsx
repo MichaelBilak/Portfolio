@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { studioPath } from "@/lib/studio/path";
 
 export default async function LeadsListPage({
   searchParams,
@@ -52,7 +53,7 @@ export default async function LeadsListPage({
             <tr key={lead.id}>
               <td>{new Date(lead.created_at).toLocaleString()}</td>
               <td>
-                <Link href={`/studio/leads/${lead.id}`}>{lead.full_name || lead.email}</Link>
+                <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
               </td>
               <td>{lead.business_name}</td>
               <td>

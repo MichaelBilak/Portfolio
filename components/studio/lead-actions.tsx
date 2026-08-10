@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { studioPath } from "@/lib/studio/path";
 
 export function LeadActions({
   leadId,
@@ -44,7 +45,7 @@ export function LeadActions({
   async function gdprDelete() {
     if (!confirm("Permanently delete this lead (GDPR)?")) return;
     const res = await fetch(`/api/studio/leads/${leadId}/gdpr`, { method: "DELETE" });
-    if (res.ok) router.push("/studio/leads");
+    if (res.ok) router.push(studioPath("/leads"));
     else setMsg("Delete failed");
   }
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { updateStudioSession } from "./lib/supabase/middleware";
+import { getStudioBasePath } from "./lib/studio/path";
 
 const rateMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 5;
@@ -59,6 +60,21 @@ const intlMiddleware = createMiddleware(routing);
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const studioBase = getStudioBasePath();
+
+  // Obscure public path → internal /studio (rewrite, URL stays secret)
+  if (pathname === studioBase || pathname.startsWith(`${studioBase}/`)) {
+    const rest = pathname.slice(studioBase.length) || "";
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = `/studio${rest}`;
+    const response = NextResponse.rewrite(rewriteUrl);
+    return updateStudioSession(request, response);
+  }
+
+  // Hide default /studio when a custom path is configured
+  if (studioBase !== "/studio" && (pathname === "/studio" || pathname.startsWith("/studio/"))) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
 
   if (pathname.startsWith("/studio")) {
     return updateStudioSession(request);

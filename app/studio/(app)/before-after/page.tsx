@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { studioPath } from "@/lib/studio/path";
 
 export default async function BeforeAfterAdminPage() {
   const sb = createAdminClient();
@@ -24,7 +25,7 @@ export default async function BeforeAfterAdminPage() {
               <td>{row.case_id}</td>
               <td>{row.published ? "yes" : "no"}</td>
               <td>
-                <Link href={`/studio/before-after/${row.id}`}>Edit</Link>
+                <Link href={studioPath(`/before-after/${row.id}`)}>Edit</Link>
               </td>
             </tr>
           ))}

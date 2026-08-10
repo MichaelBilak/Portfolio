@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
+import { studioPath } from "@/lib/studio/path";
 
 export default async function StudioDashboardPage() {
   if (!isSupabaseConfigured()) {
@@ -50,13 +51,13 @@ export default async function StudioDashboardPage() {
         </div>
       </div>
       <div className="st-row">
-        <Link className="st-btn primary" href="/studio/leads">
+        <Link className="st-btn primary" href={studioPath("/leads")}>
           Open leads
         </Link>
-        <Link className="st-btn" href="/studio/copy">
+        <Link className="st-btn" href={studioPath("/copy")}>
           Edit site copy
         </Link>
-        <Link className="st-btn" href="/studio/services">
+        <Link className="st-btn" href={studioPath("/services")}>
           Edit services
         </Link>
       </div>

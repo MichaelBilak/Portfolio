@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { studioPath } from "@/lib/studio/path";
 
 export default async function ServicesAdminPage() {
   const sb = createAdminClient();
@@ -28,7 +29,7 @@ export default async function ServicesAdminPage() {
               <td>{row.slug}</td>
               <td>{row.base_price}</td>
               <td>
-                <Link href={`/studio/services/${row.id}`}>Edit</Link>
+                <Link href={studioPath(`/services/${row.id}`)}>Edit</Link>
               </td>
             </tr>
           ))}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { JsonResourceEditor } from "@/components/studio/json-resource-editor";
+import { studioPath } from "@/lib/studio/path";
 
 const LOCALES = ["it", "en", "fr", "ru", "de", "es"] as const;
 
@@ -36,7 +37,7 @@ export default async function SiteCopySectionPage({
         {LOCALES.map((l) => (
           <Link
             key={l}
-            href={`/studio/copy/${section}?locale=${l}`}
+            href={`${studioPath(`/copy/${section}`)}?locale=${l}`}
             className={`st-tab${l === locale ? " active" : ""}`}
           >
             {l.toUpperCase()}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { studioPath } from "@/lib/studio/path";
 
 export default async function AddonsAdminPage() {
   const sb = createAdminClient();
@@ -24,7 +25,7 @@ export default async function AddonsAdminPage() {
             <tr key={row.id}>
               <td>{row.category_id}</td>
               <td>
-                <Link href={`/studio/addons/${row.id}`}>Edit</Link>
+                <Link href={studioPath(`/addons/${row.id}`)}>Edit</Link>
               </td>
             </tr>
           ))}

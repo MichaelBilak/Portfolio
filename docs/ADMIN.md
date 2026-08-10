@@ -1,55 +1,30 @@
 # DormUp Studio Admin
 
-Custom admin at **`/studio`** (Supabase Auth + Postgres + Storage). Payload CMS has been removed.
+Public admin URL is set by env (not the obvious `/studio`):
+
+```env
+NEXT_PUBLIC_STUDIO_PATH=/ops-k7m2xq9n4w
+```
+
+Open `https://your-domain/ops-k7m2xq9n4w`. Direct `/studio` returns **404** when a custom path is set.
 
 ## Setup
 
-1. Create a Supabase project.
-2. In **SQL Editor**, run [`supabase/migrations/001_studio.sql`](../supabase/migrations/001_studio.sql).
-3. Create a Storage bucket named **`media`** (public).
-4. Copy API keys into `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-SUPABASE_SERVICE_ROLE_KEY=eyJ...
-```
-
-5. Create your user in **Authentication → Users** (email/password).
-6. In SQL:
-
-```sql
-update profiles set role = 'owner' where id = '<your-auth-user-uuid>';
-```
-
-7. Seed catalog + copy from the static site data:
-
-```bash
-npm run studio:seed
-```
-
-8. Open [http://localhost:3000/studio](http://localhost:3000/studio) and sign in.
+1. Supabase project + run [`supabase/SETUP.sql`](../supabase/SETUP.sql)
+2. Storage bucket **`media`** (public)
+3. `.env.local`: Supabase keys + `NEXT_PUBLIC_STUDIO_PATH`
+4. Auth user → `update profiles set role = 'owner' where id = '…'`
+5. `npm run studio:seed`
+6. Open `http://localhost:3000` + your studio path
 
 ## Roles
 
 | Role | Access |
 |------|--------|
 | `owner` | Everything + Users |
-| `editor` | Content (projects, services, copy, SEO, media, settings) + leads |
+| `editor` | Content + leads |
 | `sales` | Leads only |
-
-## Features
-
-- **Dashboard** — lead counters, quick links
-- **Leads CRM** — status/priority, notes, GDPR export/delete
-- **Projects / Services / Addons / Process / Before-After** — JSON editors with i18n
-- **Site copy** — per-section, per-locale editors
-- **SEO / Redirects / Settings / Media / Users**
-
-## Public site
-
-[`lib/cms/catalog.ts`](../lib/cms/catalog.ts) reads Supabase when configured; otherwise falls back to `data/*` + `lib/translations.ts`. Contact form writes to `leads` when Supabase is configured; email/Sheets still work via env.
 
 ## Vercel
 
-Set the same three Supabase env vars (+ Gmail etc.) on the project. No `PAYLOAD_SECRET` / `DATABASE_URL` needed for Studio.
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_STUDIO_PATH`

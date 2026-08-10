@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { JsonResourceEditor } from "@/components/studio/json-resource-editor";
+import { studioPath } from "@/lib/studio/path";
 
 const LOCALES = ["it", "en", "fr", "ru", "de", "es"] as const;
 
@@ -21,7 +22,7 @@ export default async function SeoAdminPage({
       <p className="st-sub">Default title/description, OG, analytics IDs.</p>
       <div className="st-tabs">
         {LOCALES.map((l) => (
-          <a key={l} href={`/studio/seo?locale=${l}`} className={`st-tab${l === locale ? " active" : ""}`}>
+          <a key={l} href={`${studioPath("/seo")}?locale=${l}`} className={`st-tab${l === locale ? " active" : ""}`}>
             {l.toUpperCase()}
           </a>
         ))}

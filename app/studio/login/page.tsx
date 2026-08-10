@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
+import { studioPath } from "@/lib/studio/path";
 
 export default function StudioLoginPage() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function StudioLoginPage() {
         setError(authError.message);
         return;
       }
-      router.replace("/studio");
+      router.replace(studioPath());
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
