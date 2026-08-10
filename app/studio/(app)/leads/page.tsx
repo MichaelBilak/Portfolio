@@ -31,9 +31,9 @@ export default async function LeadsListPage({
   return (
     <>
       <h1 className="st-h1">Заявки</h1>
-      <p className="st-sub">Входящие с формы на сайте. Меняйте статус и добавляйте заметки.</p>
+      <p className="st-sub">Входящие обращения с формы на сайте.</p>
       <form className="st-row" style={{ marginBottom: "1rem" }}>
-        <select className="st-select" name="status" defaultValue={sp.status || ""} style={{ width: 180 }}>
+        <select className="st-select" name="status" defaultValue={sp.status || ""} style={{ width: 160 }}>
           <option value="">Все статусы</option>
           <option value="new">Новые</option>
           <option value="in_progress">В работе</option>
@@ -41,47 +41,37 @@ export default async function LeadsListPage({
           <option value="lost">Отказ</option>
           <option value="spam">Спам</option>
         </select>
-        <input
-          className="st-input"
-          name="q"
-          placeholder="Поиск по имени / email…"
-          defaultValue={sp.q || ""}
-          style={{ width: 240 }}
-        />
+        <input className="st-input" name="q" placeholder="Поиск по имени или email…" defaultValue={sp.q || ""} style={{ width: 240 }} />
         <button className="st-btn" type="submit">
           Найти
         </button>
       </form>
-      {(leads || []).length === 0 ? (
-        <p className="st-empty">Заявок пока нет.</p>
-      ) : (
-        <table className="st-table">
-          <thead>
-            <tr>
-              <th>Дата</th>
-              <th>Клиент</th>
-              <th>Бизнес</th>
-              <th>Статус</th>
-              <th>Язык</th>
+      <table className="st-table">
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Клиент</th>
+            <th>Бизнес</th>
+            <th>Статус</th>
+            <th>Язык</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(leads || []).map((lead) => (
+            <tr key={lead.id}>
+              <td>{new Date(lead.created_at).toLocaleString("ru-RU")}</td>
+              <td>
+                <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
+              </td>
+              <td>{lead.business_name}</td>
+              <td>
+                <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
+              </td>
+              <td>{lead.locale}</td>
             </tr>
-          </thead>
-          <tbody>
-            {(leads || []).map((lead) => (
-              <tr key={lead.id}>
-                <td>{new Date(lead.created_at).toLocaleString("ru-RU")}</td>
-                <td>
-                  <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
-                </td>
-                <td>{lead.business_name}</td>
-                <td>
-                  <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
-                </td>
-                <td>{lead.locale}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }

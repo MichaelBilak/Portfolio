@@ -17,7 +17,7 @@ export default async function UsersAdminPage() {
   return (
     <>
       <h1 className="st-h1">Команда</h1>
-      <p className="st-sub">Кто может заходить в панель.</p>
+      <p className="st-sub">Пользователи и права доступа к панели.</p>
       <UsersManager initial={rows} />
     </>
   );

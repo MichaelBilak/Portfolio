@@ -7,7 +7,7 @@ export default async function RedirectsAdminPage() {
   return (
     <>
       <h1 className="st-h1">Редиректы</h1>
-      <p className="st-sub">Старые адреса → новые.</p>
+      <p className="st-sub">Перенаправление старых адресов на новые.</p>
       <RedirectsManager initial={data || []} />
     </>
   );

@@ -12,7 +12,7 @@ export default async function ProjectsAdminPage() {
   return (
     <>
       <h1 className="st-h1">Портфолио</h1>
-      <p className="st-sub">Проекты на сайте.</p>
+      <p className="st-sub">Проекты и кейсы на сайте.</p>
       <table className="st-table">
         <thead>
           <tr>

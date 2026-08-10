@@ -1,250 +1,228 @@
 import Link from "next/link";
+import { ArrowRight, Inbox, TrendingUp, Trophy, UsersRound } from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 import { studioPath } from "@/lib/studio/path";
-import { BarChart, DonutChart, Sparkline } from "@/components/studio/charts";
+import {
+  BreakdownChart,
+  ContentHealth,
+  LeadsTrendChart,
+} from "@/components/studio/analytics-charts";
 
-const STATUS_LABEL: Record<string, string> = {
-  new: "Новые",
-  in_progress: "В работе",
-  won: "Выиграны",
-  lost: "Отказ",
-  spam: "Спам",
+type LeadRow = {
+  status: string;
+  source: string | null;
+  locale: string | null;
+  created_at: string;
 };
 
-const STATUS_COLOR: Record<string, string> = {
-  new: "#d4af37",
-  in_progress: "#6b9fd4",
-  won: "#6cbc7a",
-  lost: "#e05a5a",
-  spam: "#7a7368",
-};
+function titleCase(value: string) {
+  const labels: Record<string, string> = {
+    new: "Новые",
+    in_progress: "В работе",
+    won: "Выиграны",
+    lost: "Отказ",
+    spam: "Спам",
+    unknown: "Не указано",
+    it: "Итальянский",
+    en: "Английский",
+    fr: "Французский",
+    ru: "Русский",
+    de: "Немецкий",
+    es: "Испанский",
+  };
+  return labels[value] || value.replace(/_/g, " ");
+}
 
-function lastNDays(n: number) {
-  const days: string[] = [];
-  const now = new Date();
-  for (let i = n - 1; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(now.getDate() - i);
-    days.push(d.toISOString().slice(0, 10));
+function countBy(rows: LeadRow[], key: "status" | "source" | "locale") {
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    const value = row[key] || "unknown";
+    counts.set(value, (counts.get(value) || 0) + 1);
   }
-  return days;
+  return [...counts.entries()]
+    .map(([label, value]) => ({ label: titleCase(label), value }))
+    .sort((a, b) => b.value - a.value);
 }
 
 export default async function StudioDashboardPage() {
   if (!isSupabaseConfigured()) {
     return (
       <>
-        <h1 className="st-h1">Обзор</h1>
-        <p className="st-sub">Подключите Supabase в переменных окружения, чтобы увидеть аналитику.</p>
+        <h1 className="st-h1">Dashboard</h1>
+        <p className="st-sub">
+          Supabase env vars are missing. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY,
+          and SUPABASE_SERVICE_ROLE_KEY, then apply <code>supabase/migrations/001_studio.sql</code>.
+        </p>
       </>
     );
   }
 
   const sb = createAdminClient();
   const since = new Date();
-  since.setDate(since.getDate() - 29);
-  since.setHours(0, 0, 0, 0);
-
-  const [{ data: leads }, { data: recent }, projects, services] = await Promise.all([
+  since.setDate(since.getDate() - 30);
+  const [
+    leadsResult,
+    projectCount,
+    serviceCount,
+    projectTranslations,
+    serviceTranslations,
+  ] = await Promise.all([
     sb
       .from("leads")
-      .select("id, status, intent, locale, created_at, full_name, business_name, email")
+      .select("status, source, locale, created_at")
       .gte("created_at", since.toISOString())
-      .order("created_at", { ascending: true }),
-    sb
-      .from("leads")
-      .select("id, status, full_name, business_name, email, intent, created_at")
-      .order("created_at", { ascending: false })
-      .limit(8),
+      .order("created_at", { ascending: true })
+      .limit(1000),
     sb.from("projects").select("*", { count: "exact", head: true }),
     sb.from("services").select("*", { count: "exact", head: true }),
+    sb.from("project_i18n").select("*", { count: "exact", head: true }),
+    sb.from("service_i18n").select("*", { count: "exact", head: true }),
   ]);
+  const leads = (leadsResult.data || []) as LeadRow[];
+  const newCount = leads.filter((lead) => lead.status === "new").length;
+  const activeCount = leads.filter((lead) => lead.status === "in_progress").length;
+  const wonCount = leads.filter((lead) => lead.status === "won").length;
+  const conversion = leads.length ? Math.round((wonCount / leads.length) * 100) : 0;
+  const previousBoundary = new Date();
+  previousBoundary.setDate(previousBoundary.getDate() - 14);
+  const recentCount = leads.filter(
+    (lead) => new Date(lead.created_at) >= previousBoundary,
+  ).length;
+  const priorCount = leads.length - recentCount;
+  const growth = priorCount
+    ? Math.round(((recentCount - priorCount) / priorCount) * 100)
+    : recentCount
+      ? 100
+      : 0;
 
-  const all = leads || [];
-  const byStatus: Record<string, number> = {
-    new: 0,
-    in_progress: 0,
-    won: 0,
-    lost: 0,
-    spam: 0,
-  };
-  const byIntent: Record<string, number> = { audit: 0, contact: 0, other: 0 };
-  const byLocale: Record<string, number> = {};
-  const dayKeys = lastNDays(14);
-  const byDay: Record<string, number> = Object.fromEntries(dayKeys.map((d) => [d, 0]));
+  const trend = Array.from({ length: 14 }, (_, index) => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - (13 - index));
+    const next = new Date(date);
+    next.setDate(next.getDate() + 1);
+    return {
+      label: date.toLocaleDateString("en", { day: "numeric", month: "short" }),
+      value: leads.filter((lead) => {
+        const created = new Date(lead.created_at);
+        return created >= date && created < next;
+      }).length,
+    };
+  });
 
-  for (const lead of all) {
-    const st = lead.status || "new";
-    byStatus[st] = (byStatus[st] || 0) + 1;
-    const intent = lead.intent === "audit" || lead.intent === "contact" ? lead.intent : "other";
-    byIntent[intent] += 1;
-    const loc = (lead.locale || "?").toUpperCase();
-    byLocale[loc] = (byLocale[loc] || 0) + 1;
-    const day = String(lead.created_at).slice(0, 10);
-    if (day in byDay) byDay[day] += 1;
-  }
-
-  // Also count totals beyond 30d window for KPI cards
-  const [{ count: totalLeads }, { count: newCount }, { count: wonCount }] = await Promise.all([
-    sb.from("leads").select("*", { count: "exact", head: true }),
-    sb.from("leads").select("*", { count: "exact", head: true }).eq("status", "new"),
-    sb.from("leads").select("*", { count: "exact", head: true }).eq("status", "won"),
-  ]);
-
-  const closed = (byStatus.won || 0) + (byStatus.lost || 0);
-  const winRate = closed > 0 ? Math.round(((byStatus.won || 0) / closed) * 100) : 0;
-  const sparkValues = dayKeys.map((d) => byDay[d] || 0);
-  const statusItems = Object.entries(byStatus)
-    .filter(([, v]) => v > 0)
-    .map(([k, v]) => ({
-      label: STATUS_LABEL[k] || k,
-      value: v,
-      color: STATUS_COLOR[k] || "#d4af37",
-    }));
-
-  const localeItems = Object.entries(byLocale)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 6)
-    .map(([label, value]) => ({ label, value }));
-
-  const intentItems = [
-    { label: "Аудит", value: byIntent.audit, color: "#d4af37" },
-    { label: "Контакт", value: byIntent.contact, color: "#6b9fd4" },
-    { label: "Другое", value: byIntent.other, color: "#7a7368" },
-  ].filter((i) => i.value > 0);
+  const expectedTranslations =
+    ((projectCount.count || 0) + (serviceCount.count || 0)) * 6;
+  const actualTranslations =
+    (projectTranslations.count || 0) + (serviceTranslations.count || 0);
+  const contentHealth = expectedTranslations
+    ? (actualTranslations / expectedTranslations) * 100
+    : 100;
 
   return (
     <>
-      <div className="st-page-head">
+      <div className="st-page-header">
         <div>
-          <h1 className="st-h1">Обзор</h1>
-          <p className="st-sub">Заявки, конверсия и активность за последние 30 дней.</p>
+          <p className="st-eyebrow">Обзор бизнеса</p>
+          <h1 className="st-h1">Добрый день</h1>
+          <p className="st-sub">Главные показатели за последние 30 дней.</p>
         </div>
         <Link className="st-btn primary" href={studioPath("/leads")}>
-          Открыть заявки
+          <Inbox size={16} /> Открыть заявки
         </Link>
       </div>
 
-      <div className="st-cards st-cards-kpi">
-        <div className="st-card">
-          <span>Новые заявки</span>
-          <strong>{newCount ?? 0}</strong>
-        </div>
-        <div className="st-card">
-          <span>Всего заявок</span>
-          <strong>{totalLeads ?? 0}</strong>
-        </div>
-        <div className="st-card">
-          <span>Win rate (30д)</span>
-          <strong>{winRate}%</strong>
-        </div>
-        <div className="st-card">
-          <span>Услуг / проектов</span>
-          <strong>
-            {services.count ?? 0} / {projects.count ?? 0}
-          </strong>
-        </div>
-      </div>
-
-      <div className="st-grid-2">
-        <section className="st-panel">
-          <h2 className="st-h2">Заявки за 14 дней</h2>
-          <Sparkline values={sparkValues} />
-          <div className="st-muted-row">
-            {dayKeys.filter((_, i) => i % 3 === 0 || i === dayKeys.length - 1).map((d) => (
-              <span key={d}>{d.slice(5)}</span>
-            ))}
+      <div className="st-metrics">
+        <div className="st-metric">
+          <span className="st-metric-icon"><UsersRound size={18} /></span>
+          <div>
+            <small>Всего заявок</small>
+            <strong>{leads.length}</strong>
+            <em className={growth >= 0 ? "positive" : "negative"}>
+              {growth >= 0 ? "+" : ""}{growth}% к прошлым 14 дням
+            </em>
           </div>
-        </section>
-
-        <section className="st-panel">
-          <h2 className="st-h2">Статусы (30 дней)</h2>
-          {statusItems.length ? (
-            <DonutChart items={statusItems} />
-          ) : (
-            <p className="st-empty">Пока нет заявок за период.</p>
-          )}
-        </section>
-      </div>
-
-      <div className="st-grid-2" style={{ marginTop: "1rem" }}>
-        <section className="st-panel">
-          <h2 className="st-h2">Тип запроса</h2>
-          {intentItems.length ? (
-            <BarChart items={intentItems} />
-          ) : (
-            <p className="st-empty">Нет данных.</p>
-          )}
-        </section>
-        <section className="st-panel">
-          <h2 className="st-h2">Язык формы</h2>
-          {localeItems.length ? (
-            <BarChart
-              items={localeItems.map((i, idx) => ({
-                ...i,
-                color: ["#d4af37", "#c4a35a", "#8f7a3a", "#6b9fd4", "#6cbc7a", "#a8892a"][idx % 6],
-              }))}
-            />
-          ) : (
-            <p className="st-empty">Нет данных.</p>
-          )}
-        </section>
-      </div>
-
-      <section className="st-panel" style={{ marginTop: "1rem" }}>
-        <div className="st-page-head" style={{ marginBottom: "0.75rem" }}>
-          <h2 className="st-h2" style={{ margin: 0 }}>
-            Последние заявки
-          </h2>
-          <Link href={studioPath("/leads")}>Все →</Link>
         </div>
-        {(recent || []).length === 0 ? (
-          <p className="st-empty">Заявок ещё нет — они появятся из формы на сайте.</p>
-        ) : (
-          <table className="st-table">
-            <thead>
-              <tr>
-                <th>Когда</th>
-                <th>Клиент</th>
-                <th>Тип</th>
-                <th>Статус</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(recent || []).map((lead) => (
-                <tr key={lead.id}>
-                  <td>{new Date(lead.created_at).toLocaleString("ru-RU")}</td>
-                  <td>
-                    <Link href={studioPath(`/leads/${lead.id}`)}>
-                      {lead.full_name || lead.email || "Без имени"}
-                    </Link>
-                    <div className="st-table-sub">{lead.business_name}</div>
-                  </td>
-                  <td>{lead.intent === "audit" ? "Аудит" : "Контакт"}</td>
-                  <td>
-                    <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </section>
+        <div className="st-metric">
+          <span className="st-metric-icon"><Inbox size={18} /></span>
+          <div>
+            <small>Требуют внимания</small>
+            <strong>{newCount}</strong>
+            <em>{activeCount} сейчас в работе</em>
+          </div>
+        </div>
+        <div className="st-metric">
+          <span className="st-metric-icon"><Trophy size={18} /></span>
+          <div>
+            <small>Выиграны</small>
+            <strong>{wonCount}</strong>
+            <em>конверсия {conversion}%</em>
+          </div>
+        </div>
+        <div className="st-metric">
+          <span className="st-metric-icon"><TrendingUp size={18} /></span>
+          <div>
+            <small>Контент сайта</small>
+            <strong>{(projectCount.count || 0) + (serviceCount.count || 0)}</strong>
+            <em>{projectCount.count || 0} проектов · {serviceCount.count || 0} услуг</em>
+          </div>
+        </div>
+      </div>
 
-      <section className="st-quick" style={{ marginTop: "1.25rem" }}>
-        <Link href={studioPath("/content")} className="st-quick-card">
-          <strong>Контент сайта</strong>
-          <span>Услуги, портфолио, тексты</span>
-        </Link>
-        <Link href={studioPath("/media")} className="st-quick-card">
-          <strong>Медиа</strong>
-          <span>Картинки и файлы</span>
-        </Link>
-        <Link href={studioPath("/settings")} className="st-quick-card">
-          <strong>Настройки</strong>
-          <span>Бренд, SEO, доступы</span>
-        </Link>
-      </section>
+      <div className="st-dashboard-grid">
+        <section className="st-panel st-panel-wide">
+          <div className="st-panel-head">
+            <div>
+              <h2>Динамика заявок</h2>
+              <p>Новые обращения за последние 14 дней</p>
+            </div>
+            <span className="st-panel-total">{recentCount} заявок</span>
+          </div>
+          <LeadsTrendChart points={trend} />
+        </section>
+
+        <section className="st-panel">
+          <div className="st-panel-head">
+            <div>
+              <h2>Воронка продаж</h2>
+              <p>Текущий статус всех возможностей</p>
+            </div>
+          </div>
+          <BreakdownChart items={countBy(leads, "status")} emptyLabel="Заявок пока нет" />
+        </section>
+
+        <section className="st-panel">
+          <div className="st-panel-head">
+            <div>
+              <h2>Источники заявок</h2>
+              <p>Откуда клиенты узнают о студии</p>
+            </div>
+          </div>
+          <BreakdownChart items={countBy(leads, "source")} emptyLabel="Данные об источниках появятся здесь" />
+        </section>
+
+        <section className="st-panel">
+          <div className="st-panel-head">
+            <div>
+              <h2>Состояние сайта</h2>
+              <p>Готовность переводов каталога</p>
+            </div>
+          </div>
+          <ContentHealth value={contentHealth} label="Переводы" />
+          <Link href={studioPath("/catalog")} className="st-panel-link">
+            Проверить контент <ArrowRight size={15} />
+          </Link>
+        </section>
+
+        <section className="st-panel">
+          <div className="st-panel-head">
+            <div>
+              <h2>Языки аудитории</h2>
+              <p>Язык входящих обращений</p>
+            </div>
+          </div>
+          <BreakdownChart items={countBy(leads, "locale")} emptyLabel="Данные о языках появятся здесь" />
+        </section>
+      </div>
     </>
   );
 }
