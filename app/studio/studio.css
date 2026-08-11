@@ -1156,6 +1156,13 @@ body {
 
 .st-nav {
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.st-nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .st-nav-list {
