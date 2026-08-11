@@ -10,7 +10,7 @@ interface ContactCompactProps {
   t: TranslationSet;
 }
 
-/** Mobile homepage inline form after AuditCta — audit intent, minimal fields. */
+/** Mobile homepage inline form after AuditCta — same fields as /contact. */
 export function ContactCompact({ t }: ContactCompactProps) {
   return (
     <section id="contact-compact" className="border-t border-borderSubtle py-14 md:hidden">

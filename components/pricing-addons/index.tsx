@@ -1,5 +1,6 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { ADDON_CATEGORIES } from "@/data/pricing";
 import type { TranslationSet } from "@/lib/translations";
 import { Reveal } from "@/components/ui";
@@ -34,19 +35,12 @@ function AddonGrid({
                 {localized.title}
               </span>
 
-              <ul className="mt-6 space-y-0">
+              <ul className="mt-6 space-y-2">
                 {cat.items.map((item) => {
                   const copy = localized.items.find((i) => i.id === item.id);
                   if (!copy) return null;
 
                   const isSelected = selected?.has(item.id);
-
-                  const inner = (
-                    <div className="min-w-0 flex-1 pr-4">
-                      <p className="text-base font-medium text-textPrimary">{copy.label}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-textMuted">{copy.info}</p>
-                    </div>
-                  );
 
                   if (selectable && onToggle) {
                     return (
@@ -54,11 +48,39 @@ function AddonGrid({
                         <button
                           type="button"
                           onClick={() => onToggle(item.id)}
-                          className={`focus-outline flex min-h-11 w-full items-start border-b border-borderSubtle py-4 text-left transition-colors first:border-t hover:bg-white/[0.02] ${
-                            isSelected ? "bg-white/[0.03]" : ""
+                          aria-pressed={isSelected}
+                          className={`focus-outline flex min-h-11 w-full items-start gap-3 rounded-2xl border px-3.5 py-3.5 text-left transition-all duration-200 ${
+                            isSelected
+                              ? "border-accentGold/55 bg-accentGold/[0.1] shadow-[inset_3px_0_0_0_rgba(252,211,77,0.9)] ring-1 ring-accentGold/25"
+                              : "border-transparent hover:border-borderSubtle hover:bg-white/[0.03]"
                           }`}
                         >
-                          {inner}
+                          <div className="min-w-0 flex-1 pr-1">
+                            <p
+                              className={`text-base font-medium transition-colors ${
+                                isSelected ? "text-accentGold" : "text-textPrimary"
+                              }`}
+                            >
+                              {copy.label}
+                            </p>
+                            <p
+                              className={`mt-1 text-sm leading-relaxed transition-colors ${
+                                isSelected ? "text-textSecondary" : "text-textMuted"
+                              }`}
+                            >
+                              {copy.info}
+                            </p>
+                          </div>
+                          <span
+                            aria-hidden
+                            className={`mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                              isSelected
+                                ? "border-accentGold bg-accentGold text-bgPrimary shadow-[0_0_20px_-4px_rgba(252,211,77,0.65)]"
+                                : "border-borderStrong bg-white/[0.03] text-transparent"
+                            }`}
+                          >
+                            <Check size={14} strokeWidth={2.5} />
+                          </span>
                         </button>
                       </li>
                     );
@@ -69,7 +91,10 @@ function AddonGrid({
                       key={item.id}
                       className="flex items-start border-b border-borderSubtle py-4 first:border-t"
                     >
-                      {inner}
+                      <div className="min-w-0 flex-1 pr-4">
+                        <p className="text-base font-medium text-textPrimary">{copy.label}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-textMuted">{copy.info}</p>
+                      </div>
                     </li>
                   );
                 })}
