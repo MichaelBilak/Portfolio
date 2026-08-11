@@ -9,10 +9,11 @@ import {
   CheckSquare2,
   ChevronRight,
   FileText,
+  FolderKanban,
   Inbox,
   LayoutDashboard,
-  SlidersHorizontal,
   Settings2,
+  SlidersHorizontal,
   Workflow,
   type LucideIcon,
 } from "lucide-react";
@@ -77,6 +78,13 @@ const ITEMS: NavItem[] = [
     label: "nav.website",
     group: "content",
     icon: BriefcaseBusiness,
+    roles: ["owner", "editor"],
+  },
+  {
+    href: studioPath("/projects"),
+    label: "nav.portfolio",
+    group: "content",
+    icon: FolderKanban,
     roles: ["owner", "editor"],
   },
   {

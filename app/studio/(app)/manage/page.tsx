@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  BriefcaseBusiness,
   Images,
   Settings2,
   Shuffle,
@@ -17,6 +18,12 @@ export default async function ManageHubPage() {
   const t = createStudioTranslator(locale);
 
   const sections = [
+    {
+      href: "/projects",
+      title: t("catalog.projectsTitle"),
+      description: t("catalog.projectsDesc"),
+      icon: BriefcaseBusiness,
+    },
     {
       href: "/seo",
       title: t("manage.seoTitle"),

@@ -30,8 +30,10 @@ export function FeaturedWork({
   const shouldReduceMotion = useReducedMotion();
   const isHome = variant === "home";
 
-  const totalCount = projects.length;
-  const visibleProjects = isHome ? projects.slice(0, HOME_LIMIT) : projects;
+  const catalog = projects as Array<ProjectMeta & { featured?: boolean }>;
+  const homePool = catalog.filter((p) => p.featured !== false);
+  const totalCount = catalog.length;
+  const visibleProjects = isHome ? homePool.slice(0, HOME_LIMIT) : catalog;
   const hasMore = isHome && totalCount > HOME_LIMIT;
 
   return (

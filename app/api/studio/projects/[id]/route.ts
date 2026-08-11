@@ -28,7 +28,7 @@ export async function PUT(
 
   if (Array.isArray(project_i18n)) {
     for (const row of project_i18n) {
-      const { id: i18nId, ...rest } = row;
+      const { id: i18nId, project_id: _pid, ...rest } = row;
       if (i18nId) {
         await sb.from("project_i18n").update(rest).eq("id", i18nId);
       } else {
@@ -39,6 +39,21 @@ export async function PUT(
       }
     }
   }
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE(
+  _request: NextRequest,
+  ctx: { params: Promise<{ id: string }> },
+) {
+  const auth = await requireStudioUser({ content: true });
+  if ("error" in auth) return auth.error;
+
+  const { id } = await ctx.params;
+  const sb = createAdminClient();
+  const { error } = await sb.from("projects").delete().eq("id", id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
   return NextResponse.json({ ok: true });
 }
