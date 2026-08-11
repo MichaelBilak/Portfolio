@@ -1,22 +1,29 @@
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { LeadActions } from "@/components/studio/lead-actions";
+import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
 
 export default async function LeadDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const user = await getStudioSession();
+  if (!user || !canManageLeads(user.role)) notFound();
+
   const { id } = await params;
   const sb = createAdminClient();
   const { data: lead } = await sb.from("leads").select("*").eq("id", id).maybeSingle();
   if (!lead) notFound();
 
-  const { data: notes } = await sb
-    .from("lead_notes")
-    .select("*")
-    .eq("lead_id", id)
-    .order("created_at", { ascending: false });
+  const [{ data: notes }, { data: linkedCase }] = await Promise.all([
+    sb
+      .from("lead_notes")
+      .select("*")
+      .eq("lead_id", id)
+      .order("created_at", { ascending: false }),
+    sb.from("cases").select("id").eq("lead_id", id).maybeSingle(),
+  ]);
 
   return (
     <>
@@ -24,7 +31,12 @@ export default async function LeadDetailPage({
       <p className="st-sub">
         {lead.email} · {lead.business_name} · {lead.intent}
       </p>
-      <LeadActions leadId={lead.id} status={lead.status} priority={lead.priority} />
+      <LeadActions
+        leadId={lead.id}
+        status={lead.status}
+        priority={lead.priority}
+        existingCaseId={linkedCase?.id}
+      />
       <div className="st-card" style={{ marginTop: "1.25rem" }}>
         <p>
           <strong>Brief</strong>

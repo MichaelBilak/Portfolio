@@ -8,14 +8,17 @@ export function LeadActions({
   leadId,
   status,
   priority,
+  existingCaseId,
 }: {
   leadId: string;
   status: string;
   priority: string;
+  existingCaseId?: string | null;
 }) {
   const router = useRouter();
   const [note, setNote] = useState("");
   const [msg, setMsg] = useState("");
+  const [converting, setConverting] = useState(false);
 
   async function patch(body: Record<string, unknown>) {
     setMsg("");
@@ -36,6 +39,26 @@ export function LeadActions({
     if (!note.trim()) return;
     await patch({ note });
     setNote("");
+  }
+
+  async function convertToCase() {
+    setMsg("");
+    setConverting(true);
+    try {
+      const res = await fetch(`/api/studio/leads/${leadId}/convert`, { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 409 && data.caseId) {
+        router.push(studioPath(`/cases/${data.caseId}`));
+        return;
+      }
+      if (!res.ok) {
+        setMsg(data.error || "Не удалось создать дело");
+        return;
+      }
+      router.push(studioPath(`/cases/${data.id}`));
+    } finally {
+      setConverting(false);
+    }
   }
 
   async function gdprExport() {
@@ -84,7 +107,25 @@ export function LeadActions({
         <textarea className="st-textarea" value={note} onChange={(e) => setNote(e.target.value)} />
       </label>
       <div className="st-row">
-        <button type="button" className="st-btn primary" onClick={addNote}>
+        {existingCaseId ? (
+          <button
+            type="button"
+            className="st-btn primary"
+            onClick={() => router.push(studioPath(`/cases/${existingCaseId}`))}
+          >
+            Открыть дело
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="st-btn primary"
+            onClick={convertToCase}
+            disabled={converting}
+          >
+            {converting ? "Создаём…" : "Создать дело"}
+          </button>
+        )}
+        <button type="button" className="st-btn" onClick={addNote}>
           Сохранить заметку
         </button>
         <button type="button" className="st-btn" onClick={gdprExport}>

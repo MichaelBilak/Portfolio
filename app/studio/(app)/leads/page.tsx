@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
 import { studioPath } from "@/lib/studio/path";
 
 const STATUS_LABEL: Record<string, string> = {
@@ -15,6 +17,9 @@ export default async function LeadsListPage({
 }: {
   searchParams: Promise<{ status?: string; q?: string }>;
 }) {
+  const user = await getStudioSession();
+  if (!user || !canManageLeads(user.role)) notFound();
+
   const sp = await searchParams;
   const sb = createAdminClient();
   let query = sb

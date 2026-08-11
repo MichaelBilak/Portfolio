@@ -1,7 +1,12 @@
+import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { UsersManager } from "@/components/studio/users-manager";
+import { canManageUsers, getStudioSession } from "@/lib/studio/auth";
 
 export default async function UsersAdminPage() {
+  const user = await getStudioSession();
+  if (!user || !canManageUsers(user.role)) notFound();
+
   const sb = createAdminClient();
   const { data: profiles } = await sb.from("profiles").select("id, name, role, created_at").order("created_at");
 

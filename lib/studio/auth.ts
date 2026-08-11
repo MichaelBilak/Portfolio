@@ -1,13 +1,86 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-export type StudioRole = "owner" | "editor" | "sales";
+export type StudioRole =
+  | "owner"
+  | "editor"
+  | "sales"
+  | "manager"
+  | "specialist"
+  | "viewer";
+
+export type StudioCapability =
+  | "content.manage"
+  | "leads.manage"
+  | "users.manage"
+  | "cases.read"
+  | "cases.create"
+  | "cases.update"
+  | "cases.archive"
+  | "tasks.manage"
+  | "files.manage"
+  | "documents.manage"
+  | "automations.manage"
+  | "finance.manage"
+  | "time.manage"
+  | "reports.read"
+  | "settings.manage";
 
 export type StudioProfile = {
   id: string;
   email: string;
   name: string | null;
   role: StudioRole;
+  adminLocale: string;
+};
+
+const allCapabilities: readonly StudioCapability[] = [
+  "content.manage",
+  "leads.manage",
+  "users.manage",
+  "cases.read",
+  "cases.create",
+  "cases.update",
+  "cases.archive",
+  "tasks.manage",
+  "files.manage",
+  "documents.manage",
+  "automations.manage",
+  "finance.manage",
+  "time.manage",
+  "reports.read",
+  "settings.manage",
+];
+
+const roleCapabilities: Record<StudioRole, readonly StudioCapability[]> = {
+  owner: allCapabilities,
+  editor: allCapabilities.filter((capability) => capability !== "users.manage"),
+  manager: allCapabilities.filter(
+    (capability) =>
+      capability !== "users.manage" &&
+      capability !== "content.manage" &&
+      capability !== "settings.manage",
+  ),
+  sales: [
+    "leads.manage",
+    "cases.read",
+    "cases.create",
+    "cases.update",
+    "tasks.manage",
+    "files.manage",
+    "documents.manage",
+    "time.manage",
+    "reports.read",
+  ],
+  specialist: [
+    "cases.read",
+    "cases.update",
+    "tasks.manage",
+    "files.manage",
+    "documents.manage",
+    "time.manage",
+  ],
+  viewer: ["cases.read", "reports.read"],
 };
 
 export async function getStudioSession(): Promise<StudioProfile | null> {
@@ -24,7 +97,7 @@ export async function getStudioSession(): Promise<StudioProfile | null> {
   const admin = createAdminClient();
   const { data: profile } = await admin
     .from("profiles")
-    .select("id, name, role")
+    .select("id, name, role, admin_locale")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -35,25 +108,32 @@ export async function getStudioSession(): Promise<StudioProfile | null> {
     email: user.email || "",
     name: profile.name,
     role: profile.role as StudioRole,
+    adminLocale: (profile.admin_locale as string | null) || "ru",
   };
 }
 
+export function hasStudioCapability(role: StudioRole, capability: StudioCapability) {
+  return roleCapabilities[role]?.includes(capability) ?? false;
+}
+
 export function canManageContent(role: StudioRole) {
-  return role === "owner" || role === "editor";
+  return hasStudioCapability(role, "content.manage");
 }
 
 export function canManageLeads(role: StudioRole) {
-  return role === "owner" || role === "editor" || role === "sales";
+  return hasStudioCapability(role, "leads.manage");
 }
 
 export function canManageUsers(role: StudioRole) {
-  return role === "owner";
+  return hasStudioCapability(role, "users.manage");
 }
 
 export async function requireStudioUser(opts?: {
   content?: boolean;
   leads?: boolean;
   owner?: boolean;
+  capability?: StudioCapability;
+  capabilities?: StudioCapability[];
 }): Promise<StudioProfile | { error: Response }> {
   const user = await getStudioSession();
   if (!user) {
@@ -66,6 +146,15 @@ export async function requireStudioUser(opts?: {
     return { error: new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 }) };
   }
   if (opts?.leads && !canManageLeads(user.role)) {
+    return { error: new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 }) };
+  }
+  if (opts?.capability && !hasStudioCapability(user.role, opts.capability)) {
+    return { error: new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 }) };
+  }
+  if (
+    opts?.capabilities &&
+    !opts.capabilities.every((capability) => hasStudioCapability(user.role, capability))
+  ) {
     return { error: new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 }) };
   }
   return user;

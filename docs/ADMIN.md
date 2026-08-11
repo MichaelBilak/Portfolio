@@ -12,18 +12,27 @@ Open `https://your-domain/ops-k7m2xq9n4w`. Direct `/studio` returns **404** when
 
 1. Supabase project + run [`supabase/SETUP.sql`](../supabase/SETUP.sql)
 2. Storage bucket **`media`** (public)
-3. `.env.local`: Supabase keys + `NEXT_PUBLIC_STUDIO_PATH`
-4. Auth user → `update profiles set role = 'owner' where id = '…'`
-5. `npm run studio:seed`
-6. Open `http://localhost:3000` + your studio path
+3. Apply CRM migrations after the base schema and create **`crm-private`**
+   as a private bucket
+4. `.env.local`: Supabase keys + `NEXT_PUBLIC_STUDIO_PATH`
+5. Auth user → `update profiles set role = 'owner' where id = '…'`
+6. `npm run studio:seed`
+7. `npm run studio:check`
+8. Open `http://localhost:3000` + your studio path
+
+The complete case-management workflow and security checks are documented in
+[`docs/CRM.md`](./CRM.md).
 
 ## Roles
 
 | Role | Access |
 |------|--------|
 | `owner` | Everything + Users |
-| `editor` | Content + leads |
-| `sales` | Leads only |
+| `manager` | Cases, tasks, documents, automations |
+| `editor` | Website content + cases |
+| `sales` | Leads and case qualification |
+| `specialist` | Assigned cases and tasks |
+| `viewer` | Assigned cases, read-only |
 
 ## Vercel
 

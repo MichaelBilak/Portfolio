@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { getStudioSession } from "@/lib/studio/auth";
 import { studioPath } from "@/lib/studio/path";
 import { StudioNavigation } from "@/components/studio/studio-navigation";
+import { StudioI18nProvider } from "@/lib/studio/i18n";
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +12,11 @@ export default async function StudioAppLayout({ children }: { children: ReactNod
   if (!user) redirect(studioPath("/login"));
 
   return (
-    <div className="st-shell">
-      <StudioNavigation email={user.email} role={user.role} />
-      <main className="st-main">{children}</main>
-    </div>
+    <StudioI18nProvider initialLocale={user.adminLocale}>
+      <div className="st-shell">
+        <StudioNavigation email={user.email} role={user.role} />
+        <main className="st-main">{children}</main>
+      </div>
+    </StudioI18nProvider>
   );
 }

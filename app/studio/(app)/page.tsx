@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { ArrowRight, Inbox, TrendingUp, Trophy, UsersRound } from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
+import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
 import { studioPath } from "@/lib/studio/path";
 import {
   BreakdownChart,
@@ -52,6 +54,9 @@ export default async function StudioDashboardPage({
 }: {
   searchParams: Promise<{ days?: string }>;
 }) {
+  const user = await getStudioSession();
+  if (!user || !canManageLeads(user.role)) redirect(studioPath("/cases"));
+
   const params = await searchParams;
   const requestedDays = Number(params.days);
   const days: TimelineDays = TIMELINES.includes(requestedDays as TimelineDays)
