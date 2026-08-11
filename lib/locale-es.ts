@@ -55,13 +55,13 @@ export const es: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Streetwear premium · Israel · buy / sell / trade",
+      subtitle: "Streetwear premium · buy / sell / trade",
       problem:
-        "El escaparate vivía en Instagram y era casi invisible en Google: una SPA sin URLs de producto, sitemap ni analytics, estados de stock confusos y pedidos de WhatsApp sin estructura.",
+        "La tienda vivia sobre todo en Instagram y era dificil de encontrar en Google. El stock no estaba claro y los pedidos por WhatsApp llegaban en chats confusos, sin detalles claros de producto o talla.",
       solution:
-        "Rebuild en Next.js con páginas de producto SEO, catálogo y admin en Supabase, embudo GA4, checkout de WhatsApp estructurado (SS-*) y cuentas de clientes.",
+        "Creamos una tienda online clara: paginas de producto, estados de stock, un panel sencillo para el catalogo, cuentas de clientes y pedidos de WhatsApp ordenados con todo lo necesario para cerrar la venta.",
       businessImpact:
-        "Storefront en vivo indexable, con embudo medible drop → carrito → WhatsApp y control operativo del catálogo.",
+        "Un sitio en vivo donde los clientes encuentran y compran con mas facilidad — pedidos mas claros, catalogo bajo control y menos idas y vueltas en el chat.",
     },
   ],
   services: [

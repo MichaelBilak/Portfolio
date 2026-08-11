@@ -317,13 +317,13 @@ const it: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Streetwear premium · Israele · buy / sell / trade",
+      subtitle: "Streetwear premium · buy / sell / trade",
       problem:
-        "La vetrina viveva su Instagram ed era quasi invisibile su Google: SPA senza URL prodotto, sitemap o analytics, stati di disponibilita confusi e ordini WhatsApp non strutturati.",
+        "Il negozio viveva soprattutto su Instagram ed era difficile da trovare su Google. La disponibilita dei pezzi non era chiara e gli ordini su WhatsApp arrivavano in chat confuse, senza dettagli netti su prodotto e taglia.",
       solution:
-        "Rebuild su Next.js con pagine prodotto SEO, catalogo e admin Supabase, funnel GA4, checkout WhatsApp strutturato (SS-*) e account clienti.",
+        "Abbiamo creato un negozio online chiaro: pagine prodotto, stati di disponibilita, pannello per gestire il catalogo, account clienti e messaggi WhatsApp ordinati con tutto cio che serve per chiudere la vendita.",
       businessImpact:
-        "Storefront live indicizzabile, con funnel misurabile drop → carrello → WhatsApp e controllo operativo del catalogo.",
+        "Un sito live dove i clienti trovano e comprano con piu facilita — ordini piu chiari, catalogo sotto controllo e meno andirivieni in chat.",
     },
   ],
   services: [
@@ -1018,13 +1018,13 @@ const en: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Premium streetwear · Israel · buy / sell / trade",
+      subtitle: "Premium streetwear · buy / sell / trade",
       problem:
-        "The storefront lived on Instagram and was nearly invisible in Google: a SPA with no product URLs, sitemap or analytics, messy stock states and unstructured WhatsApp orders.",
+        "The shop lived mostly on Instagram and was hard to find on Google. Stock was unclear, and WhatsApp orders arrived as messy chats without clear product or size details.",
       solution:
-        "Next.js rebuild with SEO product pages, Supabase catalog and admin, GA4 funnel, structured WhatsApp checkout (SS-*) and customer accounts.",
+        "We built a clear online store: product pages, stock status, an easy panel to manage the catalog, customer accounts, and tidy WhatsApp orders with everything needed to close the sale.",
       businessImpact:
-        "Live storefront that indexes in search, tracks a measurable drop → cart → WhatsApp funnel and gives ops control over the catalog.",
+        "A live store people can find and shop from — clearer orders, better control of what's in stock, and less back-and-forth in chat.",
     },
   ],
   services: [
@@ -1717,13 +1717,13 @@ const fr: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Streetwear premium · Israel · buy / sell / trade",
+      subtitle: "Streetwear premium · buy / sell / trade",
       problem:
-        "La vitrine vivait sur Instagram et etait presque invisible sur Google : une SPA sans URL produit, sitemap ni analytics, des stocks flous et des commandes WhatsApp non structurees.",
+        "La boutique vivait surtout sur Instagram et etait difficile a trouver sur Google. Les stocks n'etaient pas clairs et les commandes WhatsApp arrivaient en messages confus, sans details nets sur le produit ou la taille.",
       solution:
-        "Rebuild Next.js avec pages produit SEO, catalogue et admin Supabase, funnel GA4, checkout WhatsApp structure (SS-*) et comptes clients.",
+        "Nous avons cree une boutique en ligne claire : pages produit, etats de stock, un panneau simple pour gerer le catalogue, des comptes clients et des messages WhatsApp ranges avec tout ce qu'il faut pour conclure la vente.",
       businessImpact:
-        "Storefront live indexable, avec un funnel mesurable drop → panier → WhatsApp et un controle operationnel du catalogue.",
+        "Un site live ou les clients trouvent et achettent plus facilement — commandes plus claires, catalogue sous controle et moins d'allers-retours en chat.",
     },
   ],
   services: [
@@ -2353,13 +2353,13 @@ const ru: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Premium streetwear · Израиль · buy / sell / trade",
+      subtitle: "Premium streetwear · buy / sell / trade",
       problem:
-        "Витрина жила в Instagram и была почти невидима в Google: SPA без product URL, sitemap и analytics, хаос статусов наличия и неструктурированные WhatsApp-заказы.",
+        "Магазин жил в основном в Instagram и его было сложно найти в Google. Наличие вещей было непонятным, а заказы в WhatsApp приходили хаотичными сообщениями — без чётких деталей о товаре и размере.",
       solution:
-        "Rebuild на Next.js: SEO-страницы товаров, каталог и admin на Supabase, воронка GA4, структурированный WhatsApp checkout (SS-*) и аккаунты клиентов.",
+        "Сделали понятный онлайн-магазин: страницы товаров, статусы наличия, простая панель для каталога, аккаунты клиентов и аккуратные заказы в WhatsApp со всем нужным, чтобы закрыть продажу.",
       businessImpact:
-        "Live-витрина с индексацией, измеримой воронкой drop → корзина → WhatsApp и операционным контролем каталога.",
+        "Живой сайт, где клиенты находят магазин и покупают проще — заказы понятнее, каталог под контролем, меньше переписок туда-сюда.",
     },
   ],
   services: [
@@ -2991,13 +2991,13 @@ const de: TranslationSet = {
       id: "solovyev-store",
       name: "SOLOVYEV STORE",
       nameTagline: "Streetwear & Sneakers Consignment",
-      subtitle: "Premium-Streetwear · Israel · buy / sell / trade",
+      subtitle: "Premium-Streetwear · buy / sell / trade",
       problem:
-        "Der Shop lebte auf Instagram und war in Google kaum sichtbar: eine SPA ohne Produkt-URLs, Sitemap oder Analytics, unklare Lagerstatus und unstrukturierte WhatsApp-Bestellungen.",
+        "Der Shop lebte vor allem auf Instagram und war bei Google schwer zu finden. Der Bestand war unklar, und WhatsApp-Bestellungen kamen als unubersichtliche Chats ohne klare Produkt- oder Grossenangaben.",
       solution:
-        "Next.js-Rebuild mit SEO-Produktseiten, Supabase-Katalog und Admin, GA4-Funnel, strukturiertem WhatsApp-Checkout (SS-*) und Kundenkonten.",
+        "Wir haben einen klaren Online-Shop gebaut: Produktseiten, Bestandsstatus, ein einfaches Panel fur den Katalog, Kundenkonten und aufgeraumte WhatsApp-Bestellungen mit allem, was fur den Verkauf noetig ist.",
       businessImpact:
-        "Live-Storefront mit Indexierung, messbarem Funnel Drop → Warenkorb → WhatsApp und operativer Kontrolle uber den Katalog.",
+        "Ein live Shop, den Kunden finden und leichter bedienen konnen — klarere Bestellungen, besserer Uberblick uber den Bestand und weniger Hin und Her im Chat.",
     },
   ],
   services: [

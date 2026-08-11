@@ -70,7 +70,7 @@ export const projectsMeta: ProjectMeta[] = [
     tag: "Live Project",
     image: "/images/project-solovyev.png",
     imagePosition: "top",
-    tech: ["Next.js 15", "Supabase Admin", "WhatsApp Checkout", "SEO / GA4"],
+    tech: ["Online Catalog", "WhatsApp Orders", "Stock Control"],
     url: "https://solovyev-store.vercel.app/",
     displayUrl: "solovyev-store.vercel.app",
     repoUrl: "https://github.com/DormUpGroup/SOLOVYEV.STORE",

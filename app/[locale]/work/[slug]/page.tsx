@@ -82,7 +82,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-start lg:gap-10">
               <div className="space-y-6">
                 <h1 className="font-display font-light text-textPrimary">
-                  <span className="block text-fluid-title">{project.name}</span>
+                  <span className="block whitespace-nowrap text-[clamp(1.55rem,3.6vw,3.25rem)] leading-[1.08] tracking-[-0.025em]">
+                    {project.name}
+                  </span>
                   {project.nameTagline ? (
                     <span className="mt-2 block text-xl font-light text-textSecondary md:text-2xl">
                       {project.nameTagline}
@@ -160,7 +162,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
                 {t.workPage.overview}
               </p>
-              <h2 className="mt-3 text-fluid-title font-display font-light">{project.name}</h2>
+              <h2 className="mt-3 whitespace-nowrap text-[clamp(1.55rem,3.6vw,3.25rem)] font-display font-light leading-[1.08] tracking-[-0.025em]">
+                {project.name}
+              </h2>
             </header>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
