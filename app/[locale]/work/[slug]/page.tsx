@@ -115,6 +115,20 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                         className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                       />
                     </a>
+                    {meta.repoUrl ? (
+                      <a
+                        href={meta.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="focus-outline group inline-flex w-full items-center justify-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-6 py-3 text-sm font-semibold text-textPrimary transition-all duration-200 hover:-translate-y-0.5 hover:border-borderStrong sm:w-auto"
+                      >
+                        {t.workPage.viewRepo}
+                        <ArrowUpRight
+                          size={16}
+                          className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                        />
+                      </a>
+                    ) : null}
                     <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-5 py-2.5 font-mono text-xs text-textSecondary">
                       <ExternalLink size={12} className="shrink-0 text-accentGold" aria-hidden />
                       <span className="min-w-0 break-all">{meta.displayUrl}</span>

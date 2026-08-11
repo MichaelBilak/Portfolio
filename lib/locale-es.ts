@@ -51,6 +51,18 @@ export const es: TranslationSet = {
       businessImpact:
         "Sitio en vivo que convirtió un perfil social en una marca profesional, aumentando la confianza, los pedidos directos y la visibilidad en nuevos mercados.",
     },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Streetwear premium · Israel · buy / sell / trade",
+      problem:
+        "El escaparate vivía en Instagram y era casi invisible en Google: una SPA sin URLs de producto, sitemap ni analytics, estados de stock confusos y pedidos de WhatsApp sin estructura.",
+      solution:
+        "Rebuild en Next.js con páginas de producto SEO, catálogo y admin en Supabase, embudo GA4, checkout de WhatsApp estructurado (SS-*) y cuentas de clientes.",
+      businessImpact:
+        "Storefront en vivo indexable, con embudo medible drop → carrito → WhatsApp y control operativo del catálogo.",
+    },
   ],
   services: [
     {
@@ -679,6 +691,7 @@ export const es: TranslationSet = {
     viewAll: "Ver todos los proyectos",
     backToWork: "Volver a proyectos",
     visitLiveSite: "Visitar sitio en vivo",
+    viewRepo: "Ver en GitHub",
     liveStatus: "En vivo",
     techStack: "Stack tecnológico",
     overview: "Resumen",

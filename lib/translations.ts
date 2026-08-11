@@ -254,6 +254,7 @@ export interface TranslationSet {
     viewAll: string;
     backToWork: string;
     visitLiveSite: string;
+    viewRepo: string;
     liveStatus: string;
     techStack: string;
     overview: string;
@@ -311,6 +312,18 @@ const it: TranslationSet = {
         "Galleria multilingue (EN/RU/IT) con categorie chiare, dettaglio prodotto e CTA dirette su WhatsApp e Instagram per chiudere l'ordine.",
       businessImpact:
         "Sito live che ha trasformato un profilo social in un brand professionale, aumentando fiducia, ordini diretti e visibilita su nuovi mercati.",
+    },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Streetwear premium · Israele · buy / sell / trade",
+      problem:
+        "La vetrina viveva su Instagram ed era quasi invisibile su Google: SPA senza URL prodotto, sitemap o analytics, stati di disponibilita confusi e ordini WhatsApp non strutturati.",
+      solution:
+        "Rebuild su Next.js con pagine prodotto SEO, catalogo e admin Supabase, funnel GA4, checkout WhatsApp strutturato (SS-*) e account clienti.",
+      businessImpact:
+        "Storefront live indicizzabile, con funnel misurabile drop → carrello → WhatsApp e controllo operativo del catalogo.",
     },
   ],
   services: [
@@ -942,6 +955,7 @@ const it: TranslationSet = {
     viewAll: "Vedi tutti i lavori",
     backToWork: "Torna ai progetti",
     visitLiveSite: "Visita il sito",
+    viewRepo: "Vedi su GitHub",
     liveStatus: "Online",
     techStack: "Stack tecnico",
     overview: "Panoramica",
@@ -999,6 +1013,18 @@ const en: TranslationSet = {
         "Multi-language gallery (EN/RU/IT) with clear categories, product detail and direct WhatsApp / Instagram CTAs to close the order.",
       businessImpact:
         "Live site that turned a social profile into a professional brand, increasing trust, direct orders and visibility on new markets.",
+    },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Premium streetwear · Israel · buy / sell / trade",
+      problem:
+        "The storefront lived on Instagram and was nearly invisible in Google: a SPA with no product URLs, sitemap or analytics, messy stock states and unstructured WhatsApp orders.",
+      solution:
+        "Next.js rebuild with SEO product pages, Supabase catalog and admin, GA4 funnel, structured WhatsApp checkout (SS-*) and customer accounts.",
+      businessImpact:
+        "Live storefront that indexes in search, tracks a measurable drop → cart → WhatsApp funnel and gives ops control over the catalog.",
     },
   ],
   services: [
@@ -1628,6 +1654,7 @@ const en: TranslationSet = {
     viewAll: "View all work",
     backToWork: "Back to projects",
     visitLiveSite: "Visit live site",
+    viewRepo: "View on GitHub",
     liveStatus: "Live",
     techStack: "Tech stack",
     overview: "Overview",
@@ -1685,6 +1712,18 @@ const fr: TranslationSet = {
         "Galerie multilingue (EN/RU/IT) avec categories claires, fiche produit et CTA directs vers WhatsApp et Instagram pour finaliser la commande.",
       businessImpact:
         "Site live qui a transforme un profil social en marque professionnelle, en augmentant la confiance, les commandes directes et la visibilite sur de nouveaux marches.",
+    },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Streetwear premium · Israel · buy / sell / trade",
+      problem:
+        "La vitrine vivait sur Instagram et etait presque invisible sur Google : une SPA sans URL produit, sitemap ni analytics, des stocks flous et des commandes WhatsApp non structurees.",
+      solution:
+        "Rebuild Next.js avec pages produit SEO, catalogue et admin Supabase, funnel GA4, checkout WhatsApp structure (SS-*) et comptes clients.",
+      businessImpact:
+        "Storefront live indexable, avec un funnel mesurable drop → panier → WhatsApp et un controle operationnel du catalogue.",
     },
   ],
   services: [
@@ -2251,6 +2290,7 @@ const fr: TranslationSet = {
     viewAll: "Voir tous les projets",
     backToWork: "Retour aux projets",
     visitLiveSite: "Visiter le site",
+    viewRepo: "Voir sur GitHub",
     liveStatus: "En ligne",
     techStack: "Stack technique",
     overview: "Apercu",
@@ -2308,6 +2348,18 @@ const ru: TranslationSet = {
         "Многоязычная галерея (EN/RU/IT) с понятными категориями, карточкой товара и прямыми CTA в WhatsApp и Instagram для закрытия заказа.",
       businessImpact:
         "Live-сайт, который превратил соц-профиль в профессиональный бренд, повысив доверие, прямые заказы и видимость на новых рынках.",
+    },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Premium streetwear · Израиль · buy / sell / trade",
+      problem:
+        "Витрина жила в Instagram и была почти невидима в Google: SPA без product URL, sitemap и analytics, хаос статусов наличия и неструктурированные WhatsApp-заказы.",
+      solution:
+        "Rebuild на Next.js: SEO-страницы товаров, каталог и admin на Supabase, воронка GA4, структурированный WhatsApp checkout (SS-*) и аккаунты клиентов.",
+      businessImpact:
+        "Live-витрина с индексацией, измеримой воронкой drop → корзина → WhatsApp и операционным контролем каталога.",
     },
   ],
   services: [
@@ -2876,6 +2928,7 @@ const ru: TranslationSet = {
     viewAll: "Смотреть все работы",
     backToWork: "Назад к проектам",
     visitLiveSite: "Перейти на сайт",
+    viewRepo: "Смотреть на GitHub",
     liveStatus: "Live",
     techStack: "Стек технологий",
     overview: "Обзор",
@@ -2933,6 +2986,18 @@ const de: TranslationSet = {
         "Mehrsprachige Galerie (EN/RU/IT) mit klaren Kategorien, Produktdetail und direkten WhatsApp- / Instagram-CTAs zum Abschluss der Bestellung.",
       businessImpact:
         "Live-Site, die ein Social-Profil in eine professionelle Marke verwandelt hat — mehr Vertrauen, direkte Bestellungen und Sichtbarkeit auf neuen Markten.",
+    },
+    {
+      id: "solovyev-store",
+      name: "SOLOVYEV STORE",
+      nameTagline: "Streetwear & Sneakers Consignment",
+      subtitle: "Premium-Streetwear · Israel · buy / sell / trade",
+      problem:
+        "Der Shop lebte auf Instagram und war in Google kaum sichtbar: eine SPA ohne Produkt-URLs, Sitemap oder Analytics, unklare Lagerstatus und unstrukturierte WhatsApp-Bestellungen.",
+      solution:
+        "Next.js-Rebuild mit SEO-Produktseiten, Supabase-Katalog und Admin, GA4-Funnel, strukturiertem WhatsApp-Checkout (SS-*) und Kundenkonten.",
+      businessImpact:
+        "Live-Storefront mit Indexierung, messbarem Funnel Drop → Warenkorb → WhatsApp und operativer Kontrolle uber den Katalog.",
     },
   ],
   services: [
@@ -3498,6 +3563,7 @@ const de: TranslationSet = {
     viewAll: "Alle Arbeiten ansehen",
     backToWork: "Zuruck zu Projekten",
     visitLiveSite: "Live-Site besuchen",
+    viewRepo: "Auf GitHub ansehen",
     liveStatus: "Live",
     techStack: "Tech-Stack",
     overview: "Uberblick",

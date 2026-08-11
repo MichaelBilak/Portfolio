@@ -9,6 +9,8 @@ export interface ProjectMeta {
   /** External live URL. `#` for concept-only projects. */
   url: string;
   displayUrl: string;
+  /** Optional public repository URL shown on the case-study page. */
+  repoUrl?: string;
   /** When true the project gets an internal detail page and the card hides the description rows. */
   isLive?: boolean;
   /** Focal point for the mockup screenshot crop. Defaults to top. */
@@ -60,5 +62,18 @@ export const projectsMeta: ProjectMeta[] = [
     tech: ["i18n EN/IT", "Reservation Flow"],
     url: "https://mare-vivo.vercel.app/",
     displayUrl: "mare-vivo.vercel.app",
+  },
+  {
+    id: "solovyev-store",
+    slug: "solovyev-store",
+    index: "05",
+    tag: "Live Project",
+    image: "/images/project-solovyev.png",
+    imagePosition: "top",
+    tech: ["Next.js 15", "Supabase Admin", "WhatsApp Checkout", "SEO / GA4"],
+    url: "https://solovyev-store.vercel.app/",
+    displayUrl: "solovyev-store.vercel.app",
+    repoUrl: "https://github.com/DormUpGroup/SOLOVYEV.STORE",
+    isLive: true,
   },
 ];

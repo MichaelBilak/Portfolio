@@ -70,7 +70,11 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
 
     if (error || !rows?.length) return staticProjects(locale);
 
+    const staticById = new Map(projectsMeta.map((p) => [p.id, p]));
+
     return rows.map((doc) => {
+      const projectId = String(doc.project_id);
+      const staticMeta = staticById.get(projectId);
       const i18n =
         (doc.project_i18n as Array<Record<string, unknown>> | null)?.find(
           (r) => r.locale === locale,
@@ -79,7 +83,7 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
           (r) => r.locale === "it",
         );
       return {
-        id: String(doc.project_id),
+        id: projectId,
         slug: String(doc.slug),
         index: String(doc.index_label),
         tag: String(doc.tag),
@@ -88,11 +92,12 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
         tech: Array.isArray(doc.tech) ? (doc.tech as string[]) : [],
         url: String(doc.url),
         displayUrl: String(doc.display_url),
+        repoUrl: staticMeta?.repoUrl,
         isLive: Boolean(doc.is_live),
         featured: doc.featured !== false,
         localized: i18n
           ? {
-              id: String(doc.project_id),
+              id: projectId,
               name: String(i18n.name || ""),
               nameTagline: i18n.name_tagline ? String(i18n.name_tagline) : undefined,
               subtitle: String(i18n.subtitle || ""),
@@ -100,7 +105,7 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
               solution: String(i18n.solution || ""),
               businessImpact: String(i18n.business_impact || ""),
             }
-          : translations[locale].projects.find((x) => x.id === doc.project_id),
+          : translations[locale].projects.find((x) => x.id === projectId),
       };
     });
   } catch (err) {
