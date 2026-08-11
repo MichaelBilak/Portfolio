@@ -1,89 +1,33 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createStudioTranslator,
+  resolveStudioLocale,
+  type StudioLocale,
+  type StudioMessageKey,
+  type StudioVars,
+} from "@/lib/studio/i18n/messages";
 
-export type StudioLocale = "ru" | "en";
+export type { StudioLocale, StudioMessageKey, StudioVars };
+export {
+  createStudioTranslator,
+  fieldLabel,
+  formatStudioDate,
+  getSiteCopyCatalog,
+  labelLang,
+  labelPriority,
+  labelStatus,
+  resolveStudioLocale,
+  studioDateLocale,
+  studioMessages,
+  translateStudio,
+} from "@/lib/studio/i18n/messages";
 
-const messages = {
-  ru: {
-    "nav.overview": "Обзор",
-    "nav.leads": "Лиды",
-    "nav.cases": "Кейсы",
-    "nav.tasks": "Задачи",
-    "nav.documents": "Документы",
-    "nav.automations": "Автоматизации",
-    "nav.inbox": "Уведомления",
-    "nav.reports": "Отчёты",
-    "nav.website": "Сайт",
-    "nav.settings": "Настройки",
-    "nav.siteSettings": "Настройки сайта",
-    "nav.crm": "CRM",
-    "nav.content": "Контент",
-    "nav.workspace": "Рабочее пространство",
-    "role.owner": "Владелец",
-    "role.editor": "Редактор",
-    "role.sales": "Продажи",
-    "role.manager": "Менеджер",
-    "role.specialist": "Специалист",
-    "role.viewer": "Наблюдатель",
-    "common.loading": "Загрузка…",
-    "common.retry": "Повторить",
-    "common.empty": "Здесь пока ничего нет",
-    "common.error": "Не удалось загрузить данные",
-    "common.search": "Поиск",
-    "common.refresh": "Обновить",
-    "common.save": "Сохранить",
-    "common.cancel": "Отмена",
-    "common.add": "Добавить",
-    "common.open": "Открыть",
-    "common.all": "Все",
-    "common.list": "Список",
-    "common.board": "Доска",
-    "common.endpointUnavailable": "Не удалось выполнить запрос к серверу.",
-  },
-  en: {
-    "nav.overview": "Overview",
-    "nav.leads": "Leads",
-    "nav.cases": "Cases",
-    "nav.tasks": "Tasks",
-    "nav.documents": "Documents",
-    "nav.automations": "Automations",
-    "nav.inbox": "Notifications",
-    "nav.reports": "Reports",
-    "nav.website": "Website",
-    "nav.settings": "Settings",
-    "nav.siteSettings": "Site settings",
-    "nav.crm": "CRM",
-    "nav.content": "Content",
-    "nav.workspace": "Workspace",
-    "role.owner": "Owner",
-    "role.editor": "Editor",
-    "role.sales": "Sales",
-    "role.manager": "Manager",
-    "role.specialist": "Specialist",
-    "role.viewer": "Viewer",
-    "common.loading": "Loading…",
-    "common.retry": "Retry",
-    "common.empty": "Nothing here yet",
-    "common.error": "Could not load data",
-    "common.search": "Search",
-    "common.refresh": "Refresh",
-    "common.save": "Save",
-    "common.cancel": "Cancel",
-    "common.add": "Add",
-    "common.open": "Open",
-    "common.all": "All",
-    "common.list": "List",
-    "common.board": "Board",
-    "common.endpointUnavailable": "The server request could not be completed.",
-  },
-} as const;
-
-export type StudioMessageKey = keyof (typeof messages)["en"];
 type I18nValue = {
   locale: StudioLocale;
   setLocale: (locale: StudioLocale) => void;
-  t: (key: StudioMessageKey) => string;
+  t: (key: StudioMessageKey, vars?: StudioVars) => string;
 };
 
 const I18nContext = createContext<I18nValue | null>(null);
@@ -102,7 +46,7 @@ export function StudioI18nProvider({
   children: React.ReactNode;
   initialLocale?: StudioLocale | string;
 }) {
-  const bootLocale: StudioLocale = initialLocale === "en" ? "en" : "ru";
+  const bootLocale = resolveStudioLocale(initialLocale);
   const [locale, setLocaleState] = useState<StudioLocale>(bootLocale);
 
   useEffect(() => {
@@ -130,7 +74,7 @@ export function StudioI18nProvider({
     () => ({
       locale,
       setLocale,
-      t: (key) => messages[locale][key],
+      t: (key, vars) => createStudioTranslator(locale)(key, vars),
     }),
     [locale, setLocale],
   );
@@ -145,14 +89,14 @@ export function useStudioI18n() {
 }
 
 export function StudioLanguageSelector() {
-  const { locale, setLocale } = useStudioI18n();
+  const { locale, setLocale, t } = useStudioI18n();
   return (
     <label className="st-language">
-      <span className="st-visually-hidden">Admin language</span>
+      <span className="st-visually-hidden">{t("nav.language")}</span>
       <select
         value={locale}
         onChange={(event) => setLocale(event.target.value as StudioLocale)}
-        aria-label="Admin language"
+        aria-label={t("nav.language")}
       >
         <option value="ru">RU</option>
         <option value="en">EN</option>

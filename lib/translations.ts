@@ -156,6 +156,8 @@ export interface TranslationSet {
       submitAudit: string;
       submitting: string;
       success: string;
+      successTitle: string;
+      successClose: string;
       submitError: string;
       auditBriefPlaceholder: string;
       optional: string;
@@ -726,7 +728,9 @@ const it: TranslationSet = {
       submit: "Invia messaggio",
       submitAudit: "Richiedi audit gratuito",
       submitting: "Invio in corso...",
-      success: "Ricevuto. Ti rispondiamo entro 1 ora.",
+      success: "Ti rispondiamo entro 1 ora.",
+      successTitle: "La tua richiesta è stata inviata",
+      successClose: "Chiudi",
       submitError: "Invio non riuscito. Scrivici a {email} e ti rispondiamo subito.",
       auditBriefPlaceholder: "Cosa non funziona nel tuo setup digitale — sistemi, processi, sito o contenuti?",
       optional: "facoltativo",
@@ -1411,7 +1415,9 @@ const en: TranslationSet = {
       submit: "Send message",
       submitAudit: "Request free audit",
       submitting: "Sending...",
-      success: "Got it. We'll reply within 1 hour.",
+      success: "We'll reply within 1 hour.",
+      successTitle: "Your request has been sent",
+      successClose: "Close",
       submitError: "Could not send. Email us at {email} and we'll reply shortly.",
       auditBriefPlaceholder: "What isn't working in your digital setup — systems, processes, website or content?",
       optional: "optional",
@@ -2033,7 +2039,9 @@ const fr: TranslationSet = {
       submit: "Envoyer le message",
       submitAudit: "Demander l'audit gratuit",
       submitting: "Envoi en cours...",
-      success: "Bien recu. Nous repondons sous 1 heure.",
+      success: "Nous repondons sous 1 heure.",
+      successTitle: "Votre demande a ete envoyee",
+      successClose: "Fermer",
       submitError: "Envoi echoue. Ecrivez a {email} et nous repondrons rapidement.",
       auditBriefPlaceholder: "Qu'est-ce qui ne fonctionne pas dans votre setup digital — systemes, processus, site ou contenus?",
       optional: "facultatif",
@@ -2655,7 +2663,9 @@ const ru: TranslationSet = {
       submit: "Отправить сообщение",
       submitAudit: "Запросить бесплатный аудит",
       submitting: "Отправка...",
-      success: "Принято. Ответим в течение 1 часа.",
+      success: "Ответим в течение 1 часа.",
+      successTitle: "Ваша заявка отправлена",
+      successClose: "Закрыть",
       submitError: "Не удалось отправить. Напишите на {email} — ответим в ближайшее время.",
       auditBriefPlaceholder: "Что не работает в цифровом сетапе — системы, процессы, сайт или контент?",
       optional: "необязательно",
@@ -3276,7 +3286,9 @@ const de: TranslationSet = {
       submit: "Nachricht senden",
       submitAudit: "Kostenloses Audit anfragen",
       submitting: "Wird gesendet...",
-      success: "Erhalten. Wir antworten innerhalb einer Stunde.",
+      success: "Wir antworten innerhalb einer Stunde.",
+      successTitle: "Ihre Anfrage wurde gesendet",
+      successClose: "Schließen",
       submitError: "Senden fehlgeschlagen. Schreiben Sie an {email} — wir melden uns schnell.",
       auditBriefPlaceholder: "Was funktioniert in Ihrem digitalen Setup nicht — Systeme, Prozesse, Website oder Content?",
       optional: "optional",

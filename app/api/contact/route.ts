@@ -60,20 +60,31 @@ const SOURCE_LABELS: Record<string, string> = {
   other: "Other",
 };
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildPlainText(
   p: ContactFormPayload,
   timestamp: string,
   selectedServices: string[],
   selectedServiceSlugs: string[],
   selectedAddons: string[],
-  siteUrl?: string,
+  siteUrl: string | undefined,
+  isAudit: boolean,
 ): string {
   const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
   const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
+  const title = isAudit ? "NEW AUDIT REQUEST" : "NEW CONTACT REQUEST";
 
   const lines = [
     "================================================",
-    "  NEW AUDIT REQUEST  —  DormUp Studio",
+    `  ${title}  —  DormUp Studio`,
     "================================================",
     "",
     `Date / Time:     ${timestamp}`,
@@ -111,6 +122,115 @@ function buildPlainText(
   );
 
   return lines.join("\n");
+}
+
+function rowHtml(label: string, value: string, href?: string): string {
+  const safeLabel = escapeHtml(label);
+  const safeValue = escapeHtml(value);
+  const content = href
+    ? `<a href="${escapeHtml(href)}" style="color:#fcd34d;text-decoration:none;">${safeValue}</a>`
+    : safeValue;
+
+  return `
+    <tr>
+      <td style="padding:10px 0;border-bottom:1px solid rgba(252,211,77,0.12);width:38%;vertical-align:top;">
+        <span style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#9ca3af;">${safeLabel}</span>
+      </td>
+      <td style="padding:10px 0;border-bottom:1px solid rgba(252,211,77,0.12);vertical-align:top;">
+        <span style="font-size:15px;color:#f6f5f1;line-height:1.45;">${content}</span>
+      </td>
+    </tr>`;
+}
+
+function listBlockHtml(title: string, items: string[]): string {
+  if (items.length === 0) return "";
+  const lis = items
+    .map(
+      (item) =>
+        `<li style="margin:0 0 8px;padding:0;color:#f6f5f1;font-size:14px;line-height:1.45;">${escapeHtml(item.replace(/^•\s*/, ""))}</li>`,
+    )
+    .join("");
+
+  return `
+    <div style="margin:22px 0 0;">
+      <p style="margin:0 0 10px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#fcd34d;">${escapeHtml(title)}</p>
+      <ul style="margin:0;padding:0 0 0 18px;">${lis}</ul>
+    </div>`;
+}
+
+function buildHtmlEmail(
+  p: ContactFormPayload,
+  timestamp: string,
+  selectedServices: string[],
+  selectedServiceSlugs: string[],
+  selectedAddons: string[],
+  siteUrl: string | undefined,
+  isAudit: boolean,
+): string {
+  const businessTypeLabel = BUSINESS_TYPE_LABELS[p.businessType] ?? p.businessType;
+  const sourceLabel = SOURCE_LABELS[p.source] ?? p.source;
+  const badge = isAudit ? "Audit request" : "Contact request";
+  const headline = isAudit ? "New audit request" : "New contact request";
+  const serviceLines = buildServiceEmailLines(selectedServiceSlugs, selectedServices);
+  const site = siteUrl?.trim();
+  const briefHtml = escapeHtml(p.brief).replace(/\n/g, "<br>");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(headline)} — DormUp Studio</title>
+</head>
+<body style="margin:0;padding:0;background:#06080c;font-family:Georgia,'Times New Roman',serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#06080c;padding:28px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#0f1620;border:1px solid rgba(252,211,77,0.28);border-radius:18px;overflow:hidden;">
+          <tr>
+            <td style="background:linear-gradient(135deg,#1a1408 0%,#0f1620 55%,#0b1a16 100%);padding:28px 28px 22px;border-bottom:1px solid rgba(252,211,77,0.18);">
+              <p style="margin:0 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#fcd34d;">DormUp Studio</p>
+              <h1 style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:24px;line-height:1.25;color:#f6f5f1;font-weight:600;">${escapeHtml(headline)}</h1>
+              <p style="display:inline-block;margin:14px 0 0;padding:6px 12px;border-radius:999px;background:rgba(252,211,77,0.12);border:1px solid rgba(252,211,77,0.35);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;color:#fde68a;">${escapeHtml(badge)}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:26px 28px 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                ${rowHtml("Date / Time", timestamp)}
+                ${rowHtml("Full name", p.fullName)}
+                ${rowHtml("Email", p.email, `mailto:${p.email}`)}
+                ${rowHtml("Business", p.businessName)}
+                ${rowHtml("Business type", businessTypeLabel)}
+                ${rowHtml("Source", sourceLabel)}
+                ${site ? rowHtml("Website", site, site.startsWith("http") ? site : `https://${site}`) : ""}
+              </table>
+
+              ${listBlockHtml("Selected services", serviceLines)}
+              ${listBlockHtml("Add-on modules", selectedAddons)}
+
+              <div style="margin:24px 0 8px;">
+                <p style="margin:0 0 10px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#fcd34d;">Brief</p>
+                <div style="padding:16px 18px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(252,211,77,0.14);color:#e5e7eb;font-size:14px;line-height:1.6;">
+                  ${briefHtml}
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 28px 26px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+              <p style="margin:0;font-size:12px;color:#9ca3af;line-height:1.5;">
+                Sent automatically from
+                <a href="https://dormup-it.com" style="color:#fcd34d;text-decoration:none;">dormup-it.com</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
 }
 
 async function appendToGoogleSheets(
@@ -398,6 +518,16 @@ export async function POST(request: NextRequest) {
         selectedServiceSlugs,
         selectedAddons,
         siteUrl,
+        isAudit,
+      ),
+      html: buildHtmlEmail(
+        p,
+        timestamp,
+        selectedServices,
+        selectedServiceSlugs,
+        selectedAddons,
+        siteUrl,
+        isAudit,
       ),
     });
   })();
