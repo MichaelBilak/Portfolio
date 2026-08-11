@@ -381,13 +381,38 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
       }
     };
 
+    const mergeContact = () => {
+      const raw = bySection.contact;
+      if (!raw || typeof raw !== "object") return;
+      const baseContact = translations[locale].contact;
+      const rawContact = raw as Partial<TranslationSet["contact"]> & {
+        form?: Partial<TranslationSet["contact"]["form"]>;
+      };
+      overlay.contact = {
+        ...baseContact,
+        ...rawContact,
+        form: {
+          ...baseContact.form,
+          ...(rawContact.form || {}),
+          options: {
+            ...baseContact.form.options,
+            ...(rawContact.form?.options || {}),
+          },
+          errors: {
+            ...baseContact.form.errors,
+            ...(rawContact.form?.errors || {}),
+          },
+        },
+      };
+    };
+
     mergeObj("nav");
     mergeObj("hero");
     mergeObj("problem");
     mergeObj("caseStudies");
     mergeObj("impact");
     mergeObj("processSection");
-    mergeObj("contact");
+    mergeContact();
     mergeObj("aboutPage");
     mergeObj("langSelector");
     mergeObj("footer");

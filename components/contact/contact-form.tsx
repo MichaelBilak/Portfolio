@@ -238,22 +238,33 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
               <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.22em] text-accentGold">
                 DormUp Studio
               </p>
-              <h2
-                id="contact-success-title"
-                className="text-2xl font-semibold tracking-tight text-textPrimary sm:text-[1.7rem]"
-              >
-                {t.contact.form.successTitle}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-textSecondary">
-                {t.contact.form.success}
-              </p>
+              {t.contact.form.successTitle ? (
+                <>
+                  <h2
+                    id="contact-success-title"
+                    className="text-2xl font-semibold tracking-tight text-[#f6f5f1] sm:text-[1.7rem]"
+                  >
+                    {t.contact.form.successTitle}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-[rgba(226,226,220,0.74)]">
+                    {t.contact.form.success}
+                  </p>
+                </>
+              ) : (
+                <h2
+                  id="contact-success-title"
+                  className="text-2xl font-semibold tracking-tight text-[#f6f5f1] sm:text-[1.7rem]"
+                >
+                  {t.contact.form.success}
+                </h2>
+              )}
 
               <button
                 type="button"
                 onClick={() => setSent(false)}
-                className="focus-outline interactive mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-accentGold px-6 py-3 text-sm font-medium text-bgPrimary shadow-[0_20px_50px_-22px_rgba(252,211,77,0.65)] hover:shadow-[0_26px_60px_-22px_rgba(252,211,77,0.85)] active:scale-[0.97]"
+                className="focus-outline interactive mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#fcd34d] px-6 py-3 text-sm font-semibold text-[#06080c] shadow-[0_20px_50px_-22px_rgba(252,211,77,0.65)] hover:shadow-[0_26px_60px_-22px_rgba(252,211,77,0.85)] active:scale-[0.97]"
               >
-                {t.contact.form.successClose}
+                {t.contact.form.successClose || "OK"}
               </button>
             </motion.div>
           </motion.div>
