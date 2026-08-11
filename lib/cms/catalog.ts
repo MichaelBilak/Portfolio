@@ -71,8 +71,7 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
     if (error || !rows?.length) return staticProjects(locale);
 
     const staticById = new Map(projectsMeta.map((p) => [p.id, p]));
-
-    return rows.map((doc) => {
+    const fromCms: CmsProject[] = rows.map((doc) => {
       const projectId = String(doc.project_id);
       const staticMeta = staticById.get(projectId);
       const i18n =
@@ -108,6 +107,11 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
           : translations[locale].projects.find((x) => x.id === projectId),
       };
     });
+
+    // Keep portfolio complete: append static projects not yet seeded into CMS.
+    const cmsIds = new Set(fromCms.map((p) => p.id));
+    const missing = staticProjects(locale).filter((p) => !cmsIds.has(p.id));
+    return [...fromCms, ...missing];
   } catch (err) {
     console.warn("[cms] getProjects failed:", err);
     return staticProjects(locale);
