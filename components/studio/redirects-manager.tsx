@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useStudioI18n } from "@/lib/studio/i18n";
 
 type RedirectRow = {
   id?: string;
@@ -13,6 +14,7 @@ type RedirectRow = {
 
 export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
   const router = useRouter();
+  const { t } = useStudioI18n();
   const [rows, setRows] = useState(initial);
   const [fromPath, setFrom] = useState("");
   const [toPath, setTo] = useState("");
@@ -24,7 +26,7 @@ export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rows }),
     });
-    setMsg(res.ok ? "Saved" : "Failed");
+    setMsg(res.ok ? t("redirects.saved") : t("redirects.failed"));
     if (res.ok) {
       await fetch("/api/studio/revalidate", { method: "POST" });
       router.refresh();
@@ -33,7 +35,7 @@ export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
 
   async function addRow() {
     if (!fromPath.startsWith("/") || !toPath.startsWith("/")) {
-      setMsg("Paths must start with /");
+      setMsg(t("redirects.pathError"));
       return;
     }
     setRows((r) => [...r, { from_path: fromPath, to_path: toPath, permanent: true, enabled: true }]);
@@ -46,10 +48,10 @@ export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
       <table className="st-table">
         <thead>
           <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>301</th>
-            <th>On</th>
+            <th>{t("redirects.from")}</th>
+            <th>{t("redirects.to")}</th>
+            <th>{t("redirects.permanent")}</th>
+            <th>{t("redirects.enabled")}</th>
             <th />
           </tr>
         </thead>
@@ -94,7 +96,7 @@ export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
               </td>
               <td>
                 <button type="button" className="st-btn danger" onClick={() => setRows((all) => all.filter((_, idx) => idx !== i))}>
-                  Remove
+                  {t("common.remove")}
                 </button>
               </td>
             </tr>
@@ -105,10 +107,10 @@ export function RedirectsManager({ initial }: { initial: RedirectRow[] }) {
         <input className="st-input" placeholder="/old" value={fromPath} onChange={(e) => setFrom(e.target.value)} style={{ width: 180 }} />
         <input className="st-input" placeholder="/new" value={toPath} onChange={(e) => setTo(e.target.value)} style={{ width: 180 }} />
         <button type="button" className="st-btn" onClick={addRow}>
-          Add
+          {t("redirects.add")}
         </button>
         <button type="button" className="st-btn primary" onClick={saveAll}>
-          Save all
+          {t("redirects.saveAll")}
         </button>
       </div>
       {msg ? <p className="st-ok">{msg}</p> : null}

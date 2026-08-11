@@ -84,6 +84,12 @@ const ru = {
   "status.active": "Активный",
   "status.done": "Завершён",
   "status.delivery": "Доставка",
+  "status.todo": "К выполнению",
+  "status.blocked": "Заблокирована",
+  "status.cancelled": "Отменена",
+  "status.planned": "Запланировано",
+  "status.invoiced": "Выставлено",
+  "status.paid": "Оплачено",
 
   "priority.low": "Низкий",
   "priority.normal": "Обычный",
@@ -98,6 +104,7 @@ const ru = {
   "lang.es": "Испанский",
 
   "login.subtitle": "Вход в панель управления",
+  "login.email": "Email",
   "login.password": "Пароль",
   "login.submit": "Войти",
   "login.loading": "Входим…",
@@ -171,6 +178,7 @@ const ru = {
   "leads.saveError": "Ошибка сохранения",
   "leads.convertError": "Не удалось создать дело",
   "leads.deleteError": "Не удалось удалить",
+  "leads.fallbackTitle": "Лид",
 
   "users.title": "Команда",
   "users.subtitle": "Пользователи и права доступа к панели.",
@@ -483,6 +491,8 @@ const ru = {
   "crm.stageKey": "Системный ключ",
   "crm.color": "Цвет",
   "crm.order": "Порядок",
+  "crm.daysBadge": "{days} дней",
+  "crm.eyebrow": "CRM",
 } as const;
 
 type MessageKey = keyof typeof ru;
@@ -547,6 +557,12 @@ const en: Record<MessageKey, string> = {
   "status.active": "Active",
   "status.done": "Done",
   "status.delivery": "Delivery",
+  "status.todo": "To do",
+  "status.blocked": "Blocked",
+  "status.cancelled": "Cancelled",
+  "status.planned": "Planned",
+  "status.invoiced": "Invoiced",
+  "status.paid": "Paid",
 
   "priority.low": "Low",
   "priority.normal": "Normal",
@@ -561,6 +577,7 @@ const en: Record<MessageKey, string> = {
   "lang.es": "Spanish",
 
   "login.subtitle": "Sign in to the control panel",
+  "login.email": "Email",
   "login.password": "Password",
   "login.submit": "Sign in",
   "login.loading": "Signing in…",
@@ -634,6 +651,7 @@ const en: Record<MessageKey, string> = {
   "leads.saveError": "Could not save",
   "leads.convertError": "Could not create case",
   "leads.deleteError": "Could not delete",
+  "leads.fallbackTitle": "Lead",
 
   "users.title": "Team",
   "users.subtitle": "Users and panel access permissions.",
@@ -946,6 +964,8 @@ const en: Record<MessageKey, string> = {
   "crm.stageKey": "System key",
   "crm.color": "Color",
   "crm.order": "Order",
+  "crm.daysBadge": "{days} days",
+  "crm.eyebrow": "CRM",
 };
 
 export const studioMessages = { ru, en } as const;

@@ -8,40 +8,44 @@ import {
   Users,
 } from "lucide-react";
 import { getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
 
 export default async function ManageHubPage() {
   const user = await getStudioSession();
+  const locale = resolveStudioLocale(user?.adminLocale);
+  const t = createStudioTranslator(locale);
+
   const sections = [
     {
       href: "/seo",
-      title: "Поиск и аналитика",
-      description: "SEO-заголовки, описания и счётчики",
+      title: t("manage.seoTitle"),
+      description: t("manage.seoDesc"),
       icon: SlidersHorizontal,
     },
     {
       href: "/media",
-      title: "Медиатека",
-      description: "Изображения и видео для сайта",
+      title: t("manage.mediaTitle"),
+      description: t("manage.mediaDesc"),
       icon: Images,
     },
     {
       href: "/redirects",
-      title: "Редиректы",
-      description: "Перенаправление старых адресов на новые",
+      title: t("manage.redirectsTitle"),
+      description: t("manage.redirectsDesc"),
       icon: Shuffle,
     },
     {
       href: "/settings",
-      title: "Данные студии",
-      description: "Бренд, сайт, email и социальные сети",
+      title: t("manage.settingsTitle"),
+      description: t("manage.settingsDesc"),
       icon: Settings2,
     },
     ...(user?.role === "owner"
       ? [{
           href: "/users",
-          title: "Доступ команды",
-          description: "Пользователи и права доступа",
+          title: t("manage.usersTitle"),
+          description: t("manage.usersDesc"),
           icon: Users,
         }]
       : []),
@@ -51,9 +55,9 @@ export default async function ManageHubPage() {
     <>
       <div className="st-page-header">
         <div>
-          <p className="st-eyebrow">Управление</p>
-          <h1 className="st-h1">Настройки</h1>
-          <p className="st-sub">Технические параметры и доступ команды.</p>
+          <p className="st-eyebrow">{t("manage.eyebrow")}</p>
+          <h1 className="st-h1">{t("manage.title")}</h1>
+          <p className="st-sub">{t("manage.subtitle")}</p>
         </div>
       </div>
       <div className="st-action-grid">

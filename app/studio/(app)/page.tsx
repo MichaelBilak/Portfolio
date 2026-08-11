@@ -3,6 +3,13 @@ import { redirect } from "next/navigation";
 import { ArrowRight, Inbox, TrendingUp, Trophy, UsersRound } from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
+import {
+  createStudioTranslator,
+  labelLang,
+  labelStatus,
+  resolveStudioLocale,
+  studioDateLocale,
+} from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
 import {
   BreakdownChart,
@@ -20,32 +27,26 @@ type LeadRow = {
 const TIMELINES = [7, 14, 30, 90] as const;
 type TimelineDays = (typeof TIMELINES)[number];
 
-function titleCase(value: string) {
-  const labels: Record<string, string> = {
-    new: "Новые",
-    in_progress: "В работе",
-    won: "Выиграны",
-    lost: "Отказ",
-    spam: "Спам",
-    unknown: "Не указано",
-    it: "Итальянский",
-    en: "Английский",
-    fr: "Французский",
-    ru: "Русский",
-    de: "Немецкий",
-    es: "Испанский",
-  };
-  return labels[value] || value.replace(/_/g, " ");
-}
-
-function countBy(rows: LeadRow[], key: "status" | "source" | "locale") {
+function countBy(
+  rows: LeadRow[],
+  key: "status" | "source" | "locale",
+  locale: ReturnType<typeof resolveStudioLocale>,
+) {
   const counts = new Map<string, number>();
   for (const row of rows) {
     const value = row[key] || "unknown";
     counts.set(value, (counts.get(value) || 0) + 1);
   }
   return [...counts.entries()]
-    .map(([label, value]) => ({ label: titleCase(label), value }))
+    .map(([label, value]) => ({
+      label:
+        key === "status"
+          ? labelStatus(locale, label)
+          : key === "locale"
+            ? labelLang(locale, label)
+            : label.replace(/_/g, " "),
+      value,
+    }))
     .sort((a, b) => b.value - a.value);
 }
 
@@ -57,6 +58,9 @@ export default async function StudioDashboardPage({
   const user = await getStudioSession();
   if (!user || !canManageLeads(user.role)) redirect(studioPath("/cases"));
 
+  const locale = resolveStudioLocale(user.adminLocale);
+  const t = createStudioTranslator(locale);
+
   const params = await searchParams;
   const requestedDays = Number(params.days);
   const days: TimelineDays = TIMELINES.includes(requestedDays as TimelineDays)
@@ -66,11 +70,8 @@ export default async function StudioDashboardPage({
   if (!isSupabaseConfigured()) {
     return (
       <>
-        <h1 className="st-h1">Dashboard</h1>
-        <p className="st-sub">
-          Supabase env vars are missing. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY,
-          and SUPABASE_SERVICE_ROLE_KEY, then apply <code>supabase/migrations/001_studio.sql</code>.
-        </p>
+        <h1 className="st-h1">{t("dashboard.title")}</h1>
+        <p className="st-sub">{t("dashboard.missingEnv")}</p>
       </>
     );
   }
@@ -118,6 +119,7 @@ export default async function StudioDashboardPage({
       ? 100
       : 0;
 
+  const dateLocale = studioDateLocale(locale);
   const trend = Array.from({ length: days }, (_, index) => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
@@ -125,7 +127,7 @@ export default async function StudioDashboardPage({
     const next = new Date(date);
     next.setDate(next.getDate() + 1);
     return {
-      label: date.toLocaleDateString("ru-RU", { day: "numeric", month: "short" }),
+      label: date.toLocaleDateString(dateLocale, { day: "numeric", month: "short" }),
       value: leads.filter((lead) => {
         const created = new Date(lead.created_at);
         return created >= date && created < next;
@@ -140,17 +142,23 @@ export default async function StudioDashboardPage({
   const contentHealth = expectedTranslations
     ? (actualTranslations / expectedTranslations) * 100
     : 100;
+  const healthHint =
+    contentHealth >= 90
+      ? t("dashboard.healthReady")
+      : contentHealth >= 60
+        ? t("dashboard.healthPartial")
+        : t("dashboard.healthLow");
 
   return (
     <>
       <div className="st-page-header">
         <div>
-          <p className="st-eyebrow">Обзор бизнеса</p>
-          <h1 className="st-h1">Добрый день</h1>
-          <p className="st-sub">Главные показатели за последние {days} дней.</p>
+          <p className="st-eyebrow">{t("dashboard.eyebrow")}</p>
+          <h1 className="st-h1">{t("dashboard.title")}</h1>
+          <p className="st-sub">{t("dashboard.subtitle", { days })}</p>
         </div>
         <Link className="st-btn primary" href={studioPath("/leads")}>
-          <Inbox size={16} /> Открыть заявки
+          <Inbox size={16} /> {t("dashboard.openLeads")}
         </Link>
       </div>
 
@@ -158,35 +166,41 @@ export default async function StudioDashboardPage({
         <div className="st-metric">
           <span className="st-metric-icon"><UsersRound size={18} /></span>
           <div>
-            <small>Всего заявок</small>
+            <small>{t("dashboard.totalLeads")}</small>
             <strong>{leads.length}</strong>
             <em className={growth >= 0 ? "positive" : "negative"}>
-              {growth >= 0 ? "+" : ""}{growth}% к прошлому периоду
+              {growth >= 0 ? "+" : ""}
+              {t("dashboard.vsPrevious", { value: growth })}
             </em>
           </div>
         </div>
         <div className="st-metric">
           <span className="st-metric-icon"><Inbox size={18} /></span>
           <div>
-            <small>Требуют внимания</small>
+            <small>{t("dashboard.needsAttention")}</small>
             <strong>{newCount}</strong>
-            <em>{activeCount} сейчас в работе</em>
+            <em>{t("dashboard.inProgressNow", { count: activeCount })}</em>
           </div>
         </div>
         <div className="st-metric">
           <span className="st-metric-icon"><Trophy size={18} /></span>
           <div>
-            <small>Выиграны</small>
+            <small>{t("dashboard.won")}</small>
             <strong>{wonCount}</strong>
-            <em>конверсия {conversion}%</em>
+            <em>{t("dashboard.conversion", { value: conversion })}</em>
           </div>
         </div>
         <div className="st-metric">
           <span className="st-metric-icon"><TrendingUp size={18} /></span>
           <div>
-            <small>Контент сайта</small>
+            <small>{t("dashboard.siteContent")}</small>
             <strong>{(projectCount.count || 0) + (serviceCount.count || 0)}</strong>
-            <em>{projectCount.count || 0} проектов · {serviceCount.count || 0} услуг</em>
+            <em>
+              {t("dashboard.contentCounts", {
+                projects: projectCount.count || 0,
+                services: serviceCount.count || 0,
+              })}
+            </em>
           </div>
         </div>
       </div>
@@ -195,12 +209,12 @@ export default async function StudioDashboardPage({
         <section className="st-panel st-panel-wide">
           <div className="st-panel-head">
             <div>
-              <h2>Динамика заявок</h2>
-              <p>Новые обращения за последние {days} дней</p>
+              <h2>{t("dashboard.trendTitle")}</h2>
+              <p>{t("dashboard.trendSub", { days })}</p>
             </div>
             <div className="st-panel-actions">
-              <span className="st-panel-total">{recentCount} заявок</span>
-              <nav className="st-timeline" aria-label="Период графика">
+              <span className="st-panel-total">{t("dashboard.leadsCount", { count: recentCount })}</span>
+              <nav className="st-timeline" aria-label={t("dashboard.timelineAria")}>
                 {TIMELINES.map((value) => (
                   <Link
                     key={value}
@@ -209,56 +223,72 @@ export default async function StudioDashboardPage({
                     aria-current={value === days ? "page" : undefined}
                     scroll={false}
                   >
-                    {value}д
+                    {t("dashboard.daysShort", { days: value })}
                   </Link>
                 ))}
               </nav>
             </div>
           </div>
-          <LeadsTrendChart points={trend} />
+          <LeadsTrendChart
+            points={trend}
+            ariaLabel={t("dashboard.chartAria", { days })}
+          />
         </section>
 
         <section className="st-panel">
           <div className="st-panel-head">
             <div>
-              <h2>Воронка продаж</h2>
-              <p>Текущий статус всех возможностей</p>
+              <h2>{t("dashboard.funnelTitle")}</h2>
+              <p>{t("dashboard.funnelSub")}</p>
             </div>
           </div>
-          <BreakdownChart items={countBy(leads, "status")} emptyLabel="Заявок пока нет" />
+          <BreakdownChart
+            items={countBy(leads, "status", locale)}
+            emptyLabel={t("dashboard.funnelEmpty")}
+          />
         </section>
 
         <section className="st-panel">
           <div className="st-panel-head">
             <div>
-              <h2>Источники заявок</h2>
-              <p>Откуда клиенты узнают о студии</p>
+              <h2>{t("dashboard.sourcesTitle")}</h2>
+              <p>{t("dashboard.sourcesSub")}</p>
             </div>
           </div>
-          <BreakdownChart items={countBy(leads, "source")} emptyLabel="Данные об источниках появятся здесь" />
+          <BreakdownChart
+            items={countBy(leads, "source", locale)}
+            emptyLabel={t("dashboard.sourcesEmpty")}
+          />
         </section>
 
         <section className="st-panel">
           <div className="st-panel-head">
             <div>
-              <h2>Состояние сайта</h2>
-              <p>Готовность переводов каталога</p>
+              <h2>{t("dashboard.siteHealthTitle")}</h2>
+              <p>{t("dashboard.siteHealthSub")}</p>
             </div>
           </div>
-          <ContentHealth value={contentHealth} label="Переводы" />
+          <ContentHealth
+            value={contentHealth}
+            label={t("dashboard.translations")}
+            hint={healthHint}
+          />
           <Link href={studioPath("/catalog")} className="st-panel-link">
-            Проверить контент <ArrowRight size={15} />
+            {t("dashboard.checkContent")} <ArrowRight size={15} />
           </Link>
         </section>
 
         <section className="st-panel">
           <div className="st-panel-head">
             <div>
-              <h2>Языки аудитории</h2>
-              <p>Язык входящих обращений</p>
+              <h2>{t("dashboard.audienceTitle")}</h2>
+              <p>{t("dashboard.audienceSub")}</p>
             </div>
           </div>
-          <BreakdownChart items={countBy(leads, "locale")} emptyLabel="Данные о языках появятся здесь" />
+          <BreakdownChart
+            items={countBy(leads, "locale", locale)}
+            emptyLabel={t("dashboard.audienceEmpty")}
+          />
         </section>
       </div>
     </>

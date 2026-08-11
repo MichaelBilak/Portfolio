@@ -1,7 +1,13 @@
 type TrendPoint = { label: string; value: number };
 type BreakdownItem = { label: string; value: number; color?: string };
 
-export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
+export function LeadsTrendChart({
+  points,
+  ariaLabel,
+}: {
+  points: TrendPoint[];
+  ariaLabel?: string;
+}) {
   const max = Math.max(1, ...points.map((point) => point.value));
   const width = 760;
   const height = 210;
@@ -25,7 +31,7 @@ export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
         className="st-line-chart"
         viewBox={`0 0 ${width} ${height}`}
         role="img"
-        aria-label={`Заявки за последние ${points.length} дней`}
+        aria-label={ariaLabel || `Leads · ${points.length} days`}
       >
         {[0, 0.5, 1].map((fraction) => (
           <line
@@ -70,7 +76,7 @@ export function LeadsTrendChart({ points }: { points: TrendPoint[] }) {
 
 export function BreakdownChart({
   items,
-  emptyLabel = "Данных пока нет",
+  emptyLabel = "—",
 }: {
   items: BreakdownItem[];
   emptyLabel?: string;
@@ -107,9 +113,11 @@ export function BreakdownChart({
 export function ContentHealth({
   value,
   label,
+  hint,
 }: {
   value: number;
   label: string;
+  hint: string;
 }) {
   const normalized = Math.max(0, Math.min(100, Math.round(value)));
   return (
@@ -124,13 +132,7 @@ export function ContentHealth({
       </div>
       <div>
         <strong>{label}</strong>
-        <small>
-          {normalized >= 90
-            ? "Все переводы готовы"
-            : normalized >= 60
-              ? "Некоторые переводы требуют внимания"
-              : "Контент требует внимания"}
-        </small>
+        <small>{hint}</small>
       </div>
     </div>
   );

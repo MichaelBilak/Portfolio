@@ -1,5 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { JsonResourceEditor } from "@/components/studio/json-resource-editor";
+import { getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
 
 const LOCALES = ["it", "en", "fr", "ru", "de", "es"] as const;
@@ -9,6 +11,10 @@ export default async function SeoAdminPage({
 }: {
   searchParams: Promise<{ locale?: string }>;
 }) {
+  const user = await getStudioSession();
+  const adminLocale = resolveStudioLocale(user?.adminLocale);
+  const t = createStudioTranslator(adminLocale);
+
   const sp = await searchParams;
   const locale = LOCALES.includes(sp.locale as (typeof LOCALES)[number])
     ? (sp.locale as string)
@@ -18,8 +24,8 @@ export default async function SeoAdminPage({
 
   return (
     <>
-      <h1 className="st-h1">SEO · {locale.toUpperCase()}</h1>
-      <p className="st-sub">Заголовки, описания и счётчики аналитики.</p>
+      <h1 className="st-h1">{t("content.seoTitle", { locale: locale.toUpperCase() })}</h1>
+      <p className="st-sub">{t("content.seoSub")}</p>
       <div className="st-tabs">
         {LOCALES.map((l) => (
           <a key={l} href={`${studioPath("/seo")}?locale=${l}`} className={`st-tab${l === locale ? " active" : ""}`}>

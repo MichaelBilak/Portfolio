@@ -8,8 +8,10 @@ export class ApiInputError extends Error {
 }
 
 export async function readJsonObject(request: NextRequest): Promise<Record<string, unknown>> {
+  const raw = await request.text();
+  if (!raw.trim()) return {};
   try {
-    const value: unknown = await request.json();
+    const value: unknown = JSON.parse(raw);
     if (!value || typeof value !== "object" || Array.isArray(value)) {
       throw new ApiInputError("JSON object required");
     }

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Check, ChevronDown, Code2, Plus, Save, Trash2 } from "lucide-react";
+import { fieldLabel, useStudioI18n } from "@/lib/studio/i18n";
 
 type JsonValue =
   | string
@@ -16,59 +17,6 @@ const HIDDEN_KEYS = new Set([
   "id", "created_at", "updated_at", "project_id", "service_id",
   "category_id", "item_id", "step_id", "case_id",
 ]);
-
-const LABELS: Record<string, string> = {
-  name: "Название", title: "Заголовок", description: "Описание",
-  subtitle: "Подзаголовок", locale: "Язык", slug: "Адрес страницы",
-  href: "Ссылка", label: "Подпись", details: "Детали", price: "Цена",
-  project_i18n: "Переводы",
-  service_i18n: "Переводы",
-  service_tiers: "Тарифы и цены",
-  service_tier_i18n: "Переводы тарифа",
-  addon_category_i18n: "Переводы категории",
-  addon_items: "Дополнительные опции",
-  addon_item_i18n: "Переводы опции",
-  process_step_i18n: "Переводы",
-  default_title: "Заголовок страницы по умолчанию",
-  default_description: "Описание по умолчанию",
-  og_image_path: "Картинка для соцсетей",
-  ga_measurement_id: "Google Analytics ID",
-  plausible_domain: "Домен Plausible",
-  brand_name: "Название бренда",
-  brand_tagline: "Слоган",
-  site_url: "Адрес сайта",
-  contact_email: "Контактный email",
-  instagram_url: "Ссылка Instagram",
-  instagram_bio_link: "Ссылка из профиля Instagram",
-  base_price: "Цена от (€)",
-  image_path: "Изображение",
-  image_position: "Позиция изображения",
-  sort_order: "Порядок показа",
-  is_live: "Проект опубликован",
-  is_monthly: "Ежемесячная услуга",
-  index_label: "Номер проекта",
-  display_url: "Отображаемая ссылка",
-  what_you_get: "Что получает клиент",
-  business_impact: "Результат для бизнеса",
-  name_tagline: "Короткое описание",
-  before_src: "Изображение «до»",
-  after_src: "Изображение «после»",
-  before_alt: "Описание изображения «до»",
-  after_alt: "Описание изображения «после»",
-  number_label: "Номер шага",
-  price_type: "Тип цены",
-};
-
-function humanize(key: string) {
-  return (
-    LABELS[key] ||
-    key
-      .replace(/_i18n$/, " translations")
-      .replace(/_/g, " ")
-      .replace(/([a-z])([A-Z])/g, "$1 $2")
-      .replace(/^./, (letter) => letter.toUpperCase())
-  );
-}
 
 function isRecord(value: JsonValue): value is Record<string, JsonValue> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -118,8 +66,9 @@ function FieldEditor({
   path: Array<string | number>;
   onChange: (path: Array<string | number>, value: JsonValue) => void;
 }) {
+  const { t, locale } = useStudioI18n();
   if (HIDDEN_KEYS.has(fieldKey)) return null;
-  const label = humanize(fieldKey);
+  const label = fieldLabel(locale, fieldKey);
 
   if (Array.isArray(value)) {
     const objectArray = value.some(isRecord);
@@ -128,14 +77,14 @@ function FieldEditor({
         <div className="st-field-group-head">
           <div>
             <strong>{label}</strong>
-            <small>{value.length} элементов</small>
+            <small>{t("editor.itemsCount", { count: value.length })}</small>
           </div>
           <button
             type="button"
             className="st-btn subtle"
             onClick={() => onChange(path, [...value, emptyLike(value[0])])}
           >
-            <Plus size={14} /> Добавить
+            <Plus size={14} /> {t("editor.add")}
           </button>
         </div>
         <div className={objectArray ? "st-array-cards" : "st-simple-list"}>
@@ -171,7 +120,7 @@ function FieldEditor({
                       onChange(path, value.filter((_, itemIndex) => itemIndex !== index))
                     }
                   >
-                    <Trash2 size={14} /> Удалить
+                    <Trash2 size={14} /> {t("editor.delete")}
                   </button>
                 </div>
               </details>
@@ -191,14 +140,14 @@ function FieldEditor({
                   onClick={() =>
                     onChange(path, value.filter((_, itemIndex) => itemIndex !== index))
                   }
-                  aria-label={`Remove ${label} ${index + 1}`}
+                  aria-label={`${t("common.remove")} ${label} ${index + 1}`}
                 >
                   <Trash2 size={15} />
                 </button>
               </div>
             ),
           )}
-          {!value.length ? <p className="st-empty-inline">Элементов пока нет.</p> : null}
+          {!value.length ? <p className="st-empty-inline">{t("editor.emptyItems")}</p> : null}
         </div>
       </section>
     );
@@ -228,7 +177,7 @@ function FieldEditor({
       <label className="st-toggle">
         <span>
           <strong>{label}</strong>
-          <small>{value ? "Включено" : "Выключено"}</small>
+          <small>{value ? t("common.enabled") : t("common.disabled")}</small>
         </span>
         <input
           type="checkbox"
@@ -280,6 +229,7 @@ export function JsonResourceEditor({
   title?: string;
 }) {
   const router = useRouter();
+  const { t } = useStudioI18n();
   const [value, setValue] = useState<JsonValue>(
     (initial === undefined ? null : initial) as JsonValue,
   );
@@ -298,7 +248,7 @@ export function JsonResourceEditor({
       try {
         parsed = JSON.parse(text) as JsonValue;
       } catch {
-        setError("JSON содержит ошибку.");
+        setError(t("editor.jsonError"));
         setSaving(false);
         return;
       }
@@ -312,12 +262,12 @@ export function JsonResourceEditor({
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        setError(data.error || "Не удалось сохранить изменения.");
+        setError(data.error || t("editor.saveFailed"));
         return;
       }
       setValue(parsed);
       setText(JSON.stringify(parsed, null, 2));
-      setMsg("Изменения сохранены");
+      setMsg(t("editor.saved"));
       await fetch("/api/studio/revalidate", { method: "POST" });
       router.refresh();
     } finally {
@@ -335,11 +285,9 @@ export function JsonResourceEditor({
       {title ? <h2>{title}</h2> : null}
       <div className="st-editor-toolbar">
         <div>
-          <strong>{advanced ? "Расширенный редактор" : "Редактирование"}</strong>
+          <strong>{advanced ? t("editor.modeAdvanced") : t("editor.modeForm")}</strong>
           <small>
-            {advanced
-              ? "Только для технических изменений"
-              : "После сохранения изменения появятся на сайте"}
+            {advanced ? t("editor.modeAdvancedHint") : t("editor.modeFormHint")}
           </small>
         </div>
         <button
@@ -351,7 +299,7 @@ export function JsonResourceEditor({
           }}
         >
           <Code2 size={15} />
-          {advanced ? "Вернуться к форме" : "Расширенный режим"}
+          {advanced ? t("editor.switchForm") : t("editor.switchAdvanced")}
         </button>
       </div>
 
@@ -393,7 +341,7 @@ export function JsonResourceEditor({
           onClick={save}
           disabled={saving}
         >
-          <Save size={16} /> {saving ? "Сохраняем…" : "Сохранить"}
+          <Save size={16} /> {saving ? t("editor.saving") : t("common.save")}
         </button>
       </div>
     </div>

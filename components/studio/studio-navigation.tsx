@@ -113,7 +113,7 @@ export function StudioNavigation({
         </span>
       </Link>
 
-      <nav className="st-nav-list" aria-label="Studio navigation">
+      <nav className="st-nav-list" aria-label={t("nav.aria")}>
         {groups.map((group) => (
           <div className="st-nav-group" key={group.key}>
             <span className="st-nav-group-label">{t(group.label)}</span>

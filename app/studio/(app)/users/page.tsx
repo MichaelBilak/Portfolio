@@ -2,10 +2,14 @@ import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { UsersManager } from "@/components/studio/users-manager";
 import { canManageUsers, getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 
 export default async function UsersAdminPage() {
   const user = await getStudioSession();
   if (!user || !canManageUsers(user.role)) notFound();
+
+  const locale = resolveStudioLocale(user.adminLocale);
+  const t = createStudioTranslator(locale);
 
   const sb = createAdminClient();
   const { data: profiles } = await sb.from("profiles").select("id, name, role, created_at").order("created_at");
@@ -21,8 +25,8 @@ export default async function UsersAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Команда</h1>
-      <p className="st-sub">Пользователи и права доступа к панели.</p>
+      <h1 className="st-h1">{t("users.title")}</h1>
+      <p className="st-sub">{t("users.subtitle")}</p>
       <UsersManager initial={rows} />
     </>
   );

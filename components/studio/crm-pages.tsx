@@ -9,91 +9,28 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { studioPath } from "@/lib/studio/path";
-import { useStudioI18n } from "@/lib/studio/i18n";
+import {
+  formatStudioDate,
+  labelPriority,
+  labelStatus,
+  useStudioI18n,
+  type StudioLocale,
+  type StudioMessageKey,
+} from "@/lib/studio/i18n";
 
 type Row = Record<string, unknown>;
 type ModuleKind = "tasks" | "automations" | "inbox";
 type CreateKind = "case" | "task" | "automation" | "document" | "note" | "finance" | "time";
 
-const copy = {
-  ru: {
-    cases: "Кейсы", casesSub: "Все клиентские проекты от продажи до завершения.",
-    tasks: "Задачи", tasksSub: "Личная и командная работа по клиентским кейсам.",
-    documents: "Документы", documentsSub: "Спецификации и версии документов по кейсам.",
-    automations: "Автоматизации", automationsSub: "Правила, триггеры и действия.",
-    inbox: "Уведомления", inboxSub: "Обновления и события, требующие внимания.",
-    reports: "Отчёты", reportsSub: "Сводка по кейсам, задачам, времени и финансам.",
-    newCase: "Новый кейс", newTask: "Новая задача", newAutomation: "Новое правило",
-    newDocument: "Новый документ", markRead: "Прочитать все", upload: "Загрузить файл",
-    noCases: "Кейсов пока нет", noTasks: "Задач пока нет", noDocuments: "Документов пока нет",
-    noAutomations: "Автоматизаций пока нет", noInbox: "Новых уведомлений нет",
-    client: "Клиент", owner: "Ответственный", deadline: "Срок", status: "Статус",
-    priority: "Приоритет", case: "Кейс", updated: "Обновлено", type: "Тип",
-    due: "Срок", assignee: "Исполнитель", title: "Название", description: "Описание",
-    search: "Поиск…", create: "Создать", close: "Закрыть", cancel: "Отмена",
-    openCase: "Открыть кейс", active: "Активные", won: "Согласование",
-    delivery: "В работе", done: "Завершённые", overview: "Обзор", timeline: "Хронология",
-    materials: "Материалы", specification: "Спецификация", team: "Команда",
-    finance: "Финансы", time: "Время", settings: "Настройки", workspace: "Рабочее пространство кейса",
-    backCases: "Все кейсы", saveChanges: "Сохранить изменения", addNote: "Добавить заметку",
-    addFinance: "Добавить этап", addTime: "Учесть время", addItem: "Добавить пункт",
-    publishVersion: "Сохранить спецификацию", section: "Раздел", item: "Пункт",
-    acceptance: "Критерий приёмки", requestFailed: "Не удалось выполнить запрос",
-    saved: "Сохранено", empty: "Данных пока нет", amount: "Сумма", minutes: "Минуты",
-    actions: "Действие", trigger: "Триггер", name: "Название", dueWithin: "Напомнить за, часов",
-    notificationTitle: "Заголовок уведомления", taskDueTrigger: "При приближении срока задачи",
-    stage: "Стадия", file: "Файл", category: "Категория", documentType: "Тип документа",
-    versions: "Версии", integrations: "Интеграции", available: "Доступна", unavailable: "Не настроена",
-    general: "Общие", pipelines: "Стадии", workspaceName: "Название рабочего пространства",
-    timezone: "Часовой пояс", currency: "Валюта", revenue: "Финансы",
-    teamLoad: "Учёт времени", totalPipeline: "Открытые кейсы", openTasks: "Открытые задачи",
-    overdue: "Просроченные", loggedHours: "Учтено часов", unread: "Непрочитанные",
-    taskBreakdown: "Задачи по статусу", financeBreakdown: "Финансы по валютам",
-    timeBreakdown: "Учёт времени", billable: "Оплачиваемое", nonBillable: "Неоплачиваемое",
-    addMember: "Добавить участника", memberRole: "Роль в кейсе",
-    addStage: "Добавить стадию", stageKey: "Системный ключ", color: "Цвет", order: "Порядок",
-  },
-  en: {
-    cases: "Cases", casesSub: "Every client project from sale through delivery.",
-    tasks: "Tasks", tasksSub: "Personal and team work across client cases.",
-    documents: "Documents", documentsSub: "Specifications and document versions by case.",
-    automations: "Automations", automationsSub: "Rules, triggers, and actions.",
-    inbox: "Notifications", inboxSub: "Updates and events that need attention.",
-    reports: "Reports", reportsSub: "Case, task, time, and finance summary.",
-    newCase: "New case", newTask: "New task", newAutomation: "New rule",
-    newDocument: "New document", markRead: "Mark all read", upload: "Upload file",
-    noCases: "No cases yet", noTasks: "No tasks yet", noDocuments: "No documents yet",
-    noAutomations: "No automations yet", noInbox: "You are all caught up",
-    client: "Client", owner: "Owner", deadline: "Deadline", status: "Status",
-    priority: "Priority", case: "Case", updated: "Updated", type: "Type",
-    due: "Due", assignee: "Assignee", title: "Title", description: "Description",
-    search: "Search…", create: "Create", close: "Close", cancel: "Cancel",
-    openCase: "Open case", active: "Active", won: "Approval", delivery: "In progress",
-    done: "Completed", overview: "Overview", timeline: "Timeline", materials: "Materials",
-    specification: "Specification", team: "Team", finance: "Finance", time: "Time",
-    settings: "Settings", workspace: "Case workspace", backCases: "All cases",
-    saveChanges: "Save changes", addNote: "Add note", addFinance: "Add milestone",
-    addTime: "Log time", addItem: "Add item", publishVersion: "Save specification",
-    section: "Section", item: "Item", acceptance: "Acceptance criteria",
-    requestFailed: "Request failed", saved: "Saved", empty: "No data yet", amount: "Amount",
-    minutes: "Minutes", actions: "Action", trigger: "Trigger",
-    dueWithin: "Notify within, hours", notificationTitle: "Notification title",
-    taskDueTrigger: "When a task deadline approaches",
-    name: "Name", stage: "Stage", file: "File", category: "Category",
-    documentType: "Document type", versions: "Versions", integrations: "Integrations",
-    available: "Available", unavailable: "Not configured", general: "General",
-    pipelines: "Stages", workspaceName: "Workspace name", timezone: "Time zone",
-    currency: "Currency", revenue: "Finance", teamLoad: "Time tracking",
-    totalPipeline: "Open cases", openTasks: "Open tasks", overdue: "Overdue",
-    loggedHours: "Hours logged", unread: "Unread", taskBreakdown: "Tasks by status",
-    financeBreakdown: "Finance by currency", timeBreakdown: "Time tracking",
-    billable: "Billable", nonBillable: "Non-billable",
-    addMember: "Add member", memberRole: "Case role",
-    addStage: "Add stage", stageKey: "System key", color: "Color", order: "Order",
-  },
-} as const;
+type CrmCopyKey = "cases" | "casesSub" | "tasks" | "tasksSub" | "documents" | "documentsSub" | "automations" | "automationsSub" | "inbox" | "inboxSub" | "reports" | "reportsSub" | "newCase" | "newTask" | "newAutomation" | "newDocument" | "markRead" | "upload" | "noCases" | "noTasks" | "noDocuments" | "noAutomations" | "noInbox" | "client" | "owner" | "deadline" | "status" | "priority" | "case" | "updated" | "type" | "due" | "assignee" | "title" | "description" | "search" | "create" | "close" | "cancel" | "openCase" | "active" | "won" | "delivery" | "done" | "overview" | "timeline" | "materials" | "specification" | "team" | "finance" | "time" | "settings" | "workspace" | "backCases" | "saveChanges" | "addNote" | "addFinance" | "addTime" | "addItem" | "publishVersion" | "section" | "item" | "acceptance" | "requestFailed" | "saved" | "empty" | "amount" | "minutes" | "actions" | "trigger" | "name" | "dueWithin" | "notificationTitle" | "taskDueTrigger" | "stage" | "file" | "category" | "documentType" | "documentGeneric" | "versions" | "integrations" | "available" | "unavailable" | "general" | "pipelines" | "workspaceName" | "timezone" | "currency" | "revenue" | "teamLoad" | "totalPipeline" | "openTasks" | "overdue" | "loggedHours" | "unread" | "taskBreakdown" | "financeBreakdown" | "timeBreakdown" | "billable" | "nonBillable" | "addMember" | "memberRole" | "addStage" | "stageKey" | "color" | "order" | "daysBadge" | "eyebrow";
+const CRM_COPY_KEYS = ["cases", "casesSub", "tasks", "tasksSub", "documents", "documentsSub", "automations", "automationsSub", "inbox", "inboxSub", "reports", "reportsSub", "newCase", "newTask", "newAutomation", "newDocument", "markRead", "upload", "noCases", "noTasks", "noDocuments", "noAutomations", "noInbox", "client", "owner", "deadline", "status", "priority", "case", "updated", "type", "due", "assignee", "title", "description", "search", "create", "close", "cancel", "openCase", "active", "won", "delivery", "done", "overview", "timeline", "materials", "specification", "team", "finance", "time", "settings", "workspace", "backCases", "saveChanges", "addNote", "addFinance", "addTime", "addItem", "publishVersion", "section", "item", "acceptance", "requestFailed", "saved", "empty", "amount", "minutes", "actions", "trigger", "name", "dueWithin", "notificationTitle", "taskDueTrigger", "stage", "file", "category", "documentType", "documentGeneric", "versions", "integrations", "available", "unavailable", "general", "pipelines", "workspaceName", "timezone", "currency", "revenue", "teamLoad", "totalPipeline", "openTasks", "overdue", "loggedHours", "unread", "taskBreakdown", "financeBreakdown", "timeBreakdown", "billable", "nonBillable", "addMember", "memberRole", "addStage", "stageKey", "color", "order", "daysBadge", "eyebrow"] as const satisfies readonly CrmCopyKey[];
 
-function useCopy() { return copy[useStudioI18n().locale]; }
+function useCrmCopy() {
+  const { t } = useStudioI18n();
+  return Object.fromEntries(
+    CRM_COPY_KEYS.map((key) => [key, t(("crm." + key) as StudioMessageKey)]),
+  ) as Record<CrmCopyKey, string>;
+}
 function text(value: unknown, fallback = "—") {
   return typeof value === "string" || typeof value === "number" ? String(value) : fallback;
 }
@@ -109,13 +46,8 @@ function rowsFrom(payload: unknown): Row[] {
   }
   return [];
 }
-function date(value: unknown, locale: "ru" | "en", withTime = false) {
-  if (!value) return "—";
-  const parsed = new Date(String(value));
-  if (Number.isNaN(parsed.valueOf())) return text(value);
-  return parsed.toLocaleString(locale === "ru" ? "ru-RU" : "en-GB", withTime
-    ? { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }
-    : { day: "2-digit", month: "short", year: "numeric" });
+function date(value: unknown, locale: StudioLocale, withTime = false) {
+  return formatStudioDate(value == null ? null : String(value), locale, withTime);
 }
 function localDate(value: unknown) { return value ? String(value).slice(0, 10) : ""; }
 function caseStage(row: Row) { return nested(row.pipeline_stages, "key", "active"); }
@@ -149,12 +81,14 @@ function useApi(endpoint: string, enabled = true) {
 function PageHeader(props: { eyebrow: string; title: string; subtitle: string; action?: React.ReactNode }) {
   return <div className="st-page-header"><div><p className="st-eyebrow">{props.eyebrow}</p><h1 className="st-h1">{props.title}</h1><p className="st-sub">{props.subtitle}</p></div>{props.action}</div>;
 }
-function StatusBadge({ value }: { value: unknown }) {
-  const status = text(value, "active");
-  return <span className={`st-status st-status-${status.replaceAll("_", "-")}`}>{status.replaceAll("_", " ")}</span>;
+function StatusBadge({ value, kind = "status" }: { value: unknown; kind?: "status" | "priority" }) {
+  const { locale } = useStudioI18n();
+  const raw = text(value, kind === "priority" ? "normal" : "active");
+  const label = kind === "priority" ? labelPriority(locale, raw) : labelStatus(locale, raw);
+  return <span className={`st-status st-status-${raw.replaceAll("_", "-")}`}>{label}</span>;
 }
 function StateView(props: { loading: boolean; error: string; empty: boolean; onRetry: () => void; emptyText?: string; children: React.ReactNode }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { t } = useStudioI18n();
   if (props.loading) return <div className="st-state"><LoaderCircle className="st-spin" /><strong>{t("common.loading")}</strong></div>;
   if (props.error) return <div className="st-state st-state-error"><AlertCircle /><strong>{c.requestFailed}</strong><span>{props.error}</span><button className="st-btn" onClick={props.onRetry}><RefreshCw size={15} />{t("common.retry")}</button></div>;
@@ -164,14 +98,15 @@ function StateView(props: { loading: boolean; error: string; empty: boolean; onR
 
 const priorities = ["low", "normal", "high", "urgent"];
 function PriorityField({ defaultValue = "normal" }: { defaultValue?: string }) {
-  const c = useCopy();
-  return <label className="st-label"><span>{c.priority}</span><select className="st-select" name="priority" defaultValue={defaultValue}>{priorities.map((value) => <option key={value}>{value}</option>)}</select></label>;
+  const c = useCrmCopy();
+  const { locale } = useStudioI18n();
+  return <label className="st-label"><span>{c.priority}</span><select className="st-select" name="priority" defaultValue={defaultValue}>{priorities.map((value) => <option key={value} value={value}>{labelPriority(locale, value)}</option>)}</select></label>;
 }
 
 function CreateModal({ kind, endpoint, caseId, cases = [], onClose, onSaved }: {
   kind: CreateKind; endpoint: string; caseId?: string; cases?: Row[]; onClose: () => void; onSaved: () => void;
 }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const titles: Record<CreateKind, string> = {
@@ -210,7 +145,7 @@ function CreateModal({ kind, endpoint, caseId, cases = [], onClose, onSaved }: {
         {kind === "task" && <>{!caseId && <label className="st-label"><span>{c.case}</span><select className="st-select" name="caseId" defaultValue=""><option value="">—</option>{cases.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.title)}</option>)}</select></label>}<PriorityField /><label className="st-label"><span>{c.due}</span><input className="st-input" name="dueAt" type="datetime-local" /></label></>}
         {(kind === "case" || kind === "task" || kind === "note" || kind === "time") && <label className="st-label"><span>{c.description}</span><textarea className="st-textarea" name="description" /></label>}
         {kind === "automation" && <><label className="st-label"><span>{c.trigger}</span><input className="st-input" value={c.taskDueTrigger} readOnly /></label><label className="st-label"><span>{c.dueWithin}</span><input className="st-input" name="dueWithinHours" type="number" min="1" max="720" defaultValue="24" required /></label><label className="st-label"><span>{c.notificationTitle}</span><input className="st-input" name="notificationTitle" /></label></>}
-        {kind === "document" && <><label className="st-label"><span>{c.documentType}</span><select className="st-select" name="documentType"><option value="specification">{c.specification}</option><option value="document">Document</option></select></label><label className="st-label"><span>{c.description}</span><textarea className="st-textarea" name="body" /></label></>}
+        {kind === "document" && <><label className="st-label"><span>{c.documentType}</span><select className="st-select" name="documentType"><option value="specification">{c.specification}</option><option value="document">{c.documentGeneric}</option></select></label><label className="st-label"><span>{c.description}</span><textarea className="st-textarea" name="body" /></label></>}
         {kind === "finance" && <><label className="st-label"><span>{c.amount}</span><input className="st-input" name="amount" type="number" min="0" step="0.01" required /></label><label className="st-label"><span>{c.currency}</span><input className="st-input" name="currency" defaultValue="EUR" maxLength={3} /></label><label className="st-label"><span>{c.due}</span><input className="st-input" name="dueDate" type="date" /></label></>}
         {kind === "time" && <><label className="st-label"><span>{c.minutes}</span><input className="st-input" name="minutes" type="number" min="1" max="1440" required /></label><label className="st-label"><span>{c.updated}</span><input className="st-input" name="entryDate" type="date" /></label><label className="st-check"><input name="billable" type="checkbox" defaultChecked />{c.billable}</label></>}
         {error && <p className="st-error">{c.requestFailed}: {error}</p>}
@@ -221,7 +156,7 @@ function CreateModal({ kind, endpoint, caseId, cases = [], onClose, onSaved }: {
 }
 
 export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCreate?: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale, t } = useStudioI18n();
   const config = {
     tasks: { endpoint: "/api/studio/tasks", title: c.tasks, sub: c.tasksSub, empty: c.noTasks, action: c.newTask, icon: CheckSquare2 },
@@ -269,7 +204,7 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
     }
   }
   return <>
-    <PageHeader eyebrow="CRM" title={config.title} subtitle={config.sub} action={(kind === "inbox" || canCreate) ? <button className="st-btn primary" onClick={primaryAction}>{kind === "inbox" ? <CheckCircle2 size={16} /> : <Plus size={16} />}{config.action}</button> : undefined} />
+    <PageHeader eyebrow={c.eyebrow} title={config.title} subtitle={config.sub} action={(kind === "inbox" || canCreate) ? <button className="st-btn primary" onClick={primaryAction}>{kind === "inbox" ? <CheckCircle2 size={16} /> : <Plus size={16} />}{config.action}</button> : undefined} />
     {actionError && <p className="st-error">{c.requestFailed}: {actionError}</p>}
     <div className="st-toolbar"><label className="st-search"><Search size={16} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={c.search} aria-label={t("common.search")} /></label><button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button></div>
     <StateView loading={api.loading || (kind === "tasks" && casesApi.loading)} error={api.error || (kind === "tasks" ? casesApi.error : "")} empty={!rows.length} emptyText={config.empty} onRetry={() => { void api.reload(); if (kind === "tasks") void casesApi.reload(); }}>
@@ -278,7 +213,7 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
          kind === "automations" ? <><th>{c.name}</th><th>{c.trigger}</th><th>{c.actions}</th><th>{c.status}</th></> :
          <><th>{c.title}</th><th>{c.type}</th><th>{c.description}</th><th>{c.updated}</th><th>{c.status}</th></>}
       </tr></thead><tbody>{rows.map((row, index) => <tr key={text(row.id, String(index))}>
-        {kind === "tasks" ? <><td><strong>{text(row.title)}</strong><small className="st-cell-sub">{text(row.description, "")}</small></td><td>{caseNames.get(text(row.case_id)) || text(row.case_id)}</td><td>{nested(row.profiles, "name")}</td><td><StatusBadge value={row.priority} /></td><td>{date(row.due_at, locale, true)}</td><td>{canCreate ? <select className="st-select st-status-select" defaultValue={text(row.status, "todo")} onChange={(event) => void updateTask(text(row.id), event.target.value)}><option value="todo">todo</option><option value="in_progress">in progress</option><option value="blocked">blocked</option><option value="done">done</option><option value="cancelled">cancelled</option></select> : <StatusBadge value={row.status} />}</td></> :
+        {kind === "tasks" ? <><td><strong>{text(row.title)}</strong><small className="st-cell-sub">{text(row.description, "")}</small></td><td>{caseNames.get(text(row.case_id)) || text(row.case_id)}</td><td>{nested(row.profiles, "name")}</td><td><StatusBadge value={row.priority} kind="priority" /></td><td>{date(row.due_at, locale, true)}</td><td>{canCreate ? <select className="st-select st-status-select" defaultValue={text(row.status, "todo")} onChange={(event) => void updateTask(text(row.id), event.target.value)}><option value="todo">{labelStatus(locale, "todo")}</option><option value="in_progress">{labelStatus(locale, "in_progress")}</option><option value="blocked">{labelStatus(locale, "blocked")}</option><option value="done">{labelStatus(locale, "done")}</option><option value="cancelled">{labelStatus(locale, "cancelled")}</option></select> : <StatusBadge value={row.status} />}</td></> :
          kind === "automations" ? <><td><strong>{text(row.name)}</strong></td><td>{text(row.trigger_type)}</td><td><code>{Array.isArray(row.actions) ? row.actions.length : 0}</code></td><td><button className="st-btn subtle" onClick={() => void toggleAutomation(text(row.id), row.enabled === false)}><StatusBadge value={row.enabled === false ? "disabled" : "active"} /></button></td></> :
          <><td><strong>{text(row.title)}</strong></td><td>{text(row.type)}</td><td>{text(row.body ?? row.message ?? row.description, "")}</td><td>{date(row.created_at, locale, true)}</td><td><StatusBadge value={row.read_at ? "read" : "unread"} /></td></>}
       </tr>)}</tbody></table></div>
@@ -288,7 +223,7 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
 }
 
 export function DocumentsPage({ canCreate = true }: { canCreate?: boolean } = {}) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const casesApi = useApi("/api/studio/cases?limit=100");
   const cases = rowsFrom(casesApi.data);
@@ -299,7 +234,7 @@ export function DocumentsPage({ canCreate = true }: { canCreate?: boolean } = {}
   const [showCreate, setShowCreate] = useState(false);
   const [expanded, setExpanded] = useState("");
   return <>
-    <PageHeader eyebrow="CRM" title={c.documents} subtitle={c.documentsSub} action={canCreate ? <button className="st-btn primary" disabled={!caseId} onClick={() => setShowCreate(true)}><Plus size={16} />{c.newDocument}</button> : undefined} />
+    <PageHeader eyebrow={c.eyebrow} title={c.documents} subtitle={c.documentsSub} action={canCreate ? <button className="st-btn primary" disabled={!caseId} onClick={() => setShowCreate(true)}><Plus size={16} />{c.newDocument}</button> : undefined} />
     <div className="st-toolbar"><label className="st-label st-case-picker"><span>{c.case}</span><select className="st-select" value={caseId} onChange={(e) => setCaseId(e.target.value)}><option value="">—</option>{cases.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.title)}</option>)}</select></label><button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button></div>
     <StateView loading={casesApi.loading || api.loading} error={casesApi.error || api.error} empty={!documents.length} emptyText={c.noDocuments} onRetry={() => { void casesApi.reload(); void api.reload(); }}>
       <div className="st-record-list">{documents.map((row, index) => {
@@ -320,7 +255,7 @@ const CASE_COLUMNS = [
 ] as const;
 
 export function CasesPage({ canCreate = true }: { canCreate?: boolean } = {}) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale, t } = useStudioI18n();
   const api = useApi("/api/studio/cases");
   const [query, setQuery] = useState("");
@@ -328,19 +263,19 @@ export function CasesPage({ canCreate = true }: { canCreate?: boolean } = {}) {
   const [showCreate, setShowCreate] = useState(false);
   const cases = rowsFrom(api.data).filter((row) => JSON.stringify(row).toLowerCase().includes(query.toLowerCase()));
   return <>
-    <PageHeader eyebrow="CRM" title={c.cases} subtitle={c.casesSub} action={canCreate ? <button className="st-btn primary" onClick={() => setShowCreate(true)}><Plus size={16} />{c.newCase}</button> : undefined} />
+    <PageHeader eyebrow={c.eyebrow} title={c.cases} subtitle={c.casesSub} action={canCreate ? <button className="st-btn primary" onClick={() => setShowCreate(true)}><Plus size={16} />{c.newCase}</button> : undefined} />
     <div className="st-toolbar"><label className="st-search"><Search size={16} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={c.search} aria-label={t("common.search")} /></label><div className="st-segmented"><button className={view === "board" ? "active" : ""} onClick={() => setView("board")}><LayoutGrid size={15} />{t("common.board")}</button><button className={view === "list" ? "active" : ""} onClick={() => setView("list")}><List size={15} />{t("common.list")}</button></div><button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button></div>
     <StateView loading={api.loading} error={api.error} empty={!cases.length} emptyText={c.noCases} onRetry={api.reload}>
       {view === "board" ? <div className="st-kanban">{CASE_COLUMNS.map((column) => {
         const items = cases.filter((row) => column.statuses.includes(caseStage(row) as never));
         return <section className="st-kanban-column" key={column.id}><header><span>{c[column.id]}</span><b>{items.length}</b></header><div>{items.map((row) => <CaseCard key={text(row.id)} row={row} locale={locale} />)}</div></section>;
-      })}</div> : <div className="st-table-wrap"><table className="st-table"><thead><tr><th>{c.case}</th><th>{c.client}</th><th>{c.owner}</th><th>{c.priority}</th><th>{c.deadline}</th><th>{c.stage}</th></tr></thead><tbody>{cases.map((row) => <tr key={text(row.id)}><td><Link href={studioPath(`/cases/${text(row.id)}`)}><strong>{text(row.title)}</strong></Link></td><td>{text(row.client_name)}</td><td>{caseOwner(row)}</td><td><StatusBadge value={row.priority} /></td><td>{date(row.due_date, locale)}</td><td><StatusBadge value={caseStage(row)} /></td></tr>)}</tbody></table></div>}
+      })}</div> : <div className="st-table-wrap"><table className="st-table"><thead><tr><th>{c.case}</th><th>{c.client}</th><th>{c.owner}</th><th>{c.priority}</th><th>{c.deadline}</th><th>{c.stage}</th></tr></thead><tbody>{cases.map((row) => <tr key={text(row.id)}><td><Link href={studioPath(`/cases/${text(row.id)}`)}><strong>{text(row.title)}</strong></Link></td><td>{text(row.client_name)}</td><td>{caseOwner(row)}</td><td><StatusBadge value={row.priority} kind="priority" /></td><td>{date(row.due_date, locale)}</td><td><StatusBadge value={caseStage(row)} /></td></tr>)}</tbody></table></div>}
     </StateView>
     {canCreate && showCreate && <CreateModal kind="case" endpoint="/api/studio/cases" onClose={() => setShowCreate(false)} onSaved={() => { setShowCreate(false); void api.reload(); }} />}
   </>;
 }
-function CaseCard({ row, locale }: { row: Row; locale: "ru" | "en" }) {
-  const c = useCopy();
+function CaseCard({ row, locale }: { row: Row; locale: StudioLocale }) {
+  const c = useCrmCopy();
   return <Link href={studioPath(`/cases/${text(row.id)}`)} className="st-case-card"><div className="st-case-card-top"><StatusBadge value={caseStage(row)} /><span>{text(row.case_number, "")}</span></div><strong>{text(row.title)}</strong><span>{text(row.client_name)}</span><footer><span><Users size={13} />{caseOwner(row)}</span><span><CalendarClock size={13} />{date(row.due_date, locale)}</span></footer><span className="st-case-open">{c.openCase}<ArrowRight size={14} /></span></Link>;
 }
 
@@ -361,7 +296,7 @@ export function CaseWorkspace({
   caseId: string;
   permissions?: CasePermissions;
 }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const [tab, setTab] = useState<CaseTab>("overview");
   const api = useApi(`/api/studio/cases/${caseId}`);
@@ -389,7 +324,7 @@ export function CaseWorkspace({
 }
 
 function OverviewTab({ detail, stages, endpoint, onSaved, canEdit }: { detail: Row; stages: Row[]; endpoint: string; onSaved: () => void; canEdit: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -408,7 +343,7 @@ function OverviewTab({ detail, stages, endpoint, onSaved, canEdit }: { detail: R
 }
 
 function TeamTab({ caseId, items, onSaved, canManage }: { caseId: string; items: Row[]; onSaved: () => void; canManage: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const usersApi = useApi("/api/studio/users", canManage);
   const [error, setError] = useState("");
   async function addMember(event: React.FormEvent<HTMLFormElement>) {
@@ -435,7 +370,7 @@ function TeamTab({ caseId, items, onSaved, canManage }: { caseId: string; items:
 }
 
 function CollectionTab({ tab, caseId, canCreate }: { tab: "timeline" | "tasks" | "finance" | "time"; caseId: string; canCreate: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const endpoint = `/api/studio/${tab === "timeline" ? "events" : tab}?caseId=${encodeURIComponent(caseId)}`;
   const api = useApi(endpoint);
@@ -455,7 +390,7 @@ function CollectionTab({ tab, caseId, canCreate }: { tab: "timeline" | "tasks" |
 }
 
 function FilesTab({ caseId, canUpload }: { caseId: string; canUpload: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const api = useApi(`/api/studio/files?caseId=${encodeURIComponent(caseId)}`);
   const [uploading, setUploading] = useState(false);
@@ -487,7 +422,7 @@ function FilesTab({ caseId, canUpload }: { caseId: string; canUpload: boolean })
 
 type SpecItem = { section: string; item: string; acceptance: string };
 function SpecificationTab({ caseId, canManage }: { caseId: string; canManage: boolean }) {
-  const c = useCopy();
+  const c = useCrmCopy();
   const { locale } = useStudioI18n();
   const api = useApi(`/api/studio/documents?caseId=${encodeURIComponent(caseId)}`);
   const documents = rowsFrom(api.data).filter((row) => row.document_type === "specification");
@@ -535,7 +470,7 @@ function SpecificationTab({ caseId, canManage }: { caseId: string; canManage: bo
     })}</div></StateView>
   </div>;
 }
-function SpecVersion({ version, locale }: { version: Row; locale: "ru" | "en" }) {
+function SpecVersion({ version, locale }: { version: Row; locale: StudioLocale }) {
   let parsed: unknown = null;
   try { parsed = JSON.parse(text(version.body, "{}")); } catch { parsed = null; }
   const items = parsed && typeof parsed === "object" && Array.isArray((parsed as Row).items) ? (parsed as Row).items as Row[] : [];
@@ -547,17 +482,20 @@ function Breakdown({ rows }: { rows: Array<{ label: string; value: number; detai
   return <div className="st-breakdown">{rows.map((row) => <div className="st-breakdown-row" key={row.label}><div><span>{row.label}</span></div><div className="st-progress"><span style={{ width: `${Math.max(3, row.value / max * 100)}%`, background: "var(--st-gold)" }} /></div><small>{row.detail || row.value}</small></div>)}</div>;
 }
 export function ReportsPage() {
-  const c = useCopy();
+  const c = useCrmCopy();
+  const { locale, t } = useStudioI18n();
   const api = useApi("/api/studio/reports/summary?days=30");
   const object = api.data && typeof api.data === "object" ? api.data as Row : {};
   const tasks = object.tasks && typeof object.tasks === "object" ? object.tasks as Row : {};
   const finance = object.finance && typeof object.finance === "object" ? object.finance as Row : {};
   const time = object.time && typeof object.time === "object" ? object.time as Row : {};
   const openTasks = Number(tasks.todo || 0) + Number(tasks.in_progress || 0);
-  const taskRows = Object.entries(tasks).map(([label, value]) => ({ label: label.replaceAll("_", " "), value: Number(value || 0) }));
+  const taskRows = Object.entries(tasks)
+    .filter(([label]) => label !== "overdue")
+    .map(([label, value]) => ({ label: labelStatus(locale, label), value: Number(value || 0) }));
   const financeRows = Object.entries(finance).flatMap(([currency, value]) => {
     const totals = value as Row;
-    return ["planned", "invoiced", "paid"].map((status) => ({ label: `${currency} · ${status}`, value: Number(totals[status] || 0), detail: `${Number(totals[status] || 0).toLocaleString()} ${currency}` }));
+    return ["planned", "invoiced", "paid"].map((status) => ({ label: `${currency} · ${labelStatus(locale, status)}`, value: Number(totals[status] || 0), detail: `${Number(totals[status] || 0).toLocaleString()} ${currency}` }));
   });
   const minutes = Number(time.minutes || 0);
   const billable = Number(time.billableMinutes || 0);
@@ -566,11 +504,11 @@ export function ReportsPage() {
     [c.overdue, Number(tasks.overdue || 0), AlertCircle], [c.loggedHours, (minutes / 60).toFixed(1), Clock3],
     [c.unread, Number(object.unreadNotifications || 0), Bell],
   ] as const;
-  return <><PageHeader eyebrow="CRM" title={c.reports} subtitle={c.reportsSub} action={<span className="st-badge">30 days</span>} /><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}><div className="st-report-grid">{metrics.map(([label, value, Icon]) => <article className="st-report-card" key={label}><span className="st-metric-icon"><Icon size={18} /></span><span>{label}</span><strong>{value}</strong></article>)}</div><div className="st-dashboard-grid"><section className="st-panel"><h2>{c.taskBreakdown}</h2>{taskRows.length ? <Breakdown rows={taskRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel"><h2>{c.financeBreakdown}</h2>{financeRows.length ? <Breakdown rows={financeRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel st-panel-wide"><h2>{c.timeBreakdown}</h2><Breakdown rows={[{ label: c.billable, value: billable, detail: `${(billable / 60).toFixed(1)}h` }, { label: c.nonBillable, value: Math.max(0, minutes - billable), detail: `${(Math.max(0, minutes - billable) / 60).toFixed(1)}h` }]} /></section></div></StateView></>;
+  return <><PageHeader eyebrow={c.eyebrow} title={c.reports} subtitle={c.reportsSub} action={<span className="st-badge">{t("crm.daysBadge", { days: 30 })}</span>} /><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}><div className="st-report-grid">{metrics.map(([label, value, Icon]) => <article className="st-report-card" key={label}><span className="st-metric-icon"><Icon size={18} /></span><span>{label}</span><strong>{value}</strong></article>)}</div><div className="st-dashboard-grid"><section className="st-panel"><h2>{c.taskBreakdown}</h2>{taskRows.length ? <Breakdown rows={taskRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel"><h2>{c.financeBreakdown}</h2>{financeRows.length ? <Breakdown rows={financeRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel st-panel-wide"><h2>{c.timeBreakdown}</h2><Breakdown rows={[{ label: c.billable, value: billable, detail: `${(billable / 60).toFixed(1)}h` }, { label: c.nonBillable, value: Math.max(0, minutes - billable), detail: `${(Math.max(0, minutes - billable) / 60).toFixed(1)}h` }]} /></section></div></StateView></>;
 }
 
 export function CrmSettingsPage() {
-  const c = useCopy();
+  const c = useCrmCopy();
   const api = useApi("/api/studio/crm-settings");
   const settings = api.data && typeof api.data === "object" ? api.data as Row : {};
   const stages = Array.isArray(settings.stages) ? settings.stages as Row[] : [];
@@ -604,7 +542,7 @@ export function CrmSettingsPage() {
     }
   }
   const tabs = [["general", c.general, Settings2], ["pipelines", c.pipelines, Workflow], ["integrations", c.integrations, CheckCircle2]] as const;
-  return <><PageHeader eyebrow="CRM" title={c.settings} subtitle={copy[useStudioI18n().locale].workspace} /><div className="st-settings-layout"><nav className="st-settings-nav">{tabs.map(([id, label, Icon]) => <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</nav><section className="st-panel"><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}>
+  return <><PageHeader eyebrow={c.eyebrow} title={c.settings} subtitle={c.workspace} /><div className="st-settings-layout"><nav className="st-settings-nav">{tabs.map(([id, label, Icon]) => <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</nav><section className="st-panel"><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}>
     {tab === "general" && <form className="st-form" onSubmit={save}><label className="st-label"><span>{c.workspaceName}</span><input className="st-input" name="workspace_name" defaultValue={text(settings.workspace_name, "DormUp Studio")} /></label><label className="st-label"><span>{c.timezone}</span><input className="st-input" name="timezone" defaultValue={text(settings.timezone, "Europe/Rome")} /></label><label className="st-label"><span>{c.currency}</span><input className="st-input" name="currency" defaultValue={text(settings.currency, "EUR")} /></label><button className="st-btn primary">{c.saveChanges}</button>{message && <p className={message === c.saved ? "st-ok" : "st-error"}>{message}</p>}</form>}
     {tab === "pipelines" && <div className="st-workspace-stack"><form className="st-form st-panel" onSubmit={addStage}><div className="st-form-grid"><label className="st-label"><span>{c.name}</span><input className="st-input" name="name" required /></label><label className="st-label"><span>{c.stageKey}</span><input className="st-input" name="key" pattern="[a-z0-9][a-z0-9_-]*" required /></label><label className="st-label"><span>{c.color}</span><input className="st-input" name="color" type="color" defaultValue="#64748b" /></label><label className="st-label"><span>{c.order}</span><input className="st-input" name="sortOrder" type="number" defaultValue={stages.length * 10 + 10} /></label></div><button className="st-btn primary"><Plus size={15} />{c.addStage}</button>{message && <p className={message === c.saved ? "st-ok" : "st-error"}>{message}</p>}</form><div className="st-record-list">{stages.map((row) => <article className="st-record" key={text(row.id)}><span className="st-stage-dot" style={{ background: text(row.color, "#64748b") }} /><div><strong>{text(row.name)}</strong><p>{text(row.key)}</p></div><StatusBadge value={row.is_closed ? "closed" : row.is_won ? "won" : "active"} /></article>)}</div></div>}
     {tab === "integrations" && <div className="st-integration-grid">{Object.entries(integrations).map(([name, enabled]) => <article key={name}><strong>{name}</strong><StatusBadge value={enabled ? c.available : c.unavailable} /></article>)}</div>}

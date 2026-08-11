@@ -2,16 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useStudioI18n, type StudioMessageKey } from "@/lib/studio/i18n";
 
 type UserRow = { id: string; email: string; name: string | null; role: string };
 
+const ROLES = ["owner", "editor", "sales"] as const;
+
 export function UsersManager({ initial }: { initial: UserRow[] }) {
   const router = useRouter();
+  const { t } = useStudioI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("editor");
   const [msg, setMsg] = useState("");
+
+  function roleLabel(value: string) {
+    return t(`role.${value}` as StudioMessageKey);
+  }
 
   async function invite() {
     setMsg("");
@@ -22,10 +30,10 @@ export function UsersManager({ initial }: { initial: UserRow[] }) {
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setMsg(data.error || "Failed");
+      setMsg(data.error || t("users.createFailed"));
       return;
     }
-    setMsg("User created");
+    setMsg(t("users.created"));
     setEmail("");
     setPassword("");
     setName("");
@@ -39,7 +47,7 @@ export function UsersManager({ initial }: { initial: UserRow[] }) {
       body: JSON.stringify({ id, role: nextRole }),
     });
     if (res.ok) router.refresh();
-    else setMsg("Role update failed");
+    else setMsg(t("users.roleFailed"));
   }
 
   return (
@@ -47,9 +55,9 @@ export function UsersManager({ initial }: { initial: UserRow[] }) {
       <table className="st-table">
         <thead>
           <tr>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Role</th>
+            <th>{t("users.email")}</th>
+            <th>{t("users.name")}</th>
+            <th>{t("users.role")}</th>
           </tr>
         </thead>
         <tbody>
@@ -63,9 +71,11 @@ export function UsersManager({ initial }: { initial: UserRow[] }) {
                   value={u.role}
                   onChange={(e) => setUserRole(u.id, e.target.value)}
                 >
-                  <option value="owner">owner</option>
-                  <option value="editor">editor</option>
-                  <option value="sales">sales</option>
+                  {ROLES.map((value) => (
+                    <option key={value} value={value}>
+                      {roleLabel(value)}
+                    </option>
+                  ))}
                 </select>
               </td>
             </tr>
@@ -73,29 +83,31 @@ export function UsersManager({ initial }: { initial: UserRow[] }) {
         </tbody>
       </table>
 
-      <h2 style={{ fontSize: "1.05rem" }}>Invite user</h2>
+      <h2 style={{ fontSize: "1.05rem" }}>{t("users.invite")}</h2>
       <label className="st-label">
-        Email
+        {t("users.email")}
         <input className="st-input" value={email} onChange={(e) => setEmail(e.target.value)} />
       </label>
       <label className="st-label">
-        Temporary password
+        {t("users.tempPassword")}
         <input className="st-input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <label className="st-label">
-        Name
+        {t("users.name")}
         <input className="st-input" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <label className="st-label">
-        Role
+        {t("users.role")}
         <select className="st-select" value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="editor">editor</option>
-          <option value="sales">sales</option>
-          <option value="owner">owner</option>
+          {ROLES.map((value) => (
+            <option key={value} value={value}>
+              {roleLabel(value)}
+            </option>
+          ))}
         </select>
       </label>
       <button type="button" className="st-btn primary" onClick={invite}>
-        Create user
+        {t("users.create")}
       </button>
       {msg ? <p className="st-ok">{msg}</p> : null}
     </div>

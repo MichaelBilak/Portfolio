@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
 
 export default async function ProjectsAdminPage() {
+  const user = await getStudioSession();
+  const locale = resolveStudioLocale(user?.adminLocale);
+  const t = createStudioTranslator(locale);
+
   const sb = createAdminClient();
   const { data } = await sb
     .from("projects")
@@ -11,14 +17,14 @@ export default async function ProjectsAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Портфолио</h1>
-      <p className="st-sub">Проекты и кейсы на сайте.</p>
+      <h1 className="st-h1">{t("content.projectsTitle")}</h1>
+      <p className="st-sub">{t("content.projectsSub")}</p>
       <table className="st-table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Slug</th>
-            <th>Published</th>
+            <th>{t("content.colId")}</th>
+            <th>{t("content.colSlug")}</th>
+            <th>{t("content.colPublished")}</th>
             <th />
           </tr>
         </thead>
@@ -27,9 +33,9 @@ export default async function ProjectsAdminPage() {
             <tr key={row.id}>
               <td>{row.project_id}</td>
               <td>{row.slug}</td>
-              <td>{row.published ? "yes" : "no"}</td>
+              <td>{row.published ? t("common.yes") : t("common.no")}</td>
               <td>
-                <Link href={studioPath(`/projects/${row.id}`)}>Edit</Link>
+                <Link href={studioPath(`/projects/${row.id}`)}>{t("common.edit")}</Link>
               </td>
             </tr>
           ))}

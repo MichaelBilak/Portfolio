@@ -1,22 +1,28 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { MediaUploader } from "@/components/studio/media-uploader";
+import { getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 
 export default async function MediaAdminPage() {
+  const user = await getStudioSession();
+  const locale = resolveStudioLocale(user?.adminLocale);
+  const t = createStudioTranslator(locale);
+
   const sb = createAdminClient();
   const { data } = await sb.from("media").select("*").order("created_at", { ascending: false }).limit(100);
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
   return (
     <>
-      <h1 className="st-h1">Медиа</h1>
-      <p className="st-sub">Загрузка изображений в облако Supabase.</p>
+      <h1 className="st-h1">{t("content.mediaTitle")}</h1>
+      <p className="st-sub">{t("content.mediaSub")}</p>
       <MediaUploader />
       <table className="st-table" style={{ marginTop: "1.25rem" }}>
         <thead>
           <tr>
-            <th>Path</th>
-            <th>Alt</th>
-            <th>Size</th>
+            <th>{t("content.colPath")}</th>
+            <th>{t("content.colAlt")}</th>
+            <th>{t("content.colSize")}</th>
           </tr>
         </thead>
         <tbody>

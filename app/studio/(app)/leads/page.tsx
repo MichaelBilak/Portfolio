@@ -2,15 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
+import {
+  createStudioTranslator,
+  formatStudioDate,
+  labelStatus,
+  resolveStudioLocale,
+} from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
-
-const STATUS_LABEL: Record<string, string> = {
-  new: "Новая",
-  in_progress: "В работе",
-  won: "Выиграна",
-  lost: "Отказ",
-  spam: "Спам",
-};
 
 export default async function LeadsListPage({
   searchParams,
@@ -19,6 +17,9 @@ export default async function LeadsListPage({
 }) {
   const user = await getStudioSession();
   if (!user || !canManageLeads(user.role)) notFound();
+
+  const locale = resolveStudioLocale(user.adminLocale);
+  const t = createStudioTranslator(locale);
 
   const sp = await searchParams;
   const sb = createAdminClient();
@@ -35,38 +36,44 @@ export default async function LeadsListPage({
 
   return (
     <>
-      <h1 className="st-h1">Заявки</h1>
-      <p className="st-sub">Входящие обращения с формы на сайте.</p>
+      <h1 className="st-h1">{t("leads.title")}</h1>
+      <p className="st-sub">{t("leads.subtitle")}</p>
       <form className="st-row" style={{ marginBottom: "1rem" }}>
         <select className="st-select" name="status" defaultValue={sp.status || ""} style={{ width: 160 }}>
-          <option value="">Все статусы</option>
-          <option value="new">Новые</option>
-          <option value="in_progress">В работе</option>
-          <option value="won">Выиграны</option>
-          <option value="lost">Отказ</option>
-          <option value="spam">Спам</option>
+          <option value="">{t("leads.allStatuses")}</option>
+          <option value="new">{labelStatus(locale, "new")}</option>
+          <option value="in_progress">{labelStatus(locale, "in_progress")}</option>
+          <option value="won">{labelStatus(locale, "won")}</option>
+          <option value="lost">{labelStatus(locale, "lost")}</option>
+          <option value="spam">{labelStatus(locale, "spam")}</option>
         </select>
-        <input className="st-input" name="q" placeholder="Поиск по имени или email…" defaultValue={sp.q || ""} style={{ width: 240 }} />
+        <input
+          className="st-input"
+          name="q"
+          placeholder={t("leads.searchPlaceholder")}
+          defaultValue={sp.q || ""}
+          style={{ width: 240 }}
+        />
         <button className="st-btn" type="submit">
-          Найти
+          {t("leads.find")}
         </button>
       </form>
       <table className="st-table">
         <thead>
           <tr>
-            <th>Дата</th>
-            <th>Клиент</th>
-            <th>Email</th>
-            <th>Бизнес</th>
-            <th>Статус</th>
-            <th>Язык</th>
-            <th aria-label="Действия" />
+            <th>{t("leads.date")}</th>
+            <th>{t("leads.client")}</th>
+            <th>{t("leads.email")}</th>
+            <th>{t("leads.business")}</th>
+            <th>{t("leads.status")}</th>
+            <th>{t("leads.locale")}</th>
+            <th aria-label={t("leads.actions")} />
           </tr>
         </thead>
         <tbody>
           {(leads || []).map((lead) => (
             <tr key={lead.id}>
-              <td>{new Date(lead.created_at).toLocaleString("ru-RU")}</td>
+              <td>{formatStudioDate(lead.created_at, locale, true)}</td>
               <td>
                 <Link href={studioPath(`/leads/${lead.id}`)}>{lead.full_name || lead.email}</Link>
               </td>
@@ -75,7 +82,7 @@ export default async function LeadsListPage({
               </td>
               <td>{lead.business_name}</td>
               <td>
-                <span className="st-badge">{STATUS_LABEL[lead.status] || lead.status}</span>
+                <span className="st-badge">{labelStatus(locale, lead.status)}</span>
               </td>
               <td>{lead.locale}</td>
               <td>
@@ -83,7 +90,7 @@ export default async function LeadsListPage({
                   className="st-btn subtle"
                   href={studioPath(`/leads/${lead.id}`)}
                 >
-                  Открыть дело
+                  {t("leads.openCase")}
                 </Link>
               </td>
             </tr>

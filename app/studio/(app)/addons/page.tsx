@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getStudioSession } from "@/lib/studio/auth";
+import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
 
 export default async function AddonsAdminPage() {
+  const user = await getStudioSession();
+  const locale = resolveStudioLocale(user?.adminLocale);
+  const t = createStudioTranslator(locale);
+
   const sb = createAdminClient();
   const { data } = await sb
     .from("addon_categories")
@@ -11,12 +17,12 @@ export default async function AddonsAdminPage() {
 
   return (
     <>
-      <h1 className="st-h1">Доп. модули</h1>
-      <p className="st-sub">Опции к заказу.</p>
+      <h1 className="st-h1">{t("content.addonsTitle")}</h1>
+      <p className="st-sub">{t("content.addonsSub")}</p>
       <table className="st-table">
         <thead>
           <tr>
-            <th>Category</th>
+            <th>{t("content.colCategory")}</th>
             <th />
           </tr>
         </thead>
@@ -25,7 +31,7 @@ export default async function AddonsAdminPage() {
             <tr key={row.id}>
               <td>{row.category_id}</td>
               <td>
-                <Link href={studioPath(`/addons/${row.id}`)}>Edit</Link>
+                <Link href={studioPath(`/addons/${row.id}`)}>{t("common.edit")}</Link>
               </td>
             </tr>
           ))}
