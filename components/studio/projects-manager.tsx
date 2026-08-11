@@ -227,20 +227,31 @@ export function ProjectsManager({
                   <td>
                     <button
                       type="button"
-                      className={`st-btn subtle${row.featured ? " primary" : ""}`}
+                      className="st-btn subtle"
                       disabled={busy}
                       onClick={() => patchFlags(row.id, { featured: !row.featured })}
+                      aria-pressed={row.featured}
+                      aria-label={
+                        row.featured
+                          ? t("projects.featuredOn")
+                          : t("projects.featuredOff")
+                      }
                       title={
                         row.featured
                           ? t("projects.featuredOn")
                           : t("projects.featuredOff")
                       }
+                      style={{
+                        color: row.featured ? "var(--st-gold)" : "var(--st-muted)",
+                        minWidth: 40,
+                        paddingInline: 10,
+                      }}
                     >
                       <Star
-                        size={14}
+                        size={18}
                         fill={row.featured ? "currentColor" : "none"}
+                        strokeWidth={row.featured ? 0 : 1.75}
                       />
-                      {row.featured ? t("common.yes") : t("common.no")}
                     </button>
                   </td>
                   <td>
