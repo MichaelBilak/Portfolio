@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     .from("cases")
     .select("id,stage_id,estimated_value,currency")
     .is("archived_at", null);
-  let tasksQuery = sb.from("tasks").select("id,status,due_at").gte("created_at", since);
+  let tasksQuery = sb.from("tasks").select("id,status,due_at").is("deleted_at", null).gte("created_at", since);
   let financeQuery = sb
     .from("finance_milestones")
     .select("status,amount,currency")

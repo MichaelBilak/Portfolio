@@ -4,8 +4,8 @@ import Link from "next/link";
 import {
   AlertCircle, Archive, ArrowRight, Bell, BriefcaseBusiness, CalendarClock,
   CheckCircle2, CheckSquare2, Clock3, FileText, FolderOpen, History, LayoutGrid,
-  List, LoaderCircle, Paperclip, Plus, RefreshCw, Search, Settings2, Timer,
-  Users, WalletCards, Workflow, X, type LucideIcon,
+  List, LoaderCircle, Paperclip, Pencil, Plus, RefreshCw, RotateCcw, Search, Settings2, Timer,
+  Trash2, Users, WalletCards, Workflow, X, type LucideIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { studioPath } from "@/lib/studio/path";
@@ -22,8 +22,8 @@ type Row = Record<string, unknown>;
 type ModuleKind = "tasks" | "automations" | "inbox";
 type CreateKind = "case" | "task" | "automation" | "document" | "note" | "finance" | "time";
 
-type CrmCopyKey = "cases" | "casesSub" | "tasks" | "tasksSub" | "documents" | "documentsSub" | "automations" | "automationsSub" | "inbox" | "inboxSub" | "reports" | "reportsSub" | "newCase" | "newTask" | "newAutomation" | "newDocument" | "markRead" | "upload" | "noCases" | "noTasks" | "noDocuments" | "noAutomations" | "noInbox" | "client" | "owner" | "deadline" | "status" | "priority" | "case" | "updated" | "type" | "due" | "assignee" | "title" | "description" | "search" | "create" | "close" | "cancel" | "openCase" | "active" | "won" | "delivery" | "done" | "overview" | "timeline" | "materials" | "specification" | "team" | "finance" | "time" | "settings" | "workspace" | "backCases" | "saveChanges" | "addNote" | "addFinance" | "addTime" | "addItem" | "publishVersion" | "section" | "item" | "acceptance" | "requestFailed" | "saved" | "empty" | "amount" | "minutes" | "actions" | "trigger" | "name" | "dueWithin" | "notificationTitle" | "taskDueTrigger" | "stage" | "file" | "category" | "documentType" | "documentGeneric" | "versions" | "integrations" | "available" | "unavailable" | "general" | "pipelines" | "workspaceName" | "timezone" | "currency" | "revenue" | "teamLoad" | "totalPipeline" | "openTasks" | "overdue" | "loggedHours" | "unread" | "taskBreakdown" | "financeBreakdown" | "timeBreakdown" | "billable" | "nonBillable" | "addMember" | "memberRole" | "addStage" | "stageKey" | "color" | "order" | "daysBadge" | "eyebrow";
-const CRM_COPY_KEYS = ["cases", "casesSub", "tasks", "tasksSub", "documents", "documentsSub", "automations", "automationsSub", "inbox", "inboxSub", "reports", "reportsSub", "newCase", "newTask", "newAutomation", "newDocument", "markRead", "upload", "noCases", "noTasks", "noDocuments", "noAutomations", "noInbox", "client", "owner", "deadline", "status", "priority", "case", "updated", "type", "due", "assignee", "title", "description", "search", "create", "close", "cancel", "openCase", "active", "won", "delivery", "done", "overview", "timeline", "materials", "specification", "team", "finance", "time", "settings", "workspace", "backCases", "saveChanges", "addNote", "addFinance", "addTime", "addItem", "publishVersion", "section", "item", "acceptance", "requestFailed", "saved", "empty", "amount", "minutes", "actions", "trigger", "name", "dueWithin", "notificationTitle", "taskDueTrigger", "stage", "file", "category", "documentType", "documentGeneric", "versions", "integrations", "available", "unavailable", "general", "pipelines", "workspaceName", "timezone", "currency", "revenue", "teamLoad", "totalPipeline", "openTasks", "overdue", "loggedHours", "unread", "taskBreakdown", "financeBreakdown", "timeBreakdown", "billable", "nonBillable", "addMember", "memberRole", "addStage", "stageKey", "color", "order", "daysBadge", "eyebrow"] as const satisfies readonly CrmCopyKey[];
+type CrmCopyKey = "cases" | "casesSub" | "tasks" | "tasksSub" | "documents" | "documentsSub" | "automations" | "automationsSub" | "inbox" | "inboxSub" | "reports" | "reportsSub" | "newCase" | "newTask" | "newAutomation" | "newDocument" | "markRead" | "upload" | "noCases" | "noTasks" | "noCompletedTasks" | "noDeletedTasks" | "noDocuments" | "noAutomations" | "noInbox" | "client" | "owner" | "deadline" | "status" | "priority" | "case" | "updated" | "type" | "due" | "assignee" | "title" | "description" | "search" | "create" | "close" | "cancel" | "openCase" | "active" | "won" | "delivery" | "done" | "trash" | "deleteTask" | "restoreTask" | "confirmDeleteTask" | "deletedAt" | "overview" | "timeline" | "materials" | "specification" | "team" | "finance" | "time" | "settings" | "workspace" | "backCases" | "saveChanges" | "addNote" | "addFinance" | "addTime" | "addItem" | "publishVersion" | "section" | "item" | "acceptance" | "requestFailed" | "saved" | "empty" | "amount" | "minutes" | "actions" | "trigger" | "name" | "dueWithin" | "notificationTitle" | "taskDueTrigger" | "stage" | "file" | "category" | "documentType" | "documentGeneric" | "versions" | "integrations" | "available" | "unavailable" | "general" | "pipelines" | "workspaceName" | "timezone" | "currency" | "revenue" | "teamLoad" | "totalPipeline" | "openTasks" | "overdue" | "loggedHours" | "unread" | "taskBreakdown" | "financeBreakdown" | "timeBreakdown" | "billable" | "nonBillable" | "addMember" | "memberRole" | "addStage" | "stageKey" | "color" | "order" | "daysBadge" | "eyebrow";
+const CRM_COPY_KEYS = ["cases", "casesSub", "tasks", "tasksSub", "documents", "documentsSub", "automations", "automationsSub", "inbox", "inboxSub", "reports", "reportsSub", "newCase", "newTask", "newAutomation", "newDocument", "markRead", "upload", "noCases", "noTasks", "noCompletedTasks", "noDeletedTasks", "noDocuments", "noAutomations", "noInbox", "client", "owner", "deadline", "status", "priority", "case", "updated", "type", "due", "assignee", "title", "description", "search", "create", "close", "cancel", "openCase", "active", "won", "delivery", "done", "trash", "deleteTask", "restoreTask", "confirmDeleteTask", "deletedAt", "overview", "timeline", "materials", "specification", "team", "finance", "time", "settings", "workspace", "backCases", "saveChanges", "addNote", "addFinance", "addTime", "addItem", "publishVersion", "section", "item", "acceptance", "requestFailed", "saved", "empty", "amount", "minutes", "actions", "trigger", "name", "dueWithin", "notificationTitle", "taskDueTrigger", "stage", "file", "category", "documentType", "documentGeneric", "versions", "integrations", "available", "unavailable", "general", "pipelines", "workspaceName", "timezone", "currency", "revenue", "teamLoad", "totalPipeline", "openTasks", "overdue", "loggedHours", "unread", "taskBreakdown", "financeBreakdown", "timeBreakdown", "billable", "nonBillable", "addMember", "memberRole", "addStage", "stageKey", "color", "order", "daysBadge", "eyebrow"] as const satisfies readonly CrmCopyKey[];
 
 function useCrmCopy() {
   const { t } = useStudioI18n();
@@ -50,6 +50,13 @@ function date(value: unknown, locale: StudioLocale, withTime = false) {
   return formatStudioDate(value == null ? null : String(value), locale, withTime);
 }
 function localDate(value: unknown) { return value ? String(value).slice(0, 10) : ""; }
+function localDateTime(value: unknown) {
+  if (!value) return "";
+  const dateValue = new Date(String(value));
+  if (Number.isNaN(dateValue.getTime())) return "";
+  const pad = (part: number) => String(part).padStart(2, "0");
+  return `${dateValue.getFullYear()}-${pad(dateValue.getMonth() + 1)}-${pad(dateValue.getDate())}T${pad(dateValue.getHours())}:${pad(dateValue.getMinutes())}`;
+}
 function caseStage(row: Row) { return nested(row.pipeline_stages, "key", "active"); }
 function caseOwner(row: Row) { return nested(row.profiles, "name", text(row.owner_name)); }
 
@@ -155,22 +162,127 @@ function CreateModal({ kind, endpoint, caseId, cases = [], onClose, onSaved }: {
   </div>;
 }
 
+function EditTaskModal({
+  task,
+  cases = [],
+  users = [],
+  lockCaseId,
+  onClose,
+  onSaved,
+}: {
+  task: Row;
+  cases?: Row[];
+  users?: Row[];
+  lockCaseId?: string;
+  onClose: () => void;
+  onSaved: () => void;
+}) {
+  const c = useCrmCopy();
+  const { locale, t } = useStudioI18n();
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const statuses = ["todo", "in_progress", "blocked", "done", "cancelled"] as const;
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSaving(true);
+    setError("");
+    const values = Object.fromEntries(new FormData(event.currentTarget).entries());
+    try {
+      await requestJson(`/api/studio/tasks/${encodeURIComponent(text(task.id))}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: values.title,
+          description: values.description || null,
+          priority: values.priority,
+          status: values.status,
+          caseId: lockCaseId || values.caseId || null,
+          assigneeId: values.assigneeId || null,
+          dueAt: values.dueAt ? new Date(String(values.dueAt)).toISOString() : null,
+        }),
+      });
+      onSaved();
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="st-modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <section className="st-modal" role="dialog" aria-modal="true">
+        <button className="st-icon-btn st-modal-close" onClick={onClose} aria-label={c.close}><X size={17} /></button>
+        <h2>{t("common.edit")}</h2>
+        <form className="st-form" onSubmit={submit}>
+          <label className="st-label"><span>{c.title}</span><input className="st-input" name="title" required defaultValue={text(task.title, "")} /></label>
+          {!lockCaseId && (
+            <label className="st-label">
+              <span>{c.case}</span>
+              <select className="st-select" name="caseId" defaultValue={text(task.case_id, "")}>
+                <option value="">—</option>
+                {cases.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.title)}</option>)}
+              </select>
+            </label>
+          )}
+          <label className="st-label">
+            <span>{c.assignee}</span>
+            <select className="st-select" name="assigneeId" defaultValue={text(task.assignee_id, "")}>
+              <option value="">—</option>
+              {users.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.name) || text(row.id)}</option>)}
+            </select>
+          </label>
+          <PriorityField defaultValue={text(task.priority, "normal")} />
+          <label className="st-label">
+            <span>{c.status}</span>
+            <select className="st-select" name="status" defaultValue={text(task.status, "todo")}>
+              {statuses.map((value) => <option key={value} value={value}>{labelStatus(locale, value)}</option>)}
+            </select>
+          </label>
+          <label className="st-label"><span>{c.due}</span><input className="st-input" name="dueAt" type="datetime-local" defaultValue={localDateTime(task.due_at)} /></label>
+          <label className="st-label"><span>{c.description}</span><textarea className="st-textarea" name="description" defaultValue={text(task.description, "")} /></label>
+          {error && <p className="st-error">{c.requestFailed}: {error}</p>}
+          <div className="st-row">
+            <button className="st-btn primary" disabled={saving}>{saving && <LoaderCircle className="st-spin" size={15} />}{c.saveChanges}</button>
+            <button type="button" className="st-btn subtle" onClick={onClose}>{c.cancel}</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  );
+}
+
 export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCreate?: boolean }) {
   const c = useCrmCopy();
   const { locale, t } = useStudioI18n();
+  type TaskView = "active" | "done" | "deleted";
+  const [taskView, setTaskView] = useState<TaskView>("active");
   const config = {
     tasks: { endpoint: "/api/studio/tasks", title: c.tasks, sub: c.tasksSub, empty: c.noTasks, action: c.newTask, icon: CheckSquare2 },
     automations: { endpoint: "/api/studio/automations", title: c.automations, sub: c.automationsSub, empty: c.noAutomations, action: c.newAutomation, icon: Workflow },
     inbox: { endpoint: "/api/studio/notifications", title: c.inbox, sub: c.inboxSub, empty: c.noInbox, action: c.markRead, icon: Bell },
   }[kind];
-  const api = useApi(config.endpoint);
+  const tasksEndpoint = kind === "tasks" ? `${config.endpoint}?view=${taskView}` : config.endpoint;
+  const api = useApi(tasksEndpoint);
   const casesApi = useApi("/api/studio/cases?limit=100", kind === "tasks");
+  const usersApi = useApi("/api/studio/users", kind === "tasks" && canCreate);
   const [query, setQuery] = useState("");
   const [showCreate, setShowCreate] = useState(false);
+  const [editingTask, setEditingTask] = useState<Row | null>(null);
   const [actionError, setActionError] = useState("");
   const cases = rowsFrom(casesApi.data);
+  const users = rowsFrom(usersApi.data);
   const caseNames = useMemo(() => new Map(cases.map((row) => [text(row.id), text(row.title)])), [cases]);
   const rows = rowsFrom(api.data).filter((row) => JSON.stringify(row).toLowerCase().includes(query.toLowerCase()));
+  const emptyText =
+    kind === "tasks"
+      ? taskView === "done"
+        ? c.noCompletedTasks
+        : taskView === "deleted"
+          ? c.noDeletedTasks
+          : c.noTasks
+      : config.empty;
   async function primaryAction() {
     if (kind !== "inbox") { setShowCreate(true); return; }
     setActionError("");
@@ -184,6 +296,29 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
+      });
+      await api.reload();
+    } catch (reason) {
+      setActionError(reason instanceof Error ? reason.message : String(reason));
+    }
+  }
+  async function deleteTask(id: string) {
+    if (!confirm(c.confirmDeleteTask)) return;
+    setActionError("");
+    try {
+      await requestJson(`/api/studio/tasks/${encodeURIComponent(id)}`, { method: "DELETE" });
+      await api.reload();
+    } catch (reason) {
+      setActionError(reason instanceof Error ? reason.message : String(reason));
+    }
+  }
+  async function restoreTask(id: string) {
+    setActionError("");
+    try {
+      await requestJson(`/api/studio/tasks/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "restore" }),
       });
       await api.reload();
     } catch (reason) {
@@ -206,19 +341,30 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
   return <>
     <PageHeader eyebrow={c.eyebrow} title={config.title} subtitle={config.sub} action={(kind === "inbox" || canCreate) ? <button className="st-btn primary" onClick={primaryAction}>{kind === "inbox" ? <CheckCircle2 size={16} /> : <Plus size={16} />}{config.action}</button> : undefined} />
     {actionError && <p className="st-error">{c.requestFailed}: {actionError}</p>}
-    <div className="st-toolbar"><label className="st-search"><Search size={16} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={c.search} aria-label={t("common.search")} /></label><button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button></div>
-    <StateView loading={api.loading || (kind === "tasks" && casesApi.loading)} error={api.error || (kind === "tasks" ? casesApi.error : "")} empty={!rows.length} emptyText={config.empty} onRetry={() => { void api.reload(); if (kind === "tasks") void casesApi.reload(); }}>
+    <div className="st-toolbar">
+      <label className="st-search"><Search size={16} /><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={c.search} aria-label={t("common.search")} /></label>
+      {kind === "tasks" ? (
+        <div className="st-segmented">
+          <button type="button" className={taskView === "active" ? "active" : ""} onClick={() => setTaskView("active")}>{c.active}</button>
+          <button type="button" className={taskView === "done" ? "active" : ""} onClick={() => setTaskView("done")}>{c.done}</button>
+          <button type="button" className={taskView === "deleted" ? "active" : ""} onClick={() => setTaskView("deleted")}>{c.trash}</button>
+        </div>
+      ) : null}
+      <button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button>
+    </div>
+    <StateView loading={api.loading || (kind === "tasks" && casesApi.loading)} error={api.error || (kind === "tasks" ? casesApi.error : "")} empty={!rows.length} emptyText={emptyText} onRetry={() => { void api.reload(); if (kind === "tasks") void casesApi.reload(); }}>
       <div className="st-table-wrap"><table className="st-table"><thead><tr>
-        {kind === "tasks" ? <><th>{c.title}</th><th>{c.case}</th><th>{c.assignee}</th><th>{c.priority}</th><th>{c.due}</th><th>{c.status}</th></> :
+        {kind === "tasks" ? <><th>{c.title}</th><th>{c.case}</th><th>{c.assignee}</th><th>{c.priority}</th><th>{taskView === "deleted" ? c.deletedAt : c.due}</th><th>{c.status}</th>{canCreate ? <th aria-label={c.actions} /> : null}</> :
          kind === "automations" ? <><th>{c.name}</th><th>{c.trigger}</th><th>{c.actions}</th><th>{c.status}</th></> :
          <><th>{c.title}</th><th>{c.type}</th><th>{c.description}</th><th>{c.updated}</th><th>{c.status}</th></>}
       </tr></thead><tbody>{rows.map((row, index) => <tr key={text(row.id, String(index))}>
-        {kind === "tasks" ? <><td><strong>{text(row.title)}</strong><small className="st-cell-sub">{text(row.description, "")}</small></td><td>{caseNames.get(text(row.case_id)) || text(row.case_id)}</td><td>{nested(row.profiles, "name")}</td><td><StatusBadge value={row.priority} kind="priority" /></td><td>{date(row.due_at, locale, true)}</td><td>{canCreate ? <select className="st-select st-status-select" defaultValue={text(row.status, "todo")} onChange={(event) => void updateTask(text(row.id), event.target.value)}><option value="todo">{labelStatus(locale, "todo")}</option><option value="in_progress">{labelStatus(locale, "in_progress")}</option><option value="blocked">{labelStatus(locale, "blocked")}</option><option value="done">{labelStatus(locale, "done")}</option><option value="cancelled">{labelStatus(locale, "cancelled")}</option></select> : <StatusBadge value={row.status} />}</td></> :
+        {kind === "tasks" ? <><td><strong>{text(row.title)}</strong><small className="st-cell-sub">{text(row.description, "")}</small></td><td>{caseNames.get(text(row.case_id)) || text(row.case_id)}</td><td>{nested(row.profiles, "name")}</td><td><StatusBadge value={row.priority} kind="priority" /></td><td>{date(taskView === "deleted" ? row.deleted_at : row.due_at, locale, true)}</td><td>{canCreate && taskView !== "deleted" ? <select className="st-select st-status-select" key={`${text(row.id)}-${text(row.status)}`} defaultValue={text(row.status, "todo")} onChange={(event) => void updateTask(text(row.id), event.target.value)}><option value="todo">{labelStatus(locale, "todo")}</option><option value="in_progress">{labelStatus(locale, "in_progress")}</option><option value="blocked">{labelStatus(locale, "blocked")}</option><option value="done">{labelStatus(locale, "done")}</option><option value="cancelled">{labelStatus(locale, "cancelled")}</option></select> : <StatusBadge value={row.status} />}</td>{canCreate ? <td><div className="st-record-actions">{taskView === "deleted" ? <button type="button" className="st-icon-btn" onClick={() => void restoreTask(text(row.id))} aria-label={c.restoreTask} title={c.restoreTask}><RotateCcw size={15} /></button> : <><button type="button" className="st-icon-btn" onClick={() => setEditingTask(row)} aria-label={t("common.edit")} title={t("common.edit")}><Pencil size={15} /></button><button type="button" className="st-icon-btn danger" onClick={() => void deleteTask(text(row.id))} aria-label={c.deleteTask} title={c.deleteTask}><Trash2 size={15} /></button></>}</div></td> : null}</> :
          kind === "automations" ? <><td><strong>{text(row.name)}</strong></td><td>{text(row.trigger_type)}</td><td><code>{Array.isArray(row.actions) ? row.actions.length : 0}</code></td><td><button className="st-btn subtle" onClick={() => void toggleAutomation(text(row.id), row.enabled === false)}><StatusBadge value={row.enabled === false ? "disabled" : "active"} /></button></td></> :
          <><td><strong>{text(row.title)}</strong></td><td>{text(row.type)}</td><td>{text(row.body ?? row.message ?? row.description, "")}</td><td>{date(row.created_at, locale, true)}</td><td><StatusBadge value={row.read_at ? "read" : "unread"} /></td></>}
       </tr>)}</tbody></table></div>
     </StateView>
     {canCreate && showCreate && <CreateModal kind={kind === "tasks" ? "task" : "automation"} endpoint={config.endpoint} cases={cases} onClose={() => setShowCreate(false)} onSaved={() => { setShowCreate(false); void api.reload(); }} />}
+    {canCreate && editingTask && <EditTaskModal task={editingTask} cases={cases} users={users} onClose={() => setEditingTask(null)} onSaved={() => { setEditingTask(null); void api.reload(); }} />}
   </>;
 }
 
@@ -371,21 +517,37 @@ function TeamTab({ caseId, items, onSaved, canManage }: { caseId: string; items:
 
 function CollectionTab({ tab, caseId, canCreate }: { tab: "timeline" | "tasks" | "finance" | "time"; caseId: string; canCreate: boolean }) {
   const c = useCrmCopy();
-  const { locale } = useStudioI18n();
-  const endpoint = `/api/studio/${tab === "timeline" ? "events" : tab}?caseId=${encodeURIComponent(caseId)}`;
+  const { locale, t } = useStudioI18n();
+  const endpoint = `/api/studio/${tab === "timeline" ? "events" : tab}?caseId=${encodeURIComponent(caseId)}${tab === "tasks" ? "&view=all" : ""}`;
   const api = useApi(endpoint);
+  const usersApi = useApi("/api/studio/users", tab === "tasks" && canCreate);
   const items = rowsFrom(api.data);
+  const users = rowsFrom(usersApi.data);
   const [showCreate, setShowCreate] = useState(false);
+  const [editingTask, setEditingTask] = useState<Row | null>(null);
+  const [actionError, setActionError] = useState("");
   const kinds: Record<typeof tab, CreateKind> = { timeline: "note", tasks: "task", finance: "finance", time: "time" };
   const labels = { timeline: c.addNote, tasks: c.newTask, finance: c.addFinance, time: c.addTime };
   const Icon = TABS.find((item) => item.id === tab)?.icon || FileText;
+  async function deleteTask(id: string) {
+    if (!confirm(c.confirmDeleteTask)) return;
+    setActionError("");
+    try {
+      await requestJson(`/api/studio/tasks/${encodeURIComponent(id)}`, { method: "DELETE" });
+      await api.reload();
+    } catch (reason) {
+      setActionError(reason instanceof Error ? reason.message : String(reason));
+    }
+  }
   return <div className="st-workspace-stack"><div className="st-section-head"><h2>{c[tab]}</h2>{canCreate && <button className="st-btn primary" onClick={() => setShowCreate(true)}><Plus size={15} />{labels[tab]}</button>}</div>
+    {actionError && <p className="st-error">{c.requestFailed}: {actionError}</p>}
     <StateView loading={api.loading} error={api.error} empty={!items.length} onRetry={api.reload}><div className="st-record-list">{items.map((row, index) => {
       const title = tab === "timeline" ? text((row.payload as Row | undefined)?.title, text(row.event_type)) : tab === "time" ? `${text(row.minutes)} ${c.minutes}` : text(row.title);
       const description = tab === "timeline" ? text((row.payload as Row | undefined)?.description, "") : text(row.description, tab === "finance" ? `${text(row.amount)} ${text(row.currency)}` : "");
-      return <article className="st-record" key={text(row.id, String(index))}><span className="st-record-icon"><Icon size={17} /></span><div><strong>{title}</strong><p>{description}</p><small>{date(row.due_at ?? row.due_date ?? row.entry_date ?? row.created_at, locale, tab !== "finance")}</small></div><StatusBadge value={row.status ?? row.priority ?? row.event_type ?? (row.billable ? "billable" : "non_billable")} /></article>;
+      return <article className="st-record" key={text(row.id, String(index))}><span className="st-record-icon"><Icon size={17} /></span><div><strong>{title}</strong><p>{description}</p><small>{date(row.due_at ?? row.due_date ?? row.entry_date ?? row.created_at, locale, tab !== "finance")}</small></div><div className="st-record-actions"><StatusBadge value={row.status ?? row.priority ?? row.event_type ?? (row.billable ? "billable" : "non_billable")} />{tab === "tasks" && canCreate ? <><button type="button" className="st-icon-btn" onClick={() => setEditingTask(row)} aria-label={t("common.edit")} title={t("common.edit")}><Pencil size={15} /></button><button type="button" className="st-icon-btn danger" onClick={() => void deleteTask(text(row.id))} aria-label={c.deleteTask} title={c.deleteTask}><Trash2 size={15} /></button></> : null}</div></article>;
     })}</div></StateView>
     {canCreate && showCreate && <CreateModal kind={kinds[tab]} endpoint={`/api/studio/${tab === "timeline" ? "events" : tab}`} caseId={caseId} onClose={() => setShowCreate(false)} onSaved={() => { setShowCreate(false); void api.reload(); }} />}
+    {canCreate && editingTask && <EditTaskModal task={editingTask} users={users} lockCaseId={caseId} onClose={() => setEditingTask(null)} onSaved={() => { setEditingTask(null); void api.reload(); }} />}
   </div>;
 }
 

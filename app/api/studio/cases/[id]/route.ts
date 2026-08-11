@@ -34,6 +34,11 @@ export async function GET(
     .maybeSingle();
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   if (!data) return NextResponse.json({ error: "Case not found" }, { status: 404 });
+  if (Array.isArray(data.tasks)) {
+    data.tasks = data.tasks.filter(
+      (task: { deleted_at?: string | null }) => !task?.deleted_at,
+    );
+  }
   return NextResponse.json(data);
 }
 

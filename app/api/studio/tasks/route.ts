@@ -18,6 +18,7 @@ import {
 } from "@/lib/studio/access";
 
 const priorities = ["low", "normal", "high", "urgent"] as const;
+const views = ["active", "done", "deleted", "all"] as const;
 
 export async function GET(request: NextRequest) {
   const auth = await requireStudioUser({ capability: "cases.read" });
@@ -30,11 +31,34 @@ export async function GET(request: NextRequest) {
     const denied = await requireCaseAccess(sb, auth, caseId);
     if (denied) return denied;
   }
+  const viewParam = request.nextUrl.searchParams.get("view");
+  const view = views.includes(viewParam as (typeof views)[number])
+    ? (viewParam as (typeof views)[number])
+    : caseId
+      ? "all"
+      : "active";
+
   let query = sb
     .from("tasks")
     .select("*, task_checklist_items(*), task_watchers(profile_id), profiles!tasks_assignee_id_fkey(id,name)")
-    .order("due_at", { ascending: true, nullsFirst: false })
     .range(offset, offset + limit - 1);
+
+  if (view === "deleted") {
+    query = query.not("deleted_at", "is", null).order("deleted_at", { ascending: false });
+  } else if (view === "done") {
+    query = query
+      .is("deleted_at", null)
+      .eq("status", "done")
+      .order("completed_at", { ascending: false, nullsFirst: false });
+  } else if (view === "all") {
+    query = query.is("deleted_at", null).order("due_at", { ascending: true, nullsFirst: false });
+  } else {
+    query = query
+      .is("deleted_at", null)
+      .neq("status", "done")
+      .order("due_at", { ascending: true, nullsFirst: false });
+  }
+
   if (!hasGlobalCaseAccess(auth)) {
     const caseFilter = accessibleCaseIds?.length
       ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`
@@ -45,7 +69,7 @@ export async function GET(request: NextRequest) {
   const status = request.nextUrl.searchParams.get("status");
   if (caseId) query = query.eq("case_id", caseId);
   if (assigneeId) query = query.eq("assignee_id", assigneeId);
-  if (status) query = query.eq("status", status);
+  if (status && view === "active") query = query.eq("status", status);
   const { data, error } = await query;
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   return NextResponse.json(data);

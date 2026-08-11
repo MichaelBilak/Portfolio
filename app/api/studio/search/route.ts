@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
   let tasksQuery = sb
     .from("tasks")
     .select("id,case_id,title,status,due_at")
+    .is("deleted_at", null)
     .ilike("title", `%${term}%`)
     .limit(20);
   let documentsQuery = sb

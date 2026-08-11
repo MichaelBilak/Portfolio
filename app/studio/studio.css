@@ -1653,6 +1653,12 @@ body {
   color: var(--st-gold);
 }
 
+.st-record-actions {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
 .st-record > div {
   min-width: 0;
 }
