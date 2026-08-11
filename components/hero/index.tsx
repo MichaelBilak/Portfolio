@@ -108,7 +108,7 @@ export function Hero({ t }: HeroProps) {
                 className={btn(
                   "primary",
                   "md",
-                  "w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
+                  "amber-pulse w-full justify-center overflow-visible sm:w-auto sm:shrink-0 sm:whitespace-nowrap",
                 )}
               >
                 <span className="relative z-10">{t.hero.buyCta}</span>

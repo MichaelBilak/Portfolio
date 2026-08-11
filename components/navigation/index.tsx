@@ -13,7 +13,7 @@ import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 import { useNavScroll } from "@/lib/hooks/use-nav-scroll";
 import { usePastHero } from "@/lib/hooks/use-past-hero";
 import { Locale, TranslationSet } from "@/lib/translations";
-import { btn } from "@/lib/ui";
+import { btn, cn } from "@/lib/ui";
 
 interface NavigationProps {
   locale: Locale;
@@ -39,7 +39,9 @@ function OrderCtaLink({
       className={btn(
         "primary",
         fullWidth ? "md" : "sm",
-        fullWidth ? `w-full ${className ?? ""}` : className,
+        fullWidth
+          ? `amber-pulse w-full ${className ?? ""}`
+          : cn("amber-pulse order-cta-lift", className),
       )}
     >
       <span className="relative z-10">{t.hero.buyCta}</span>
