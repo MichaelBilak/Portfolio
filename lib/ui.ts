@@ -19,7 +19,7 @@ const sizes: Record<ButtonSize, string> = {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-b from-[#ffe08a] via-accentGold to-[#f5b942] text-bgPrimary shadow-[0_0_0_1px_rgba(255,236,170,0.45),0_10px_28px_-6px_rgba(252,211,77,0.85),0_0_36px_-4px_rgba(252,211,77,0.55)] hover:-translate-y-0.5 hover:from-[#fff3b0] hover:via-[#ffe08a] hover:to-accentGold hover:shadow-[0_0_0_1px_rgba(255,243,176,0.6),0_16px_40px_-6px_rgba(252,211,77,1),0_0_48px_-2px_rgba(252,211,77,0.7)]",
+    "bg-accentGold text-bgPrimary shadow-[0_12px_32px_-14px_rgba(252,211,77,0.7)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-14px_rgba(252,211,77,0.85)]",
   secondary:
     "border border-white/[0.14] bg-white/[0.04] text-accentGold backdrop-blur-sm hover:-translate-y-0.5 hover:border-white/[0.22] hover:bg-white/[0.07]",
   ghost:
