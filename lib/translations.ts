@@ -254,7 +254,6 @@ export interface TranslationSet {
     viewAll: string;
     backToWork: string;
     visitLiveSite: string;
-    viewRepo: string;
     liveStatus: string;
     techStack: string;
     overview: string;
@@ -955,7 +954,6 @@ const it: TranslationSet = {
     viewAll: "Vedi tutti i lavori",
     backToWork: "Torna ai progetti",
     visitLiveSite: "Visita il sito",
-    viewRepo: "Vedi su GitHub",
     liveStatus: "Online",
     techStack: "Stack tecnico",
     overview: "Panoramica",
@@ -1654,7 +1652,6 @@ const en: TranslationSet = {
     viewAll: "View all work",
     backToWork: "Back to projects",
     visitLiveSite: "Visit live site",
-    viewRepo: "View on GitHub",
     liveStatus: "Live",
     techStack: "Tech stack",
     overview: "Overview",
@@ -2290,7 +2287,6 @@ const fr: TranslationSet = {
     viewAll: "Voir tous les projets",
     backToWork: "Retour aux projets",
     visitLiveSite: "Visiter le site",
-    viewRepo: "Voir sur GitHub",
     liveStatus: "En ligne",
     techStack: "Stack technique",
     overview: "Apercu",
@@ -2928,7 +2924,6 @@ const ru: TranslationSet = {
     viewAll: "Смотреть все работы",
     backToWork: "Назад к проектам",
     visitLiveSite: "Перейти на сайт",
-    viewRepo: "Смотреть на GitHub",
     liveStatus: "Live",
     techStack: "Стек технологий",
     overview: "Обзор",
@@ -3563,7 +3558,6 @@ const de: TranslationSet = {
     viewAll: "Alle Arbeiten ansehen",
     backToWork: "Zuruck zu Projekten",
     visitLiveSite: "Live-Site besuchen",
-    viewRepo: "Auf GitHub ansehen",
     liveStatus: "Live",
     techStack: "Tech-Stack",
     overview: "Uberblick",

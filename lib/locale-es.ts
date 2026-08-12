@@ -691,7 +691,6 @@ export const es: TranslationSet = {
     viewAll: "Ver todos los proyectos",
     backToWork: "Volver a proyectos",
     visitLiveSite: "Visitar sitio en vivo",
-    viewRepo: "Ver en GitHub",
     liveStatus: "En vivo",
     techStack: "Stack tecnológico",
     overview: "Resumen",

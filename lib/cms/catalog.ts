@@ -91,7 +91,6 @@ export async function getProjects(locale: Locale = "it"): Promise<CmsProject[]> 
         tech: Array.isArray(doc.tech) ? (doc.tech as string[]) : [],
         url: String(doc.url),
         displayUrl: String(doc.display_url),
-        repoUrl: staticMeta?.repoUrl,
         isLive: Boolean(doc.is_live),
         featured: doc.featured !== false,
         localized: i18n

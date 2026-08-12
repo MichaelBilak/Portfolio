@@ -9,8 +9,6 @@ export interface ProjectMeta {
   /** External live URL. `#` for concept-only projects. */
   url: string;
   displayUrl: string;
-  /** Optional public repository URL shown on the case-study page. */
-  repoUrl?: string;
   /** When true the project gets an internal detail page and the card hides the description rows. */
   isLive?: boolean;
   /** Focal point for the mockup screenshot crop. Defaults to top. */
@@ -73,7 +71,6 @@ export const projectsMeta: ProjectMeta[] = [
     tech: ["Online Catalog", "WhatsApp Orders", "Stock Control"],
     url: "https://solovyev-store.vercel.app/",
     displayUrl: "solovyev-store.vercel.app",
-    repoUrl: "https://github.com/DormUpGroup/SOLOVYEV.STORE",
     isLive: true,
   },
 ];
