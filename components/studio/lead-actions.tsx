@@ -121,8 +121,9 @@ export function LeadActions({
 
   return (
     <div className="st-form st-lead-actions">
-      <div className="st-row">
-        <label className="st-label" style={{ flex: 1 }}>
+      <div className="st-lead-action-block">
+        <p className="st-lead-action-label">{t("leads.qualifySection")}</p>
+        <label className="st-label">
           {t("leads.statusLabel")}
           <select
             className="st-select"
@@ -143,7 +144,7 @@ export function LeadActions({
             ))}
           </select>
         </label>
-        <label className="st-label" style={{ flex: 1 }}>
+        <label className="st-label">
           {t("leads.priorityLabel")}
           <select
             className="st-select"
@@ -157,10 +158,7 @@ export function LeadActions({
             ))}
           </select>
         </label>
-      </div>
-
-      <div className="st-row">
-        <label className="st-label" style={{ flex: 1 }}>
+        <label className="st-label">
           {t("crm.assignee")}
           <select
             className="st-select"
@@ -175,7 +173,7 @@ export function LeadActions({
             ))}
           </select>
         </label>
-        <label className="st-label" style={{ flex: 1 }}>
+        <label className="st-label">
           {t("leads.nextAction")}
           <input
             className="st-input"
@@ -183,69 +181,25 @@ export function LeadActions({
             defaultValue={toLocalInput(nextActionAt)}
             onChange={(e) =>
               patch({
-                nextActionAt: e.target.value
-                  ? new Date(e.target.value).toISOString()
-                  : null,
+                nextActionAt: e.target.value ? new Date(e.target.value).toISOString() : null,
               })
             }
           />
         </label>
-      </div>
-
-      <label className="st-label">
-        {t("leads.lostReason")}
-        <input
-          className="st-input"
-          value={localLostReason}
-          onChange={(e) => setLocalLostReason(e.target.value)}
-          onBlur={() => {
-            if (localLostReason !== (lostReason || "")) {
-              void patch({ lostReason: localLostReason || null });
-            }
-          }}
-          placeholder={t("leads.lostReasonPlaceholder")}
-        />
-      </label>
-
-      <label className="st-label">
-        {t("leads.noteLabel")}
-        <textarea className="st-textarea" value={note} onChange={(e) => setNote(e.target.value)} />
-      </label>
-
-      {!existingCaseId ? (
-        <div className="st-row">
-          <label className="st-label" style={{ flex: 1 }}>
-            {t("crm.stage")}
-            <select
-              className="st-select"
-              value={stageId}
-              onChange={(e) => setStageId(e.target.value)}
-            >
-              {stages.map((stage) => (
-                <option key={stage.id} value={stage.id}>
-                  {stage.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="st-label" style={{ flex: 1 }}>
-            {t("crm.owner")}
-            <select
-              className="st-select"
-              value={ownerId}
-              onChange={(e) => setOwnerId(e.target.value)}
-            >
-              {users.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.name || user.id.slice(0, 8)}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      ) : null}
-
-      <div className="st-row" style={{ flexWrap: "wrap" }}>
+        <label className="st-label">
+          {t("leads.lostReason")}
+          <input
+            className="st-input"
+            value={localLostReason}
+            onChange={(e) => setLocalLostReason(e.target.value)}
+            onBlur={() => {
+              if (localLostReason !== (lostReason || "")) {
+                void patch({ lostReason: localLostReason || null });
+              }
+            }}
+            placeholder={t("leads.lostReasonPlaceholder")}
+          />
+        </label>
         <button
           type="button"
           className="st-btn"
@@ -253,7 +207,66 @@ export function LeadActions({
         >
           {t("leads.claim")}
         </button>
-        {existingCaseId ? (
+      </div>
+
+      <div className="st-lead-action-block">
+        <p className="st-lead-action-label">{t("leads.noteLabel")}</p>
+        <label className="st-label">
+          <textarea
+            className="st-textarea"
+            rows={4}
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder={t("leads.noteLabel")}
+          />
+        </label>
+        <button type="button" className="st-btn" onClick={addNote}>
+          {t("leads.saveNote")}
+        </button>
+      </div>
+
+      <div className="st-lead-action-block">
+        <p className="st-lead-action-label">{t("leads.convertSection")}</p>
+        {!existingCaseId ? (
+          <>
+            <label className="st-label">
+              {t("crm.stage")}
+              <select
+                className="st-select"
+                value={stageId}
+                onChange={(e) => setStageId(e.target.value)}
+              >
+                {stages.map((stage) => (
+                  <option key={stage.id} value={stage.id}>
+                    {stage.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="st-label">
+              {t("crm.owner")}
+              <select
+                className="st-select"
+                value={ownerId}
+                onChange={(e) => setOwnerId(e.target.value)}
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name || user.id.slice(0, 8)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              className="st-btn primary"
+              onClick={convertToCase}
+              disabled={converting}
+            >
+              {converting ? t("leads.creatingCase") : t("leads.createCase")}
+            </button>
+          </>
+        ) : (
           <button
             type="button"
             className="st-btn primary"
@@ -261,26 +274,21 @@ export function LeadActions({
           >
             {t("leads.openCase")}
           </button>
-        ) : (
-          <button
-            type="button"
-            className="st-btn primary"
-            onClick={convertToCase}
-            disabled={converting}
-          >
-            {converting ? t("leads.creatingCase") : t("leads.createCase")}
-          </button>
         )}
-        <button type="button" className="st-btn" onClick={addNote}>
-          {t("leads.saveNote")}
-        </button>
-        <button type="button" className="st-btn" onClick={gdprExport}>
-          {t("leads.gdprExport")}
-        </button>
-        <button type="button" className="st-btn danger" onClick={gdprDelete}>
-          {t("leads.gdprDelete")}
-        </button>
       </div>
+
+      <div className="st-lead-action-block st-lead-action-danger">
+        <p className="st-lead-action-label">{t("leads.gdprSection")}</p>
+        <div className="st-row" style={{ flexWrap: "wrap", gap: "0.5rem" }}>
+          <button type="button" className="st-btn" onClick={gdprExport}>
+            {t("leads.gdprExport")}
+          </button>
+          <button type="button" className="st-btn danger" onClick={gdprDelete}>
+            {t("leads.gdprDelete")}
+          </button>
+        </div>
+      </div>
+
       {msg ? <p className={msgTone === "error" ? "st-error" : "st-ok"}>{msg}</p> : null}
     </div>
   );

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  ChevronDown,
   Download,
   LayoutGrid,
   List,
@@ -81,6 +82,7 @@ export function LeadsWorkspace({
   const [importOpen, setImportOpen] = useState(false);
   const [importMsg, setImportMsg] = useState("");
   const [importBusy, setImportBusy] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const limit = view === "board" ? 200 : 40;
 
   const filters = useMemo(
@@ -99,6 +101,15 @@ export function LeadsWorkspace({
     }),
     [searchParams, view],
   );
+
+  const hasAdvanced =
+    Boolean(filters.priority) ||
+    Boolean(filters.source) ||
+    Boolean(filters.locale) ||
+    Boolean(filters.intent) ||
+    Boolean(filters.from) ||
+    Boolean(filters.to) ||
+    filters.unassigned === "1";
 
   const queryString = useMemo(
     () =>
@@ -142,6 +153,10 @@ export function LeadsWorkspace({
   useEffect(() => {
     void load();
   }, [load]);
+
+  useEffect(() => {
+    if (hasAdvanced) setFiltersOpen(true);
+  }, [hasAdvanced]);
 
   function replaceFilters(next: Record<string, string>) {
     const sp = new URLSearchParams(searchParams.toString());
@@ -211,6 +226,26 @@ export function LeadsWorkspace({
     }
   }
 
+  function submitFilters(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    replaceFilters({
+      view,
+      status: String(form.get("status") || ""),
+      priority: String(form.get("priority") || ""),
+      source: String(form.get("source") || ""),
+      locale: String(form.get("locale") || ""),
+      intent: String(form.get("intent") || ""),
+      assigneeId: String(form.get("assigneeId") || ""),
+      q: String(form.get("q") || ""),
+      from: String(form.get("from") || "")
+        ? `${String(form.get("from"))}T00:00:00.000Z`
+        : "",
+      to: String(form.get("to") || "") ? `${String(form.get("to"))}T23:59:59.999Z` : "",
+      unassigned: form.get("unassigned") === "on" ? "1" : "",
+    });
+  }
+
   const exportHref = `/api/studio/leads/export?${buildQuery({
     status: filters.status,
     priority: filters.priority,
@@ -224,20 +259,44 @@ export function LeadsWorkspace({
     unassigned: filters.unassigned,
   })}`;
 
+  const statusCounts = useMemo(() => {
+    const counts: Record<string, number> = Object.fromEntries(
+      LEAD_STATUSES.map((status) => [status, 0]),
+    );
+    for (const lead of items) counts[lead.status] = (counts[lead.status] || 0) + 1;
+    return counts;
+  }, [items]);
+
   const boardColumns = LEAD_STATUSES.map((status) => ({
     status,
     items: items.filter((lead) => lead.status === status),
   }));
 
   return (
-    <>
-      <div className="st-page-header">
+    <div className="st-leads-page">
+      <header className="st-leads-hero">
         <div>
           <p className="st-eyebrow">{t("leads.eyebrow")}</p>
           <h1 className="st-h1">{t("leads.title")}</h1>
           <p className="st-sub">{t("leads.subtitle")}</p>
         </div>
-        <div className="st-row" style={{ gap: "0.5rem", flexWrap: "wrap" }}>
+        <div className="st-leads-hero-actions">
+          <div className="st-segmented" role="tablist" aria-label={t("leads.viewList")}>
+            <button
+              type="button"
+              className={view === "list" ? "active" : ""}
+              onClick={() => replaceFilters({ ...filters, view: "list" })}
+            >
+              <List size={14} /> {t("leads.viewList")}
+            </button>
+            <button
+              type="button"
+              className={view === "board" ? "active" : ""}
+              onClick={() => replaceFilters({ ...filters, view: "board" })}
+            >
+              <LayoutGrid size={14} /> {t("leads.viewBoard")}
+            </button>
+          </div>
           <button type="button" className="st-btn" onClick={() => setImportOpen(true)}>
             <Upload size={16} /> {t("leads.import")}
           </button>
@@ -245,91 +304,120 @@ export function LeadsWorkspace({
             <Download size={16} /> {t("leads.export")}
           </a>
         </div>
+      </header>
+
+      <div className="st-leads-status-strip" role="navigation" aria-label={t("leads.status")}>
+        <button
+          type="button"
+          className={!filters.status ? "active" : ""}
+          onClick={() => replaceFilters({ ...filters, status: "" })}
+        >
+          {t("leads.allStatuses")}
+          <b>{total}</b>
+        </button>
+        {LEAD_STATUSES.map((status) => (
+          <button
+            key={status}
+            type="button"
+            className={filters.status === status ? "active" : ""}
+            onClick={() =>
+              replaceFilters({
+                ...filters,
+                status: filters.status === status ? "" : status,
+              })
+            }
+          >
+            {labelStatus(locale, status)}
+            <b>{statusCounts[status] || 0}</b>
+          </button>
+        ))}
       </div>
 
-      <form
-        className="st-toolbar st-leads-filters"
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = new FormData(event.currentTarget);
-          replaceFilters({
-            view,
-            status: String(form.get("status") || ""),
-            priority: String(form.get("priority") || ""),
-            source: String(form.get("source") || ""),
-            locale: String(form.get("locale") || ""),
-            intent: String(form.get("intent") || ""),
-            assigneeId: String(form.get("assigneeId") || ""),
-            q: String(form.get("q") || ""),
-            from: String(form.get("from") || "")
-              ? `${String(form.get("from"))}T00:00:00.000Z`
-              : "",
-            to: String(form.get("to") || "")
-              ? `${String(form.get("to"))}T23:59:59.999Z`
-              : "",
-            unassigned: form.get("unassigned") === "on" ? "1" : "",
-          });
-        }}
-      >
-        <label className="st-search">
-          <Search size={16} />
-          <input name="q" defaultValue={filters.q} placeholder={t("leads.searchPlaceholder")} />
-        </label>
-        <select className="st-select" name="status" defaultValue={filters.status}>
-          <option value="">{t("leads.allStatuses")}</option>
-          {LEAD_STATUSES.map((status) => (
-            <option key={status} value={status}>
-              {labelStatus(locale, status)}
-            </option>
-          ))}
-        </select>
-        <select className="st-select" name="priority" defaultValue={filters.priority}>
-          <option value="">{t("leads.allPriorities")}</option>
-          {(["low", "normal", "high"] as const).map((priority) => (
-            <option key={priority} value={priority}>
-              {labelPriority(locale, priority)}
-            </option>
-          ))}
-        </select>
-        <select className="st-select" name="assigneeId" defaultValue={filters.assigneeId}>
-          <option value="">{t("leads.allAssignees")}</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name || user.email || user.id.slice(0, 8)}
-            </option>
-          ))}
-        </select>
-        <input className="st-input" name="source" defaultValue={filters.source} placeholder={t("leads.source")} />
-        <input className="st-input" name="intent" defaultValue={filters.intent} placeholder={t("leads.intent")} />
-        <input className="st-input" name="locale" defaultValue={filters.locale} placeholder={t("leads.locale")} />
-        <input className="st-input" type="date" name="from" defaultValue={filters.from.slice(0, 10)} />
-        <input className="st-input" type="date" name="to" defaultValue={filters.to.slice(0, 10)} />
-        <label className="st-check">
-          <input type="checkbox" name="unassigned" defaultChecked={filters.unassigned === "1"} />
-          {t("leads.unassignedOnly")}
-        </label>
-        <button className="st-btn" type="submit">
-          {t("leads.find")}
-        </button>
-        <div className="st-segmented">
-          <button
-            type="button"
-            className={view === "list" ? "active" : ""}
-            onClick={() => replaceFilters({ ...filters, view: "list" })}
-          >
-            <List size={14} /> {t("leads.viewList")}
+      <form className="st-leads-filter-panel" onSubmit={submitFilters}>
+        <div className="st-leads-filter-primary">
+          <label className="st-search st-leads-search">
+            <Search size={16} />
+            <input name="q" defaultValue={filters.q} placeholder={t("leads.searchPlaceholder")} />
+          </label>
+          <select className="st-select" name="assigneeId" defaultValue={filters.assigneeId}>
+            <option value="">{t("leads.allAssignees")}</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.name || user.email || user.id.slice(0, 8)}
+              </option>
+            ))}
+          </select>
+          <input type="hidden" name="status" value={filters.status} />
+          <button className="st-btn primary" type="submit">
+            {t("leads.find")}
           </button>
           <button
             type="button"
-            className={view === "board" ? "active" : ""}
-            onClick={() => replaceFilters({ ...filters, view: "board" })}
+            className={`st-btn subtle st-leads-more-btn${filtersOpen || hasAdvanced ? " open" : ""}`}
+            onClick={() => setFiltersOpen((value) => !value)}
           >
-            <LayoutGrid size={14} /> {t("leads.viewBoard")}
+            {t("leads.moreFilters")}
+            <ChevronDown size={14} />
           </button>
         </div>
+
+        {(filtersOpen || hasAdvanced) && (
+          <div className="st-leads-filter-advanced">
+            <label className="st-label">
+              <span>{t("leads.priorityLabel")}</span>
+              <select className="st-select" name="priority" defaultValue={filters.priority}>
+                <option value="">{t("leads.allPriorities")}</option>
+                {(["low", "normal", "high"] as const).map((priority) => (
+                  <option key={priority} value={priority}>
+                    {labelPriority(locale, priority)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="st-label">
+              <span>{t("leads.source")}</span>
+              <input className="st-input" name="source" defaultValue={filters.source} />
+            </label>
+            <label className="st-label">
+              <span>{t("leads.intent")}</span>
+              <input className="st-input" name="intent" defaultValue={filters.intent} />
+            </label>
+            <label className="st-label">
+              <span>{t("leads.locale")}</span>
+              <input className="st-input" name="locale" defaultValue={filters.locale} />
+            </label>
+            <label className="st-label">
+              <span>{t("dashboard.customFrom")}</span>
+              <input
+                className="st-input"
+                type="date"
+                name="from"
+                defaultValue={filters.from.slice(0, 10)}
+              />
+            </label>
+            <label className="st-label">
+              <span>{t("dashboard.customTo")}</span>
+              <input
+                className="st-input"
+                type="date"
+                name="to"
+                defaultValue={filters.to.slice(0, 10)}
+              />
+            </label>
+            <label className="st-check st-leads-check">
+              <input
+                type="checkbox"
+                name="unassigned"
+                defaultChecked={filters.unassigned === "1"}
+              />
+              {t("leads.unassignedOnly")}
+            </label>
+          </div>
+        )}
       </form>
 
       {error ? <p className="st-error">{error}</p> : null}
+
       {loading ? (
         <div className="st-state">
           <LoaderCircle className="st-spin" />
@@ -352,22 +440,24 @@ export function LeadsWorkspace({
                 {column.items.map((lead) => (
                   <article
                     key={lead.id}
-                    className={`st-case-card st-lead-card${isSlaBreached(lead) ? " sla" : ""}`}
+                    className={`st-lead-card${isSlaBreached(lead) ? " sla" : ""}`}
                     draggable
                     onDragStart={() => setDraggingId(lead.id)}
                     onDragEnd={() => setDraggingId(null)}
                   >
-                    <div className="st-case-card-top">
-                      <strong>
-                        <Link href={studioPath(`/leads/${lead.id}`)}>
-                          {lead.full_name || lead.email || t("leads.fallbackTitle")}
-                        </Link>
-                      </strong>
-                      <span className={`st-status st-status-${lead.priority}`}>{labelPriority(locale, lead.priority)}</span>
+                    <div className="st-lead-card-top">
+                      <Link href={studioPath(`/leads/${lead.id}`)} className="st-lead-card-title">
+                        {lead.full_name || lead.email || t("leads.fallbackTitle")}
+                      </Link>
+                      <span className={`st-status st-status-${lead.priority}`}>
+                        {labelPriority(locale, lead.priority)}
+                      </span>
                     </div>
-                    <span>{lead.business_name || "—"}</span>
-                    <span>{lead.source || "—"} · {formatStudioDate(lead.created_at, locale, true)}</span>
-                    <footer>
+                    <p className="st-lead-card-biz">{lead.business_name || "—"}</p>
+                    <p className="st-lead-card-meta">
+                      {lead.source || "—"} · {formatStudioDate(lead.created_at, locale, true)}
+                    </p>
+                    <footer className="st-lead-card-foot">
                       <span>{assigneeName(lead, users, t("leads.unassigned"))}</span>
                       <button
                         type="button"
@@ -379,94 +469,75 @@ export function LeadsWorkspace({
                     </footer>
                   </article>
                 ))}
-                {!column.items.length ? <p className="st-kanban-empty">{t("leads.boardEmpty")}</p> : null}
+                {!column.items.length ? (
+                  <p className="st-kanban-empty">{t("leads.boardEmpty")}</p>
+                ) : null}
               </div>
             </section>
           ))}
         </div>
       ) : (
-        <>
-          <div className="st-lead-cards-mobile">
-            {items.map((lead) => (
-              <article key={lead.id} className={`st-lead-mobile-card${isSlaBreached(lead) ? " sla" : ""}`}>
-                <div>
-                  <strong>
-                    <Link href={studioPath(`/leads/${lead.id}`)}>
-                      {lead.full_name || lead.email || t("leads.fallbackTitle")}
-                    </Link>
-                  </strong>
-                  <p>{lead.business_name || lead.email}</p>
-                  <small>
-                    {labelStatus(locale, lead.status)} · {formatStudioDate(lead.created_at, locale, true)}
-                  </small>
-                </div>
-                <div className="st-row">
-                  <button type="button" className="st-btn primary" onClick={() => void claimLead(lead.id)}>
-                    {t("leads.claim")}
-                  </button>
-                  <Link className="st-btn" href={studioPath(`/leads/${lead.id}`)}>
-                    {t("leads.open")}
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="st-table-wrap st-leads-table">
-            <table className="st-table">
-              <thead>
-                <tr>
-                  <th>{t("leads.date")}</th>
-                  <th>{t("leads.client")}</th>
-                  <th>{t("leads.email")}</th>
-                  <th>{t("leads.business")}</th>
-                  <th>{t("leads.status")}</th>
-                  <th>{t("leads.priorityLabel")}</th>
-                  <th>{t("crm.assignee")}</th>
-                  <th>{t("leads.source")}</th>
-                  <th aria-label={t("leads.actions")} />
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((lead) => (
-                  <tr key={lead.id} className={isSlaBreached(lead) ? "sla" : undefined}>
-                    <td>{formatStudioDate(lead.created_at, locale, true)}</td>
-                    <td>
+        <section className="st-leads-list-panel">
+          {!items.length ? (
+            <p className="st-empty-inline">{t("common.empty")}</p>
+          ) : (
+            <ul className="st-leads-list">
+              {items.map((lead) => (
+                <li
+                  key={lead.id}
+                  className={`st-leads-row${isSlaBreached(lead) ? " sla" : ""}`}
+                >
+                  <div className="st-leads-row-main">
+                    <div className="st-leads-row-title">
                       <Link href={studioPath(`/leads/${lead.id}`)}>
-                        {lead.full_name || lead.email}
+                        {lead.full_name || lead.email || t("leads.fallbackTitle")}
                       </Link>
-                    </td>
-                    <td>
-                      {lead.email ? <a href={`mailto:${lead.email}`}>{lead.email}</a> : "—"}
-                    </td>
-                    <td>{lead.business_name || "—"}</td>
-                    <td>
-                      <span className="st-badge">{labelStatus(locale, lead.status)}</span>
-                    </td>
-                    <td>{labelPriority(locale, lead.priority)}</td>
-                    <td>{assigneeName(lead, users, t("leads.unassigned"))}</td>
-                    <td>{lead.source || "—"}</td>
-                    <td>
-                      <div className="st-record-actions">
-                        <button
-                          type="button"
-                          className="st-btn subtle"
-                          onClick={() => void claimLead(lead.id)}
-                        >
-                          {t("leads.claim")}
-                        </button>
-                        <Link className="st-btn subtle" href={studioPath(`/leads/${lead.id}`)}>
-                          {t("leads.open")}
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="st-row" style={{ marginTop: "1rem", justifyContent: "space-between" }}>
-            <span className="st-muted">
-              {t("leads.pagination", { from: total ? offset + 1 : 0, to: Math.min(offset + limit, total), total })}
+                      <span className={`st-status st-status-${lead.status.replaceAll("_", "-")}`}>
+                        {labelStatus(locale, lead.status)}
+                      </span>
+                      {isSlaBreached(lead) ? (
+                        <span className="st-badge st-badge-danger">{t("leads.slaBreached")}</span>
+                      ) : null}
+                    </div>
+                    <div className="st-leads-row-meta">
+                      <span>{lead.business_name || "—"}</span>
+                      <span>
+                        {lead.email ? (
+                          <a href={`mailto:${lead.email}`}>{lead.email}</a>
+                        ) : (
+                          "—"
+                        )}
+                      </span>
+                      <span>{lead.source || "—"}</span>
+                      <span>{formatStudioDate(lead.created_at, locale, true)}</span>
+                      <span>{assigneeName(lead, users, t("leads.unassigned"))}</span>
+                      <span>{labelPriority(locale, lead.priority)}</span>
+                    </div>
+                  </div>
+                  <div className="st-leads-row-actions">
+                    <button
+                      type="button"
+                      className="st-btn subtle"
+                      onClick={() => void claimLead(lead.id)}
+                    >
+                      {t("leads.claim")}
+                    </button>
+                    <Link className="st-btn" href={studioPath(`/leads/${lead.id}`)}>
+                      {t("leads.open")}
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="st-leads-pager">
+            <span>
+              {t("leads.pagination", {
+                from: total ? offset + 1 : 0,
+                to: Math.min(offset + limit, total),
+                total,
+              })}
             </span>
             <div className="st-row">
               <button
@@ -487,7 +558,7 @@ export function LeadsWorkspace({
               </button>
             </div>
           </div>
-        </>
+        </section>
       )}
 
       {importOpen ? (
@@ -529,6 +600,6 @@ export function LeadsWorkspace({
           </div>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
