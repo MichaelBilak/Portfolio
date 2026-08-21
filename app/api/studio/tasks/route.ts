@@ -15,6 +15,7 @@ import {
   getAccessibleCaseIds,
   hasGlobalCaseAccess,
   requireCaseAccess,
+  taskAccessOrFilter,
 } from "@/lib/studio/access";
 
 const priorities = ["low", "normal", "high", "urgent"] as const;
@@ -60,10 +61,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (!hasGlobalCaseAccess(auth)) {
-    const caseFilter = accessibleCaseIds?.length
-      ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`
-      : `and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`;
-    query = query.or(caseFilter);
+    query = query.or(taskAccessOrFilter(auth.id, accessibleCaseIds));
   }
   const assigneeId = request.nextUrl.searchParams.get("assigneeId");
   const status = request.nextUrl.searchParams.get("status");

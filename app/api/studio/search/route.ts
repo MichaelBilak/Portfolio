@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { canManageLeads, requireStudioUser } from "@/lib/studio/auth";
-import { getAccessibleCaseIds, hasGlobalCaseAccess } from "@/lib/studio/access";
+import {
+  getAccessibleCaseIds,
+  hasGlobalCaseAccess,
+  taskAccessOrFilter,
+} from "@/lib/studio/access";
 
 export async function GET(request: NextRequest) {
   const auth = await requireStudioUser({ capability: "cases.read" });
@@ -35,10 +39,7 @@ export async function GET(request: NextRequest) {
     const ids = accessibleCaseIds?.length ? accessibleCaseIds : [noCaseId];
     casesQuery = casesQuery.in("id", ids);
     documentsQuery = documentsQuery.in("case_id", ids);
-    const taskFilter = accessibleCaseIds?.length
-      ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`
-      : `and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`;
-    tasksQuery = tasksQuery.or(taskFilter);
+    tasksQuery = tasksQuery.or(taskAccessOrFilter(auth.id, accessibleCaseIds));
   }
   const requests = [
     casesQuery,

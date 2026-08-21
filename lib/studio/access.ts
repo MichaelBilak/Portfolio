@@ -51,3 +51,13 @@ export async function requireCaseAccess(
     ? null
     : NextResponse.json({ error: `${resource} not found` }, { status: 404 });
 }
+
+/** PostgREST `.or(...)` filter for non-owner task lists (member cases + personal uncased tasks). */
+export function taskAccessOrFilter(
+  userId: string,
+  accessibleCaseIds: string[] | null | undefined,
+): string {
+  return accessibleCaseIds?.length
+    ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,or(created_by.eq.${userId},assignee_id.eq.${userId}))`
+    : `and(case_id.is.null,or(created_by.eq.${userId},assignee_id.eq.${userId}))`;
+}

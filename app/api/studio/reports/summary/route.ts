@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireStudioUser } from "@/lib/studio/auth";
-import { getAccessibleCaseIds, hasGlobalCaseAccess } from "@/lib/studio/access";
+import {
+  getAccessibleCaseIds,
+  hasGlobalCaseAccess,
+  taskAccessOrFilter,
+} from "@/lib/studio/access";
 
 export async function GET(request: NextRequest) {
   const auth = await requireStudioUser({ capability: "reports.read" });
@@ -30,10 +34,7 @@ export async function GET(request: NextRequest) {
       "case_id",
       accessibleCaseIds?.length ? accessibleCaseIds : [noCaseId],
     );
-    const taskFilter = accessibleCaseIds?.length
-      ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`
-      : `and(case_id.is.null,or(created_by.eq.${auth.id},assignee_id.eq.${auth.id}))`;
-    tasksQuery = tasksQuery.or(taskFilter);
+    tasksQuery = tasksQuery.or(taskAccessOrFilter(auth.id, accessibleCaseIds));
     const timeFilter = accessibleCaseIds?.length
       ? `case_id.in.(${accessibleCaseIds.join(",")}),and(case_id.is.null,profile_id.eq.${auth.id})`
       : `and(case_id.is.null,profile_id.eq.${auth.id})`;
