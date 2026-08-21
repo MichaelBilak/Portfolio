@@ -471,28 +471,46 @@ export async function POST(request: NextRequest) {
   const leadPromise = (async () => {
     try {
       const { isSupabaseConfigured, createAdminClient } = await import("@/lib/supabase/admin");
+      const { appendLeadEvent, notifyLeadManagers } = await import("@/lib/studio/leads");
       if (!isSupabaseConfigured()) return;
       const sb = createAdminClient();
-      const { error } = await sb.from("leads").insert({
-        status: "new",
-        priority: "normal",
-        full_name: p.fullName,
-        email: p.email,
-        business_name: p.businessName,
-        business_type: businessType,
-        site_url: siteUrl || null,
-        brief: p.brief,
-        source,
-        intent: isAudit ? "audit" : "contact",
-        locale,
-        selected_services: selectedServices,
-        selected_service_slugs: selectedServiceSlugs,
-        selected_addons: selectedAddons,
-        ip: ip || null,
-        user_agent: userAgent || null,
-        raw_payload: payload as unknown as Record<string, unknown>,
-      });
+      const { data: lead, error } = await sb
+        .from("leads")
+        .insert({
+          status: "new",
+          priority: "normal",
+          full_name: p.fullName,
+          email: p.email,
+          business_name: p.businessName,
+          business_type: businessType,
+          site_url: siteUrl || null,
+          brief: p.brief,
+          source,
+          intent: isAudit ? "audit" : "contact",
+          locale,
+          selected_services: selectedServices,
+          selected_service_slugs: selectedServiceSlugs,
+          selected_addons: selectedAddons,
+          ip: ip || null,
+          user_agent: userAgent || null,
+          raw_payload: payload as unknown as Record<string, unknown>,
+        })
+        .select("id")
+        .single();
       if (error) throw error;
+      if (!lead?.id) return;
+      await appendLeadEvent(sb, {
+        leadId: lead.id,
+        eventType: "created",
+        payload: { source, intent: isAudit ? "audit" : "contact", locale },
+      });
+      await notifyLeadManagers(sb, {
+        leadId: lead.id,
+        type: "lead_created",
+        title: isAudit ? "Новый запрос аудита" : "Новая заявка",
+        body: `${p.businessName} · ${p.fullName} · ${p.email}`,
+        payload: { source, intent: isAudit ? "audit" : "contact" },
+      });
     } catch (err) {
       console.error("[contact] Failed to persist lead:", err);
     }

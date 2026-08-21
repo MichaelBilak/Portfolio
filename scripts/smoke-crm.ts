@@ -15,6 +15,7 @@ const supabase = createClient(url, serviceRoleKey, {
 const marker = `[CRM smoke] ${new Date().toISOString()}`;
 const storagePath = `smoke/${randomUUID()}.txt`;
 let caseId: string | null = null;
+let leadId: string | null = null;
 
 function check(error: { message: string } | null, step: string) {
   if (error) throw new Error(`${step}: ${error.message}`);
@@ -39,6 +40,43 @@ try {
   check(stageError, "pipeline lookup");
   if (!stage) throw new Error("The intake pipeline stage is missing.");
 
+  const { data: createdLead, error: leadError } = await supabase
+    .from("leads")
+    .insert({
+      status: "new",
+      priority: "normal",
+      full_name: "Smoke Lead",
+      email: `smoke-${randomUUID().slice(0, 8)}@example.com`,
+      business_name: marker,
+      source: "smoke",
+      intent: "contact",
+      locale: "en",
+      assignee_id: profile.id,
+    })
+    .select("id")
+    .single();
+  check(leadError, "lead create");
+  if (!createdLead) throw new Error("Lead create did not return a record.");
+  leadId = createdLead.id;
+
+  const { error: leadEventError } = await supabase.from("lead_events").insert({
+    lead_id: leadId,
+    actor_id: profile.id,
+    event_type: "created",
+    payload: { smoke: true },
+  });
+  check(leadEventError, "lead event");
+
+  const { error: leadNotificationError } = await supabase.from("notifications").insert({
+    recipient_id: profile.id,
+    type: "lead_created",
+    title: "Smoke lead",
+    body: marker,
+    link: `/leads/${leadId}`,
+    payload: { leadId },
+  });
+  check(leadNotificationError, "lead notification");
+
   const { data: createdCase, error: caseError } = await supabase
     .from("cases")
     .insert({
@@ -47,6 +85,7 @@ try {
       owner_id: profile.id,
       created_by: profile.id,
       client_name: "Smoke Test",
+      lead_id: leadId,
     })
     .select("id")
     .single();
@@ -155,6 +194,10 @@ try {
   if (caseId) {
     const { error } = await supabase.from("cases").delete().eq("id", caseId);
     if (error) console.error(`Cleanup case failed: ${error.message}`);
+  }
+  if (leadId) {
+    const { error } = await supabase.from("leads").delete().eq("id", leadId);
+    if (error) console.error(`Cleanup lead failed: ${error.message}`);
   }
   const { error: storageCleanupError } = await supabase.storage
     .from("crm-private")

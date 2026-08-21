@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireStudioUser } from "@/lib/studio/auth";
 import { apiError, optionalString, optionalUuid, readJsonObject } from "@/lib/studio/api";
 import { recordStudioMutation } from "@/lib/studio/audit";
+import { appendLeadEvent } from "@/lib/studio/leads";
 
 export async function POST(
   request: NextRequest,
@@ -73,14 +74,26 @@ export async function POST(
       await sb.from("cases").delete().eq("id", createdCase.id);
       return NextResponse.json({ error: memberError.message }, { status: 400 });
     }
+    const now = new Date().toISOString();
     const { error: leadUpdateError } = await sb
       .from("leads")
-      .update({ status: "won", updated_at: new Date().toISOString() })
+      .update({
+        status: "won",
+        closed_at: now,
+        qualified_at: lead.qualified_at || now,
+        updated_at: now,
+      })
       .eq("id", id);
     if (leadUpdateError) {
       await sb.from("cases").delete().eq("id", createdCase.id);
       return NextResponse.json({ error: leadUpdateError.message }, { status: 400 });
     }
+    await appendLeadEvent(sb, {
+      leadId: id,
+      actorId: auth.id,
+      eventType: "converted",
+      payload: { caseId: createdCase.id, ownerId, stageId },
+    });
     await recordStudioMutation(sb, {
       actorId: auth.id,
       action: "lead.convert",

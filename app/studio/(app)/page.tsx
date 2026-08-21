@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, Inbox, TrendingUp, Trophy, UsersRound } from "lucide-react";
+import { ArrowRight, Clock3, Inbox, Trophy, UsersRound } from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
 import {
@@ -11,6 +11,7 @@ import {
   studioDateLocale,
 } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
+import { medianMs } from "@/lib/studio/leads";
 import {
   BreakdownChart,
   ContentHealth,
@@ -18,9 +19,13 @@ import {
 } from "@/components/studio/analytics-charts";
 
 type LeadRow = {
+  id: string;
   status: string;
   source: string | null;
   locale: string | null;
+  intent: string | null;
+  assignee_id: string | null;
+  first_responded_at: string | null;
   created_at: string;
 };
 
@@ -29,7 +34,7 @@ type TimelineDays = (typeof TIMELINES)[number];
 
 function countBy(
   rows: LeadRow[],
-  key: "status" | "source" | "locale",
+  key: "status" | "source" | "locale" | "intent",
   locale: ReturnType<typeof resolveStudioLocale>,
 ) {
   const counts = new Map<string, number>();
@@ -53,7 +58,7 @@ function countBy(
 export default async function StudioDashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ days?: string }>;
+  searchParams: Promise<{ days?: string; from?: string; to?: string }>;
 }) {
   const user = await getStudioSession();
   if (!user || !canManageLeads(user.role)) redirect(studioPath("/cases"));
@@ -62,10 +67,30 @@ export default async function StudioDashboardPage({
   const t = createStudioTranslator(locale);
 
   const params = await searchParams;
+  const customFrom = params.from ? new Date(params.from) : null;
+  const customTo = params.to ? new Date(params.to) : null;
+  const useCustom =
+    customFrom &&
+    !Number.isNaN(customFrom.getTime()) &&
+    customTo &&
+    !Number.isNaN(customTo.getTime());
+
   const requestedDays = Number(params.days);
   const days: TimelineDays = TIMELINES.includes(requestedDays as TimelineDays)
     ? (requestedDays as TimelineDays)
     : 14;
+
+  const periodEnd = useCustom ? customTo! : new Date();
+  const periodStart = useCustom
+    ? customFrom!
+    : new Date(Date.now() - days * 86_400_000);
+  const periodDays = Math.max(
+    1,
+    Math.round((periodEnd.getTime() - periodStart.getTime()) / 86_400_000),
+  );
+  const lookbackStart = new Date(
+    periodStart.getTime() - (periodEnd.getTime() - periodStart.getTime()),
+  );
 
   if (!isSupabaseConfigured()) {
     return (
@@ -77,10 +102,10 @@ export default async function StudioDashboardPage({
   }
 
   const sb = createAdminClient();
-  const since = new Date();
-  since.setDate(since.getDate() - days * 2);
   const [
     leadsResult,
+    casesResult,
+    stagesResult,
     projectCount,
     serviceCount,
     projectTranslations,
@@ -88,24 +113,34 @@ export default async function StudioDashboardPage({
   ] = await Promise.all([
     sb
       .from("leads")
-      .select("status, source, locale, created_at")
-      .gte("created_at", since.toISOString())
+      .select(
+        "id, status, source, locale, intent, assignee_id, first_responded_at, created_at",
+      )
+      .gte("created_at", lookbackStart.toISOString())
+      .lte("created_at", periodEnd.toISOString())
       .order("created_at", { ascending: true })
-      .limit(1000),
+      .limit(5000),
+    sb
+      .from("cases")
+      .select("id, lead_id, stage_id, estimated_value, currency, created_at")
+      .not("lead_id", "is", null)
+      .gte("created_at", periodStart.toISOString())
+      .lte("created_at", periodEnd.toISOString())
+      .limit(2000),
+    sb.from("pipeline_stages").select("id, is_won"),
     sb.from("projects").select("*", { count: "exact", head: true }),
     sb.from("services").select("*", { count: "exact", head: true }),
     sb.from("project_i18n").select("*", { count: "exact", head: true }),
     sb.from("service_i18n").select("*", { count: "exact", head: true }),
   ]);
   const allLeads = (leadsResult.data || []) as LeadRow[];
-  const periodBoundary = new Date();
-  periodBoundary.setDate(periodBoundary.getDate() - days);
-  const leads = allLeads.filter(
-    (lead) => new Date(lead.created_at) >= periodBoundary,
-  );
+  const leads = allLeads.filter((lead) => {
+    const created = new Date(lead.created_at);
+    return created >= periodStart && created <= periodEnd;
+  });
   const previousLeads = allLeads.filter((lead) => {
     const created = new Date(lead.created_at);
-    return created < periodBoundary && created >= since;
+    return created < periodStart && created >= lookbackStart;
   });
   const newCount = leads.filter((lead) => lead.status === "new").length;
   const activeCount = leads.filter((lead) => lead.status === "in_progress").length;
@@ -119,11 +154,36 @@ export default async function StudioDashboardPage({
       ? 100
       : 0;
 
+  const responseTimes = leads
+    .filter((lead) => lead.first_responded_at)
+    .map(
+      (lead) =>
+        new Date(lead.first_responded_at as string).getTime() -
+        new Date(lead.created_at).getTime(),
+    )
+    .filter((value) => value >= 0);
+  const medianResponseHours = medianMs(responseTimes);
+  const medianHoursLabel =
+    medianResponseHours == null
+      ? "—"
+      : t("dashboard.hoursShort", {
+          hours: Math.round((medianResponseHours / 3_600_000) * 10) / 10,
+        });
+
+  const wonStages = new Set(
+    (stagesResult.data || []).filter((stage) => stage.is_won).map((stage) => stage.id),
+  );
+  const convertedCases = casesResult.data || [];
+  const caseWonCount = convertedCases.filter((item) =>
+    item.stage_id ? wonStages.has(item.stage_id) : false,
+  ).length;
+
   const dateLocale = studioDateLocale(locale);
-  const trend = Array.from({ length: days }, (_, index) => {
-    const date = new Date();
+  const trendDays = Math.min(periodDays, 90);
+  const trend = Array.from({ length: trendDays }, (_, index) => {
+    const date = new Date(periodEnd);
     date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - (days - 1 - index));
+    date.setDate(date.getDate() - (trendDays - 1 - index));
     const next = new Date(date);
     next.setDate(next.getDate() + 1);
     return {
@@ -149,13 +209,20 @@ export default async function StudioDashboardPage({
         ? t("dashboard.healthPartial")
         : t("dashboard.healthLow");
 
+  const funnelItems = [
+    { label: t("dashboard.funnelCreated"), value: leads.length },
+    { label: t("dashboard.funnelQualified"), value: activeCount },
+    { label: t("dashboard.funnelWon"), value: wonCount },
+    { label: t("dashboard.funnelCases"), value: convertedCases.length },
+  ];
+
   return (
     <>
       <div className="st-page-header">
         <div>
           <p className="st-eyebrow">{t("dashboard.eyebrow")}</p>
           <h1 className="st-h1">{t("dashboard.title")}</h1>
-          <p className="st-sub">{t("dashboard.subtitle", { days })}</p>
+          <p className="st-sub">{t("dashboard.subtitle", { days: periodDays })}</p>
         </div>
         <Link className="st-btn primary" href={studioPath("/leads")}>
           <Inbox size={16} /> {t("dashboard.openLeads")}
@@ -187,14 +254,16 @@ export default async function StudioDashboardPage({
           <div>
             <small>{t("dashboard.won")}</small>
             <strong>{wonCount}</strong>
-            <em>{t("dashboard.conversion", { value: conversion })}</em>
+            <em>
+              {t("dashboard.conversion", { value: conversion })} · {caseWonCount} case won
+            </em>
           </div>
         </div>
         <div className="st-metric">
-          <span className="st-metric-icon"><TrendingUp size={18} /></span>
+          <span className="st-metric-icon"><Clock3 size={18} /></span>
           <div>
-            <small>{t("dashboard.siteContent")}</small>
-            <strong>{(projectCount.count || 0) + (serviceCount.count || 0)}</strong>
+            <small>{t("dashboard.medianResponse")}</small>
+            <strong>{medianHoursLabel}</strong>
             <em>
               {t("dashboard.contentCounts", {
                 projects: projectCount.count || 0,
@@ -210,7 +279,7 @@ export default async function StudioDashboardPage({
           <div className="st-panel-head">
             <div>
               <h2>{t("dashboard.trendTitle")}</h2>
-              <p>{t("dashboard.trendSub", { days })}</p>
+              <p>{t("dashboard.trendSub", { days: periodDays })}</p>
             </div>
             <div className="st-panel-actions">
               <span className="st-panel-total">{t("dashboard.leadsCount", { count: recentCount })}</span>
@@ -219,8 +288,8 @@ export default async function StudioDashboardPage({
                   <Link
                     key={value}
                     href={`${studioPath()}?days=${value}`}
-                    className={value === days ? "active" : undefined}
-                    aria-current={value === days ? "page" : undefined}
+                    className={!useCustom && value === days ? "active" : undefined}
+                    aria-current={!useCustom && value === days ? "page" : undefined}
                     scroll={false}
                   >
                     {t("dashboard.daysShort", { days: value })}
@@ -229,9 +298,32 @@ export default async function StudioDashboardPage({
               </nav>
             </div>
           </div>
+          <form className="st-row" style={{ marginBottom: "0.75rem", gap: "0.5rem" }}>
+            <label className="st-label">
+              {t("dashboard.customFrom")}
+              <input
+                className="st-input"
+                type="date"
+                name="from"
+                defaultValue={useCustom ? periodStart.toISOString().slice(0, 10) : ""}
+              />
+            </label>
+            <label className="st-label">
+              {t("dashboard.customTo")}
+              <input
+                className="st-input"
+                type="date"
+                name="to"
+                defaultValue={useCustom ? periodEnd.toISOString().slice(0, 10) : ""}
+              />
+            </label>
+            <button className="st-btn" type="submit" style={{ alignSelf: "end" }}>
+              {t("dashboard.applyPeriod")}
+            </button>
+          </form>
           <LeadsTrendChart
             points={trend}
-            ariaLabel={t("dashboard.chartAria", { days })}
+            ariaLabel={t("dashboard.chartAria", { days: periodDays })}
           />
         </section>
 
@@ -243,7 +335,7 @@ export default async function StudioDashboardPage({
             </div>
           </div>
           <BreakdownChart
-            items={countBy(leads, "status", locale)}
+            items={funnelItems}
             emptyLabel={t("dashboard.funnelEmpty")}
           />
         </section>
@@ -288,6 +380,19 @@ export default async function StudioDashboardPage({
           <BreakdownChart
             items={countBy(leads, "locale", locale)}
             emptyLabel={t("dashboard.audienceEmpty")}
+          />
+        </section>
+
+        <section className="st-panel">
+          <div className="st-panel-head">
+            <div>
+              <h2>{t("leads.intent")}</h2>
+              <p>{t("dashboard.sourcesSub")}</p>
+            </div>
+          </div>
+          <BreakdownChart
+            items={countBy(leads, "intent", locale)}
+            emptyLabel={t("dashboard.sourcesEmpty")}
           />
         </section>
       </div>

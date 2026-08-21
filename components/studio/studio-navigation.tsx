@@ -48,6 +48,7 @@ const ITEMS: NavItem[] = [
     icon: Inbox,
     roles: ["owner", "editor", "sales", "manager"],
   },
+  { href: studioPath("/inbox"), label: "nav.inbox", group: "crm", icon: Bell },
   { href: studioPath("/cases"), label: "nav.cases", group: "crm", icon: BriefcaseBusiness },
   { href: studioPath("/tasks"), label: "nav.tasks", group: "crm", icon: CheckSquare2 },
   { href: studioPath("/documents"), label: "nav.documents", group: "crm", icon: FileText },
@@ -58,7 +59,6 @@ const ITEMS: NavItem[] = [
     icon: Workflow,
     roles: ["owner", "editor", "manager"],
   },
-  { href: studioPath("/inbox"), label: "nav.inbox", group: "crm", icon: Bell },
   {
     href: studioPath("/reports"),
     label: "nav.reports",

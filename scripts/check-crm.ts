@@ -19,6 +19,7 @@ const tables = [
   "tasks",
   "task_checklist_items",
   "case_events",
+  "lead_events",
   "case_decisions",
   "case_questions",
   "case_requirements",
@@ -66,7 +67,7 @@ if (bucketError) {
 
 if (failed) {
   console.error(
-    "\nCRM checks failed. Apply supabase/migrations/003_crm_backend.sql and retry.",
+    "\nCRM checks failed. Apply supabase/migrations/003_crm_backend.sql and 006_leads_workspace.sql and retry.",
   );
   process.exit(1);
 }

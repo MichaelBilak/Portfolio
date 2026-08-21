@@ -86,6 +86,79 @@ export async function POST(request: NextRequest) {
     ? await sb.from("notifications").insert(notifications)
     : { error: null };
 
+  const staleNewBefore = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
+  const [
+    { data: slaLeads, error: slaLeadsError },
+    { data: existingLeadNotifs, error: existingLeadError },
+    { data: salesProfiles },
+  ] = await Promise.all([
+    sb
+      .from("leads")
+      .select(
+        "id, full_name, email, business_name, status, assignee_id, next_action_at, first_responded_at, created_at",
+      )
+      .in("status", ["new", "in_progress"])
+      .limit(500),
+    sb
+      .from("notifications")
+      .select("type,payload,recipient_id")
+      .in("type", ["lead.sla", "lead.stale"])
+      .is("read_at", null)
+      .limit(2000),
+    sb.from("profiles").select("id").in("role", ["owner", "editor", "manager", "sales"]),
+  ]);
+
+  const existingLeadKeys = new Set(
+    (existingLeadNotifs || []).flatMap((notification) => {
+      const leadId = object(notification.payload).leadId;
+      return typeof leadId === "string"
+        ? [`${notification.type}:${notification.recipient_id}:${leadId}`]
+        : [];
+    }),
+  );
+
+  const defaultRecipients = (salesProfiles || []).map((profile) => profile.id);
+  const leadSlaNotifications: Array<Record<string, unknown>> = [];
+  for (const lead of slaLeads || []) {
+    const overdueNext =
+      Boolean(lead.next_action_at) &&
+      new Date(lead.next_action_at as string).getTime() <= now.getTime();
+    const staleNew =
+      lead.status === "new" &&
+      !lead.first_responded_at &&
+      new Date(lead.created_at).getTime() <= new Date(staleNewBefore).getTime();
+    if (!overdueNext && !staleNew) continue;
+
+    const type = overdueNext ? "lead.sla" : "lead.stale";
+    const title = overdueNext ? "SLA по лиду просрочен" : "Лид без ответа";
+    const body =
+      lead.business_name || lead.full_name || lead.email || lead.id.slice(0, 8);
+    const recipients = lead.assignee_id ? [lead.assignee_id] : defaultRecipients;
+
+    for (const recipientId of recipients) {
+      const key = `${type}:${recipientId}:${lead.id}`;
+      if (existingLeadKeys.has(key)) continue;
+      existingLeadKeys.add(key);
+      leadSlaNotifications.push({
+        recipient_id: recipientId,
+        case_id: null,
+        type,
+        title,
+        body,
+        link: `/leads/${lead.id}`,
+        payload: {
+          leadId: lead.id,
+          nextActionAt: lead.next_action_at,
+          createdAt: lead.created_at,
+        },
+      });
+    }
+  }
+
+  const { error: leadSlaError } = leadSlaNotifications.length
+    ? await sb.from("notifications").insert(leadSlaNotifications)
+    : { error: null };
+
   const { data: rules, error: rulesError } = await sb
     .from("automation_rules")
     .select("id,trigger_type,conditions,actions")
@@ -174,8 +247,15 @@ export async function POST(request: NextRequest) {
     ok: true,
     scanned: dueTasks?.length || 0,
     notificationsCreated: notifications.length,
+    leadSlaScanned: slaLeads?.length || 0,
+    leadSlaNotificationsCreated: leadSlaNotifications.length,
     automationRulesRun: rules?.length || 0,
     automationNotificationsCreated: automationNotifications,
-    warning: notificationError?.message || null,
+    warning:
+      notificationError?.message ||
+      leadSlaError?.message ||
+      slaLeadsError?.message ||
+      existingLeadError?.message ||
+      null,
   });
 }

@@ -360,7 +360,7 @@ export function ModulePage({ kind, canCreate = true }: { kind: ModuleKind; canCr
       </tr></thead><tbody>{rows.map((row, index) => <tr key={text(row.id, String(index))}>
         {kind === "tasks" ? <><td><strong>{text(row.title)}</strong><small className="st-cell-sub">{text(row.description, "")}</small></td><td>{caseNames.get(text(row.case_id)) || text(row.case_id)}</td><td>{nested(row.profiles, "name")}</td><td><StatusBadge value={row.priority} kind="priority" /></td><td>{date(taskView === "deleted" ? row.deleted_at : row.due_at, locale, true)}</td><td>{canCreate && taskView !== "deleted" ? <select className="st-select st-status-select" key={`${text(row.id)}-${text(row.status)}`} defaultValue={text(row.status, "todo")} onChange={(event) => void updateTask(text(row.id), event.target.value)}><option value="todo">{labelStatus(locale, "todo")}</option><option value="in_progress">{labelStatus(locale, "in_progress")}</option><option value="blocked">{labelStatus(locale, "blocked")}</option><option value="done">{labelStatus(locale, "done")}</option><option value="cancelled">{labelStatus(locale, "cancelled")}</option></select> : <StatusBadge value={row.status} />}</td>{canCreate ? <td><div className="st-record-actions">{taskView === "deleted" ? <button type="button" className="st-icon-btn" onClick={() => void restoreTask(text(row.id))} aria-label={c.restoreTask} title={c.restoreTask}><RotateCcw size={15} /></button> : <><button type="button" className="st-icon-btn" onClick={() => setEditingTask(row)} aria-label={t("common.edit")} title={t("common.edit")}><Pencil size={15} /></button><button type="button" className="st-icon-btn danger" onClick={() => void deleteTask(text(row.id))} aria-label={c.deleteTask} title={c.deleteTask}><Trash2 size={15} /></button></>}</div></td> : null}</> :
          kind === "automations" ? <><td><strong>{text(row.name)}</strong></td><td>{text(row.trigger_type)}</td><td><code>{Array.isArray(row.actions) ? row.actions.length : 0}</code></td><td><button className="st-btn subtle" onClick={() => void toggleAutomation(text(row.id), row.enabled === false)}><StatusBadge value={row.enabled === false ? "disabled" : "active"} /></button></td></> :
-         <><td><strong>{text(row.title)}</strong></td><td>{text(row.type)}</td><td>{text(row.body ?? row.message ?? row.description, "")}</td><td>{date(row.created_at, locale, true)}</td><td><StatusBadge value={row.read_at ? "read" : "unread"} /></td></>}
+         <><td>{text(row.link) !== "—" ? <Link className="st-inbox-link" href={studioPath(text(row.link).startsWith("/") ? text(row.link) : `/${text(row.link)}`)}><strong>{text(row.title)}</strong></Link> : <strong>{text(row.title)}</strong>}</td><td>{text(row.type)}</td><td>{text(row.body ?? row.message ?? row.description, "")}</td><td>{date(row.created_at, locale, true)}</td><td><StatusBadge value={row.read_at ? "read" : "unread"} /></td></>}
       </tr>)}</tbody></table></div>
     </StateView>
     {canCreate && showCreate && <CreateModal kind={kind === "tasks" ? "task" : "automation"} endpoint={config.endpoint} cases={cases} onClose={() => setShowCreate(false)} onSaved={() => { setShowCreate(false); void api.reload(); }} />}
@@ -646,11 +646,21 @@ function Breakdown({ rows }: { rows: Array<{ label: string; value: number; detai
 export function ReportsPage() {
   const c = useCrmCopy();
   const { locale, t } = useStudioI18n();
-  const api = useApi("/api/studio/reports/summary?days=30");
+  const [days, setDays] = useState(30);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const query = from || to
+    ? `/api/studio/reports/summary?${new URLSearchParams({
+        ...(from ? { from: new Date(from).toISOString() } : {}),
+        ...(to ? { to: new Date(`${to}T23:59:59`).toISOString() } : {}),
+      }).toString()}`
+    : `/api/studio/reports/summary?days=${days}`;
+  const api = useApi(query);
   const object = api.data && typeof api.data === "object" ? api.data as Row : {};
   const tasks = object.tasks && typeof object.tasks === "object" ? object.tasks as Row : {};
   const finance = object.finance && typeof object.finance === "object" ? object.finance as Row : {};
   const time = object.time && typeof object.time === "object" ? object.time as Row : {};
+  const funnel = object.funnel && typeof object.funnel === "object" ? object.funnel as Row : {};
   const openTasks = Number(tasks.todo || 0) + Number(tasks.in_progress || 0);
   const taskRows = Object.entries(tasks)
     .filter(([label]) => label !== "overdue")
@@ -661,12 +671,49 @@ export function ReportsPage() {
   });
   const minutes = Number(time.minutes || 0);
   const billable = Number(time.billableMinutes || 0);
+  const funnelRows = [
+    { label: t("dashboard.funnelCreated"), value: Number(funnel.created || 0) },
+    { label: t("dashboard.funnelQualified"), value: Number(funnel.inProgress || 0) },
+    { label: t("dashboard.funnelWon"), value: Number(funnel.won || 0) },
+    { label: t("dashboard.funnelCases"), value: Number(funnel.convertedCases || 0) },
+  ];
   const metrics = [
     [c.totalPipeline, Number(object.openCases || 0), BriefcaseBusiness], [c.openTasks, openTasks, CheckSquare2],
     [c.overdue, Number(tasks.overdue || 0), AlertCircle], [c.loggedHours, (minutes / 60).toFixed(1), Clock3],
     [c.unread, Number(object.unreadNotifications || 0), Bell],
   ] as const;
-  return <><PageHeader eyebrow={c.eyebrow} title={c.reports} subtitle={c.reportsSub} action={<span className="st-badge">{t("crm.daysBadge", { days: 30 })}</span>} /><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}><div className="st-report-grid">{metrics.map(([label, value, Icon]) => <article className="st-report-card" key={label}><span className="st-metric-icon"><Icon size={18} /></span><span>{label}</span><strong>{value}</strong></article>)}</div><div className="st-dashboard-grid"><section className="st-panel"><h2>{c.taskBreakdown}</h2>{taskRows.length ? <Breakdown rows={taskRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel"><h2>{c.financeBreakdown}</h2>{financeRows.length ? <Breakdown rows={financeRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel st-panel-wide"><h2>{c.timeBreakdown}</h2><Breakdown rows={[{ label: c.billable, value: billable, detail: `${(billable / 60).toFixed(1)}h` }, { label: c.nonBillable, value: Math.max(0, minutes - billable), detail: `${(Math.max(0, minutes - billable) / 60).toFixed(1)}h` }]} /></section></div></StateView></>;
+  function exportFunnelCsv() {
+    const lines = [
+      "metric,value",
+      `created,${Number(funnel.created || 0)}`,
+      `in_progress,${Number(funnel.inProgress || 0)}`,
+      `won,${Number(funnel.won || 0)}`,
+      `lost,${Number(funnel.lost || 0)}`,
+      `converted_cases,${Number(funnel.convertedCases || 0)}`,
+      `case_won,${Number(funnel.caseWon || 0)}`,
+      `conversion_rate,${Number(funnel.conversionRate || 0)}`,
+      `median_first_response_ms,${Number(funnel.medianFirstResponseMs || 0)}`,
+    ];
+    const blob = new Blob([`${lines.join("\n")}\n`], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "funnel-report.csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+  return <><PageHeader eyebrow={c.eyebrow} title={c.reports} subtitle={c.reportsSub} action={<button type="button" className="st-btn" onClick={exportFunnelCsv}>{t("reports.exportCsv")}</button>} />
+    <div className="st-toolbar">
+      <label className="st-label"><span>{t("reports.periodLabel")}</span>
+        <select className="st-select" value={from || to ? "" : String(days)} onChange={(e) => { setFrom(""); setTo(""); setDays(Number(e.target.value) || 30); }}>
+          {[7, 14, 30, 90].map((value) => <option key={value} value={value}>{t("crm.daysBadge", { days: value })}</option>)}
+        </select>
+      </label>
+      <label className="st-label"><span>{t("dashboard.customFrom")}</span><input className="st-input" type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></label>
+      <label className="st-label"><span>{t("dashboard.customTo")}</span><input className="st-input" type="date" value={to} onChange={(e) => setTo(e.target.value)} /></label>
+      <button className="st-icon-btn" onClick={api.reload}><RefreshCw size={16} /></button>
+    </div>
+    <StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}><div className="st-report-grid">{metrics.map(([label, value, Icon]) => <article className="st-report-card" key={label}><span className="st-metric-icon"><Icon size={18} /></span><span>{label}</span><strong>{value}</strong></article>)}</div><div className="st-dashboard-grid"><section className="st-panel"><h2>{t("reports.funnelTitle")}</h2>{funnelRows.some((row) => row.value) ? <Breakdown rows={funnelRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel"><h2>{c.taskBreakdown}</h2>{taskRows.length ? <Breakdown rows={taskRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel"><h2>{c.financeBreakdown}</h2>{financeRows.length ? <Breakdown rows={financeRows} /> : <p className="st-empty-inline">{c.empty}</p>}</section><section className="st-panel st-panel-wide"><h2>{c.timeBreakdown}</h2><Breakdown rows={[{ label: c.billable, value: billable, detail: `${(billable / 60).toFixed(1)}h` }, { label: c.nonBillable, value: Math.max(0, minutes - billable), detail: `${(Math.max(0, minutes - billable) / 60).toFixed(1)}h` }]} /></section></div></StateView></>;
 }
 
 export function CrmSettingsPage() {
