@@ -47,7 +47,8 @@ export async function GET(request: NextRequest) {
       : `and(case_id.is.null,profile_id.eq.${auth.id})`;
     timeQuery = timeQuery.or(timeFilter);
   }
-  const [cases, tasks, finance, time, unread, leads, closedCases, stages] = await Promise.all([
+  const [cases, tasks, finance, time, unread, leads, closedCases, stages, unpaidOpen, careActive] =
+    await Promise.all([
     casesQuery,
     tasksQuery,
     financeQuery,
@@ -73,6 +74,17 @@ export async function GET(request: NextRequest) {
       .lte("created_at", to)
       .limit(5000),
     sb.from("pipeline_stages").select("id, key, is_won, is_closed"),
+    (() => {
+      let q = sb
+        .from("finance_milestones")
+        .select("status,amount,currency,case_id,due_date")
+        .in("status", ["planned", "invoiced", "overdue"]);
+      if (!hasGlobalCaseAccess(auth)) {
+        q = q.in("case_id", accessibleCaseIds?.length ? accessibleCaseIds : [noCaseId]);
+      }
+      return q.limit(2000);
+    })(),
+    sb.from("care_retainers").select("monthly_amount, currency, status").eq("status", "active"),
   ]);
   const error =
     cases.error ||
@@ -84,6 +96,10 @@ export async function GET(request: NextRequest) {
     closedCases.error ||
     stages.error;
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+
+  // Soft-fail until migration 007 (care) is applied.
+  const unpaidRows = unpaidOpen.error ? [] : unpaidOpen.data || [];
+  const careRows = careActive.error ? [] : careActive.data || [];
 
   const taskCounts: Record<string, number> = {};
   for (const task of tasks.data || []) taskCounts[task.status] = (taskCounts[task.status] || 0) + 1;
@@ -153,6 +169,29 @@ export async function GET(request: NextRequest) {
     if (lead.status === "won") bucket.won += 1;
   }
 
+  const unpaidByCurrency: Record<string, number> = {};
+  let unpaidCount = 0;
+  let overdueFinanceCount = 0;
+  const today = new Date().toISOString().slice(0, 10);
+  for (const item of unpaidRows) {
+    unpaidCount += 1;
+    const currency = item.currency || "EUR";
+    unpaidByCurrency[currency] = (unpaidByCurrency[currency] || 0) + Number(item.amount || 0);
+    if (
+      item.status === "overdue" ||
+      (item.due_date && String(item.due_date) < today && item.status !== "paid")
+    ) {
+      overdueFinanceCount += 1;
+    }
+  }
+
+  const careMrrByCurrency: Record<string, number> = {};
+  for (const item of careRows) {
+    const currency = item.currency || "EUR";
+    careMrrByCurrency[currency] =
+      (careMrrByCurrency[currency] || 0) + Number(item.monthly_amount || 0);
+  }
+
   return NextResponse.json({
     periodDays,
     from,
@@ -160,6 +199,8 @@ export async function GET(request: NextRequest) {
     openCases: cases.data?.length || 0,
     tasks: taskCounts,
     finance: financeByCurrency,
+    unpaid: { count: unpaidCount, overdueCount: overdueFinanceCount, byCurrency: unpaidByCurrency },
+    care: { activeCount: careRows.length, mrrByCurrency: careMrrByCurrency },
     time: { minutes, billableMinutes },
     unreadNotifications: unread.count || 0,
     funnel: {

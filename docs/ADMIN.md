@@ -12,7 +12,7 @@ Open `https://your-domain/ops-k7m2xq9n4w`. Direct `/studio` returns **404** when
 
 1. Supabase project + run [`supabase/SETUP.sql`](../supabase/SETUP.sql)
 2. Storage bucket **`media`** (public)
-3. Apply CRM migrations after the base schema (`003`–`006`) and create **`crm-private`**
+3. Apply CRM migrations after the base schema (`003`–`007`) and create **`crm-private`**
    as a private bucket
 4. `.env.local`: Supabase keys + `NEXT_PUBLIC_STUDIO_PATH`
 5. Auth user → `update profiles set role = 'owner' where id = '…'`

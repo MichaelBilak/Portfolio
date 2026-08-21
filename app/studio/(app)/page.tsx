@@ -1,96 +1,41 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, Clock3, Inbox, Trophy, UsersRound } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowRight,
+  BriefcaseBusiness,
+  Clock3,
+  HeartHandshake,
+  Inbox,
+  WalletCards,
+} from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
-import { canManageLeads, getStudioSession } from "@/lib/studio/auth";
+import {
+  canManageLeads,
+  getStudioSession,
+  hasStudioCapability,
+} from "@/lib/studio/auth";
 import {
   createStudioTranslator,
-  labelLang,
-  labelStatus,
+  formatStudioDate,
   resolveStudioLocale,
-  studioDateLocale,
 } from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
-import { medianMs } from "@/lib/studio/leads";
-import {
-  BreakdownChart,
-  ContentHealth,
-  LeadsTrendChart,
-} from "@/components/studio/analytics-charts";
+import { ContentHealth } from "@/components/studio/analytics-charts";
 
-type LeadRow = {
-  id: string;
-  status: string;
-  source: string | null;
-  locale: string | null;
-  intent: string | null;
-  assignee_id: string | null;
-  first_responded_at: string | null;
-  created_at: string;
-};
-
-const TIMELINES = [7, 14, 30, 90] as const;
-type TimelineDays = (typeof TIMELINES)[number];
-
-function countBy(
-  rows: LeadRow[],
-  key: "status" | "source" | "locale" | "intent",
-  locale: ReturnType<typeof resolveStudioLocale>,
-) {
-  const counts = new Map<string, number>();
-  for (const row of rows) {
-    const value = row[key] || "unknown";
-    counts.set(value, (counts.get(value) || 0) + 1);
-  }
-  return [...counts.entries()]
-    .map(([label, value]) => ({
-      label:
-        key === "status"
-          ? labelStatus(locale, label)
-          : key === "locale"
-            ? labelLang(locale, label)
-            : label.replace(/_/g, " "),
-      value,
-    }))
-    .sort((a, b) => b.value - a.value);
-}
-
-export default async function StudioDashboardPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ days?: string; from?: string; to?: string }>;
-}) {
+export default async function StudioDashboardPage() {
   const user = await getStudioSession();
-  if (!user || !canManageLeads(user.role)) redirect(studioPath("/cases"));
+  if (!user) redirect(studioPath("/login"));
+  if (
+    !canManageLeads(user.role) &&
+    !hasStudioCapability(user.role, "cases.read") &&
+    !hasStudioCapability(user.role, "reports.read")
+  ) {
+    redirect(studioPath("/cases"));
+  }
 
   const locale = resolveStudioLocale(user.adminLocale);
   const t = createStudioTranslator(locale);
-
-  const params = await searchParams;
-  const customFrom = params.from ? new Date(params.from) : null;
-  const customTo = params.to ? new Date(params.to) : null;
-  const useCustom =
-    customFrom &&
-    !Number.isNaN(customFrom.getTime()) &&
-    customTo &&
-    !Number.isNaN(customTo.getTime());
-
-  const requestedDays = Number(params.days);
-  const days: TimelineDays = TIMELINES.includes(requestedDays as TimelineDays)
-    ? (requestedDays as TimelineDays)
-    : 14;
-
-  const periodEnd = useCustom ? customTo! : new Date();
-  const periodStart = useCustom
-    ? customFrom!
-    : new Date(Date.now() - days * 86_400_000);
-  const periodDays = Math.max(
-    1,
-    Math.round((periodEnd.getTime() - periodStart.getTime()) / 86_400_000),
-  );
-  const lookbackStart = new Date(
-    periodStart.getTime() - (periodEnd.getTime() - periodStart.getTime()),
-  );
 
   if (!isSupabaseConfigured()) {
     return (
@@ -102,98 +47,142 @@ export default async function StudioDashboardPage({
   }
 
   const sb = createAdminClient();
+  const nowIso = new Date().toISOString();
+  const staleLeadBefore = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+
   const [
-    leadsResult,
-    casesResult,
-    stagesResult,
+    newLeads,
+    slaLeads,
+    overdueTasks,
+    unpaidFinance,
+    openCases,
+    careActiveResult,
+    careDueResult,
+    periodLeads,
+    wonLeads,
+    completedCases,
     projectCount,
     serviceCount,
     projectTranslations,
     serviceTranslations,
+    stages,
   ] = await Promise.all([
     sb
       .from("leads")
-      .select(
-        "id, status, source, locale, intent, assignee_id, first_responded_at, created_at",
+      .select("id", { count: "exact", head: true })
+      .eq("status", "new"),
+    sb
+      .from("leads")
+      .select("id, full_name, business_name, email, next_action_at, created_at, status")
+      .in("status", ["new", "in_progress"])
+      .or(
+        `next_action_at.lte.${nowIso},and(status.eq.new,first_responded_at.is.null,created_at.lte.${staleLeadBefore})`,
       )
-      .gte("created_at", lookbackStart.toISOString())
-      .lte("created_at", periodEnd.toISOString())
-      .order("created_at", { ascending: true })
-      .limit(5000),
+      .order("created_at", { ascending: false })
+      .limit(8),
+    sb
+      .from("tasks")
+      .select("id, title, due_at, case_id, status")
+      .in("status", ["todo", "in_progress", "blocked"])
+      .is("deleted_at", null)
+      .lt("due_at", nowIso)
+      .order("due_at", { ascending: true })
+      .limit(8),
+    sb
+      .from("finance_milestones")
+      .select("id, title, amount, currency, status, due_date, case_id")
+      .in("status", ["planned", "invoiced", "overdue"])
+      .order("due_date", { ascending: true })
+      .limit(12),
     sb
       .from("cases")
-      .select("id, lead_id, stage_id, estimated_value, currency, created_at")
-      .not("lead_id", "is", null)
-      .gte("created_at", periodStart.toISOString())
-      .lte("created_at", periodEnd.toISOString())
-      .limit(2000),
-    sb.from("pipeline_stages").select("id, is_won"),
+      .select("id, stage_id", { count: "exact" })
+      .is("archived_at", null),
+    sb
+      .from("care_retainers")
+      .select("id, monthly_amount, currency", { count: "exact" })
+      .eq("status", "active"),
+    sb
+      .from("care_retainers")
+      .select("id, company_name, client_name, next_review_at, monthly_amount, currency")
+      .eq("status", "active")
+      .lte("next_review_at", nowIso)
+      .order("next_review_at", { ascending: true })
+      .limit(6),
+    sb
+      .from("leads")
+      .select("id, status", { count: "exact" })
+      .gte("created_at", new Date(Date.now() - 30 * 86_400_000).toISOString()),
+    sb
+      .from("leads")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "won")
+      .gte("created_at", new Date(Date.now() - 30 * 86_400_000).toISOString()),
+    sb
+      .from("cases")
+      .select("id, stage_id")
+      .gte("updated_at", new Date(Date.now() - 30 * 86_400_000).toISOString())
+      .limit(500),
     sb.from("projects").select("*", { count: "exact", head: true }),
     sb.from("services").select("*", { count: "exact", head: true }),
     sb.from("project_i18n").select("*", { count: "exact", head: true }),
     sb.from("service_i18n").select("*", { count: "exact", head: true }),
+    sb.from("pipeline_stages").select("id, key, is_won, is_closed"),
   ]);
-  const allLeads = (leadsResult.data || []) as LeadRow[];
-  const leads = allLeads.filter((lead) => {
-    const created = new Date(lead.created_at);
-    return created >= periodStart && created <= periodEnd;
-  });
-  const previousLeads = allLeads.filter((lead) => {
-    const created = new Date(lead.created_at);
-    return created < periodStart && created >= lookbackStart;
-  });
-  const newCount = leads.filter((lead) => lead.status === "new").length;
-  const activeCount = leads.filter((lead) => lead.status === "in_progress").length;
-  const wonCount = leads.filter((lead) => lead.status === "won").length;
-  const conversion = leads.length ? Math.round((wonCount / leads.length) * 100) : 0;
-  const recentCount = leads.length;
-  const priorCount = previousLeads.length;
-  const growth = priorCount
-    ? Math.round(((recentCount - priorCount) / priorCount) * 100)
-    : recentCount
-      ? 100
-      : 0;
 
-  const responseTimes = leads
-    .filter((lead) => lead.first_responded_at)
-    .map(
-      (lead) =>
-        new Date(lead.first_responded_at as string).getTime() -
-        new Date(lead.created_at).getTime(),
-    )
-    .filter((value) => value >= 0);
-  const medianResponseHours = medianMs(responseTimes);
-  const medianHoursLabel =
-    medianResponseHours == null
-      ? "—"
-      : t("dashboard.hoursShort", {
-          hours: Math.round((medianResponseHours / 3_600_000) * 10) / 10,
-        });
+  // Soft-fail Care until migration 007 is applied.
+  const activeCare = careActiveResult.error
+    ? { data: [] as Array<{ monthly_amount: number; currency: string }>, count: 0 }
+    : careActiveResult;
+  const careDue = careDueResult.error
+    ? {
+        data: [] as Array<{
+          id: string;
+          company_name: string | null;
+          client_name: string | null;
+          next_review_at: string | null;
+        }>,
+      }
+    : careDueResult;
 
-  const wonStages = new Set(
-    (stagesResult.data || []).filter((stage) => stage.is_won).map((stage) => stage.id),
+  const stageById = new Map((stages.data || []).map((s) => [s.id, s]));
+  const openStageIds = new Set(
+    (stages.data || []).filter((s) => !s.is_closed).map((s) => s.id),
   );
-  const convertedCases = casesResult.data || [];
-  const caseWonCount = convertedCases.filter((item) =>
-    item.stage_id ? wonStages.has(item.stage_id) : false,
+  const activeDelivery = (openCases.data || []).filter(
+    (row) => row.stage_id && openStageIds.has(row.stage_id),
   ).length;
+  const completedCount = (completedCases.data || []).filter((row) => {
+    const stage = row.stage_id ? stageById.get(row.stage_id) : null;
+    return Boolean(stage?.key === "completed" || stage?.is_won);
+  }).length;
 
-  const dateLocale = studioDateLocale(locale);
-  const trendDays = Math.min(periodDays, 90);
-  const trend = Array.from({ length: trendDays }, (_, index) => {
-    const date = new Date(periodEnd);
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() - (trendDays - 1 - index));
-    const next = new Date(date);
-    next.setDate(next.getDate() + 1);
-    return {
-      label: date.toLocaleDateString(dateLocale, { day: "numeric", month: "short" }),
-      value: leads.filter((lead) => {
-        const created = new Date(lead.created_at);
-        return created >= date && created < next;
-      }).length,
-    };
-  });
+  const unpaidRows = unpaidFinance.data || [];
+  const unpaidTotalByCurrency: Record<string, number> = {};
+  for (const row of unpaidRows) {
+    const currency = row.currency || "EUR";
+    unpaidTotalByCurrency[currency] =
+      (unpaidTotalByCurrency[currency] || 0) + Number(row.amount || 0);
+  }
+  const unpaidTotalLabel =
+    Object.entries(unpaidTotalByCurrency)
+      .map(([currency, amount]) => `${amount.toLocaleString()} ${currency}`)
+      .join(" · ") || "0";
+
+  const careMrrByCurrency: Record<string, number> = {};
+  for (const row of activeCare.data || []) {
+    const currency = row.currency || "EUR";
+    careMrrByCurrency[currency] =
+      (careMrrByCurrency[currency] || 0) + Number(row.monthly_amount || 0);
+  }
+  const careMrrLabel =
+    Object.entries(careMrrByCurrency)
+      .map(([currency, amount]) => `${amount.toLocaleString()} ${currency}`)
+      .join(" · ") || "0";
+
+  const leadsCreated = periodLeads.count || 0;
+  const leadsWon = wonLeads.count || 0;
+  const conversion = leadsCreated ? Math.round((leadsWon / leadsCreated) * 100) : 0;
 
   const expectedTranslations =
     ((projectCount.count || 0) + (serviceCount.count || 0)) * 6;
@@ -202,73 +191,81 @@ export default async function StudioDashboardPage({
   const contentHealth = expectedTranslations
     ? (actualTranslations / expectedTranslations) * 100
     : 100;
-  const healthHint =
-    contentHealth >= 90
-      ? t("dashboard.healthReady")
-      : contentHealth >= 60
-        ? t("dashboard.healthPartial")
-        : t("dashboard.healthLow");
 
-  const funnelItems = [
-    { label: t("dashboard.funnelCreated"), value: leads.length },
-    { label: t("dashboard.funnelQualified"), value: activeCount },
-    { label: t("dashboard.funnelWon"), value: wonCount },
-    { label: t("dashboard.funnelCases"), value: convertedCases.length },
-  ];
+  const attentionLeads = slaLeads.data || [];
+  const attentionTasks = overdueTasks.data || [];
+  const attentionCare = careDue.data || [];
 
   return (
-    <>
+    <div className="st-pulse">
       <div className="st-page-header">
         <div>
           <p className="st-eyebrow">{t("dashboard.eyebrow")}</p>
           <h1 className="st-h1">{t("dashboard.title")}</h1>
-          <p className="st-sub">{t("dashboard.subtitle", { days: periodDays })}</p>
+          <p className="st-sub">{t("dashboard.pulseSub")}</p>
         </div>
-        <Link className="st-btn primary" href={studioPath("/leads")}>
-          <Inbox size={16} /> {t("dashboard.openLeads")}
-        </Link>
+        <div className="st-row" style={{ gap: "0.5rem", flexWrap: "wrap" }}>
+          <Link className="st-btn primary" href={studioPath("/inbox")}>
+            <Inbox size={16} /> {t("nav.inbox")}
+          </Link>
+          <Link className="st-btn" href={studioPath("/leads")}>
+            {t("dashboard.openLeads")}
+          </Link>
+        </div>
       </div>
 
       <div className="st-metrics">
         <div className="st-metric">
-          <span className="st-metric-icon"><UsersRound size={18} /></span>
-          <div>
-            <small>{t("dashboard.totalLeads")}</small>
-            <strong>{leads.length}</strong>
-            <em className={growth >= 0 ? "positive" : "negative"}>
-              {growth >= 0 ? "+" : ""}
-              {t("dashboard.vsPrevious", { value: growth })}
-            </em>
-          </div>
-        </div>
-        <div className="st-metric">
-          <span className="st-metric-icon"><Inbox size={18} /></span>
+          <span className="st-metric-icon">
+            <AlertCircle size={18} />
+          </span>
           <div>
             <small>{t("dashboard.needsAttention")}</small>
-            <strong>{newCount}</strong>
-            <em>{t("dashboard.inProgressNow", { count: activeCount })}</em>
-          </div>
-        </div>
-        <div className="st-metric">
-          <span className="st-metric-icon"><Trophy size={18} /></span>
-          <div>
-            <small>{t("dashboard.won")}</small>
-            <strong>{wonCount}</strong>
+            <strong>
+              {(newLeads.count || 0) + attentionLeads.length + attentionTasks.length}
+            </strong>
             <em>
-              {t("dashboard.conversion", { value: conversion })} · {caseWonCount} case won
+              {t("dashboard.attentionDetail", {
+                leads: newLeads.count || 0,
+                tasks: attentionTasks.length,
+              })}
             </em>
           </div>
         </div>
         <div className="st-metric">
-          <span className="st-metric-icon"><Clock3 size={18} /></span>
+          <span className="st-metric-icon">
+            <WalletCards size={18} />
+          </span>
           <div>
-            <small>{t("dashboard.medianResponse")}</small>
-            <strong>{medianHoursLabel}</strong>
+            <small>{t("dashboard.unpaidMoney")}</small>
+            <strong>{unpaidRows.length}</strong>
+            <em>{unpaidTotalLabel}</em>
+          </div>
+        </div>
+        <div className="st-metric">
+          <span className="st-metric-icon">
+            <BriefcaseBusiness size={18} />
+          </span>
+          <div>
+            <small>{t("dashboard.activeDelivery")}</small>
+            <strong>{activeDelivery}</strong>
             <em>
-              {t("dashboard.contentCounts", {
-                projects: projectCount.count || 0,
-                services: serviceCount.count || 0,
-              })}
+              {t("dashboard.careActive", { count: activeCare.count || 0 })} · MRR {careMrrLabel}
+            </em>
+          </div>
+        </div>
+        <div className="st-metric">
+          <span className="st-metric-icon">
+            <Clock3 size={18} />
+          </span>
+          <div>
+            <small>{t("dashboard.funnel30")}</small>
+            <strong>
+              {leadsCreated}→{leadsWon}
+            </strong>
+            <em>
+              {t("dashboard.conversion", { value: conversion })} · {completedCount}{" "}
+              {t("dashboard.casesCompleted")}
             </em>
           </div>
         </div>
@@ -278,79 +275,110 @@ export default async function StudioDashboardPage({
         <section className="st-panel st-panel-wide">
           <div className="st-panel-head">
             <div>
-              <h2>{t("dashboard.trendTitle")}</h2>
-              <p>{t("dashboard.trendSub", { days: periodDays })}</p>
-            </div>
-            <div className="st-panel-actions">
-              <span className="st-panel-total">{t("dashboard.leadsCount", { count: recentCount })}</span>
-              <nav className="st-timeline" aria-label={t("dashboard.timelineAria")}>
-                {TIMELINES.map((value) => (
-                  <Link
-                    key={value}
-                    href={`${studioPath()}?days=${value}`}
-                    className={!useCustom && value === days ? "active" : undefined}
-                    aria-current={!useCustom && value === days ? "page" : undefined}
-                    scroll={false}
-                  >
-                    {t("dashboard.daysShort", { days: value })}
-                  </Link>
-                ))}
-              </nav>
+              <h2>{t("dashboard.attentionTitle")}</h2>
+              <p>{t("dashboard.attentionSub")}</p>
             </div>
           </div>
-          <form className="st-row" style={{ marginBottom: "0.75rem", gap: "0.5rem" }}>
-            <label className="st-label">
-              {t("dashboard.customFrom")}
-              <input
-                className="st-input"
-                type="date"
-                name="from"
-                defaultValue={useCustom ? periodStart.toISOString().slice(0, 10) : ""}
-              />
-            </label>
-            <label className="st-label">
-              {t("dashboard.customTo")}
-              <input
-                className="st-input"
-                type="date"
-                name="to"
-                defaultValue={useCustom ? periodEnd.toISOString().slice(0, 10) : ""}
-              />
-            </label>
-            <button className="st-btn" type="submit" style={{ alignSelf: "end" }}>
-              {t("dashboard.applyPeriod")}
-            </button>
-          </form>
-          <LeadsTrendChart
-            points={trend}
-            ariaLabel={t("dashboard.chartAria", { days: periodDays })}
-          />
-        </section>
-
-        <section className="st-panel">
-          <div className="st-panel-head">
+          <div className="st-pulse-lists">
             <div>
-              <h2>{t("dashboard.funnelTitle")}</h2>
-              <p>{t("dashboard.funnelSub")}</p>
+              <h3>
+                <Inbox size={14} /> {t("nav.leads")}
+              </h3>
+              {!attentionLeads.length ? (
+                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
+              ) : (
+                <ul className="st-pulse-list">
+                  {attentionLeads.map((lead) => (
+                    <li key={lead.id}>
+                      <Link href={studioPath(`/leads/${lead.id}`)}>
+                        {lead.business_name || lead.full_name || lead.email || lead.id.slice(0, 8)}
+                      </Link>
+                      <span>
+                        {lead.next_action_at
+                          ? formatStudioDate(lead.next_action_at, locale, true)
+                          : t("leads.slaBreached")}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </div>
-          <BreakdownChart
-            items={funnelItems}
-            emptyLabel={t("dashboard.funnelEmpty")}
-          />
-        </section>
-
-        <section className="st-panel">
-          <div className="st-panel-head">
             <div>
-              <h2>{t("dashboard.sourcesTitle")}</h2>
-              <p>{t("dashboard.sourcesSub")}</p>
+              <h3>
+                <AlertCircle size={14} /> {t("nav.tasks")}
+              </h3>
+              {!attentionTasks.length ? (
+                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
+              ) : (
+                <ul className="st-pulse-list">
+                  {attentionTasks.map((task) => (
+                    <li key={task.id}>
+                      <Link
+                        href={
+                          task.case_id
+                            ? studioPath(`/cases/${task.case_id}`)
+                            : studioPath("/tasks")
+                        }
+                      >
+                        {task.title}
+                      </Link>
+                      <span>
+                        {task.due_at ? formatStudioDate(task.due_at, locale, true) : "—"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              <h3>
+                <WalletCards size={14} /> {t("dashboard.unpaidMoney")}
+              </h3>
+              {!unpaidRows.length ? (
+                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
+              ) : (
+                <ul className="st-pulse-list">
+                  {unpaidRows.slice(0, 6).map((row) => (
+                    <li key={row.id}>
+                      <Link
+                        href={
+                          row.case_id
+                            ? studioPath(`/cases/${row.case_id}`)
+                            : studioPath("/reports")
+                        }
+                      >
+                        {row.title} · {Number(row.amount || 0).toLocaleString()} {row.currency}
+                      </Link>
+                      <span>{row.status}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              <h3>
+                <HeartHandshake size={14} /> {t("nav.care")}
+              </h3>
+              {!attentionCare.length ? (
+                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
+              ) : (
+                <ul className="st-pulse-list">
+                  {attentionCare.map((row) => (
+                    <li key={row.id}>
+                      <Link href={studioPath("/care")}>
+                        {row.company_name || row.client_name || row.id.slice(0, 8)}
+                      </Link>
+                      <span>
+                        {row.next_review_at
+                          ? formatStudioDate(row.next_review_at, locale, true)
+                          : "—"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
-          <BreakdownChart
-            items={countBy(leads, "source", locale)}
-            emptyLabel={t("dashboard.sourcesEmpty")}
-          />
         </section>
 
         <section className="st-panel">
@@ -363,9 +391,15 @@ export default async function StudioDashboardPage({
           <ContentHealth
             value={contentHealth}
             label={t("dashboard.translations")}
-            hint={healthHint}
+            hint={
+              contentHealth >= 90
+                ? t("dashboard.healthReady")
+                : contentHealth >= 60
+                  ? t("dashboard.healthPartial")
+                  : t("dashboard.healthLow")
+            }
           />
-          <Link href={studioPath("/catalog")} className="st-panel-link">
+          <Link href={studioPath("/projects")} className="st-panel-link">
             {t("dashboard.checkContent")} <ArrowRight size={15} />
           </Link>
         </section>
@@ -373,29 +407,33 @@ export default async function StudioDashboardPage({
         <section className="st-panel">
           <div className="st-panel-head">
             <div>
-              <h2>{t("dashboard.audienceTitle")}</h2>
-              <p>{t("dashboard.audienceSub")}</p>
+              <h2>{t("dashboard.loopTitle")}</h2>
+              <p>{t("dashboard.loopSub")}</p>
             </div>
           </div>
-          <BreakdownChart
-            items={countBy(leads, "locale", locale)}
-            emptyLabel={t("dashboard.audienceEmpty")}
-          />
-        </section>
-
-        <section className="st-panel">
-          <div className="st-panel-head">
-            <div>
-              <h2>{t("leads.intent")}</h2>
-              <p>{t("dashboard.sourcesSub")}</p>
-            </div>
-          </div>
-          <BreakdownChart
-            items={countBy(leads, "intent", locale)}
-            emptyLabel={t("dashboard.sourcesEmpty")}
-          />
+          <ol className="st-pulse-loop">
+            <li>
+              <Link href={studioPath("/leads")}>{t("nav.leads")}</Link>
+              <span>{newLeads.count || 0} new</span>
+            </li>
+            <li>
+              <Link href={studioPath("/cases")}>{t("nav.cases")}</Link>
+              <span>{activeDelivery} active</span>
+            </li>
+            <li>
+              <Link href={studioPath("/care")}>{t("nav.care")}</Link>
+              <span>{activeCare.count || 0} active</span>
+            </li>
+            <li>
+              <Link href={studioPath("/projects")}>{t("nav.portfolio")}</Link>
+              <span>{projectCount.count || 0}</span>
+            </li>
+          </ol>
+          <Link href={studioPath("/reports")} className="st-panel-link">
+            {t("nav.reports")} <ArrowRight size={15} />
+          </Link>
         </section>
       </div>
-    </>
+    </div>
   );
 }

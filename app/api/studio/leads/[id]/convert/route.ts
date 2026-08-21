@@ -41,6 +41,18 @@ export async function POST(
       stageId = stage?.id;
     }
     const ownerId = optionalUuid(body.ownerId, "ownerId") ?? auth.id;
+    const currency = optionalString(body.currency, "currency", 8) || "EUR";
+    const estimatedRaw = body.estimatedValue ?? body.estimated_value;
+    const estimatedValue =
+      estimatedRaw === null || estimatedRaw === undefined || estimatedRaw === ""
+        ? null
+        : Number(estimatedRaw);
+    if (estimatedValue === null || !Number.isFinite(estimatedValue) || estimatedValue < 0) {
+      return NextResponse.json(
+        { error: "estimatedValue is required and must be a non-negative number" },
+        { status: 400 },
+      );
+    }
     const { data: createdCase, error } = await sb
       .from("cases")
       .insert({
@@ -56,6 +68,8 @@ export async function POST(
         client_name: lead.full_name,
         client_email: lead.email,
         company_name: lead.business_name,
+        currency,
+        estimated_value: estimatedValue,
         metadata: { source: lead.source, selectedServices: lead.selected_services },
         created_by: auth.id,
       })

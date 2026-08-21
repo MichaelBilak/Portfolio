@@ -31,6 +31,7 @@ const tables = [
   "notifications",
   "finance_milestones",
   "time_entries",
+  "care_retainers",
 ] as const;
 
 let failed = false;
@@ -67,7 +68,7 @@ if (bucketError) {
 
 if (failed) {
   console.error(
-    "\nCRM checks failed. Apply supabase/migrations/003_crm_backend.sql and 006_leads_workspace.sql and retry.",
+    "\nCRM checks failed. Apply supabase/migrations/003_crm_backend.sql, 006_leads_workspace.sql, and 007_care_and_proof.sql and retry.",
   );
   process.exit(1);
 }

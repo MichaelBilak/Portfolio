@@ -40,6 +40,8 @@ export function LeadActions({
   const [localLostReason, setLocalLostReason] = useState(lostReason || "");
   const [stageId, setStageId] = useState(stages[0]?.id || "");
   const [ownerId, setOwnerId] = useState(currentUserId);
+  const [estimatedValue, setEstimatedValue] = useState("");
+  const [currency, setCurrency] = useState("EUR");
 
   function showMsg(text: string, tone: "ok" | "error" = "ok") {
     setMsgTone(tone);
@@ -69,6 +71,11 @@ export function LeadActions({
 
   async function convertToCase() {
     showMsg("");
+    const value = Number(estimatedValue);
+    if (!Number.isFinite(value) || value < 0 || estimatedValue.trim() === "") {
+      showMsg(t("leads.estimateRequired"), "error");
+      return;
+    }
     setConverting(true);
     try {
       const res = await fetch(`/api/studio/leads/${leadId}/convert`, {
@@ -77,6 +84,8 @@ export function LeadActions({
         body: JSON.stringify({
           stageId: stageId || undefined,
           ownerId: ownerId || undefined,
+          estimatedValue: value,
+          currency: currency || "EUR",
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -256,6 +265,26 @@ export function LeadActions({
                   </option>
                 ))}
               </select>
+            </label>
+            <label className="st-label">
+              {t("leads.dealValue")}
+              <input
+                className="st-input"
+                type="number"
+                min={0}
+                step="0.01"
+                value={estimatedValue}
+                onChange={(e) => setEstimatedValue(e.target.value)}
+                required
+              />
+            </label>
+            <label className="st-label">
+              {t("crm.currency")}
+              <input
+                className="st-input"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+              />
             </label>
             <button
               type="button"

@@ -471,20 +471,67 @@ export function CaseWorkspace({
 
 function OverviewTab({ detail, stages, endpoint, onSaved, canEdit }: { detail: Row; stages: Row[]; endpoint: string; onSaved: () => void; canEdit: boolean }) {
   const c = useCrmCopy();
-  const { locale } = useStudioI18n();
+  const { locale, t } = useStudioI18n();
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [careMsg, setCareMsg] = useState("");
+  const stageKey = nested(detail.pipeline_stages, "key", "");
+  const isCompleted = stageKey === "completed";
+  const metadata = detail.metadata && typeof detail.metadata === "object" && !Array.isArray(detail.metadata) ? detail.metadata as Row : {};
   async function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setSaving(true); setMessage("");
     const values = Object.fromEntries(new FormData(event.currentTarget).entries());
     try {
-      await requestJson(endpoint, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: values.title, description: values.description, stageId: values.stageId || null, dueDate: values.dueDate || null, priority: values.priority }) });
+      await requestJson(endpoint, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: values.title,
+          description: values.description,
+          stageId: values.stageId || null,
+          dueDate: values.dueDate || null,
+          priority: values.priority,
+          estimatedValue: values.estimatedValue === "" ? null : Number(values.estimatedValue),
+          currency: values.currency || "EUR",
+          projectId: values.projectId || null,
+        }),
+      });
       setMessage(c.saved); onSaved();
     } catch (reason) { setMessage(`${c.requestFailed}: ${reason instanceof Error ? reason.message : String(reason)}`); }
     finally { setSaving(false); }
   }
+  async function openCare() {
+    setCareMsg("");
+    try {
+      const res = await requestJson("/api/studio/care", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          caseId: text(detail.id),
+          companyName: text(detail.company_name, text(detail.client_name, "Care client")),
+          clientName: text(detail.client_name, ""),
+          clientEmail: text(detail.client_email, ""),
+          monthlyAmount: 300,
+          currency: text(detail.currency, "EUR"),
+        }),
+      }) as Row;
+      if (res && typeof res === "object" && res.id) {
+        window.location.href = studioPath("/care");
+        return;
+      }
+      setCareMsg(c.saved);
+    } catch (reason) {
+      const textError = reason instanceof Error ? reason.message : String(reason);
+      if (textError.toLowerCase().includes("already")) {
+        window.location.href = studioPath("/care");
+        return;
+      }
+      setCareMsg(`${c.requestFailed}: ${textError}`);
+    }
+  }
   return <div className="st-workspace-stack"><div className="st-detail-metrics"><div><span>{c.stage}</span><StatusBadge value={nested(detail.pipeline_stages, "key")} /></div><div><span>{c.owner}</span><strong>{caseOwner(detail)}</strong></div><div><span>{c.deadline}</span><strong>{date(detail.due_date, locale)}</strong></div><div><span>{c.client}</span><strong>{text(detail.client_name)}</strong></div></div>
-    <form className="st-panel st-form st-case-form" onSubmit={save}><h2>{c.overview}</h2><fieldset className="st-form-fieldset" disabled={!canEdit}><div className="st-form-grid"><label className="st-label"><span>{c.title}</span><input className="st-input" name="title" defaultValue={text(detail.title, "")} required /></label><label className="st-label"><span>{c.stage}</span><select className="st-select" name="stageId" defaultValue={text(detail.stage_id, "")}><option value="">—</option>{stages.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.name)}</option>)}</select></label><label className="st-label"><span>{c.deadline}</span><input className="st-input" name="dueDate" type="date" defaultValue={localDate(detail.due_date)} /></label><PriorityField defaultValue={text(detail.priority, "normal")} /><label className="st-label st-field-wide"><span>{c.description}</span><textarea className="st-textarea" name="description" defaultValue={text(detail.description, "")} /></label></div>{canEdit && <div className="st-row"><button className="st-btn primary" disabled={saving}>{saving && <LoaderCircle className="st-spin" size={15} />}{c.saveChanges}</button>{message && <span className={message === c.saved ? "st-ok" : "st-error"}>{message}</span>}</div>}</fieldset></form>
+    {isCompleted ? <div className="st-panel st-proof-banner"><h2>{t("care.proofTitle")}</h2><p>{t("care.proofHint")}</p><ul className="st-pulse-list"><li>{t("care.proofPortfolio")}</li><li>{t("care.proofTestimonial")}</li><li>{t("care.proofCopy")}</li></ul>{metadata.proofSeeded === true ? <p className="st-ok">{t("care.proofSeeded")}</p> : null}<div className="st-row" style={{ marginTop: "0.75rem", gap: "0.5rem", flexWrap: "wrap" }}><button type="button" className="st-btn primary" onClick={() => void openCare()}>{t("care.openFromCase")}</button><Link className="st-btn" href={studioPath("/projects")}>{t("nav.portfolio")}</Link></div>{careMsg ? <p className={careMsg === c.saved ? "st-ok" : "st-error"}>{careMsg}</p> : null}</div> : null}
+    <form className="st-panel st-form st-case-form" onSubmit={save}><h2>{c.overview}</h2><fieldset className="st-form-fieldset" disabled={!canEdit}><div className="st-form-grid"><label className="st-label"><span>{c.title}</span><input className="st-input" name="title" defaultValue={text(detail.title, "")} required /></label><label className="st-label"><span>{c.stage}</span><select className="st-select" name="stageId" defaultValue={text(detail.stage_id, "")}><option value="">—</option>{stages.map((row) => <option key={text(row.id)} value={text(row.id)}>{text(row.name)}</option>)}</select></label><label className="st-label"><span>{c.deadline}</span><input className="st-input" name="dueDate" type="date" defaultValue={localDate(detail.due_date)} /></label><PriorityField defaultValue={text(detail.priority, "normal")} /><label className="st-label"><span>{t("leads.dealValue")}</span><input className="st-input" name="estimatedValue" type="number" min={0} step="0.01" defaultValue={detail.estimated_value == null ? "" : String(detail.estimated_value)} /></label><label className="st-label"><span>{c.currency}</span><input className="st-input" name="currency" defaultValue={text(detail.currency, "EUR")} /></label><label className="st-label"><span>{t("care.projectId")}</span><input className="st-input" name="projectId" defaultValue={text(detail.project_id, "")} placeholder="portfolio project uuid" /></label><label className="st-label st-field-wide"><span>{c.description}</span><textarea className="st-textarea" name="description" defaultValue={text(detail.description, "")} /></label></div>{canEdit && <div className="st-row"><button className="st-btn primary" disabled={saving}>{saving && <LoaderCircle className="st-spin" size={15} />}{c.saveChanges}</button>{message && <span className={message === c.saved ? "st-ok" : "st-error"}>{message}</span>}</div>}</fieldset></form>
   </div>;
 }
 
@@ -661,6 +708,8 @@ export function ReportsPage() {
   const finance = object.finance && typeof object.finance === "object" ? object.finance as Row : {};
   const time = object.time && typeof object.time === "object" ? object.time as Row : {};
   const funnel = object.funnel && typeof object.funnel === "object" ? object.funnel as Row : {};
+  const unpaid = object.unpaid && typeof object.unpaid === "object" ? object.unpaid as Row : {};
+  const care = object.care && typeof object.care === "object" ? object.care as Row : {};
   const openTasks = Number(tasks.todo || 0) + Number(tasks.in_progress || 0);
   const taskRows = Object.entries(tasks)
     .filter(([label]) => label !== "overdue")
@@ -678,8 +727,12 @@ export function ReportsPage() {
     { label: t("dashboard.funnelCases"), value: Number(funnel.convertedCases || 0) },
   ];
   const metrics = [
-    [c.totalPipeline, Number(object.openCases || 0), BriefcaseBusiness], [c.openTasks, openTasks, CheckSquare2],
-    [c.overdue, Number(tasks.overdue || 0), AlertCircle], [c.loggedHours, (minutes / 60).toFixed(1), Clock3],
+    [c.totalPipeline, Number(object.openCases || 0), BriefcaseBusiness],
+    [c.openTasks, openTasks, CheckSquare2],
+    [c.overdue, Number(tasks.overdue || 0), AlertCircle],
+    [t("dashboard.unpaidMoney"), Number(unpaid.count || 0), WalletCards],
+    [t("nav.care"), Number(care.activeCount || 0), Bell],
+    [c.loggedHours, (minutes / 60).toFixed(1), Clock3],
     [c.unread, Number(object.unreadNotifications || 0), Bell],
   ] as const;
   function exportFunnelCsv() {
@@ -751,7 +804,12 @@ export function CrmSettingsPage() {
     }
   }
   const tabs = [["general", c.general, Settings2], ["pipelines", c.pipelines, Workflow], ["integrations", c.integrations, CheckCircle2]] as const;
-  return <><PageHeader eyebrow={c.eyebrow} title={c.settings} subtitle={c.workspace} /><div className="st-settings-layout"><nav className="st-settings-nav">{tabs.map(([id, label, Icon]) => <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</nav><section className="st-panel"><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}>
+  return <><PageHeader eyebrow={c.eyebrow} title={c.settings} subtitle={c.workspace} />
+    <div className="st-toolbar" style={{ marginBottom: "1rem" }}>
+      <Link className="st-btn" href={studioPath("/documents")}>{c.documents}</Link>
+      <Link className="st-btn" href={studioPath("/automations")}>{c.automations}</Link>
+    </div>
+    <div className="st-settings-layout"><nav className="st-settings-nav">{tabs.map(([id, label, Icon]) => <button key={id} className={tab === id ? "active" : ""} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</nav><section className="st-panel"><StateView loading={api.loading} error={api.error} empty={false} onRetry={api.reload}>
     {tab === "general" && <form className="st-form" onSubmit={save}><label className="st-label"><span>{c.workspaceName}</span><input className="st-input" name="workspace_name" defaultValue={text(settings.workspace_name, "DormUp Studio")} /></label><label className="st-label"><span>{c.timezone}</span><input className="st-input" name="timezone" defaultValue={text(settings.timezone, "Europe/Rome")} /></label><label className="st-label"><span>{c.currency}</span><input className="st-input" name="currency" defaultValue={text(settings.currency, "EUR")} /></label><button className="st-btn primary">{c.saveChanges}</button>{message && <p className={message === c.saved ? "st-ok" : "st-error"}>{message}</p>}</form>}
     {tab === "pipelines" && <div className="st-workspace-stack"><form className="st-form st-panel" onSubmit={addStage}><div className="st-form-grid"><label className="st-label"><span>{c.name}</span><input className="st-input" name="name" required /></label><label className="st-label"><span>{c.stageKey}</span><input className="st-input" name="key" pattern="[a-z0-9][a-z0-9_-]*" required /></label><label className="st-label"><span>{c.color}</span><input className="st-input" name="color" type="color" defaultValue="#64748b" /></label><label className="st-label"><span>{c.order}</span><input className="st-input" name="sortOrder" type="number" defaultValue={stages.length * 10 + 10} /></label></div><button className="st-btn primary"><Plus size={15} />{c.addStage}</button>{message && <p className={message === c.saved ? "st-ok" : "st-error"}>{message}</p>}</form><div className="st-record-list">{stages.map((row) => <article className="st-record" key={text(row.id)}><span className="st-stage-dot" style={{ background: text(row.color, "#64748b") }} /><div><strong>{text(row.name)}</strong><p>{text(row.key)}</p></div><StatusBadge value={row.is_closed ? "closed" : row.is_won ? "won" : "active"} /></article>)}</div></div>}
     {tab === "integrations" && <div className="st-integration-grid">{Object.entries(integrations).map(([name, enabled]) => <article key={name}><strong>{name}</strong><StatusBadge value={enabled ? c.available : c.unavailable} /></article>)}</div>}

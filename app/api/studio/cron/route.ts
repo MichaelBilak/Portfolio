@@ -243,12 +243,60 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const [{ data: careDue, error: careDueError }, { data: existingCareNotifs }] =
+    await Promise.all([
+      sb
+        .from("care_retainers")
+        .select("id, company_name, client_name, next_review_at")
+        .eq("status", "active")
+        .lte("next_review_at", now.toISOString())
+        .limit(200),
+      sb
+        .from("notifications")
+        .select("type,payload,recipient_id")
+        .eq("type", "care.review")
+        .is("read_at", null)
+        .limit(2000),
+    ]);
+
+  const careDueSafe = careDueError ? [] : careDue || [];
+  const existingCareKeys = new Set(
+    (existingCareNotifs || []).flatMap((notification) => {
+      const careId = object(notification.payload).careId;
+      return typeof careId === "string"
+        ? [`${notification.recipient_id}:${careId}`]
+        : [];
+    }),
+  );
+  const careNotifications: Array<Record<string, unknown>> = [];
+  for (const care of careDueSafe) {
+    for (const recipientId of defaultRecipients) {
+      const key = `${recipientId}:${care.id}`;
+      if (existingCareKeys.has(key)) continue;
+      existingCareKeys.add(key);
+      careNotifications.push({
+        recipient_id: recipientId,
+        case_id: null,
+        type: "care.review",
+        title: "Care review due",
+        body: care.company_name || care.client_name || care.id.slice(0, 8),
+        link: "/care",
+        payload: { careId: care.id, nextReviewAt: care.next_review_at },
+      });
+    }
+  }
+  const { error: careNotifyError } = careNotifications.length
+    ? await sb.from("notifications").insert(careNotifications)
+    : { error: null };
+
   return NextResponse.json({
     ok: true,
     scanned: dueTasks?.length || 0,
     notificationsCreated: notifications.length,
     leadSlaScanned: slaLeads?.length || 0,
     leadSlaNotificationsCreated: leadSlaNotifications.length,
+    careReviewsScanned: careDueSafe.length,
+    careNotificationsCreated: careNotifications.length,
     automationRulesRun: rules?.length || 0,
     automationNotificationsCreated: automationNotifications,
     warning:
@@ -256,6 +304,8 @@ export async function POST(request: NextRequest) {
       leadSlaError?.message ||
       slaLeadsError?.message ||
       existingLeadError?.message ||
+      careDueError?.message ||
+      careNotifyError?.message ||
       null,
   });
 }

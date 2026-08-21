@@ -8,13 +8,12 @@ import {
   BriefcaseBusiness,
   CheckSquare2,
   ChevronRight,
-  FileText,
   FolderKanban,
+  HeartHandshake,
   Inbox,
   LayoutDashboard,
   Settings2,
   SlidersHorizontal,
-  Workflow,
   type LucideIcon,
 } from "lucide-react";
 import { studioPath } from "@/lib/studio/path";
@@ -41,6 +40,7 @@ const ITEMS: NavItem[] = [
     group: "crm",
     icon: BarChart3,
   },
+  { href: studioPath("/inbox"), label: "nav.inbox", group: "crm", icon: Bell },
   {
     href: studioPath("/leads"),
     label: "nav.leads",
@@ -48,16 +48,14 @@ const ITEMS: NavItem[] = [
     icon: Inbox,
     roles: ["owner", "editor", "sales", "manager"],
   },
-  { href: studioPath("/inbox"), label: "nav.inbox", group: "crm", icon: Bell },
   { href: studioPath("/cases"), label: "nav.cases", group: "crm", icon: BriefcaseBusiness },
   { href: studioPath("/tasks"), label: "nav.tasks", group: "crm", icon: CheckSquare2 },
-  { href: studioPath("/documents"), label: "nav.documents", group: "crm", icon: FileText },
   {
-    href: studioPath("/automations"),
-    label: "nav.automations",
+    href: studioPath("/care"),
+    label: "nav.care",
     group: "crm",
-    icon: Workflow,
-    roles: ["owner", "editor", "manager"],
+    icon: HeartHandshake,
+    roles: ["owner", "editor", "sales", "manager"],
   },
   {
     href: studioPath("/reports"),
@@ -133,7 +131,9 @@ export function StudioNavigation({
               return (
                 <Link key={item.href} href={item.href} className={active ? "active" : undefined}>
                   <Icon size={18} aria-hidden />
-                  <span><strong>{t(item.label)}</strong></span>
+                  <span>
+                    <strong>{t(item.label)}</strong>
+                  </span>
                   <ChevronRight className="st-nav-chevron" size={15} aria-hidden />
                 </Link>
               );

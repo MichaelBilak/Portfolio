@@ -10,19 +10,21 @@ services or paid model APIs.
 2. Sales claims or assigns the lead, sets next action / SLA, and moves it to
    `in_progress` (list or board on `/leads`).
 3. Qualification continues on the lead detail page: notes, timeline, lost reason,
-   spam, or convert to a case (stage + owner picker).
-4. Convert marks the lead `won`, creates a case at the chosen pipeline stage, and
-   links `cases.lead_id`.
+   spam, or convert to a case (stage + owner + **required deal value**).
+4. Convert marks the lead `won`, creates a case with `estimated_value` / currency
+   at the chosen pipeline stage, and links `cases.lead_id`.
 5. A manager assigns the case, stage, deadline, and workflow template.
 6. The team works from tasks, the case journal, private files, and versioned
-   specifications.
+   specifications (Documents / Automations live under Settings shortcuts, not top nav).
 7. Automations create reminders and template tasks. Cron also raises lead SLA
-   reminders (`next_action_at` overdue or stale `new` leads without first
-   response after 48h). They never make destructive changes without an explicit
-   user action.
-8. Completed cases remain searchable and auditable. Overview and Reports show the
-   funnel lead → case → won revenue for a selected period (presets or custom
-   from/to). Leads can be imported (CSV/XLSX) and exported (CSV).
+   reminders and **Care review** notifications. They never make destructive
+   changes without an explicit user action.
+8. When a case moves to `completed`, Studio seeds proof tasks (portfolio,
+   testimonial, services copy) and offers **Open Care** for retainer. Optional
+   `cases.project_id` links delivery to portfolio.
+9. Overview is the daily pulse: attention (SLA leads, overdue tasks, unpaid
+   milestones, Care due) + short funnel + site health. Reports add period depth
+   including unpaid finance and Care MRR.
 
 ## Lead fields (workspace)
 

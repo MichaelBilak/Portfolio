@@ -11,6 +11,7 @@ import {
 } from "@/lib/studio/api";
 import { recordStudioMutation } from "@/lib/studio/audit";
 import { requireCaseAccess } from "@/lib/studio/access";
+import { seedProofTasksOnComplete } from "@/lib/studio/care";
 
 const priorities = ["low", "normal", "high", "urgent"] as const;
 
@@ -55,6 +56,12 @@ export async function PATCH(
     const denied = await requireCaseAccess(sb, auth, id);
     if (denied) return denied;
     const body = await readJsonObject(request);
+    const { data: before } = await sb
+      .from("cases")
+      .select("id, stage_id, metadata")
+      .eq("id", id)
+      .maybeSingle();
+
     const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
     if ("title" in body) patch.title = optionalString(body.title, "title", 300);
     if ("description" in body) patch.description = optionalString(body.description, "description", 20000);
@@ -65,12 +72,14 @@ export async function PATCH(
     if ("companyName" in body) patch.company_name = optionalString(body.companyName, "companyName", 300);
     if ("priority" in body) patch.priority = oneOf(body.priority, "priority", priorities);
     if ("dueDate" in body) patch.due_date = optionalString(body.dueDate, "dueDate", 10);
+    if ("projectId" in body) patch.project_id = optionalUuid(body.projectId, "projectId");
     if ("estimatedValue" in body) {
       if (body.estimatedValue !== null && (typeof body.estimatedValue !== "number" || !Number.isFinite(body.estimatedValue))) {
         throw new ApiInputError("estimatedValue must be a finite number");
       }
       patch.estimated_value = body.estimatedValue;
     }
+    if ("currency" in body) patch.currency = optionalString(body.currency, "currency", 8);
     if ("tags" in body) {
       if (!Array.isArray(body.tags)) throw new ApiInputError("tags must be an array");
       patch.tags = body.tags.filter((tag): tag is string => typeof tag === "string").slice(0, 30);
@@ -93,6 +102,20 @@ export async function PATCH(
         return NextResponse.json({ error: membershipError.message }, { status: 400 });
       }
     }
+
+    if ("stageId" in body) {
+      try {
+        await seedProofTasksOnComplete(sb, {
+          caseId: id,
+          actorId: auth.id,
+          previousStageId: before?.stage_id,
+          nextStageId: typeof patch.stage_id === "string" ? patch.stage_id : null,
+        });
+      } catch (seedError) {
+        console.error("[cases] proof seed failed", seedError);
+      }
+    }
+
     await recordStudioMutation(sb, {
       actorId: auth.id,
       action: "case.update",
