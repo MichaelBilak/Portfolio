@@ -81,7 +81,7 @@ export function Footer({ t, className }: FooterProps) {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
+                    className="focus-outline interactive liquid-glass-chip inline-flex h-11 w-11 items-center justify-center rounded-full text-accentGold hover:-translate-y-0.5"
                   >
                     <Icon size={16} />
                   </MailtoLink>
@@ -93,7 +93,7 @@ export function Footer({ t, className }: FooterProps) {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="focus-outline interactive inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold hover:-translate-y-0.5 hover:border-accentGold/50 hover:bg-accentGold/10"
+                  className="focus-outline interactive liquid-glass-chip inline-flex h-11 w-11 items-center justify-center rounded-full text-accentGold hover:-translate-y-0.5"
                   aria-label={label}
                 >
                   <Icon size={16} />

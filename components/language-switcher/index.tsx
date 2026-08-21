@@ -88,7 +88,7 @@ export function LanguageSwitcher({ locale, variant = "compact" }: LanguageSwitch
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={current.selectorLabel}
-        className="focus-outline interactive group inline-flex min-h-11 items-center gap-2 rounded-full border border-borderSubtle bg-bgSecondary/60 px-3.5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-textPrimary backdrop-blur hover:border-borderStrong md:min-h-0"
+        className="focus-outline interactive liquid-glass-chip group inline-flex min-h-11 items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-textPrimary md:min-h-0"
       >
         <Globe size={14} className="text-accentGold" />
         <span className="text-accentGold">{current.langCode}</span>

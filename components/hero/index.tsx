@@ -62,7 +62,7 @@ export function Hero({ t }: HeroProps) {
           className="min-w-0 space-y-5 sm:space-y-9"
         >
           <motion.div variants={item} className="max-w-full">
-            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-borderSubtle bg-white/[0.03] px-2.5 py-1.5 font-mono uppercase text-accentGold backdrop-blur sm:gap-2.5 sm:px-4">
+            <span className="liquid-glass-chip inline-flex max-w-full items-center gap-2 rounded-full px-2.5 py-1.5 font-mono uppercase text-accentGold sm:gap-2.5 sm:px-4">
               <span className="relative inline-flex h-1.5 w-1.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accentGold opacity-70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accentGold" />

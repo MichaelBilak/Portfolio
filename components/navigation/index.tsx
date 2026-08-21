@@ -135,7 +135,7 @@ export function Navigation({ locale, t }: NavigationProps) {
             <LanguageSwitcher locale={locale} />
             <button
               type="button"
-              className="focus-outline inline-flex h-11 w-11 items-center justify-center rounded-full border border-borderSubtle text-accentGold lg:hidden"
+              className="focus-outline liquid-glass-chip inline-flex h-11 w-11 items-center justify-center rounded-full text-accentGold lg:hidden"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((prev) => !prev)}

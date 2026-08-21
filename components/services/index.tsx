@@ -84,7 +84,7 @@ export function Services({ t, serviceMetas }: ServicesProps) {
           <Reveal delay={0.12} className="mt-10 flex justify-center md:mt-12">
             <Link
               href="/services"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-borderStrong bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-textPrimary backdrop-blur-sm transition-all duration-300 hover:border-accentGold/40 hover:text-accentGold"
+              className="group liquid-glass-chip inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-textPrimary transition-all duration-300 hover:text-accentGold"
             >
               {t.servicesPage.viewAll}
               <ArrowUpRight
@@ -116,7 +116,7 @@ export function Services({ t, serviceMetas }: ServicesProps) {
         <Reveal delay={0.12} className="mt-10 flex justify-center md:mt-12">
           <Link
             href="/services"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-borderStrong bg-white/[0.04] px-7 py-3.5 text-sm font-semibold text-textPrimary backdrop-blur-sm transition-all duration-300 hover:border-accentGold/40 hover:text-accentGold"
+            className="group liquid-glass-chip inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold text-textPrimary transition-all duration-300 hover:text-accentGold"
           >
             {t.servicesPage.viewAll}
             <ArrowUpRight
