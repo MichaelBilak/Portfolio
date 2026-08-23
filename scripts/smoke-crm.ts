@@ -16,6 +16,12 @@ const marker = `[CRM smoke] ${new Date().toISOString()}`;
 const storagePath = `smoke/${randomUUID()}.txt`;
 let caseId: string | null = null;
 let leadId: string | null = null;
+let hqCompanyId: string | null = null;
+let hqDealId: string | null = null;
+let hqProjectId: string | null = null;
+let hqInvoiceId: string | null = null;
+let hqPaymentId: string | null = null;
+let hqSubscriptionId: string | null = null;
 
 function check(error: { message: string } | null, step: string) {
   if (error) throw new Error(`${step}: ${error.message}`);
@@ -189,7 +195,66 @@ try {
   check(relationError, "case relations read");
   if (count !== 1 || !file.id) throw new Error("Created CRM relations are incomplete.");
 
-  console.info("\nCRM write/read/storage smoke test passed.");
+  const { data: hqCompany, error: hqCompanyError } = await supabase
+    .from("companies")
+    .insert({ name: marker, status: "prospect", owner_id: profile.id, created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqCompanyError, "HQ company create");
+  hqCompanyId = hqCompany?.id || null;
+  if (!hqCompanyId) throw new Error("HQ company create did not return an id.");
+
+  const { data: hqDeal, error: hqDealError } = await supabase
+    .from("deals")
+    .insert({ company_id: hqCompanyId, title: `${marker} deal`, stage: "qualified", status: "open", value: 100, probability: 50, owner_id: profile.id, created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqDealError, "HQ deal create");
+  hqDealId = hqDeal?.id || null;
+
+  const { data: hqProject, error: hqProjectError } = await supabase
+    .from("client_projects")
+    .insert({ company_id: hqCompanyId, name: `${marker} project`, status: "planned", health: "green", sold_price: 100, owner_id: profile.id, created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqProjectError, "HQ project create");
+  hqProjectId = hqProject?.id || null;
+
+  const { data: hqInvoice, error: hqInvoiceError } = await supabase
+    .from("invoices")
+    .insert({ invoice_number: `SMOKE-${randomUUID()}`, company_id: hqCompanyId, project_id: hqProjectId, issue_date: new Date().toISOString().slice(0, 10), total: 100, subtotal: 100, created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqInvoiceError, "HQ invoice create");
+  hqInvoiceId = hqInvoice?.id || null;
+
+  const { data: hqPayment, error: hqPaymentError } = await supabase
+    .from("payments")
+    .insert({ invoice_id: hqInvoiceId, company_id: hqCompanyId, amount: 10, currency: "EUR", status: "pending", created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqPaymentError, "HQ payment create");
+  hqPaymentId = hqPayment?.id || null;
+
+  const { data: hqSubscription, error: hqSubscriptionError } = await supabase
+    .from("subscriptions")
+    .insert({ company_id: hqCompanyId, name: `${marker} support`, amount: 25, currency: "EUR", interval: "month", status: "active", started_on: new Date().toISOString().slice(0, 10), created_by: profile.id })
+    .select("id")
+    .single();
+  check(hqSubscriptionError, "HQ subscription create");
+  hqSubscriptionId = hqSubscription?.id || null;
+
+  const { error: hqTaskError } = await supabase.from("tasks").insert({
+    client_project_id: hqProjectId,
+    company_id: hqCompanyId,
+    title: `${marker} HQ task`,
+    status: "waiting",
+    assignee_id: profile.id,
+    created_by: profile.id,
+  });
+  check(hqTaskError, "HQ related task");
+
+  console.info("\nDormUp HQ write/read/storage smoke test passed.");
 } finally {
   if (caseId) {
     const { error } = await supabase.from("cases").delete().eq("id", caseId);
@@ -199,6 +264,12 @@ try {
     const { error } = await supabase.from("leads").delete().eq("id", leadId);
     if (error) console.error(`Cleanup lead failed: ${error.message}`);
   }
+  if (hqPaymentId) await supabase.from("payments").delete().eq("id", hqPaymentId);
+  if (hqInvoiceId) await supabase.from("invoices").delete().eq("id", hqInvoiceId);
+  if (hqSubscriptionId) await supabase.from("subscriptions").delete().eq("id", hqSubscriptionId);
+  if (hqProjectId) await supabase.from("client_projects").delete().eq("id", hqProjectId);
+  if (hqDealId) await supabase.from("deals").delete().eq("id", hqDealId);
+  if (hqCompanyId) await supabase.from("companies").delete().eq("id", hqCompanyId);
   const { error: storageCleanupError } = await supabase.storage
     .from("crm-private")
     .remove([storagePath]);

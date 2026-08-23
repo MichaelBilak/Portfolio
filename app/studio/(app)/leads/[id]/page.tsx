@@ -76,8 +76,8 @@ export default async function LeadDetailPage({
     { data: events },
     { data: linkedCase },
     { data: users },
-    { data: stages },
     { data: assignee },
+    { data: activities },
   ] = await Promise.all([
     sb
       .from("lead_notes")
@@ -95,13 +95,10 @@ export default async function LeadDetailPage({
       .select("id, name")
       .in("role", ["owner", "editor", "manager", "sales"])
       .order("name", { ascending: true }),
-    sb
-      .from("pipeline_stages")
-      .select("id, name, key")
-      .order("sort_order", { ascending: true }),
     lead.assignee_id
       ? sb.from("profiles").select("id, name").eq("id", lead.assignee_id).maybeSingle()
       : Promise.resolve({ data: null }),
+    sb.from("activities").select("*").eq("lead_id", id).order("occurred_at", { ascending: false }),
   ]);
 
   const slaBreached =
@@ -121,6 +118,13 @@ export default async function LeadDetailPage({
       at: note.created_at as string,
       title: t("leads.notes"),
       body: note.body as string,
+    })),
+    ...(activities || []).map((activity) => ({
+      id: `a-${activity.id}`,
+      kind: "event" as const,
+      at: activity.occurred_at as string,
+      title: `${activity.channel || activity.activity_type}: ${activity.subject}`,
+      body: activity.body || "",
     })),
   ].sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
 
@@ -160,6 +164,20 @@ export default async function LeadDetailPage({
       value: (lead.selected_addons || []).join(", ") || "—",
     },
   ];
+  const analysisRows = [
+    { label: "Lead score", value: lead.lead_score != null ? `${lead.lead_score}/10` : "—" },
+    { label: "Pain", value: lead.pain_score != null ? `${lead.pain_score}/10` : "—" },
+    { label: "Ability to pay", value: lead.ability_to_pay != null ? `${lead.ability_to_pay}/10` : "—" },
+    { label: "Willingness to pay", value: lead.willingness_to_pay != null ? `${lead.willingness_to_pay}/10` : "—" },
+    { label: "Urgency", value: lead.urgency_score != null ? `${lead.urgency_score}/10` : "—" },
+    { label: "Reachability", value: lead.reachability_score != null ? `${lead.reachability_score}/10` : "—" },
+    { label: "Digital maturity", value: lead.digital_maturity != null ? `${lead.digital_maturity}/10` : "—" },
+    { label: "Estimated size", value: lead.estimated_employees || "—" },
+    { label: "Estimated revenue", value: lead.estimated_revenue ? `€${Number(lead.estimated_revenue).toLocaleString()}` : "—" },
+    { label: "Potential value", value: lead.estimated_deal_value ? `€${Number(lead.estimated_deal_value).toLocaleString()}` : "—" },
+    { label: "Recommended offer", value: lead.recommended_offer || "—" },
+    { label: "Possible pain", value: lead.possible_pain || "—" },
+  ];
 
   return (
     <div className="st-lead-detail">
@@ -169,7 +187,7 @@ export default async function LeadDetailPage({
         </Link>
         <div className="st-lead-detail-heading">
           <div>
-            <h1 className="st-h1">{lead.full_name || t("leads.fallbackTitle")}</h1>
+            <h1 className="st-h1">{lead.business_name || lead.full_name || t("leads.fallbackTitle")}</h1>
             <p className="st-sub">
               {lead.business_name || lead.email || "—"}
               {lead.created_at
@@ -184,11 +202,16 @@ export default async function LeadDetailPage({
             <span className={`st-status st-status-${lead.priority}`}>
               {labelPriority(locale, lead.priority)}
             </span>
+            <span className="st-badge">Score {lead.lead_score ?? "—"}/10</span>
             {slaBreached ? (
               <span className="st-badge st-badge-danger">{t("leads.slaBreached")}</span>
             ) : null}
-            {linkedCase ? (
-              <Link className="st-btn primary" href={studioPath(`/cases/${linkedCase.id}`)}>
+            {lead.converted_deal_id ? (
+              <Link className="st-btn primary" href={studioPath(`/deals/${lead.converted_deal_id}`)}>
+                {t("leads.openDeal")}
+              </Link>
+            ) : linkedCase ? (
+              <Link className="st-btn" href={studioPath(`/cases/${linkedCase.id}`)}>
                 {t("leads.openCase")}
               </Link>
             ) : null}
@@ -224,6 +247,13 @@ export default async function LeadDetailPage({
           </section>
 
           <section className="st-panel">
+            <h2>Business analysis</h2>
+            <dl className="st-lead-meta-grid">
+              {analysisRows.map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
+            </dl>
+          </section>
+
+          <section className="st-panel">
             <h2>{t("leads.timeline")}</h2>
             {!timeline.length ? (
               <p className="st-muted">{t("leads.timelineEmpty")}</p>
@@ -254,18 +284,13 @@ export default async function LeadDetailPage({
               status={lead.status}
               priority={lead.priority}
               assigneeId={lead.assignee_id}
-              nextActionAt={lead.next_action_at}
+              nextActionAt={lead.next_follow_up_at || lead.next_action_at}
               lostReason={lead.lost_reason}
-              existingCaseId={linkedCase?.id}
+              existingDealId={lead.converted_deal_id}
               currentUserId={user.id}
               users={(users || []).map((profile) => ({
                 id: profile.id,
                 name: profile.name,
-              }))}
-              stages={(stages || []).map((stage) => ({
-                id: stage.id,
-                name: stage.name,
-                key: stage.key,
               }))}
             />
           </section>

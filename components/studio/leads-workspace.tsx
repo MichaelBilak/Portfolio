@@ -182,7 +182,7 @@ export function LeadsWorkspace({
   }
 
   async function claimLead(id: string) {
-    await patchLead(id, { assigneeId: currentUserId, status: "in_progress" });
+    await patchLead(id, { assigneeId: currentUserId, status: "contacted" });
   }
 
   async function onDropStatus(status: string) {

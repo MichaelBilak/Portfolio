@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { labelPriority, labelStatus, useStudioI18n } from "@/lib/studio/i18n";
+import { LEAD_STATUSES } from "@/lib/studio/leads";
 import { studioPath } from "@/lib/studio/path";
 
 type ProfileOption = { id: string; name: string | null };
-type StageOption = { id: string; name: string; key: string };
 
 export function LeadActions({
   leadId,
@@ -15,9 +15,8 @@ export function LeadActions({
   assigneeId,
   nextActionAt,
   lostReason,
-  existingCaseId,
+  existingDealId,
   users,
-  stages,
   currentUserId,
 }: {
   leadId: string;
@@ -26,9 +25,8 @@ export function LeadActions({
   assigneeId?: string | null;
   nextActionAt?: string | null;
   lostReason?: string | null;
-  existingCaseId?: string | null;
+  existingDealId?: string | null;
   users: ProfileOption[];
-  stages: StageOption[];
   currentUserId: string;
 }) {
   const router = useRouter();
@@ -38,7 +36,6 @@ export function LeadActions({
   const [msgTone, setMsgTone] = useState<"ok" | "error">("ok");
   const [converting, setConverting] = useState(false);
   const [localLostReason, setLocalLostReason] = useState(lostReason || "");
-  const [stageId, setStageId] = useState(stages[0]?.id || "");
   const [ownerId, setOwnerId] = useState(currentUserId);
   const [estimatedValue, setEstimatedValue] = useState("");
   const [currency, setCurrency] = useState("EUR");
@@ -78,21 +75,16 @@ export function LeadActions({
     }
     setConverting(true);
     try {
-      const res = await fetch(`/api/studio/leads/${leadId}/convert`, {
+      const res = await fetch(`/api/studio/leads/${leadId}/create-deal`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          stageId: stageId || undefined,
-          ownerId: ownerId || undefined,
           estimatedValue: value,
           currency: currency || "EUR",
+          ownerId: ownerId || undefined,
         }),
       });
       const data = await res.json().catch(() => ({}));
-      if (res.status === 409 && data.caseId) {
-        router.push(studioPath(`/cases/${data.caseId}`));
-        return;
-      }
       if (!res.ok) {
         showMsg(data.error || t("leads.convertError"), "error");
         return;
@@ -101,7 +93,7 @@ export function LeadActions({
         showMsg(t("leads.convertError"), "error");
         return;
       }
-      router.push(studioPath(`/cases/${data.id}`));
+      router.push(studioPath(`/deals/${data.id}`));
     } catch {
       showMsg(t("leads.convertError"), "error");
     } finally {
@@ -146,7 +138,7 @@ export function LeadActions({
               }
             }}
           >
-            {(["new", "in_progress", "won", "lost", "spam"] as const).map((value) => (
+            {LEAD_STATUSES.map((value) => (
               <option key={value} value={value}>
                 {labelStatus(locale, value)}
               </option>
@@ -212,7 +204,7 @@ export function LeadActions({
         <button
           type="button"
           className="st-btn"
-          onClick={() => patch({ assigneeId: currentUserId, status: "in_progress" })}
+          onClick={() => patch({ assigneeId: currentUserId, status: "contacted" })}
         >
           {t("leads.claim")}
         </button>
@@ -236,22 +228,8 @@ export function LeadActions({
 
       <div className="st-lead-action-block">
         <p className="st-lead-action-label">{t("leads.convertSection")}</p>
-        {!existingCaseId ? (
+        {!existingDealId ? (
           <>
-            <label className="st-label">
-              {t("crm.stage")}
-              <select
-                className="st-select"
-                value={stageId}
-                onChange={(e) => setStageId(e.target.value)}
-              >
-                {stages.map((stage) => (
-                  <option key={stage.id} value={stage.id}>
-                    {stage.name}
-                  </option>
-                ))}
-              </select>
-            </label>
             <label className="st-label">
               {t("crm.owner")}
               <select
@@ -299,9 +277,9 @@ export function LeadActions({
           <button
             type="button"
             className="st-btn primary"
-            onClick={() => router.push(studioPath(`/cases/${existingCaseId}`))}
+            onClick={() => router.push(studioPath(`/deals/${existingDealId}`))}
           >
-            {t("leads.openCase")}
+            {t("leads.openDeal")}
           </button>
         )}
       </div>

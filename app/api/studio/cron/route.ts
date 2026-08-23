@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       .select(
         "id, full_name, email, business_name, status, assignee_id, next_action_at, first_responded_at, created_at",
       )
-      .in("status", ["new", "in_progress"])
+      .in("status", ["new", "researching", "contacted"])
       .limit(500),
     sb
       .from("notifications")

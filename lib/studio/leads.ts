@@ -2,14 +2,23 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { NextRequest } from "next/server";
 import { pageParams } from "@/lib/studio/api";
 
-export const LEAD_STATUSES = ["new", "in_progress", "won", "lost", "spam"] as const;
+export const LEAD_STATUSES = [
+  "new",
+  "researching",
+  "contacted",
+  "replied",
+  "discovery",
+  "qualified",
+  "converted",
+  "lost",
+] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
 export const LEAD_PRIORITIES = ["low", "normal", "high"] as const;
 export type LeadPriority = (typeof LEAD_PRIORITIES)[number];
 
 export const LEAD_SELECT =
-  "id, status, priority, full_name, email, business_name, business_type, site_url, brief, source, intent, locale, selected_services, selected_service_slugs, selected_addons, assignee_id, first_responded_at, next_action_at, qualified_at, closed_at, lost_reason, created_at, updated_at";
+  "id, status, priority, full_name, email, business_name, business_type, site_url, brief, source, intent, locale, selected_services, selected_service_slugs, selected_addons, assignee_id, first_responded_at, next_action_at, qualified_at, closed_at, lost_reason, company_id, contact_id, converted_deal_id, converted_at, category, city, country, website, instagram, linkedin, phone, contact_person, contact_role, preferred_language, lead_score, estimated_employees, estimated_revenue, instagram_followers, digital_maturity, pain_score, ability_to_pay, willingness_to_pay, urgency_score, reachability_score, estimated_deal_value, currency, recommended_offer, notes, last_contact_at, next_follow_up_at, current_tools, possible_pain, potential_financial_gain, recommended_price, created_at, updated_at";
 
 export type LeadEventType =
   | "created"
@@ -79,7 +88,19 @@ export async function notifyLeadManagers(
 }
 
 export function isClosedLeadStatus(status: string) {
-  return status === "won" || status === "lost" || status === "spam";
+  return status === "converted" || status === "lost";
+}
+
+const LEGACY_LEAD_STATUS: Record<string, LeadStatus> = {
+  in_progress: "contacted",
+  won: "converted",
+  spam: "lost",
+};
+
+export function normalizeLeadStatus(status: string | null | undefined): LeadStatus | null {
+  if (!status) return null;
+  if ((LEAD_STATUSES as readonly string[]).includes(status)) return status as LeadStatus;
+  return LEGACY_LEAD_STATUS[status] ?? null;
 }
 
 export function buildLeadPatchTimestamps(
@@ -100,12 +121,12 @@ export function buildLeadPatchTimestamps(
 
   if (
     !current.first_responded_at &&
-    (next.noteAdded || (current.status === "new" && nextStatus === "in_progress"))
+    (next.noteAdded || (current.status === "new" && nextStatus === "contacted"))
   ) {
     patch.first_responded_at = now;
   }
 
-  if (nextStatus === "in_progress" && !current.qualified_at) {
+  if (nextStatus === "qualified" && !current.qualified_at) {
     patch.qualified_at = now;
   }
 

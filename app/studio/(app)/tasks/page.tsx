@@ -1,7 +1,5 @@
-import { ModulePage } from "@/components/studio/crm-pages";
-import { getStudioSession, hasStudioCapability } from "@/lib/studio/auth";
+import { HqTasksWorkspace } from "@/components/studio/workspaces/hq-tasks-workspace";
 
-export default async function StudioTasksPage() {
-  const user = await getStudioSession();
-  return <ModulePage kind="tasks" canCreate={Boolean(user && hasStudioCapability(user.role, "tasks.manage"))} />;
+export default function StudioTasksPage() {
+  return <HqTasksWorkspace />;
 }

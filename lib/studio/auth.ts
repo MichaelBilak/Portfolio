@@ -13,6 +13,14 @@ export type StudioCapability =
   | "content.manage"
   | "leads.manage"
   | "users.manage"
+  | "companies.read"
+  | "companies.manage"
+  | "deals.read"
+  | "deals.manage"
+  | "projects.read"
+  | "projects.manage"
+  | "activities.read"
+  | "activities.create"
   | "cases.read"
   | "cases.create"
   | "cases.update"
@@ -38,6 +46,14 @@ const allCapabilities: readonly StudioCapability[] = [
   "content.manage",
   "leads.manage",
   "users.manage",
+  "companies.read",
+  "companies.manage",
+  "deals.read",
+  "deals.manage",
+  "projects.read",
+  "projects.manage",
+  "activities.read",
+  "activities.create",
   "cases.read",
   "cases.create",
   "cases.update",
@@ -63,6 +79,13 @@ const roleCapabilities: Record<StudioRole, readonly StudioCapability[]> = {
   ),
   sales: [
     "leads.manage",
+    "companies.read",
+    "companies.manage",
+    "deals.read",
+    "deals.manage",
+    "projects.read",
+    "activities.read",
+    "activities.create",
     "cases.read",
     "cases.create",
     "cases.update",
@@ -73,6 +96,12 @@ const roleCapabilities: Record<StudioRole, readonly StudioCapability[]> = {
     "reports.read",
   ],
   specialist: [
+    "companies.read",
+    "deals.read",
+    "projects.read",
+    "projects.manage",
+    "activities.read",
+    "activities.create",
     "cases.read",
     "cases.update",
     "tasks.manage",
@@ -80,7 +109,14 @@ const roleCapabilities: Record<StudioRole, readonly StudioCapability[]> = {
     "documents.manage",
     "time.manage",
   ],
-  viewer: ["cases.read", "reports.read"],
+  viewer: [
+    "companies.read",
+    "deals.read",
+    "projects.read",
+    "activities.read",
+    "cases.read",
+    "reports.read",
+  ],
 };
 
 export async function getStudioSession(): Promise<StudioProfile | null> {
@@ -126,6 +162,22 @@ export function canManageLeads(role: StudioRole) {
 
 export function canManageUsers(role: StudioRole) {
   return hasStudioCapability(role, "users.manage");
+}
+
+export function canManageCompanies(role: StudioRole) {
+  return hasStudioCapability(role, "companies.manage");
+}
+
+export function canManageDeals(role: StudioRole) {
+  return hasStudioCapability(role, "deals.manage");
+}
+
+export function canManageProjects(role: StudioRole) {
+  return hasStudioCapability(role, "projects.manage");
+}
+
+export function canCreateActivities(role: StudioRole) {
+  return hasStudioCapability(role, "activities.create");
 }
 
 export async function requireStudioUser(opts?: {

@@ -1,439 +1,117 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import {
-  AlertCircle,
-  ArrowRight,
-  BriefcaseBusiness,
-  Clock3,
-  HeartHandshake,
-  Inbox,
-  WalletCards,
-} from "lucide-react";
+import { AlertTriangle, ArrowRight, BriefcaseBusiness, CheckSquare2, CircleDollarSign, Clock3, Handshake, Receipt } from "lucide-react";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
-import {
-  canManageLeads,
-  getStudioSession,
-  hasStudioCapability,
-} from "@/lib/studio/auth";
-import {
-  createStudioTranslator,
-  formatStudioDate,
-  resolveStudioLocale,
-} from "@/lib/studio/i18n/messages";
 import { studioPath } from "@/lib/studio/path";
-import { ContentHealth } from "@/components/studio/analytics-charts";
+
+type Deal = { id: string; title: string; value: number | string | null; probability: number | null; stage: string; expected_close_date: string | null; next_action: string | null; next_action_date: string | null };
+type Task = { id: string; title: string; due_at: string | null; priority: string; status: string };
+type Project = { id: string; name: string; status: string; health: string; progress: number; target_date: string | null; sold_price: number | string | null; actual_hours: number | string | null; internal_hourly_cost: number | string | null };
+type Invoice = { id: string; invoice_number: string; status: string; due_date: string; remaining_amount: number | string | null; currency: string };
+type Payment = { amount: number | string; currency: string; paid_at: string };
+type Subscription = { amount: number | string; currency: string; interval: string; status: string };
+type Lead = { id: string; business_name: string | null; full_name: string | null; status: string; next_follow_up_at?: string | null; next_action_at: string | null };
+
+const activeDealStages = ["discovery", "qualified", "proposal", "negotiation"];
+const activeProjectStatuses = ["planned", "discovery", "design", "development", "testing", "waiting_client", "launch"];
+
+function money(amount: number, currency = "EUR") {
+  return new Intl.NumberFormat("en-IE", { style: "currency", currency, maximumFractionDigits: 0 }).format(amount);
+}
+
+function number(value: number | string | null | undefined) {
+  const parsed = Number(value || 0);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function sum<T>(rows: T[], selector: (row: T) => number) {
+  return rows.reduce((total, row) => total + selector(row), 0);
+}
 
 export default async function StudioDashboardPage() {
-  const user = await getStudioSession();
-  if (!user) redirect(studioPath("/login"));
-  if (
-    !canManageLeads(user.role) &&
-    !hasStudioCapability(user.role, "cases.read") &&
-    !hasStudioCapability(user.role, "reports.read")
-  ) {
-    redirect(studioPath("/cases"));
-  }
-
-  const locale = resolveStudioLocale(user.adminLocale);
-  const t = createStudioTranslator(locale);
-
   if (!isSupabaseConfigured()) {
-    return (
-      <>
-        <h1 className="st-h1">{t("dashboard.title")}</h1>
-        <p className="st-sub">{t("dashboard.missingEnv")}</p>
-      </>
-    );
+    return <div className="st-state st-state-error"><strong>Supabase is not configured</strong><span>Add the Studio environment variables before opening DormUp HQ.</span></div>;
   }
 
   const sb = createAdminClient();
-  const nowIso = new Date().toISOString();
-  const staleLeadBefore = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const tomorrow = new Date(todayStart.getTime() + 86_400_000);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const previousMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const inThirtyDays = new Date(now.getTime() + 30 * 86_400_000);
 
-  const [
-    newLeads,
-    slaLeads,
-    overdueTasks,
-    unpaidFinance,
-    openCases,
-    careActiveResult,
-    careDueResult,
-    periodLeads,
-    wonLeads,
-    completedCases,
-    projectCount,
-    serviceCount,
-    projectTranslations,
-    serviceTranslations,
-    stages,
-  ] = await Promise.all([
-    sb
-      .from("leads")
-      .select("id", { count: "exact", head: true })
-      .eq("status", "new"),
-    sb
-      .from("leads")
-      .select("id, full_name, business_name, email, next_action_at, created_at, status")
-      .in("status", ["new", "in_progress"])
-      .or(
-        `next_action_at.lte.${nowIso},and(status.eq.new,first_responded_at.is.null,created_at.lte.${staleLeadBefore})`,
-      )
-      .order("created_at", { ascending: false })
-      .limit(8),
-    sb
-      .from("tasks")
-      .select("id, title, due_at, case_id, status")
-      .in("status", ["todo", "in_progress", "blocked"])
-      .is("deleted_at", null)
-      .lt("due_at", nowIso)
-      .order("due_at", { ascending: true })
-      .limit(8),
-    sb
-      .from("finance_milestones")
-      .select("id, title, amount, currency, status, due_date, case_id")
-      .in("status", ["planned", "invoiced", "overdue"])
-      .order("due_date", { ascending: true })
-      .limit(12),
-    sb
-      .from("cases")
-      .select("id, stage_id", { count: "exact" })
-      .is("archived_at", null),
-    sb
-      .from("care_retainers")
-      .select("id, monthly_amount, currency", { count: "exact" })
-      .eq("status", "active"),
-    sb
-      .from("care_retainers")
-      .select("id, company_name, client_name, next_review_at, monthly_amount, currency")
-      .eq("status", "active")
-      .lte("next_review_at", nowIso)
-      .order("next_review_at", { ascending: true })
-      .limit(6),
-    sb
-      .from("leads")
-      .select("id, status", { count: "exact" })
-      .gte("created_at", new Date(Date.now() - 30 * 86_400_000).toISOString()),
-    sb
-      .from("leads")
-      .select("id", { count: "exact", head: true })
-      .eq("status", "won")
-      .gte("created_at", new Date(Date.now() - 30 * 86_400_000).toISOString()),
-    sb
-      .from("cases")
-      .select("id, stage_id")
-      .gte("updated_at", new Date(Date.now() - 30 * 86_400_000).toISOString())
-      .limit(500),
-    sb.from("projects").select("*", { count: "exact", head: true }),
-    sb.from("services").select("*", { count: "exact", head: true }),
-    sb.from("project_i18n").select("*", { count: "exact", head: true }),
-    sb.from("service_i18n").select("*", { count: "exact", head: true }),
-    sb.from("pipeline_stages").select("id, key, is_won, is_closed"),
+  const [tasksResult, leadsResult, dealsResult, projectsResult, invoicesResult, paymentsResult, previousPaymentsResult, subscriptionsResult] = await Promise.all([
+    sb.from("tasks").select("id,title,due_at,priority,status").in("status", ["todo", "in_progress", "blocked", "waiting"]).is("deleted_at", null).order("due_at").limit(200),
+    sb.from("leads").select("id,business_name,full_name,status,next_follow_up_at,next_action_at").limit(500),
+    sb.from("deals").select("id,title,value,probability,stage,expected_close_date,next_action,next_action_date").limit(500),
+    sb.from("client_projects").select("id,name,status,health,progress,target_date,sold_price,actual_hours,internal_hourly_cost").in("status", activeProjectStatuses).order("target_date").limit(100),
+    sb.from("invoices").select("id,invoice_number,status,due_date,remaining_amount,currency").not("status", "in", '("paid","cancelled","void")').limit(200),
+    sb.from("payments").select("amount,currency,paid_at").eq("status", "succeeded").gte("paid_at", monthStart.toISOString()),
+    sb.from("payments").select("amount,currency,paid_at").eq("status", "succeeded").gte("paid_at", previousMonthStart.toISOString()).lt("paid_at", monthStart.toISOString()),
+    sb.from("subscriptions").select("amount,currency,interval,status").eq("status", "active"),
   ]);
 
-  // Soft-fail Care until migration 007 is applied.
-  const activeCare = careActiveResult.error
-    ? { data: [] as Array<{ monthly_amount: number; currency: string }>, count: 0 }
-    : careActiveResult;
-  const careDue = careDueResult.error
-    ? {
-        data: [] as Array<{
-          id: string;
-          company_name: string | null;
-          client_name: string | null;
-          next_review_at: string | null;
-        }>,
-      }
-    : careDueResult;
+  const tasks = (tasksResult.data || []) as unknown as Task[];
+  const leads = (leadsResult.data || []) as unknown as Lead[];
+  const deals = (dealsResult.data || []) as unknown as Deal[];
+  const projects = (projectsResult.data || []) as unknown as Project[];
+  const invoices = (invoicesResult.data || []) as unknown as Invoice[];
+  const payments = (paymentsResult.data || []) as unknown as Payment[];
+  const previousPayments = (previousPaymentsResult.data || []) as unknown as Payment[];
+  const subscriptions = (subscriptionsResult.data || []) as unknown as Subscription[];
 
-  const stageById = new Map((stages.data || []).map((s) => [s.id, s]));
-  const openStageIds = new Set(
-    (stages.data || []).filter((s) => !s.is_closed).map((s) => s.id),
-  );
-  const activeDelivery = (openCases.data || []).filter(
-    (row) => row.stage_id && openStageIds.has(row.stage_id),
-  ).length;
-  const completedCount = (completedCases.data || []).filter((row) => {
-    const stage = row.stage_id ? stageById.get(row.stage_id) : null;
-    return Boolean(stage?.key === "completed" || stage?.is_won);
-  }).length;
+  const tasksToday = tasks.filter((task) => task.due_at && new Date(task.due_at) >= todayStart && new Date(task.due_at) < tomorrow);
+  const overdueTasks = tasks.filter((task) => task.due_at && new Date(task.due_at) < todayStart);
+  const clientsWaiting = projects.filter((project) => project.status === "waiting_client");
+  const projectsAtRisk = projects.filter((project) => project.health === "red" || project.health === "critical");
+  const activeDeals = deals.filter((deal) => activeDealStages.includes(deal.stage));
+  const pipeline = sum(activeDeals, (deal) => number(deal.value));
+  const weightedPipeline = sum(activeDeals, (deal) => number(deal.value) * number(deal.probability) / 100);
+  const revenue = sum(payments, (payment) => number(payment.amount));
+  const previousRevenue = sum(previousPayments, (payment) => number(payment.amount));
+  const revenueDelta = previousRevenue ? Math.round(((revenue - previousRevenue) / previousRevenue) * 100) : null;
+  const outstanding = sum(invoices, (invoice) => number(invoice.remaining_amount));
+  const mrr = sum(subscriptions, (subscription) => {
+    const amount = number(subscription.amount);
+    return subscription.interval === "year" ? amount / 12 : subscription.interval === "quarter" ? amount / 3 : subscription.interval === "week" ? amount * 52 / 12 : amount;
+  });
+  const expectedDeals = sum(activeDeals.filter((deal) => deal.expected_close_date && new Date(deal.expected_close_date) <= inThirtyDays), (deal) => number(deal.value) * number(deal.probability) / 100);
+  const expectedInvoices = sum(invoices.filter((invoice) => new Date(invoice.due_date) <= inThirtyDays), (invoice) => number(invoice.remaining_amount));
+  const expectedThirty = expectedDeals + expectedInvoices;
+  const estimatedProfit = sum(projects, (project) => number(project.sold_price) - number(project.actual_hours) * number(project.internal_hourly_cost));
 
-  const unpaidRows = unpaidFinance.data || [];
-  const unpaidTotalByCurrency: Record<string, number> = {};
-  for (const row of unpaidRows) {
-    const currency = row.currency || "EUR";
-    unpaidTotalByCurrency[currency] =
-      (unpaidTotalByCurrency[currency] || 0) + Number(row.amount || 0);
-  }
-  const unpaidTotalLabel =
-    Object.entries(unpaidTotalByCurrency)
-      .map(([currency, amount]) => `${amount.toLocaleString()} ${currency}`)
-      .join(" · ") || "0";
+  const stages = ["discovery", "qualified", "proposal", "negotiation"];
+  const nextActions = [
+    ...overdueTasks.map((task) => ({ key: `task-${task.id}`, title: task.title, detail: "Overdue task", href: "/tasks", rank: 0 })),
+    ...deals.filter((deal) => deal.next_action).map((deal) => ({ key: `deal-${deal.id}`, title: deal.next_action || deal.title, detail: deal.title, href: `/deals/${deal.id}`, rank: deal.next_action_date && new Date(deal.next_action_date) < now ? 1 : 3 })),
+    ...leads.filter((lead) => lead.next_follow_up_at || lead.next_action_at).map((lead) => ({ key: `lead-${lead.id}`, title: `Follow up with ${lead.business_name || lead.full_name || "lead"}`, detail: "Lead follow-up", href: `/leads/${lead.id}`, rank: 2 })),
+    ...invoices.filter((invoice) => invoice.status === "overdue" || new Date(invoice.due_date) < todayStart).map((invoice) => ({ key: `invoice-${invoice.id}`, title: `Collect invoice ${invoice.invoice_number}`, detail: money(number(invoice.remaining_amount), invoice.currency), href: `/invoices/${invoice.id}`, rank: 1 })),
+  ].sort((a, b) => a.rank - b.rank).slice(0, 8);
 
-  const careMrrByCurrency: Record<string, number> = {};
-  for (const row of activeCare.data || []) {
-    const currency = row.currency || "EUR";
-    careMrrByCurrency[currency] =
-      (careMrrByCurrency[currency] || 0) + Number(row.monthly_amount || 0);
-  }
-  const careMrrLabel =
-    Object.entries(careMrrByCurrency)
-      .map(([currency, amount]) => `${amount.toLocaleString()} ${currency}`)
-      .join(" · ") || "0";
+  return <div className="st-hq-dashboard">
+    <div className="st-page-header"><div><p className="st-eyebrow">DormUp HQ</p><h1 className="st-h1">Business control center</h1><p className="st-sub">What is happening, what is at risk, and what to do next.</p></div><Link className="st-btn primary" href={studioPath("/tasks")}><CheckSquare2 size={15} /> Open today</Link></div>
 
-  const leadsCreated = periodLeads.count || 0;
-  const leadsWon = wonLeads.count || 0;
-  const conversion = leadsCreated ? Math.round((leadsWon / leadsCreated) * 100) : 0;
+    <section><div className="st-section-title"><h2>Today</h2></div><div className="st-hq-metrics st-hq-metrics-four">
+      <Link href={studioPath("/tasks")} className="st-metric-card"><CheckSquare2 /><small>Tasks today</small><strong>{tasksToday.length}</strong><span>Due before tomorrow</span></Link>
+      <Link href={studioPath("/tasks")} className="st-metric-card danger"><Clock3 /><small>Overdue tasks</small><strong>{overdueTasks.length}</strong><span>Needs immediate action</span></Link>
+      <Link href={studioPath("/projects")} className="st-metric-card"><Handshake /><small>Clients waiting</small><strong>{clientsWaiting.length}</strong><span>Waiting on client input</span></Link>
+      <Link href={studioPath("/projects")} className="st-metric-card warning"><AlertTriangle /><small>Projects at risk</small><strong>{projectsAtRisk.length}</strong><span>Blocked or deadline risk</span></Link>
+    </div></section>
 
-  const expectedTranslations =
-    ((projectCount.count || 0) + (serviceCount.count || 0)) * 6;
-  const actualTranslations =
-    (projectTranslations.count || 0) + (serviceTranslations.count || 0);
-  const contentHealth = expectedTranslations
-    ? (actualTranslations / expectedTranslations) * 100
-    : 100;
+    <div className="st-dashboard-grid">
+      <section className="st-panel st-panel-wide"><div className="st-panel-head"><div><h2>Sales</h2><p>Live opportunity value, not vanity analytics.</p></div><Link href={studioPath("/deals")}>Open pipeline <ArrowRight size={14} /></Link></div>
+        <div className="st-hq-metrics"><div className="st-metric-card"><BriefcaseBusiness /><small>Active leads</small><strong>{leads.filter((lead) => !["converted", "lost"].includes(lead.status)).length}</strong></div><div className="st-metric-card"><Handshake /><small>Proposals</small><strong>{deals.filter((deal) => deal.stage === "proposal").length}</strong></div><div className="st-metric-card"><CircleDollarSign /><small>Pipeline</small><strong>{money(pipeline)}</strong></div><div className="st-metric-card"><CircleDollarSign /><small>Weighted</small><strong>{money(weightedPipeline)}</strong></div></div>
+        <div className="st-pipeline-strip">{stages.map((stage) => { const rows = activeDeals.filter((deal) => deal.stage === stage); return <div key={stage}><span>{stage}</span><strong>{rows.length}</strong><small>{money(sum(rows, (deal) => number(deal.value)))}</small></div>; })}</div>
+      </section>
 
-  const attentionLeads = slaLeads.data || [];
-  const attentionTasks = overdueTasks.data || [];
-  const attentionCare = careDue.data || [];
-
-  return (
-    <div className="st-pulse">
-      <div className="st-page-header">
-        <div>
-          <p className="st-eyebrow">{t("dashboard.eyebrow")}</p>
-          <h1 className="st-h1">{t("dashboard.title")}</h1>
-          <p className="st-sub">{t("dashboard.pulseSub")}</p>
-        </div>
-        <div className="st-row" style={{ gap: "0.5rem", flexWrap: "wrap" }}>
-          <Link className="st-btn primary" href={studioPath("/inbox")}>
-            <Inbox size={16} /> {t("nav.inbox")}
-          </Link>
-          <Link className="st-btn" href={studioPath("/leads")}>
-            {t("dashboard.openLeads")}
-          </Link>
-        </div>
-      </div>
-
-      <div className="st-metrics">
-        <div className="st-metric">
-          <span className="st-metric-icon">
-            <AlertCircle size={18} />
-          </span>
-          <div>
-            <small>{t("dashboard.needsAttention")}</small>
-            <strong>
-              {(newLeads.count || 0) + attentionLeads.length + attentionTasks.length}
-            </strong>
-            <em>
-              {t("dashboard.attentionDetail", {
-                leads: newLeads.count || 0,
-                tasks: attentionTasks.length,
-              })}
-            </em>
-          </div>
-        </div>
-        <div className="st-metric">
-          <span className="st-metric-icon">
-            <WalletCards size={18} />
-          </span>
-          <div>
-            <small>{t("dashboard.unpaidMoney")}</small>
-            <strong>{unpaidRows.length}</strong>
-            <em>{unpaidTotalLabel}</em>
-          </div>
-        </div>
-        <div className="st-metric">
-          <span className="st-metric-icon">
-            <BriefcaseBusiness size={18} />
-          </span>
-          <div>
-            <small>{t("dashboard.activeDelivery")}</small>
-            <strong>{activeDelivery}</strong>
-            <em>
-              {t("dashboard.careActive", { count: activeCare.count || 0 })} · MRR {careMrrLabel}
-            </em>
-          </div>
-        </div>
-        <div className="st-metric">
-          <span className="st-metric-icon">
-            <Clock3 size={18} />
-          </span>
-          <div>
-            <small>{t("dashboard.funnel30")}</small>
-            <strong>
-              {leadsCreated}→{leadsWon}
-            </strong>
-            <em>
-              {t("dashboard.conversion", { value: conversion })} · {completedCount}{" "}
-              {t("dashboard.casesCompleted")}
-            </em>
-          </div>
-        </div>
-      </div>
-
-      <div className="st-dashboard-grid">
-        <section className="st-panel st-panel-wide">
-          <div className="st-panel-head">
-            <div>
-              <h2>{t("dashboard.attentionTitle")}</h2>
-              <p>{t("dashboard.attentionSub")}</p>
-            </div>
-          </div>
-          <div className="st-pulse-lists">
-            <div>
-              <h3>
-                <Inbox size={14} /> {t("nav.leads")}
-              </h3>
-              {!attentionLeads.length ? (
-                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
-              ) : (
-                <ul className="st-pulse-list">
-                  {attentionLeads.map((lead) => (
-                    <li key={lead.id}>
-                      <Link href={studioPath(`/leads/${lead.id}`)}>
-                        {lead.business_name || lead.full_name || lead.email || lead.id.slice(0, 8)}
-                      </Link>
-                      <span>
-                        {lead.next_action_at
-                          ? formatStudioDate(lead.next_action_at, locale, true)
-                          : t("leads.slaBreached")}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div>
-              <h3>
-                <AlertCircle size={14} /> {t("nav.tasks")}
-              </h3>
-              {!attentionTasks.length ? (
-                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
-              ) : (
-                <ul className="st-pulse-list">
-                  {attentionTasks.map((task) => (
-                    <li key={task.id}>
-                      <Link
-                        href={
-                          task.case_id
-                            ? studioPath(`/cases/${task.case_id}`)
-                            : studioPath("/tasks")
-                        }
-                      >
-                        {task.title}
-                      </Link>
-                      <span>
-                        {task.due_at ? formatStudioDate(task.due_at, locale, true) : "—"}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div>
-              <h3>
-                <WalletCards size={14} /> {t("dashboard.unpaidMoney")}
-              </h3>
-              {!unpaidRows.length ? (
-                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
-              ) : (
-                <ul className="st-pulse-list">
-                  {unpaidRows.slice(0, 6).map((row) => (
-                    <li key={row.id}>
-                      <Link
-                        href={
-                          row.case_id
-                            ? studioPath(`/cases/${row.case_id}`)
-                            : studioPath("/reports")
-                        }
-                      >
-                        {row.title} · {Number(row.amount || 0).toLocaleString()} {row.currency}
-                      </Link>
-                      <span>{row.status}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div>
-              <h3>
-                <HeartHandshake size={14} /> {t("nav.care")}
-              </h3>
-              {!attentionCare.length ? (
-                <p className="st-empty-inline">{t("dashboard.attentionClear")}</p>
-              ) : (
-                <ul className="st-pulse-list">
-                  {attentionCare.map((row) => (
-                    <li key={row.id}>
-                      <Link href={studioPath("/care")}>
-                        {row.company_name || row.client_name || row.id.slice(0, 8)}
-                      </Link>
-                      <span>
-                        {row.next_review_at
-                          ? formatStudioDate(row.next_review_at, locale, true)
-                          : "—"}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-        </section>
-
-        <section className="st-panel">
-          <div className="st-panel-head">
-            <div>
-              <h2>{t("dashboard.siteHealthTitle")}</h2>
-              <p>{t("dashboard.siteHealthSub")}</p>
-            </div>
-          </div>
-          <ContentHealth
-            value={contentHealth}
-            label={t("dashboard.translations")}
-            hint={
-              contentHealth >= 90
-                ? t("dashboard.healthReady")
-                : contentHealth >= 60
-                  ? t("dashboard.healthPartial")
-                  : t("dashboard.healthLow")
-            }
-          />
-          <Link href={studioPath("/projects")} className="st-panel-link">
-            {t("dashboard.checkContent")} <ArrowRight size={15} />
-          </Link>
-        </section>
-
-        <section className="st-panel">
-          <div className="st-panel-head">
-            <div>
-              <h2>{t("dashboard.loopTitle")}</h2>
-              <p>{t("dashboard.loopSub")}</p>
-            </div>
-          </div>
-          <ol className="st-pulse-loop">
-            <li>
-              <Link href={studioPath("/leads")}>{t("nav.leads")}</Link>
-              <span>{newLeads.count || 0} new</span>
-            </li>
-            <li>
-              <Link href={studioPath("/cases")}>{t("nav.cases")}</Link>
-              <span>{activeDelivery} active</span>
-            </li>
-            <li>
-              <Link href={studioPath("/care")}>{t("nav.care")}</Link>
-              <span>{activeCare.count || 0} active</span>
-            </li>
-            <li>
-              <Link href={studioPath("/projects")}>{t("nav.portfolio")}</Link>
-              <span>{projectCount.count || 0}</span>
-            </li>
-          </ol>
-          <Link href={studioPath("/reports")} className="st-panel-link">
-            {t("nav.reports")} <ArrowRight size={15} />
-          </Link>
-        </section>
-      </div>
+      <section className="st-panel"><div className="st-panel-head"><div><h2>Money</h2><p>Collected, recurring and expected.</p></div><Link href={studioPath("/payments")}>Finance <ArrowRight size={14} /></Link></div><dl className="st-money-list"><div><dt>Revenue this month</dt><dd>{money(revenue)} {revenueDelta !== null ? <small>{revenueDelta >= 0 ? "+" : ""}{revenueDelta}%</small> : null}</dd></div><div><dt>MRR</dt><dd>{money(mrr)}</dd></div><div><dt>Outstanding</dt><dd>{money(outstanding)}</dd></div><div><dt>Expected 30 days</dt><dd>{money(expectedThirty)}</dd></div><div><dt>Estimated project profit</dt><dd>{money(estimatedProfit)}</dd></div></dl></section>
     </div>
-  );
+
+    <div className="st-dashboard-grid">
+      <section className="st-panel st-panel-wide"><div className="st-panel-head"><div><h2>Active projects</h2><p>Delivery health and next deadlines.</p></div><Link href={studioPath("/projects")}>All projects <ArrowRight size={14} /></Link></div>
+        {!projects.length ? <p className="st-empty-inline">No active projects. Convert a won deal to begin delivery.</p> : <div className="st-table-wrap"><table className="st-table"><thead><tr><th>Project</th><th>Status</th><th>Progress</th><th>Health</th><th>Deadline</th></tr></thead><tbody>{projects.slice(0, 8).map((project) => <tr key={project.id}><td><Link href={studioPath(`/projects/${project.id}`)}>{project.name}</Link></td><td><span className={`st-status st-status-${project.status}`}>{project.status.replaceAll("_", " ")}</span></td><td>{project.progress || 0}%</td><td><span className={`st-health st-health-${project.health}`}>{project.health}</span></td><td>{project.target_date ? new Date(project.target_date).toLocaleDateString() : "—"}</td></tr>)}</tbody></table></div>}
+      </section>
+      <section className="st-panel"><div className="st-panel-head"><div><h2>Next actions</h2><p>Overdue first, then priority and deadline.</p></div><Receipt size={17} /></div>{nextActions.length ? <ol className="st-next-actions">{nextActions.map((action, index) => <li key={action.key}><span>{index + 1}</span><Link href={studioPath(action.href)}><strong>{action.title}</strong><small>{action.detail}</small></Link></li>)}</ol> : <p className="st-empty-inline">Nothing urgent. Add next actions to active deals and leads.</p>}</section>
+    </div>
+  </div>;
 }

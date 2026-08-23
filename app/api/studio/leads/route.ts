@@ -53,6 +53,14 @@ export async function POST(request: NextRequest) {
     const status = oneOf(body.status, "status", LEAD_STATUSES, "new")!;
     const priority = oneOf(body.priority, "priority", LEAD_PRIORITIES, "normal")!;
     const email = requiredString(body.email, "email", 320).toLowerCase();
+    const score = body.leadScore === undefined ? null : Number(body.leadScore);
+    const estimatedDealValue = body.estimatedDealValue === undefined ? null : Number(body.estimatedDealValue);
+    if (score !== null && (!Number.isInteger(score) || score < 0 || score > 10)) {
+      return NextResponse.json({ error: "leadScore must be an integer from 0 to 10" }, { status: 400 });
+    }
+    if (estimatedDealValue !== null && (!Number.isFinite(estimatedDealValue) || estimatedDealValue < 0)) {
+      return NextResponse.json({ error: "estimatedDealValue must be non-negative" }, { status: 400 });
+    }
 
     const row = {
       status,
@@ -77,6 +85,22 @@ export async function POST(request: NextRequest) {
       next_action_at:
         typeof body.nextActionAt === "string" && body.nextActionAt
           ? body.nextActionAt
+          : null,
+      category: optionalString(body.category, "category", 150) ?? null,
+      city: optionalString(body.city, "city", 150) ?? null,
+      country: optionalString(body.country, "country", 150) ?? null,
+      phone: optionalString(body.phone, "phone", 60) ?? null,
+      contact_person: optionalString(body.contactPerson, "contactPerson", 200) ?? null,
+      contact_role: optionalString(body.contactRole, "contactRole", 150) ?? null,
+      preferred_language: optionalString(body.preferredLanguage, "preferredLanguage", 20) ?? null,
+      lead_score: score,
+      estimated_deal_value: estimatedDealValue,
+      estimated_value: estimatedDealValue,
+      currency: (optionalString(body.currency, "currency", 3) ?? "EUR").toUpperCase(),
+      recommended_offer: optionalString(body.recommendedOffer, "recommendedOffer", 500) ?? null,
+      next_follow_up_at:
+        typeof body.nextFollowUpAt === "string" && body.nextFollowUpAt
+          ? body.nextFollowUpAt
           : null,
       lost_reason: optionalString(body.lostReason ?? body.lost_reason, "lostReason", 500) ?? null,
     };

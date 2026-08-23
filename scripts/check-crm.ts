@@ -32,20 +32,31 @@ const tables = [
   "finance_milestones",
   "time_entries",
   "care_retainers",
+  "companies",
+  "contacts",
+  "products",
+  "deals",
+  "client_projects",
+  "project_milestones",
+  "invoices",
+  "invoice_items",
+  "payments",
+  "subscriptions",
+  "activities",
+  "notes",
+  "attachments",
 ] as const;
 
 let failed = false;
 
 for (const table of tables) {
-  const { count, error } = await supabase
-    .from(table)
-    .select("*", { count: "exact", head: true });
+  const { data, error } = await supabase.from(table).select("*").limit(1);
 
   if (error) {
     failed = true;
     console.error(`✗ ${table}: ${error.message}`);
   } else {
-    console.info(`✓ ${table}: ${count ?? 0} rows`);
+    console.info(`✓ ${table}: readable (${data?.length ? "has rows" : "empty"})`);
   }
 }
 
@@ -68,9 +79,9 @@ if (bucketError) {
 
 if (failed) {
   console.error(
-    "\nCRM checks failed. Apply supabase/migrations/003_crm_backend.sql, 006_leads_workspace.sql, and 007_care_and_proof.sql and retry.",
+    "\nCRM checks failed. Apply migrations 003 through 008 in order and retry. Never rerun the destructive greenfield SETUP.sql on an existing database.",
   );
   process.exit(1);
 }
 
-console.info("\nCRM schema is ready.");
+console.info("\nDormUp HQ schema is ready.");

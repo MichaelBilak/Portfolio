@@ -125,8 +125,10 @@ export async function GET(request: NextRequest) {
 
   const leadRows = leads.data || [];
   const created = leadRows.length;
-  const inProgress = leadRows.filter((lead) => lead.status === "in_progress").length;
-  const won = leadRows.filter((lead) => lead.status === "won").length;
+  const inProgress = leadRows.filter((lead) =>
+    ["researching", "contacted", "replied", "discovery", "qualified"].includes(lead.status),
+  ).length;
+  const won = leadRows.filter((lead) => lead.status === "converted" || lead.status === "won").length;
   const lost = leadRows.filter((lead) => lead.status === "lost" || lead.status === "spam").length;
   const stageById = new Map((stages.data || []).map((stage) => [stage.id, stage]));
   const convertedCases = closedCases.data || [];

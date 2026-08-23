@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { canManageLeads, requireStudioUser } from "@/lib/studio/auth";
+import {
+  canManageLeads,
+  hasStudioCapability,
+  requireStudioUser,
+} from "@/lib/studio/auth";
 import {
   getAccessibleCaseIds,
   hasGlobalCaseAccess,
@@ -26,7 +30,7 @@ export async function GET(request: NextRequest) {
     .limit(20);
   let tasksQuery = sb
     .from("tasks")
-    .select("id,case_id,title,status,due_at")
+    .select("id,case_id,deal_id,client_project_id,title,status,due_at")
     .is("deleted_at", null)
     .ilike("title", `%${term}%`)
     .limit(20);
@@ -54,12 +58,66 @@ export async function GET(request: NextRequest) {
         .or(`full_name.ilike.%${term}%,email.ilike.%${term}%,business_name.ilike.%${term}%`)
         .limit(20)
     : { data: [] as unknown[], error: null };
-  const error = cases.error || tasks.error || documents.error || leads.error;
+  const salesRequests = await Promise.all([
+    hasStudioCapability(auth.role, "companies.read")
+      ? sb
+          .from("companies")
+          .select("id,name,legal_name,email,phone,status,updated_at")
+          .or(`name.ilike.%${term}%,legal_name.ilike.%${term}%,email.ilike.%${term}%`)
+          .limit(20)
+      : { data: [] as unknown[], error: null },
+    hasStudioCapability(auth.role, "companies.read")
+      ? sb
+          .from("contacts")
+          .select("id,company_id,first_name,last_name,email,phone,status,updated_at")
+          .or(
+            `first_name.ilike.%${term}%,last_name.ilike.%${term}%,email.ilike.%${term}%,phone.ilike.%${term}%`,
+          )
+          .limit(20)
+      : { data: [] as unknown[], error: null },
+    hasStudioCapability(auth.role, "deals.read")
+      ? sb
+          .from("deals")
+          .select("id,company_id,title,stage,status,value,currency,updated_at")
+          .or(`title.ilike.%${term}%,notes.ilike.%${term}%`)
+          .limit(20)
+      : { data: [] as unknown[], error: null },
+    hasStudioCapability(auth.role, "projects.read")
+      ? sb
+          .from("client_projects")
+          .select("id,project_number,company_id,deal_id,name,status,health,updated_at")
+          .ilike("name", `%${term}%`)
+          .limit(20)
+      : { data: [] as unknown[], error: null },
+    hasStudioCapability(auth.role, "deals.read")
+      ? sb
+          .from("products")
+          .select("id,sku,name,kind,unit_price,currency,active,updated_at")
+          .or(`sku.ilike.%${term}%,name.ilike.%${term}%,description.ilike.%${term}%`)
+          .limit(20)
+      : { data: [] as unknown[], error: null },
+  ]);
+  const [companies, contacts, deals, clientProjects, products] = salesRequests;
+  const error =
+    cases.error ||
+    tasks.error ||
+    documents.error ||
+    leads.error ||
+    companies.error ||
+    contacts.error ||
+    deals.error ||
+    clientProjects.error ||
+    products.error;
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
   return NextResponse.json({
     cases: cases.data,
     tasks: tasks.data,
     documents: documents.data,
     leads: leads.data,
+    companies: companies.data,
+    contacts: contacts.data,
+    deals: deals.data,
+    clientProjects: clientProjects.data,
+    products: products.data,
   });
 }

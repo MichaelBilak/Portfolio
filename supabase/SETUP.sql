@@ -1,5 +1,7 @@
-﻿-- Wipe Payload leftovers + apply DormUp Studio schema cleanly.
--- Run in Supabase SQL Editor (as postgres).
+﻿-- GREENFIELD INSTALL ONLY: this script intentionally drops legacy tables.
+-- Never run it on an existing DormUp database. Existing installations must
+-- apply supabase/migrations/001...008 in order; HQ is added by 008_hq_phase1.sql.
+-- Run in Supabase SQL Editor (as postgres) only for a brand-new project.
 
 -- â”€â”€ Drop legacy Payload / mixed tables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 drop table if exists public.payload_locked_documents_rels cascade;

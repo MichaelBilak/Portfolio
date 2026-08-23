@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { requireStudioUser } from "@/lib/studio/auth";
 import { apiError, readJsonObject } from "@/lib/studio/api";
 import { recordStudioMutation } from "@/lib/studio/audit";
-import { appendLeadEvent } from "@/lib/studio/leads";
+import { appendLeadEvent, normalizeLeadStatus } from "@/lib/studio/leads";
 
 type ImportRow = {
   full_name?: string | null;
@@ -71,7 +71,7 @@ function validateRow(row: ImportRow, index: number) {
   if (!row.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row.email)) {
     errors.push(`row ${index + 1}: invalid email`);
   }
-  if (row.status && !["new", "in_progress", "won", "lost", "spam"].includes(row.status)) {
+  if (row.status && !normalizeLeadStatus(row.status)) {
     errors.push(`row ${index + 1}: invalid status`);
   }
   if (row.priority && !["low", "normal", "high"].includes(row.priority)) {
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
       full_name: row.full_name,
       business_name: row.business_name,
       source: row.source || "import",
-      status: row.status || "new",
+      status: normalizeLeadStatus(row.status) || "new",
     }));
 
     if (dryRun || errors.length) {
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
 
     const sb = createAdminClient();
     const insertRows = rows.map((row) => ({
-      status: row.status || "new",
+      status: normalizeLeadStatus(row.status) || "new",
       priority: row.priority || "normal",
       full_name: row.full_name || null,
       email: (row.email || "").toLowerCase(),

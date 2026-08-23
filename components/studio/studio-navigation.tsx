@@ -2,155 +2,64 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import {
-  Bell,
-  BarChart3,
-  BriefcaseBusiness,
-  CheckSquare2,
-  ChevronRight,
-  FolderKanban,
-  HeartHandshake,
-  Inbox,
-  LayoutDashboard,
-  Settings2,
-  SlidersHorizontal,
-  type LucideIcon,
+  Building2, CheckSquare2, ChevronLeft, ChevronRight, CircleDollarSign, CreditCard,
+  FileText, FolderKanban, Handshake, LayoutDashboard, PanelLeftClose, PanelLeftOpen,
+  Receipt, Settings2, Users, WalletCards, type LucideIcon,
 } from "lucide-react";
 import { studioPath } from "@/lib/studio/path";
 import type { StudioRole } from "@/lib/studio/auth";
 import { StudioSignOut } from "@/components/studio/sign-out";
-import {
-  StudioLanguageSelector,
-  type StudioMessageKey,
-  useStudioI18n,
-} from "@/lib/studio/i18n";
+import { StudioLanguageSelector } from "@/lib/studio/i18n";
 
-type NavItem = {
-  href: string;
-  label: StudioMessageKey;
-  group: "crm" | "content";
-  icon: LucideIcon;
-  roles?: StudioRole[];
-};
+type NavGroup = "Overview" | "Sales" | "Delivery" | "Finance" | "Operations" | "Admin";
+type NavItem = { href: string; label: string; group: NavGroup; icon: LucideIcon; roles?: StudioRole[] };
 
-const ITEMS: NavItem[] = [
-  {
-    href: studioPath(),
-    label: "nav.overview",
-    group: "crm",
-    icon: BarChart3,
-  },
-  { href: studioPath("/inbox"), label: "nav.inbox", group: "crm", icon: Bell },
-  {
-    href: studioPath("/leads"),
-    label: "nav.leads",
-    group: "crm",
-    icon: Inbox,
-    roles: ["owner", "editor", "sales", "manager"],
-  },
-  { href: studioPath("/cases"), label: "nav.cases", group: "crm", icon: BriefcaseBusiness },
-  { href: studioPath("/tasks"), label: "nav.tasks", group: "crm", icon: CheckSquare2 },
-  {
-    href: studioPath("/care"),
-    label: "nav.care",
-    group: "crm",
-    icon: HeartHandshake,
-    roles: ["owner", "editor", "sales", "manager"],
-  },
-  {
-    href: studioPath("/reports"),
-    label: "nav.reports",
-    group: "crm",
-    icon: LayoutDashboard,
-    roles: ["owner", "editor", "sales", "manager", "viewer"],
-  },
-  {
-    href: studioPath("/crm-settings"),
-    label: "nav.settings",
-    group: "crm",
-    icon: SlidersHorizontal,
-    roles: ["owner", "editor"],
-  },
-  {
-    href: studioPath("/copy"),
-    label: "nav.website",
-    group: "content",
-    icon: BriefcaseBusiness,
-    roles: ["owner", "editor"],
-  },
-  {
-    href: studioPath("/projects"),
-    label: "nav.portfolio",
-    group: "content",
-    icon: FolderKanban,
-    roles: ["owner", "editor"],
-  },
-  {
-    href: studioPath("/manage"),
-    label: "nav.siteSettings",
-    group: "content",
-    icon: Settings2,
-    roles: ["owner", "editor"],
-  },
+const managers: StudioRole[] = ["owner", "editor", "sales", "manager"];
+const contentManagers: StudioRole[] = ["owner", "editor"];
+const items: NavItem[] = [
+  { href: studioPath(), label: "Dashboard", group: "Overview", icon: LayoutDashboard },
+  { href: studioPath("/leads"), label: "Leads", group: "Sales", icon: Handshake, roles: managers },
+  { href: studioPath("/deals"), label: "Deals", group: "Sales", icon: CircleDollarSign, roles: managers },
+  { href: studioPath("/companies"), label: "Companies", group: "Sales", icon: Building2 },
+  { href: studioPath("/projects"), label: "Projects", group: "Delivery", icon: FolderKanban },
+  { href: studioPath("/tasks"), label: "Tasks", group: "Delivery", icon: CheckSquare2 },
+  { href: studioPath("/payments"), label: "Payments", group: "Finance", icon: WalletCards, roles: managers },
+  { href: studioPath("/invoices"), label: "Invoices", group: "Finance", icon: Receipt, roles: managers },
+  { href: studioPath("/subscriptions"), label: "Subscriptions", group: "Finance", icon: CreditCard, roles: managers },
+  { href: studioPath("/content/projects"), label: "Portfolio", group: "Operations", icon: FileText, roles: contentManagers },
+  { href: studioPath("/copy"), label: "Website content", group: "Operations", icon: FileText, roles: contentManagers },
+  { href: studioPath("/cases"), label: "Legacy cases", group: "Operations", icon: ChevronRight },
+  { href: studioPath("/users"), label: "Team", group: "Admin", icon: Users, roles: ["owner"] },
+  { href: studioPath("/manage"), label: "Settings", group: "Admin", icon: Settings2, roles: contentManagers },
 ];
 
-export function StudioNavigation({
-  email,
-  role,
-}: {
-  email: string;
-  role: StudioRole;
-}) {
+const groups: NavGroup[] = ["Overview", "Sales", "Delivery", "Finance", "Operations", "Admin"];
+
+export function StudioNavigation({ email, role }: { email: string; role: StudioRole }) {
   const pathname = usePathname();
-  const { t } = useStudioI18n();
-  const items = ITEMS.filter((item) => !item.roles || item.roles.includes(role));
-  const groups = [
-    { key: "crm", label: "nav.crm" as const },
-    { key: "content", label: "nav.content" as const },
-  ] as const;
+  const [collapsed, setCollapsed] = useState(false);
+  const visible = items.filter((item) => !item.roles || item.roles.includes(role));
 
   return (
-    <aside className="st-nav">
-      <Link href={studioPath()} className="st-brand">
-        <span className="st-brand-mark">D</span>
-        <span>
-          DormUp
-          <small>{t("nav.workspace")}</small>
-        </span>
-      </Link>
-
-      <nav className="st-nav-list" aria-label={t("nav.aria")}>
-        {groups.map((group) => (
-          <div className="st-nav-group" key={group.key}>
-            <span className="st-nav-group-label">{t(group.label)}</span>
-            {items.filter((item) => item.group === group.key).map((item) => {
-              const active =
-                pathname === item.href ||
-                (item.href !== studioPath() && pathname.startsWith(`${item.href}/`));
-              const Icon = item.icon;
-              return (
-                <Link key={item.href} href={item.href} className={active ? "active" : undefined}>
-                  <Icon size={18} aria-hidden />
-                  <span>
-                    <strong>{t(item.label)}</strong>
-                  </span>
-                  <ChevronRight className="st-nav-chevron" size={15} aria-hidden />
-                </Link>
-              );
-            })}
-          </div>
-        ))}
-      </nav>
-
-      <div className="st-user">
-        <div className="st-user-avatar">{email.slice(0, 1).toUpperCase()}</div>
-        <div className="st-user-copy">
-          <strong>{email}</strong>
-          <span>{t(`role.${role}` as StudioMessageKey)}</span>
-        </div>
-        <StudioLanguageSelector />
-        <StudioSignOut compact />
+    <aside className={`st-nav ${collapsed ? "collapsed" : ""}`}>
+      <div className="st-nav-brand-row">
+        <Link href={studioPath()} className="st-brand"><span className="st-brand-mark">D</span><span className="st-brand-copy">DormUp<small>HQ</small></span></Link>
+        <button className="st-icon-btn st-nav-collapse" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}>{collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}</button>
       </div>
+      <nav className="st-nav-list" aria-label="DormUp HQ navigation">
+        {groups.map((group) => {
+          const groupItems = visible.filter((item) => item.group === group);
+          if (!groupItems.length) return null;
+          return <div className="st-nav-group" key={group}><span className="st-nav-group-label">{group}</span>{groupItems.map((item) => {
+            const active = pathname === item.href || (item.href !== studioPath() && pathname.startsWith(`${item.href}/`));
+            const Icon = item.icon;
+            return <Link key={item.href} href={item.href} className={active ? "active" : undefined} title={collapsed ? item.label : undefined}><Icon size={17} /><span className="st-nav-item-label">{item.label}</span>{active ? <ChevronLeft className="st-nav-active-mark" size={13} /> : null}</Link>;
+          })}</div>;
+        })}
+      </nav>
+      <div className="st-user"><div className="st-user-avatar">{email.slice(0, 1).toUpperCase()}</div><div className="st-user-copy"><strong>{email}</strong><span>{role}</span></div><StudioLanguageSelector /><StudioSignOut compact /></div>
     </aside>
   );
 }

@@ -147,7 +147,7 @@ export function ProjectsManager({
     await revalidateSite();
     setBusy(false);
     if (data.id) {
-      router.push(studioPath(`/projects/${data.id}`));
+      router.push(studioPath(`/content/projects/${data.id}`));
       return;
     }
     router.refresh();
@@ -269,7 +269,7 @@ export function ProjectsManager({
                   </td>
                   <td>
                     <div className="st-row" style={{ gap: 8, justifyContent: "flex-end" }}>
-                      <Link className="st-btn" href={studioPath(`/projects/${row.id}`)}>
+                      <Link className="st-btn" href={studioPath(`/content/projects/${row.id}`)}>
                         {t("common.edit")}
                       </Link>
                       <button

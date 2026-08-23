@@ -1,19 +1,20 @@
-# DormUp Studio CRM
+# DormUp HQ
 
-The Studio CRM manages a lead from first contact through delivery without AI
-services or paid model APIs.
+DormUp HQ is the internal operating system for the studio: lead → deal →
+company → project → recurring support and revenue. The legacy Cases workspace
+remains available during reconciliation but is no longer the primary model.
 
 ## Workflow
 
 1. A public contact form creates a lead (`status: new`), appends a `lead_events`
    row, and notifies sales/managers in Inbox.
-2. Sales claims or assigns the lead, sets next action / SLA, and moves it to
-   `in_progress` (list or board on `/leads`).
-3. Qualification continues on the lead detail page: notes, timeline, lost reason,
-   spam, or convert to a case (stage + owner + **required deal value**).
-4. Convert marks the lead `won`, creates a case with `estimated_value` / currency
-   at the chosen pipeline stage, and links `cases.lead_id`.
-5. A manager assigns the case, stage, deadline, and workflow template.
+2. Sales moves leads through Researching, Contacted, Replied, Discovery and
+   Qualified with a score and dated follow-up.
+3. Conversion atomically creates/reuses Company and Contact records and creates
+   a Deal with the required value.
+4. A won Deal can be converted once into a delivery `client_projects` record.
+5. Delivery is tracked through milestones, related tasks, progress, health and
+   project economics.
 6. The team works from tasks, the case journal, private files, and versioned
    specifications (Documents / Automations live under Settings shortcuts, not top nav).
 7. Automations create reminders and template tasks. Cron also raises lead SLA
@@ -22,9 +23,9 @@ services or paid model APIs.
 8. When a case moves to `completed`, Studio seeds proof tasks (portfolio,
    testimonial, services copy) and offers **Open Care** for retainer. Optional
    `cases.project_id` links delivery to portfolio.
-9. Overview is the daily pulse: attention (SLA leads, overdue tasks, unpaid
-   milestones, Care due) + short funnel + site health. Reports add period depth
-   including unpaid finance and Care MRR.
+9. The dashboard calculates pipeline, weighted pipeline, cash received, MRR,
+   outstanding invoices, expected 30-day value and ordered next actions from
+   live HQ records.
 
 ## Lead fields (workspace)
 
@@ -36,7 +37,7 @@ Beyond contact payload fields, leads store:
   `note_added`, `imported`, `converted`, GDPR events, …)
 
 `first_responded_at` is set on the first note or when status moves
-`new` → `in_progress`.
+`new` → `contacted` (legacy `in_progress` is remapped by migration 008).
 
 ## Data boundaries
 
@@ -68,9 +69,10 @@ server-rendered pages use the correct language immediately.
 
 ## Deployment
 
-1. Apply CRM migrations `003_crm_backend.sql`,
-   `004_fix_case_event_cascades.sql`, `005_task_soft_delete.sql`, and
-   `006_leads_workspace.sql` after the existing Studio schema.
+1. Back up the existing database. Apply migrations `003` through
+   `008_hq_phase1.sql` in numeric order. Migration 008 is additive.
+   **Never run `supabase/SETUP.sql` on an existing database**: it is a
+   destructive greenfield bootstrap.
 2. Create the private `case-files` / `crm-private` storage bucket if the
    migration cannot do it in the current Supabase environment.
 3. Verify the first owner profile before inviting the team.
@@ -82,6 +84,12 @@ Run `npm run studio:check` for a read-only schema check. Run
 `npm run studio:smoke` before the first production rollout; it creates a
 temporary lead (event + notification), a case with related records and a
 private file, verifies them, and removes the test data in a `finally` cleanup.
+
+Run `npm run hq:reconcile` for a read-only report of legacy Cases that are not
+linked to a delivery project. Review these manually; the migration deliberately
+does not guess whether an old Case represents a deal or a project. Run
+`npm run hq:seed` only when realistic demo records are desired; it is
+idempotent and does not delete existing business records.
 
 The optional reminder scheduler is enabled only when `CRM_CRON_SECRET` is set.
 Call `POST /api/studio/cron` from the deployment scheduler with that value in

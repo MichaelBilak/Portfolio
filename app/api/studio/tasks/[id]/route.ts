@@ -14,8 +14,18 @@ import { recordStudioMutation } from "@/lib/studio/audit";
 import { hasGlobalCaseAccess, requireCaseAccess } from "@/lib/studio/access";
 import type { StudioProfile } from "@/lib/studio/auth";
 
-const statuses = ["todo", "in_progress", "blocked", "done", "cancelled"] as const;
+const statuses = ["todo", "in_progress", "blocked", "waiting", "done", "cancelled"] as const;
 const priorities = ["low", "normal", "high", "urgent"] as const;
+
+function optionalMinutes(value: unknown, name: string, minimum = 0): number | null | undefined {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+  const result = typeof value === "number" ? value : Number(value);
+  if (!Number.isInteger(result) || result < minimum || result > 10_000_000) {
+    throw new ApiInputError(`${name} must be a non-negative integer`);
+  }
+  return result;
+}
 
 type TaskAccessRow = {
   id: string;
@@ -169,6 +179,17 @@ export async function PATCH(
     if ("priority" in body) patch.priority = oneOf(body.priority, "priority", priorities);
     if ("assigneeId" in body) patch.assignee_id = optionalUuid(body.assigneeId, "assigneeId");
     if ("dueAt" in body) patch.due_at = optionalString(body.dueAt, "dueAt", 40);
+    if ("companyId" in body) patch.company_id = optionalUuid(body.companyId, "companyId");
+    if ("dealId" in body) patch.deal_id = optionalUuid(body.dealId, "dealId");
+    if ("projectId" in body) {
+      patch.client_project_id = optionalUuid(body.projectId, "projectId");
+    }
+    if ("estimatedMinutes" in body) {
+      patch.estimated_minutes = optionalMinutes(body.estimatedMinutes, "estimatedMinutes", 1);
+    }
+    if ("actualMinutes" in body) {
+      patch.actual_minutes = optionalMinutes(body.actualMinutes, "actualMinutes");
+    }
     if ("caseId" in body) {
       const nextCaseId = optionalUuid(body.caseId, "caseId") ?? null;
       if (nextCaseId) {

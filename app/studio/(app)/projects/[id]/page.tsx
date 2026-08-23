@@ -1,39 +1,26 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { JsonResourceEditor } from "@/components/studio/json-resource-editor";
-import { getStudioSession } from "@/lib/studio/auth";
-import { createStudioTranslator, resolveStudioLocale } from "@/lib/studio/i18n/messages";
-import { studioPath } from "@/lib/studio/path";
+import { HqEntityDetail } from "@/components/studio/workspaces/hq-entity-detail";
+import type { HqField } from "@/components/studio/workspaces/hq-entity-workspace";
 
-export default async function ProjectEditPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const user = await getStudioSession();
-  const locale = resolveStudioLocale(user?.adminLocale);
-  const t = createStudioTranslator(locale);
+const fields: HqField[] = [
+  { key: "name", label: "Project name", required: true },
+  { key: "description", label: "Description", type: "textarea" },
+  { key: "status", label: "Status", type: "select", options: [
+    { value: "planned", label: "Planned" }, { value: "discovery", label: "Discovery" },
+    { value: "design", label: "Design" }, { value: "development", label: "Development" },
+    { value: "testing", label: "Testing" }, { value: "waiting_client", label: "Waiting Client" },
+    { value: "launch", label: "Launch" }, { value: "completed", label: "Completed" },
+    { value: "paused", label: "Paused" }, { value: "cancelled", label: "Cancelled" },
+  ] },
+  { key: "progress", label: "Progress %", type: "number" },
+  { key: "start_date", requestKey: "startDate", label: "Start date", type: "date" },
+  { key: "target_date", requestKey: "targetDate", label: "Target date", type: "date" },
+  { key: "sold_price", requestKey: "soldPrice", label: "Sold price", type: "number" },
+  { key: "estimated_hours", requestKey: "estimatedHours", label: "Estimated hours", type: "number" },
+  { key: "actual_hours", requestKey: "actualHours", label: "Actual hours", type: "number" },
+  { key: "internal_hourly_cost", requestKey: "internalHourlyCost", label: "Internal hourly cost", type: "number" },
+];
 
+export default async function ClientProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const sb = createAdminClient();
-  const { data } = await sb
-    .from("projects")
-    .select("*, project_i18n(*)")
-    .eq("id", id)
-    .maybeSingle();
-  if (!data) notFound();
-
-  return (
-    <>
-      <Link href={studioPath("/projects")} className="st-back-link">
-        <ArrowLeft size={14} />
-        {t("projects.backToList")}
-      </Link>
-      <h1 className="st-h1">{t("content.editProject", { id: data.project_id })}</h1>
-      <p className="st-sub">{t("content.editProjectSub")}</p>
-      <JsonResourceEditor endpoint={`/api/studio/projects/${id}`} initial={data} />
-    </>
-  );
+  return <HqEntityDetail id={id} kind="project" endpoint={`/api/studio/client-projects/${id}`} backPath="/projects" backLabel="Projects" titleKey="name" subtitleKey="status" fields={fields} />;
 }
