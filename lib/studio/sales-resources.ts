@@ -1,5 +1,13 @@
 import type { SalesResource } from "@/lib/studio/sales-api";
 import { ApiInputError } from "@/lib/studio/api";
+import {
+  ACTIVITY_TYPES,
+  COMPANY_STATUSES,
+  CONTACT_STATUSES,
+  DEAL_STAGES,
+  DEAL_STATUSES,
+  PRODUCT_KINDS,
+} from "@/lib/studio/hq/enums";
 
 const metadata = { column: "metadata", kind: "object", nullable: true } as const;
 const relationColumns = [
@@ -48,7 +56,7 @@ export const companiesResource: SalesResource = {
       column: "status",
       kind: "string",
       defaultValue: "prospect",
-      allowed: ["prospect", "active_client", "inactive", "former_client", "partner"],
+      allowed: COMPANY_STATUSES,
     },
     { column: "tags", kind: "stringArray" },
     metadata,
@@ -79,7 +87,7 @@ export const contactsResource: SalesResource = {
       column: "status",
       kind: "string",
       defaultValue: "active",
-      allowed: ["active", "inactive"],
+      allowed: CONTACT_STATUSES,
     },
     metadata,
   ],
@@ -122,9 +130,9 @@ export const dealsResource: SalesResource = {
       column: "stage",
       kind: "string",
       defaultValue: "qualified",
-      allowed: ["qualified", "discovery", "proposal", "negotiation", "won", "lost"],
+      allowed: DEAL_STAGES,
     },
-    { column: "status", kind: "string", defaultValue: "open", allowed: ["open", "won", "lost"] },
+    { column: "status", kind: "string", defaultValue: "open", allowed: DEAL_STATUSES },
     { column: "value", kind: "number", defaultValue: 0, min: 0 },
     { column: "currency", kind: "string", defaultValue: "EUR", maxLength: 8 },
     { column: "probability", kind: "integer", defaultValue: 25, min: 0, max: 100 },
@@ -176,7 +184,7 @@ export const productsResource: SalesResource = {
       column: "kind",
       kind: "string",
       defaultValue: "service",
-      allowed: ["service", "subscription", "addon", "other"],
+      allowed: PRODUCT_KINDS,
     },
     { column: "unit", kind: "string", defaultValue: "item", maxLength: 40 },
     { column: "unit_price", aliases: ["unitPrice"], kind: "number", defaultValue: 0, min: 0 },
@@ -214,7 +222,7 @@ export const activitiesResource: SalesResource = {
       aliases: ["type", "activityType"],
       kind: "string",
       required: true,
-      allowed: ["call", "email", "meeting", "task", "note", "status_change", "system", "other"],
+      allowed: ACTIVITY_TYPES,
     },
     { column: "subject", kind: "string", required: true, maxLength: 300 },
     { column: "body", kind: "string", nullable: true, maxLength: 10000 },
