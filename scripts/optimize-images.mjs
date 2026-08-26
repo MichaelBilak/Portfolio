@@ -24,6 +24,7 @@ const targets = [
   { file: "project-porto-sole.png", maxWidth: 1200 },
   { file: "project-hotel-aurelia.png", maxWidth: 1200 },
   { file: "project-podlopuhom.png", maxWidth: 1200 },
+  { file: "project-solovyev.png", maxWidth: 1200 },
   { file: "project-mare-vivo.png", maxWidth: 1200 },
   { file: "logo-d-letter.png", maxWidth: 256 },
   { file: "logo-dm-group.png", maxWidth: 512 },

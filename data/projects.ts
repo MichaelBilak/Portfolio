@@ -33,7 +33,7 @@ export const projectsMeta: ProjectMeta[] = [
     index: "02",
     tag: "Live Prototype",
     image: "/images/project-hotel-aurelia.png",
-    imagePosition: "center",
+    imagePosition: "top",
     tech: ["Conversion Copy", "Direct Booking"],
     url: "https://hotel-aurelia-del-mar.vercel.app/",
     displayUrl: "hotel-aurelia-del-mar.vercel.app",
