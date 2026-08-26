@@ -136,7 +136,6 @@ export interface TranslationSet {
     compactTitle: string;
     emailLabel: string;
     whatsappLabel: string;
-    availability: string;
     cart: {
       eyebrow: string;
       title: string;
@@ -721,7 +720,6 @@ const it: TranslationSet = {
     compactTitle: "Richiedi il tuo audit gratuito",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Rispondiamo entro 1h",
-    availability: "Attualmente disponibile per nuovi clienti",
     cart: {
       eyebrow: "La tua selezione",
       title: "Servizi scelti",
@@ -1420,7 +1418,6 @@ const en: TranslationSet = {
     compactTitle: "Request your free audit",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reply within 1h",
-    availability: "Currently available for new clients",
     cart: {
       eyebrow: "Your selection",
       title: "Selected services",
@@ -2056,7 +2053,6 @@ const fr: TranslationSet = {
     compactTitle: "Demander votre audit gratuit",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Reponse sous 1h",
-    availability: "Actuellement disponible pour nouveaux clients",
     cart: {
       eyebrow: "Votre selection",
       title: "Services choisis",
@@ -2692,7 +2688,6 @@ const ru: TranslationSet = {
     compactTitle: "Запросить бесплатный аудит",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Ответ в течение 1ч",
-    availability: "Сейчас открыты для новых клиентов",
     cart: {
       eyebrow: "Ваш выбор",
       title: "Выбранные услуги",
@@ -3327,7 +3322,6 @@ const de: TranslationSet = {
     compactTitle: "Kostenloses Audit anfragen",
     emailLabel: "E-Mail",
     whatsappLabel: "WhatsApp · Antwort innerhalb 1h",
-    availability: "Derzeit verfugbar fur neue Kunden",
     cart: {
       eyebrow: "Ihre Auswahl",
       title: "Gewahlte Leistungen",

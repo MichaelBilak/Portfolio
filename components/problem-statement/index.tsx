@@ -7,7 +7,7 @@ interface ProblemStatementProps {
 
 export function ProblemStatement({ t }: ProblemStatementProps) {
   return (
-    <section className="theme-light relative overflow-hidden bg-bgPrimary py-16 md:py-36">
+    <section className="theme-light relative overflow-hidden bg-[#e8e2d4] py-16 md:py-36">
       {/* Gradient fade-in from the dark sections above and below */}
       <div
         aria-hidden
@@ -19,11 +19,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
       />
       <div
         aria-hidden
-        className="dot-grid pointer-events-none absolute inset-0 text-[#0d130f]/[0.06]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-radial opacity-25 blur-3xl"
+        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-radial opacity-20 blur-3xl"
       />
 
       <div className="container-lux relative">

@@ -459,7 +459,6 @@ export const es: TranslationSet = {
     compactTitle: "Solicita tu auditoría gratuita",
     emailLabel: "Email",
     whatsappLabel: "WhatsApp · Respuesta en 1 h",
-    availability: "Actualmente disponibles para nuevos clientes",
     cart: {
       eyebrow: "Tu selección",
       title: "Servicios seleccionados",

@@ -166,10 +166,11 @@ function ScrollCarousel({
     offset: ["start start", "end end"],
   });
 
-  // Hold still briefly after pin, then start rotating — spin begins a beat later.
+  // Hold still after pin, then rotate slowly across the long scroll track.
+  const holdEnd = 0.22;
   const rotateZ = useTransform(
     scrollYProgress,
-    [0, 0.14, 1],
+    [0, holdEnd, 1],
     [0, 0, -((360 * (count - 1)) / Math.max(count, 1))],
   );
 
@@ -181,7 +182,7 @@ function ScrollCarousel({
       }
       return;
     }
-    const spinProgress = Math.max(0, (progress - 0.14) / 0.86);
+    const spinProgress = Math.max(0, (progress - holdEnd) / (1 - holdEnd));
     const next = Math.round(spinProgress * (count - 1));
     const nextActive = Math.min(count - 1, Math.max(0, next));
     if (nextActive !== activeRef.current) {
@@ -195,7 +196,7 @@ function ScrollCarousel({
   return (
     <div
       ref={trackRef}
-      className="relative h-[180vh] sm:h-[200vh] md:h-[240vh]"
+      className="relative h-[560vh] sm:h-[640vh] md:h-[760vh]"
     >
       <div className="sticky top-[var(--header-offset,4.5rem)] flex h-[calc(100svh-var(--header-offset,4.5rem))] flex-col overflow-hidden">
         <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Signal } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Suspense } from "react";
 import { MailtoLink } from "@/components/mailto-link";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
@@ -48,10 +48,6 @@ export function Contact({ t }: ContactProps) {
             >
               <EmailCardContent emailLabel={t.contact.emailLabel} copyable />
             </div>
-            <p className="flex items-center gap-3 px-1 pt-2 text-sm text-textSecondary">
-              <Signal size={16} className="shrink-0 text-emerald-400" aria-hidden />{" "}
-              {t.contact.availability}
-            </p>
           </div>
         </div>
 
