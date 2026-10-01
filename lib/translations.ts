@@ -265,17 +265,6 @@ const it: TranslationSet = {
   langCode: "IT",
   projects: [
     {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Ristorante sul molo · Dal 1993",
-      problem:
-        "Il sito non comunicava l'esperienza unica di cenare a 400 metri nel mare, l'atmosfera al tramonto e il calendario eventi con sufficiente chiarezza.",
-      solution:
-        "Storytelling cinematografico che guida il visitatore dal tramonto alla notte, con percorso di prenotazione chiaro e ottimizzato per mobile.",
-      businessImpact:
-        "Sito live che trasmette l'identita visiva di Porto Sole e converte i visitatori in prenotazioni dirette al primo sguardo.",
-    },
-    {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
@@ -964,17 +953,6 @@ const en: TranslationSet = {
   langCode: "EN",
   projects: [
     {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Restaurant & bar on the pier",
-      problem:
-        "The website failed to convey the unique experience of dining 400 metres into the Adriatic, the sunset atmosphere and event bookings with enough clarity.",
-      solution:
-        "Cinematic storytelling leading visitors from sunset to midnight, with a clear mobile-optimised booking journey.",
-      businessImpact:
-        "Live website that communicates Porto Sole's visual identity and converts visitors into direct reservations at first glance.",
-    },
-    {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
@@ -1661,17 +1639,6 @@ const fr: TranslationSet = {
   langCode: "FR",
   projects: [
     {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Restaurant & bar sur la jetée",
-      problem:
-        "Le site ne communiquait pas l'experience unique de diner a 400 metres en mer, l'ambiance du coucher de soleil et la reservation d'evenements avec assez de clarte.",
-      solution:
-        "Storytelling cinematographique guidant les visiteurs du coucher de soleil a la nuit, avec un parcours de reservation clair optimise pour mobile.",
-      businessImpact:
-        "Site live qui transmet l'identite visuelle de Porto Sole et convertit les visiteurs en reservations directes des le premier coup d'oeil.",
-    },
-    {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",
@@ -2294,17 +2261,6 @@ const ru: TranslationSet = {
   langName: "Русский",
   langCode: "RU",
   projects: [
-    {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Ресторан и бар на причале",
-      problem:
-        "Сайт не передавал уникальность ужина в 400 метрах от берега в Адриатическом море, атмосферу заката и бронирование мероприятий достаточно чётко.",
-      solution:
-        "Кинематографичный сторителлинг, ведущий посетителя от заката до ночи, с понятным мобильным путём бронирования.",
-      businessImpact:
-        "Живой сайт, транслирующий визуальную идентичность Porto Sole и конвертирующий посетителей в прямые бронирования с первого взгляда.",
-    },
     {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
@@ -2930,17 +2886,6 @@ const de: TranslationSet = {
   langName: "Deutsch",
   langCode: "DE",
   projects: [
-    {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Restaurant & Bar auf dem Pier",
-      problem:
-        "Die Website vermittelte das einzigartige Erlebnis, 400 Meter im Meer zu speisen, die Sonnenuntergangsatmosphare und Event-Buchungen nicht klar genug.",
-      solution:
-        "Kinematografisches Storytelling, das Besucher vom Sonnenuntergang bis zur Nacht fuhrt, mit klarem mobiloptimierten Buchungspfad.",
-      businessImpact:
-        "Live-Website, die Porto Soles visuelle Identitat transportiert und Besucher beim ersten Blick in direkte Buchungen verwandelt.",
-    },
     {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",

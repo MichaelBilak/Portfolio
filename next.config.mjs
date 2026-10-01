@@ -49,12 +49,26 @@ const nextConfig = {
   },
   async redirects() {
     const slugRedirects = [
-      { oldSlug: "rockisland-rimini", newSlug: "porto-sole" },
       { oldSlug: "premium-restaurant-local-concept", newSlug: "mare-vivo" },
     ];
+    const retiredWorkSlugs = ["rockisland-rimini", "porto-sole"];
     const serviceRedirects = [{ oldSlug: "booking-flow", newSlug: "services" }];
     const locales = ["it", "en", "fr", "ru", "de", "es"];
     return [
+      ...retiredWorkSlugs.flatMap((oldSlug) => [
+        {
+          source: `/work/${oldSlug}`,
+          destination: "/work",
+          permanent: true,
+        },
+        ...locales
+          .filter((locale) => locale !== "it")
+          .map((locale) => ({
+            source: `/${locale}/work/${oldSlug}`,
+            destination: `/${locale}/work`,
+            permanent: true,
+          })),
+      ]),
       ...slugRedirects.flatMap(({ oldSlug, newSlug }) => [
         {
           source: `/work/${oldSlug}`,

@@ -329,7 +329,8 @@ async function main() {
 
   // Redirects
   for (const r of [
-    { from_path: "/work/rockisland-rimini", to_path: "/work/porto-sole" },
+    { from_path: "/work/rockisland-rimini", to_path: "/work" },
+    { from_path: "/work/porto-sole", to_path: "/work" },
     { from_path: "/work/premium-restaurant-local-concept", to_path: "/work/mare-vivo" },
   ]) {
     await client.from("redirects").upsert(

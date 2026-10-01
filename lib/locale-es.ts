@@ -5,17 +5,6 @@ export const es: TranslationSet = {
   langCode: "ES",
   projects: [
     {
-      id: "porto-sole",
-      name: "Porto Sole",
-      subtitle: "Restaurante y bar en el muelle",
-      problem:
-        "El sitio web no transmitía con suficiente claridad la experiencia única de cenar a 400 metros en el Adriático, la atmósfera del atardecer ni las reservas para eventos.",
-      solution:
-        "Narrativa cinematográfica que guía al visitante del atardecer a la medianoche, con un recorrido de reserva claro y optimizado para móvil.",
-      businessImpact:
-        "Sitio web en vivo que comunica la identidad visual de Porto Sole y convierte a los visitantes en reservas directas desde el primer vistazo.",
-    },
-    {
       id: "hotel-direct-booking",
       name: "Aurelia del Mar",
       nameTagline: "Hotel Direct Booking System",

@@ -17,20 +17,9 @@ export interface ProjectMeta {
 
 export const projectsMeta: ProjectMeta[] = [
   {
-    id: "porto-sole",
-    slug: "porto-sole",
-    index: "01",
-    tag: "Concept Redesign",
-    image: "/images/project-porto-sole.png",
-    imagePosition: "center",
-    tech: ["Figma Prototype"],
-    url: "https://porto-sole.vercel.app/",
-    displayUrl: "porto-sole.vercel.app",
-  },
-  {
     id: "hotel-direct-booking",
     slug: "hotel-direct-booking",
-    index: "02",
+    index: "01",
     tag: "Live Prototype",
     image: "/images/project-hotel-aurelia.png",
     imagePosition: "top",
@@ -42,7 +31,7 @@ export const projectsMeta: ProjectMeta[] = [
   {
     id: "podlopuhom-jewelry",
     slug: "podlopuhom-jewelry",
-    index: "03",
+    index: "02",
     tag: "Live Project",
     image: "/images/project-podlopuhom.png",
     tech: ["i18n EN/RU/IT", "Gallery / Catalog", "WhatsApp Checkout"],
@@ -53,7 +42,7 @@ export const projectsMeta: ProjectMeta[] = [
   {
     id: "mare-vivo",
     slug: "mare-vivo",
-    index: "04",
+    index: "03",
     tag: "Concept Redesign",
     image: "/images/project-mare-vivo.png",
     imagePosition: "top",
@@ -64,7 +53,7 @@ export const projectsMeta: ProjectMeta[] = [
   {
     id: "solovyev-store",
     slug: "solovyev-store",
-    index: "05",
+    index: "04",
     tag: "Live Project",
     image: "/images/project-solovyev.png",
     imagePosition: "top",
