@@ -936,7 +936,7 @@ const it: TranslationSet = {
   },
   workPage: {
     eyebrow: "Lavori",
-    title: "Tutti i progetti",
+    title: "Progetti e riferimenti",
     subtitle: "Una selezione di concept, prototipi e progetti pronti per il cliente.",
     viewAll: "Vedi tutti i lavori",
     backToWork: "Torna ai progetti",
@@ -1622,7 +1622,7 @@ const en: TranslationSet = {
   },
   workPage: {
     eyebrow: "Work",
-    title: "All projects",
+    title: "Projects and references",
     subtitle: "A selection of concepts, prototypes and client-ready projects.",
     viewAll: "View all work",
     backToWork: "Back to projects",
@@ -2245,7 +2245,7 @@ const fr: TranslationSet = {
   },
   workPage: {
     eyebrow: "Projets",
-    title: "Tous les projets",
+    title: "Projets et références",
     subtitle: "Une selection de concepts, prototypes et projets prets pour le client.",
     viewAll: "Voir tous les projets",
     backToWork: "Retour aux projets",
@@ -2870,7 +2870,7 @@ const ru: TranslationSet = {
   },
   workPage: {
     eyebrow: "Работы",
-    title: "Все проекты",
+    title: "Проекты и референсы",
     subtitle: "Выборка концептов, прототипов и client-ready проектов.",
     viewAll: "Смотреть все работы",
     backToWork: "Назад к проектам",
@@ -3492,7 +3492,7 @@ const de: TranslationSet = {
   },
   workPage: {
     eyebrow: "Arbeiten",
-    title: "Alle Projekte",
+    title: "Projekte und Referenzen",
     subtitle: "Eine Auswahl an Konzepten, Prototypen und client-ready Projekten.",
     viewAll: "Alle Arbeiten ansehen",
     backToWork: "Zuruck zu Projekten",

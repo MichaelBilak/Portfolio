@@ -674,7 +674,7 @@ export const es: TranslationSet = {
   },
   workPage: {
     eyebrow: "Proyectos",
-    title: "Todos los proyectos",
+    title: "Proyectos y referencias",
     subtitle: "Una selección de conceptos, prototipos y proyectos listos para el cliente.",
     viewAll: "Ver todos los proyectos",
     backToWork: "Volver a proyectos",
