@@ -1,0 +1,5 @@
+.env
+.env.*
+.next
+supabase/.temp
+content/brand/whatsapp-business-avatar.png
