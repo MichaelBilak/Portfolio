@@ -18,7 +18,12 @@ function glueLine(line: string) {
     const curr = words[i];
     const prevCore = coreWord(prev);
     const currCore = coreWord(curr);
-    const clause = /[,;:—–-]$/.test(prev);
+    const dash = /^[—–-]+$/.test(currCore);
+    if (dash) {
+      out += "\u00A0" + curr;
+      continue;
+    }
+    const clause = /[,;:—–-]$/.test(prev) || /^[—–-]+$/.test(prevCore);
     const prevFn = FUNCTION_WORD.test(prevCore);
     const currFn = FUNCTION_WORD.test(currCore);
     const allowBreak = clause || (!prevFn && !currFn);

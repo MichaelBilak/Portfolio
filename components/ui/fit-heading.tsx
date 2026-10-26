@@ -12,15 +12,18 @@ export function FitHeading({
   className,
   max = "5.75rem",
   min = "1rem",
+  fitChars,
 }: {
   as?: HeadingTag;
   text: string;
   className?: string;
   max?: string;
   min?: string;
+  /** Size every heading as if it were this many characters, so locales match. */
+  fitChars?: number;
 }) {
   const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
-  const longest = Math.max(...lines.map((line) => line.length), 1);
+  const longest = fitChars ?? Math.max(...lines.map((line) => line.length), 1);
   const cqi = Math.min(11, 100 / (longest * 0.78));
   const size = `clamp(${min}, ${cqi.toFixed(3)}cqi, ${max})`;
 

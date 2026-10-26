@@ -66,7 +66,7 @@ export default async function ServicesPage({ params }: PageProps) {
             <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
               {sp.eyebrow}
             </p>
-            <FitHeading text={sp.title} className="mt-3" />
+            <FitHeading text={sp.title.replace(/\s*\n\s*/g, " ")} fitChars={24} className="mt-3" max="4.75rem" />
             <p className="mt-5 max-w-3xl whitespace-pre-line text-pretty text-base leading-relaxed text-textSecondary sm:text-lg">
               {phraseText(sp.subtitle)}
             </p>

@@ -804,7 +804,7 @@ const it: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Servizi",
-    title: "Crescita digitale\ne creatività,\nin un solo studio",
+    title: "Cosa offriamo",
     subtitle:
       "Visibilità su Google e AI, siti e e-commerce, produzione video, automazione e cura continua — per PMI e hospitality a Rimini.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
@@ -1899,7 +1899,7 @@ const fr: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Services",
-    title: "Ce que nous\nproposons",
+    title: "Ce que nous proposons",
     subtitle:
       "Visibilité Google et IA, sites et e-commerce, production vidéo, automatisation et suivi — pour les PME et l’hospitality à Rimini.",
     techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
@@ -2416,7 +2416,7 @@ const ru: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Услуги",
-    title: "Что мы\nпредлагаем",
+    title: "Что мы предлагаем",
     subtitle:
       "Видимость в Google и ИИ, сайты и e-commerce, видео, автоматизация и сопровождение — для малого бизнеса и hospitality в Римини.",
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
