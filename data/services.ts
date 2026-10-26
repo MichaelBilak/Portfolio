@@ -13,16 +13,14 @@ export interface ServiceMeta {
  * Visibility → Websites → Video → Automation → Growth → Care;
  * redesign kept as supporting offer.
  *
- * visibility reuses service-redesign.png and digital-growth reuses
- * service-monthly-support.png until real photographs exist.
- * Do not invent portfolio images. Video production stays a standalone service.
+ * Each service has its own glass crystal. Video production stays a standalone service.
  */
 export const servicesMeta: ServiceMeta[] = [
   {
     id: "visibility",
     slug: "google-ai-visibility",
     icon: Search,
-    image: "/images/service-redesign.png",
+    image: "/images/service-visibility.png",
   },
   {
     id: "premium-site",
@@ -46,7 +44,7 @@ export const servicesMeta: ServiceMeta[] = [
     id: "digital-growth",
     slug: "digital-growth",
     icon: ChartColumnIncreasing,
-    image: "/images/service-monthly-support.png",
+    image: "/images/service-digital-growth.png",
   },
   {
     id: "monthly-support",
