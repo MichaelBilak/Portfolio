@@ -4,6 +4,7 @@ import { ServiceCategories } from "@/components/service-categories";
 import { ServicesCrystalGrid } from "@/components/services-crystal-grid";
 import type { Metadata } from "next";
 import { pageTitle } from "@/lib/brand";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -23,10 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const { t } = await getSiteContent(locale as Locale);
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/services",
     title: pageTitle(t.servicesPage.title),
     description: t.servicesPage.subtitle,
-  };
+  });
 }
 
 export default async function ServicesPage({ params }: PageProps) {
@@ -64,7 +67,7 @@ export default async function ServicesPage({ params }: PageProps) {
             <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
               {sp.title}
             </h1>
-            <p className="mt-5 whitespace-nowrap text-[clamp(0.8rem,2.4vw,1.125rem)] leading-snug text-textSecondary">
+            <p className="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-textSecondary sm:text-lg">
               {sp.subtitle}
             </p>
           </div>

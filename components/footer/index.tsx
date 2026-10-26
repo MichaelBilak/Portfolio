@@ -41,6 +41,7 @@ export function Footer({ t, className }: FooterProps) {
     { href: "/work", label: t.nav.work },
     { href: "/services", label: t.nav.services },
     { href: "/about", label: t.nav.about },
+    { href: "/audit-digitale", label: t.nav.audit },
     { href: "/contact", label: t.nav.contact },
   ];
 

@@ -22,11 +22,13 @@ import { CONTACT_EMAIL } from "../lib/contact-email";
 const LOCALES: Locale[] = ["it", "en", "fr", "ru", "de", "es"];
 
 const ICON_BY_SERVICE: Record<string, string> = {
-  "booking-flow": "CalendarCheck",
+  visibility: "Search",
   "premium-site": "Monitor",
-  redesign: "RefreshCw",
   "photo-video": "Video",
+  "booking-flow": "CalendarCheck",
+  "digital-growth": "ChartColumnIncreasing",
   "monthly-support": "Wrench",
+  redesign: "RefreshCw",
 };
 
 const PROCESS_ICONS = ["Search", "Compass", "Brush", "Code2", "TrendingUp"] as const;

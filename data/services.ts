@@ -1,4 +1,4 @@
-import { CalendarCheck, Monitor, RefreshCw, Video, Wrench } from "lucide-react";
+import { CalendarCheck, ChartColumnIncreasing, Monitor, RefreshCw, Search, Video, Wrench } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
 export interface ServiceMeta {
@@ -8,13 +8,21 @@ export interface ServiceMeta {
   image: string;
 }
 
-/** Homepage / catalog order: automation → websites → systems upgrade → content → care */
+/**
+ * Primary commercial order:
+ * Visibility → Websites → Video → Automation → Growth → Care;
+ * redesign kept as supporting offer.
+ *
+ * visibility reuses service-redesign.png and digital-growth reuses
+ * service-monthly-support.png until real photographs exist.
+ * Do not invent portfolio images. Video production stays a standalone service.
+ */
 export const servicesMeta: ServiceMeta[] = [
   {
-    id: "booking-flow",
-    slug: "booking-flow",
-    icon: CalendarCheck,
-    image: "/images/service-booking-flow.png",
+    id: "visibility",
+    slug: "google-ai-visibility",
+    icon: Search,
+    image: "/images/service-redesign.png",
   },
   {
     id: "premium-site",
@@ -23,21 +31,33 @@ export const servicesMeta: ServiceMeta[] = [
     image: "/images/service-premium-website.png",
   },
   {
-    id: "redesign",
-    slug: "redesign",
-    icon: RefreshCw,
-    image: "/images/service-redesign.png",
-  },
-  {
     id: "photo-video",
     slug: "photo-video",
     icon: Video,
     image: "/images/service-photo-video.png",
   },
   {
+    id: "booking-flow",
+    slug: "booking-flow",
+    icon: CalendarCheck,
+    image: "/images/service-booking-flow.png",
+  },
+  {
+    id: "digital-growth",
+    slug: "digital-growth",
+    icon: ChartColumnIncreasing,
+    image: "/images/service-monthly-support.png",
+  },
+  {
     id: "monthly-support",
     slug: "monthly-support",
     icon: Wrench,
     image: "/images/service-monthly-support.png",
+  },
+  {
+    id: "redesign",
+    slug: "redesign",
+    icon: RefreshCw,
+    image: "/images/service-redesign.png",
   },
 ];

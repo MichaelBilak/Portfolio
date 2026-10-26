@@ -10,6 +10,7 @@ import { Navigation } from "@/components/navigation";
 import { OrderServices } from "@/components/order-services";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
@@ -22,10 +23,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const { t } = await getSiteContent(locale as Locale);
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/order",
     title: pageTitle(t.orderPage.title),
     description: t.orderPage.subtitle,
-  };
+  });
 }
 
 export default async function OrderPage({ params }: PageProps) {

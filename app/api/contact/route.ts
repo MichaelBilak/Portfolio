@@ -344,6 +344,13 @@ function safeArray(value: unknown, maxItems = MAX_ARRAY_LENGTH): string[] {
 }
 
 export async function POST(request: NextRequest) {
+  if (process.env.VERCEL_ENV === "preview") {
+    return NextResponse.json(
+      { ok: false, error: "Preview does not create leads or send notifications." },
+      { status: 403, headers: { "X-Robots-Tag": "noindex, nofollow" } },
+    );
+  }
+
   // ── Parse ──────────────────────────────────────────────────
   let payload: ContactPayload;
   try {

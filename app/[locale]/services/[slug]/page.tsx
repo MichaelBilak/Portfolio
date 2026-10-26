@@ -17,6 +17,14 @@ import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 import { servicesMeta } from "@/data/services";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import {
+  breadcrumbHomeLabel,
+  breadcrumbJsonLd,
+  faqHeading,
+  jsonLdScript,
+  serviceJsonLd,
+} from "@/lib/seo/json-ld";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -34,10 +42,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!meta) return {};
   const service = t.services.find((s) => s.id === meta.id);
   if (!service) return {};
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: `/services/${slug}`,
     title: pageTitle(service.title),
     description: service.description,
-  };
+  });
 }
 
 export default async function ServicePage({ params }: PageProps) {
@@ -62,11 +72,31 @@ export default async function ServicePage({ params }: PageProps) {
     }))
     .filter((s) => s.copy);
 
+  const schema = [
+    serviceJsonLd({
+      locale: safeLocale,
+      name: service.title,
+      description: service.description,
+      path: `/services/${slug}`,
+      serviceType: service.title,
+    }),
+    breadcrumbJsonLd(safeLocale, [
+      { name: breadcrumbHomeLabel(safeLocale), path: "" },
+      { name: t.nav.services, path: "/services" },
+      { name: service.title, path: `/services/${slug}` },
+    ]),
+  ];
+
   return (
     <>
       <Navigation locale={safeLocale} t={t} />
 
       <main className="relative pt-page">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(schema) }}
+        />
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div className="container-lux relative">
@@ -160,6 +190,24 @@ export default async function ServicePage({ params }: PageProps) {
             <DeliverablesGrid items={service.whatYouGet} />
           </div>
         </section>
+
+        {service.faq?.length ? (
+          <section className="py-16 md:py-24">
+            <div className="container-lux max-w-3xl">
+              <h2 className="font-display text-fluid-title font-light text-textPrimary">
+                {faqHeading(safeLocale)}
+              </h2>
+              <div className="mt-8 space-y-6">
+                {service.faq.map((item) => (
+                  <div key={item.question}>
+                    <h3 className="text-lg font-medium text-textPrimary">{item.question}</h3>
+                    <p className="mt-2 text-textSecondary leading-relaxed">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         <section className="py-16 md:py-24">
           <div className="container-lux">

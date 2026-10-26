@@ -1,5 +1,5 @@
 import { WordmarkCore } from "@/components/brand-logo/wordmark-core";
-import { BRAND_FULL, BRAND_TAGLINE } from "@/lib/brand";
+import { BRAND_NAME, BRAND_TAGLINE } from "@/lib/brand";
 
 interface BrandLogoProps {
   priority?: boolean;
@@ -22,7 +22,7 @@ export function BrandLogo({
 }: BrandLogoProps) {
   return (
     <span
-      aria-label={BRAND_FULL}
+      aria-label={BRAND_NAME}
       className={`inline-flex min-w-0 items-center ${wordmarkClassName}`}
     >
       <WordmarkCore

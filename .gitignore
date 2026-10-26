@@ -46,6 +46,12 @@ next-env.d.ts
 /media
 npm-install.log
 
+# Supabase CLI temp (not project config)
+/supabase/.temp/
+
+# Unrelated brand export, not part of the site release
+/content/brand/whatsapp-business-avatar.png
+
 # local check / seed scratch files
 /build-log.txt
 /build-check.txt

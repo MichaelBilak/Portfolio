@@ -11,6 +11,7 @@ import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -20,10 +21,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = translations[locale as Locale];
-  return {
-    title: pageTitle(t.about.title),
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/about",
+    title: pageTitle(t.nav.about),
     description: t.about.bio.split("\n")[0],
-  };
+  });
 }
 
 export default async function AboutPage({ params }: PageProps) {
@@ -49,7 +52,7 @@ export default async function AboutPage({ params }: PageProps) {
           </Link>
         </div>
 
-        <About t={t} />
+        <About t={t} headingLevel="h1" />
         <AuditCta t={t} />
       </main>
 

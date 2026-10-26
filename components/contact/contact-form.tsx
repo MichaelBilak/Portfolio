@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, X } from "lucide-react";
-import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { ServiceCart, useOrderCartSelection } from "@/components/service-cart";
@@ -57,6 +57,7 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
   });
   const [errors, setErrors] = useState<Record<keyof FormState, string>>(emptyErrors);
   const [loading, setLoading] = useState(false);
+  const submitLock = useRef(false);
   const [sent, setSent] = useState(false);
   const [submitError, setSubmitError] = useState(false);
   const [portalReady, setPortalReady] = useState(false);
@@ -123,8 +124,10 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitLock.current || loading) return;
     if (!validate(form)) return;
 
+    submitLock.current = true;
     setLoading(true);
     setSubmitError(false);
 
@@ -147,15 +150,15 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
         }),
       });
     } catch {
+      submitLock.current = false;
       setLoading(false);
       setSubmitError(true);
       return;
     }
-    setLoading(false);
 
     if (response.ok) {
       const { trackEvent } = await import("@/components/analytics");
-      trackEvent("contact_submit", {
+      trackEvent(auditMode ? "audit_submit" : "contact_submit", {
         intent: auditMode ? "audit" : "contact",
         locale: t.langCode.toLowerCase(),
       });
@@ -172,6 +175,8 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
     } else {
       setSubmitError(true);
     }
+    submitLock.current = false;
+    setLoading(false);
   };
 
   const inputClass = (key: keyof FormState) =>
@@ -361,7 +366,7 @@ export function ContactForm({ t, variant = "full", auditMode: auditModeProp }: C
               <option value="google">{t.contact.form.options.google}</option>
               <option value="referral">{t.contact.form.options.referral}</option>
               <option value="social">{t.contact.form.options.social}</option>
-              <option value="other">{t.contact.form.options.other}</option>
+              <option value="other">{t.contact.form.options.sourceOther}</option>
             </select>
           </Field>
         </div>

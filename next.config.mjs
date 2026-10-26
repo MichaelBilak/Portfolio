@@ -31,30 +31,30 @@ const nextConfig = {
     return config;
   },
   async headers() {
-    return [
+    const headers = [
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
       {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
-          },
-        ],
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
       },
     ];
+    if (process.env.VERCEL_ENV === "preview") {
+      headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" });
+    }
+    return [{ source: "/(.*)", headers }];
   },
   async redirects() {
     const slugRedirects = [
       { oldSlug: "premium-restaurant-local-concept", newSlug: "mare-vivo" },
     ];
     const retiredWorkSlugs = ["rockisland-rimini", "porto-sole"];
-    const serviceRedirects = [{ oldSlug: "booking-flow", newSlug: "services" }];
     const locales = ["it", "en", "fr", "ru", "de", "es"];
     return [
+      { source: "/it", destination: "/", permanent: true },
+      { source: "/it/", destination: "/", permanent: true },
       ...retiredWorkSlugs.flatMap((oldSlug) => [
         {
           source: `/work/${oldSlug}`,
@@ -80,20 +80,6 @@ const nextConfig = {
           .map((locale) => ({
             source: `/${locale}/work/${oldSlug}`,
             destination: `/${locale}/work/${newSlug}`,
-            permanent: true,
-          })),
-      ]),
-      ...serviceRedirects.flatMap(({ oldSlug, newSlug }) => [
-        {
-          source: `/services/${oldSlug}`,
-          destination: `/${newSlug}`,
-          permanent: true,
-        },
-        ...locales
-          .filter((locale) => locale !== "it")
-          .map((locale) => ({
-            source: `/${locale}/services/${oldSlug}`,
-            destination: `/${locale}/${newSlug}`,
             permanent: true,
           })),
       ]),

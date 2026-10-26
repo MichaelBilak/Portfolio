@@ -1,0 +1,3881 @@
+{
+  "purpose": "pre-migration-anchor",
+  "capturedAt": "2026-10-26T11:50:15.844Z",
+  "databaseHost": "bcfebgxfuneruzljivwv.supabase.co",
+  "note": "Conflict anchor captured before the release sync. Do not regenerate after apply or after manual CMS edits.",
+  "siteCopy": {
+    "it": {
+      "trust": {
+        "hash": "1b1a8ee2",
+        "updatedAt": "2026-08-11T21:06:17.455+00:00",
+        "data": [
+          "Sistemi digitali che collegano",
+          "Automazione che fa risparmiare tempo",
+          "Siti che convertono",
+          "Contenuti che costruiscono fiducia"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "7562da7f",
+        "updatedAt": "2026-08-11T21:06:17.566+00:00",
+        "data": "Cosa costruiamo"
+      },
+      "servicesLead": {
+        "hash": "9b5dd818",
+        "updatedAt": "2026-08-11T21:06:17.693+00:00",
+        "data": "Sistemi · Automazione · Siti · Contenuti"
+      },
+      "problem": {
+        "hash": "a2ea1dc3",
+        "updatedAt": "2026-08-11T21:06:17.789+00:00",
+        "data": {
+          "body": "Canali sparsi, processi manuali, una presenza web debole e contenuti che non vendono: questo gap costa tempo e clienti.\n\nColleghiamo sistemi digitali, automatizziamo i processi, costruiamo siti e produciamo contenuti perche il business funzioni meglio e comunichi al livello giusto.",
+          "title": "Quasi tutti i business hanno strumenti.\nQuasi nessuno ha un sistema digitale che funziona davvero.",
+          "eyebrow": "01 — Perche conta"
+        }
+      },
+      "caseStudies": {
+        "hash": "766aefd1",
+        "updatedAt": "2026-08-11T21:06:17.892+00:00",
+        "data": {
+          "label": "Lavori selezionati",
+          "fields": {
+            "problem": "Problema",
+            "solution": "Soluzione",
+            "businessImpact": "Impatto business"
+          },
+          "viewCaseStudy": "Vedi il progetto"
+        }
+      },
+      "audit": {
+        "hash": "0c2c6032",
+        "updatedAt": "2026-08-11T21:06:18.258+00:00",
+        "data": {
+          "cta": "Richiedi il tuo audit",
+          "body": "Analizziamo sistemi, processi, sito e contenuti — e ti diciamo esattamente cosa migliorare.",
+          "meta": "Rispondiamo entro 1 ora · Gratuito · Decidi tu i prossimi passi",
+          "title": "Vuoi sapere cosa frena\nil tuo business?",
+          "freeBadge": "FREE"
+        }
+      },
+      "processSection": {
+        "hash": "b011eeb5",
+        "updatedAt": "2026-08-11T21:06:18.358+00:00",
+        "data": {
+          "title": "Come trasformiamo il caos digitale in un asset di business",
+          "eyebrow": "Processo",
+          "subtitle": "Sistemi, automazione, web e contenuti in un unico metodo guidato dal business — non solo un bel sito.",
+          "stepLabel": "Step",
+          "footerNote": "Ogni progetto è flessibile: processo, design e funzionalità si adattano alle esigenze reali di ogni cliente."
+        }
+      },
+      "about": {
+        "hash": "2731872f",
+        "updatedAt": "2026-08-11T21:06:18.507+00:00",
+        "data": {
+          "bio": "Siamo un piccolo studio digitale. Creiamo l'ambiente digitale di cui il business ha bisogno: sistemi e piattaforme, automazione dei processi, siti e interfacce, piu contenuti visivi e sviluppo continuo del prodotto. Non solo belli — tutto e costruito per risultati di business concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
+          "pills": [
+            "Disponibile per nuovi progetti"
+          ],
+          "title": "Chi siamo?",
+          "eyebrow": "Chi siamo"
+        }
+      },
+      "aboutPage": {
+        "hash": "7fe50c27",
+        "updatedAt": "2026-08-11T21:06:18.681+00:00",
+        "data": {
+          "backToHome": "Torna alla home"
+        }
+      },
+      "pricingAddons": {
+        "hash": "289cf0b9",
+        "updatedAt": "2026-08-11T21:06:19.026+00:00",
+        "data": {
+          "title": "Estendi il progetto",
+          "eyebrow": "Moduli",
+          "footnote": "Il preventivo finale per ogni modulo viene definito dopo il brief.",
+          "subtitle": "Aggiungi funzionalita al pacchetto base. I moduli si scelgono in base alle esigenze del progetto."
+        }
+      },
+      "servicesPage": {
+        "hash": "49bf2806",
+        "updatedAt": "2026-08-11T21:06:19.123+00:00",
+        "data": {
+          "title": "Cosa costruiamo",
+          "eyebrow": "Servizi",
+          "viewAll": "Tutti i servizi",
+          "subtitle": "Sistemi digitali, automazione dei processi, siti web e produzione contenuti — end to end.",
+          "techStack": "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Sito istituzionale multi-pagina con team, servizi e SEO ottimizzato.",
+                  "label": "Siti aziendali"
+                },
+                {
+                  "info": "Sito a breve termine per lanciare un'offerta, evento o campagna.",
+                  "label": "Promo"
+                },
+                {
+                  "info": "Pagina singola ad alta conversione con un obiettivo e una CTA chiara.",
+                  "label": "Landing page"
+                },
+                {
+                  "info": "Sito editoriale con articoli, categorie, tag e feed RSS.",
+                  "label": "Media e blog"
+                },
+                {
+                  "info": "Consegna rapida tramite Webflow, Framer o Tilda — senza dev pesante.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Siti web"
+            },
+            {
+              "items": [
+                {
+                  "info": "Tool web interattivi: dashboard, prenotazioni, marketplace.",
+                  "label": "Web service"
+                },
+                {
+                  "info": "App iOS e Android native con React Native o Flutter.",
+                  "label": "App mobile"
+                },
+                {
+                  "info": "Portali interni per team: wiki, documenti, comunicazioni.",
+                  "label": "Intranet"
+                },
+                {
+                  "info": "Spazio clienti protetto per ordini, progetti e documenti.",
+                  "label": "Area riservata"
+                },
+                {
+                  "info": "Flussi automatizzati per assistenza, lead capture e onboarding.",
+                  "label": "Chatbot"
+                },
+                {
+                  "info": "Shop online con carrello, pagamenti e gestione inventario.",
+                  "label": "E-commerce"
+                }
+              ],
+              "title": "Prodotti digitali"
+            },
+            {
+              "items": [
+                {
+                  "info": "Wireframe e design d'interfaccia pixel-perfect basati su ricerca utente.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Animazioni, micro-interazioni e identità sonora del brand.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Logo, palette, tipografia e sistema di identità visiva completo.",
+                  "label": "Branding"
+                },
+                {
+                  "info": "Interviste, test di usabilità e decisioni basate sui dati.",
+                  "label": "UX Research"
+                }
+              ],
+              "title": "Design"
+            },
+            {
+              "items": [
+                {
+                  "info": "Requisiti, specifiche tecniche e pianificazione dell'architettura.",
+                  "label": "Analisi di sistema"
+                },
+                {
+                  "info": "Interfacce React/Next.js — veloci, accessibili, pronte per la produzione.",
+                  "label": "Frontend"
+                },
+                {
+                  "info": "API, database, autenticazione e logica server scalabile.",
+                  "label": "Backend"
+                },
+                {
+                  "info": "App cross-platform con performance fluide su iOS e Android.",
+                  "label": "Sviluppo mobile"
+                },
+                {
+                  "info": "Test manuali e automatizzati su dispositivi, browser e scenari reali.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "CI/CD, hosting cloud, monitoraggio e deploy senza downtime.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Sviluppo"
+            }
+          ],
+          "pricingNote": "Ogni progetto viene quotato su misura dopo il brief. I moduli aggiuntivi si scelgono in base alle esigenze del progetto."
+        }
+      },
+      "footer": {
+        "hash": "a347bf91",
+        "updatedAt": "2026-08-11T21:06:19.464+00:00",
+        "data": {
+          "built": "Built with intention.",
+          "links": "Link rapidi",
+          "status": "Disponibile per nuovi clienti",
+          "privacy": "Privacy Policy",
+          "location": "Digital Studio",
+          "description": "Studio digitale per sistemi, automazione, siti e contenuti."
+        }
+      },
+      "langSelector": {
+        "hash": "9bf2c623",
+        "updatedAt": "2026-08-11T21:06:19.683+00:00",
+        "data": {
+          "label": "Lingua"
+        }
+      },
+      "nav": {
+        "hash": "99815d34",
+        "updatedAt": "2026-08-11T21:06:17.232+00:00",
+        "data": {
+          "buy": "Ordina",
+          "work": "Lavori",
+          "about": "Chi siamo",
+          "audit": "Audit gratuito",
+          "contact": "Contatti",
+          "process": "Processo",
+          "services": "Servizi"
+        }
+      },
+      "hero": {
+        "hash": "f30e830b",
+        "updatedAt": "2026-08-11T21:06:17.345+00:00",
+        "data": {
+          "lead": "Sistemi digitali, automazione dei processi, siti web e produzione di contenuti.",
+          "buyCta": "Ordina servizi",
+          "eyebrow": "Studio Digitale",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "Vedi i progetti",
+          "buyCtaShort": "Ordina",
+          "socialProof": "4 progetti · Disponibile per nuovi clienti",
+          "secondaryCta": "Richiedi audit gratuito",
+          "chipHighlight": "Chiavi in mano",
+          "mockupCaption": "Il tuo miglior biglietto da visita",
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "impact": {
+        "hash": "af89ca44",
+        "updatedAt": "2026-08-11T21:06:18.036+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Portali, dashboard e prodotti digitali che tolgono il lavoro da chat e fogli di calcolo.",
+              "note": "Sistemi digitali",
+              "title": "Sistemi che collegano le operazioni"
+            },
+            {
+              "body": "Prenotazioni, richieste e flussi ripetitivi gestiti in modo chiaro — meno lead persi, meno follow-up manuale.",
+              "note": "Automazione dei processi",
+              "title": "Automazione che fa risparmiare ore"
+            },
+            {
+              "body": "La presenza web costruisce ancora fiducia. Progettiamo e aggiorniamo siti che trasformano attenzione in azione.",
+              "note": "Siti web",
+              "title": "Siti che convertono"
+            },
+            {
+              "body": "Foto, video e asset pronti per web e campagne — cosi il brand appare solido quanto opera.",
+              "note": "Produzione contenuti",
+              "title": "Contenuti che costruiscono fiducia"
+            }
+          ],
+          "label": "Perche conta"
+        }
+      },
+      "servicePage": {
+        "hash": "8ee17ba3",
+        "updatedAt": "2026-08-11T21:06:19.246+00:00",
+        "data": {
+          "orderCta": "Richiedi il servizio",
+          "backToHome": "Torna alla home",
+          "howItWorks": "Come funziona",
+          "viewService": "Scopri il servizio",
+          "deliverables": "Cosa include",
+          "popularLabel": "Piu scelto",
+          "otherServices": "Altri servizi",
+          "pricingEyebrow": "Tariffe",
+          "sectionEyebrow": "Servizio"
+        }
+      },
+      "workPage": {
+        "hash": "1c53540b",
+        "updatedAt": "2026-08-11T21:06:19.365+00:00",
+        "data": {
+          "title": "Tutti i progetti",
+          "eyebrow": "Lavori",
+          "viewAll": "Vedi tutti i lavori",
+          "overview": "Panoramica",
+          "subtitle": "Una selezione di concept, prototipi e progetti pronti per il cliente.",
+          "viewRepo": "Vedi su GitHub",
+          "techStack": "Stack tecnico",
+          "backToWork": "Torna ai progetti",
+          "liveStatus": "Online",
+          "otherProjects": "Altri progetti",
+          "visitLiveSite": "Visita il sito"
+        }
+      },
+      "contact": {
+        "hash": "048ab147",
+        "updatedAt": "2026-08-11T21:06:18.8+00:00",
+        "data": {
+          "body": "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
+          "cart": {
+            "title": "Servizi scelti",
+            "eyebrow": "La tua selezione",
+            "removeItem": "Rimuovi",
+            "addonsLabel": "Moduli aggiuntivi",
+            "continueSearch": "Continua a scegliere"
+          },
+          "form": {
+            "name": "Nome e cognome",
+            "brief": "Descrivi brevemente cosa cerchi",
+            "email": "Email",
+            "errors": {
+              "required": "Campo obbligatorio",
+              "invalidUrl": "Inserisci un URL valido (es. https://tuosito.it)",
+              "invalidEmail": "Inserisci un'email valida"
+            },
+            "source": "Come ci hai trovato?",
+            "submit": "Invia messaggio",
+            "options": {
+              "bar": "Bar / locale",
+              "hotel": "Hotel",
+              "other": "Altro / servizi",
+              "google": "Google",
+              "social": "Social",
+              "referral": "Passaparola",
+              "restaurant": "Ristorazione / hospitality"
+            },
+            "siteUrl": "URL sito o prodotto",
+            "success": "Ti rispondiamo entro 1 ora.",
+            "business": "Nome del business",
+            "optional": "facoltativo",
+            "submitting": "Invio in corso...",
+            "submitAudit": "Richiedi audit gratuito",
+            "submitError": "Invio non riuscito. Scrivici a {email} e ti rispondiamo subito.",
+            "businessType": "Tipo di business",
+            "successClose": "Chiudi",
+            "successTitle": "La tua richiesta è stata inviata",
+            "auditBriefPlaceholder": "Cosa non funziona nel tuo setup digitale — sistemi, processi, sito o contenuti?"
+          },
+          "label": "Iniziamo",
+          "title": "Un ambiente digitale per business che non vogliono essere come tutti.",
+          "emailLabel": "Email",
+          "availability": "Attualmente disponibile per nuovi clienti",
+          "compactTitle": "Richiedi il tuo audit gratuito",
+          "whatsappLabel": "WhatsApp · Rispondiamo entro 1h"
+        }
+      },
+      "privacyPage": {
+        "hash": "ed1af0a9",
+        "updatedAt": "2026-08-11T21:06:19.562+00:00",
+        "data": {
+          "title": "Informativa sulla privacy",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — contatto: dormup.it@gmail.com.",
+              "heading": "Titolare del trattamento"
+            },
+            {
+              "body": "Raccogliamo i dati che invii volontariamente tramite i moduli di contatto: nome, email, nome del business, tipo di attività, URL del sito (se fornito), breve descrizione del progetto e servizi selezionati.",
+              "heading": "Dati raccolti"
+            },
+            {
+              "body": "I dati sono trattati per rispondere alle richieste, preparare preventivi e audit gratuiti. Base giuridica: esecuzione di misure precontrattuali e consenso implicito inviando il modulo (art. 6 GDPR).",
+              "heading": "Finalità e base giuridica"
+            },
+            {
+              "body": "Conserviamo i dati per il tempo necessario a gestire la richiesta e per un massimo di 24 mesi, salvo obblighi di legge diversi.",
+              "heading": "Conservazione"
+            },
+            {
+              "body": "Puoi richiedere accesso, rettifica, cancellazione, limitazione o opposizione scrivendo a dormup.it@gmail.com. Hai diritto di reclamo al Garante per la protezione dei dati personali.",
+              "heading": "Diritti dell'interessato"
+            },
+            {
+              "body": "Questo sito non utilizza cookie di profilazione di terze parti. Eventuali cookie tecnici servono al funzionamento del sito e della selezione lingua.",
+              "heading": "Cookie e analytics"
+            }
+          ],
+          "backToHome": "Torna alla home",
+          "lastUpdated": "Ultimo aggiornamento: giugno 2026"
+        }
+      },
+      "orderPage": {
+        "hash": "77698eb5",
+        "updatedAt": "2026-08-11T21:06:18.913+00:00",
+        "data": {
+          "title": "Scegli i servizi",
+          "trust": {
+            "deposit": "Acconto 30% all'avvio",
+            "timeline": "Tempi tipici: 4–8 settimane",
+            "processLink": "Come lavoriamo",
+            "testimonial": "«Risposta rapida, scope chiaro — esattamente il partner digitale che cercavamo.»"
+          },
+          "eyebrow": "Ordine",
+          "footnote": "Dopo la richiesta ricevi una risposta con scope, tempi e costo finale. Nessun pagamento automatico.",
+          "subtitle": "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora.",
+          "fromLabel": "da",
+          "plusLabel": "+",
+          "proceedCta": "Richiedi preventivo",
+          "selectHint": "Seleziona almeno un servizio per continuare, oppure scrivici direttamente.",
+          "estimatedLabel": "Stima indicativa",
+          "aboutServiceCta": "Info sul servizio",
+          "addonsSectionTitle": "Moduli aggiuntivi"
+        }
+      }
+    },
+    "en": {
+      "nav": {
+        "hash": "900f8611",
+        "updatedAt": "2026-08-11T21:06:19.909+00:00",
+        "data": {
+          "buy": "Order",
+          "work": "Work",
+          "about": "About us",
+          "audit": "Free audit",
+          "contact": "Contact",
+          "process": "Process",
+          "services": "Services"
+        }
+      },
+      "hero": {
+        "hash": "ecfeee9e",
+        "updatedAt": "2026-08-11T21:06:20.01+00:00",
+        "data": {
+          "lead": "Digital systems, process automation, websites and content production.",
+          "buyCta": "Order services",
+          "eyebrow": "Digital Studio",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "View projects",
+          "buyCtaShort": "Order",
+          "socialProof": "4 projects · Available for new clients",
+          "secondaryCta": "Request free audit",
+          "chipHighlight": "Turnkey work",
+          "mockupCaption": "Your best business card",
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "trust": {
+        "hash": "05e8306b",
+        "updatedAt": "2026-08-11T21:06:20.113+00:00",
+        "data": [
+          "Digital systems that connect",
+          "Process automation that saves time",
+          "Websites that convert",
+          "Content that builds trust"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "672d35e1",
+        "updatedAt": "2026-08-11T21:06:20.209+00:00",
+        "data": "What we build"
+      },
+      "servicesLead": {
+        "hash": "3062172a",
+        "updatedAt": "2026-08-11T21:06:20.316+00:00",
+        "data": "Systems · Automation · Websites · Content"
+      },
+      "problem": {
+        "hash": "a86a250d",
+        "updatedAt": "2026-08-11T21:06:20.416+00:00",
+        "data": {
+          "body": "Scattered channels, manual processes, a weak web presence and content that doesn't sell — that gap costs time and customers.\n\nWe connect digital systems, automate processes, build websites and produce content so your business runs better and looks the part.",
+          "title": "Most businesses have tools.\nAlmost none have a digital system that works.",
+          "eyebrow": "01 — Why it matters"
+        }
+      },
+      "caseStudies": {
+        "hash": "ff9575b0",
+        "updatedAt": "2026-08-11T21:06:20.516+00:00",
+        "data": {
+          "label": "Selected work",
+          "fields": {
+            "problem": "Problem",
+            "solution": "Solution",
+            "businessImpact": "Business impact"
+          },
+          "viewCaseStudy": "View case study"
+        }
+      },
+      "impact": {
+        "hash": "ebeabf94",
+        "updatedAt": "2026-08-11T21:06:20.618+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Portals, dashboards and product surfaces that stop work from living in chats and spreadsheets.",
+              "note": "Digital systems",
+              "title": "Systems that connect operations"
+            },
+            {
+              "body": "Booking, enquiries and repeat workflows handled by clear flows — fewer lost leads, less manual follow-up.",
+              "note": "Process automation",
+              "title": "Automation that saves hours"
+            },
+            {
+              "body": "A strong web presence still closes trust. We build and upgrade sites that turn attention into action.",
+              "note": "Websites",
+              "title": "Websites that convert"
+            },
+            {
+              "body": "Photo, video and assets ready for web and campaigns — so the brand looks as solid as it operates.",
+              "note": "Content production",
+              "title": "Content that builds trust"
+            }
+          ],
+          "label": "Why it matters"
+        }
+      },
+      "audit": {
+        "hash": "b793f83f",
+        "updatedAt": "2026-08-11T21:06:20.728+00:00",
+        "data": {
+          "cta": "Request your audit",
+          "body": "We review your systems, processes, website and content — and tell you exactly what to improve.",
+          "meta": "Reply within 1 hour · Free · You decide the next steps",
+          "title": "Want to know what's\nholding your business back?",
+          "freeBadge": "FREE"
+        }
+      },
+      "processSection": {
+        "hash": "db47109f",
+        "updatedAt": "2026-08-11T21:06:20.89+00:00",
+        "data": {
+          "title": "How we turn digital chaos into a business asset",
+          "eyebrow": "Process",
+          "subtitle": "Systems, automation, web and content in one business-driven method — not just a pretty site.",
+          "stepLabel": "Step",
+          "footerNote": "Every project is flexible — the process, design, and functionality are customized around the real needs of each client."
+        }
+      },
+      "about": {
+        "hash": "6a792f4a",
+        "updatedAt": "2026-08-11T21:06:21.001+00:00",
+        "data": {
+          "bio": "We're a small digital studio. We build the digital environment your business needs—systems and platforms, process automation, websites and interfaces, plus visual content and ongoing product development. Not just polished looks: everything is built for real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
+          "pills": [
+            "Available for new projects"
+          ],
+          "title": "Who are we?",
+          "eyebrow": "About us"
+        }
+      },
+      "aboutPage": {
+        "hash": "537ac383",
+        "updatedAt": "2026-08-11T21:06:21.096+00:00",
+        "data": {
+          "backToHome": "Back to home"
+        }
+      },
+      "orderPage": {
+        "hash": "31efaa5d",
+        "updatedAt": "2026-08-11T21:06:21.331+00:00",
+        "data": {
+          "title": "Choose your services",
+          "trust": {
+            "deposit": "30% deposit to start",
+            "timeline": "Typical timeline: 4–8 weeks",
+            "processLink": "How we work",
+            "testimonial": "«Fast reply, clear scope — exactly the digital partner we were looking for.»"
+          },
+          "eyebrow": "Order",
+          "footnote": "After your request you get scope, timeline and final cost. No automatic payment.",
+          "subtitle": "Select one or more options — you'll get a tailored quote within 1 hour.",
+          "fromLabel": "from",
+          "plusLabel": "+",
+          "proceedCta": "Request a quote",
+          "selectHint": "Select at least one service to continue, or message us directly.",
+          "estimatedLabel": "Indicative estimate",
+          "aboutServiceCta": "About this service",
+          "addonsSectionTitle": "Add-on modules"
+        }
+      },
+      "pricingAddons": {
+        "hash": "62865890",
+        "updatedAt": "2026-08-11T21:06:21.427+00:00",
+        "data": {
+          "title": "Extend your project",
+          "eyebrow": "Modules",
+          "footnote": "Final quote for each module is set after the brief.",
+          "subtitle": "Add capabilities to the base package. Modules are scoped individually after your brief."
+        }
+      },
+      "servicePage": {
+        "hash": "08ae467a",
+        "updatedAt": "2026-08-11T21:06:21.651+00:00",
+        "data": {
+          "orderCta": "Request this service",
+          "backToHome": "Back to home",
+          "howItWorks": "How it works",
+          "viewService": "Explore service",
+          "deliverables": "What's included",
+          "popularLabel": "Most popular",
+          "otherServices": "Other services",
+          "pricingEyebrow": "Pricing",
+          "sectionEyebrow": "Service"
+        }
+      },
+      "workPage": {
+        "hash": "c84cab3a",
+        "updatedAt": "2026-08-11T21:06:21.758+00:00",
+        "data": {
+          "title": "All projects",
+          "eyebrow": "Work",
+          "viewAll": "View all work",
+          "overview": "Overview",
+          "subtitle": "A selection of concepts, prototypes and client-ready projects.",
+          "viewRepo": "View on GitHub",
+          "techStack": "Tech stack",
+          "backToWork": "Back to projects",
+          "liveStatus": "Live",
+          "otherProjects": "Other projects",
+          "visitLiveSite": "Visit live site"
+        }
+      },
+      "footer": {
+        "hash": "4c31470f",
+        "updatedAt": "2026-08-11T21:06:21.875+00:00",
+        "data": {
+          "built": "Built with intention.",
+          "links": "Quick links",
+          "status": "Available for new clients",
+          "privacy": "Privacy Policy",
+          "location": "Digital Studio",
+          "description": "Digital studio for systems, automation, websites and content."
+        }
+      },
+      "langSelector": {
+        "hash": "a85532af",
+        "updatedAt": "2026-08-11T21:06:22.084+00:00",
+        "data": {
+          "label": "Language"
+        }
+      },
+      "privacyPage": {
+        "hash": "34191dca",
+        "updatedAt": "2026-08-11T21:06:21.97+00:00",
+        "data": {
+          "title": "Privacy Policy",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — contact: dormup.it@gmail.com.",
+              "heading": "Data controller"
+            },
+            {
+              "body": "We collect data you voluntarily submit via contact forms: name, email, business name, business type, website URL (if provided), project brief and selected services.",
+              "heading": "Data we collect"
+            },
+            {
+              "body": "Data is processed to respond to enquiries, prepare quotes and free audits. Legal basis: pre-contractual measures and implicit consent when submitting the form (GDPR Art. 6).",
+              "heading": "Purpose and legal basis"
+            },
+            {
+              "body": "We retain data as long as needed to handle your request, up to 24 months unless legal obligations require otherwise.",
+              "heading": "Retention"
+            },
+            {
+              "body": "You may request access, rectification, erasure, restriction or objection by emailing dormup.it@gmail.com. You may lodge a complaint with your local data protection authority.",
+              "heading": "Your rights"
+            },
+            {
+              "body": "This site does not use third-party profiling cookies. Technical cookies may be used for site operation and language selection.",
+              "heading": "Cookies"
+            }
+          ],
+          "backToHome": "Back to home",
+          "lastUpdated": "Last updated: June 2026"
+        }
+      },
+      "contact": {
+        "hash": "5f05fda2",
+        "updatedAt": "2026-08-11T21:06:21.206+00:00",
+        "data": {
+          "body": "After your message you get a clear reply with next steps, timeline and feasibility.",
+          "cart": {
+            "title": "Selected services",
+            "eyebrow": "Your selection",
+            "removeItem": "Remove",
+            "addonsLabel": "Add-on modules",
+            "continueSearch": "Continue browsing services"
+          },
+          "form": {
+            "name": "Full name",
+            "brief": "Briefly describe what you're looking for",
+            "email": "Email",
+            "errors": {
+              "required": "Required field",
+              "invalidUrl": "Enter a valid URL (e.g. https://yoursite.com)",
+              "invalidEmail": "Enter a valid email address"
+            },
+            "source": "How did you find us?",
+            "submit": "Send message",
+            "options": {
+              "bar": "Bar / venue",
+              "hotel": "Hotel",
+              "other": "Other / services",
+              "google": "Google",
+              "social": "Social",
+              "referral": "Word of mouth",
+              "restaurant": "Restaurant / hospitality"
+            },
+            "siteUrl": "Website or product URL",
+            "success": "We'll reply within 1 hour.",
+            "business": "Business name",
+            "optional": "optional",
+            "submitting": "Sending...",
+            "submitAudit": "Request free audit",
+            "submitError": "Could not send. Email us at {email} and we'll reply shortly.",
+            "businessType": "Business type",
+            "successClose": "Close",
+            "successTitle": "Your request has been sent",
+            "auditBriefPlaceholder": "What isn't working in your digital setup — systems, processes, website or content?"
+          },
+          "label": "Let's start",
+          "title": "A digital environment for businesses that refuse to look generic.",
+          "emailLabel": "Email",
+          "availability": "Currently available for new clients",
+          "compactTitle": "Request your free audit",
+          "whatsappLabel": "WhatsApp · Reply within 1h"
+        }
+      },
+      "servicesPage": {
+        "hash": "32f7c92d",
+        "updatedAt": "2026-08-11T21:06:21.525+00:00",
+        "data": {
+          "title": "What we build",
+          "eyebrow": "Services",
+          "viewAll": "All services",
+          "subtitle": "Digital systems, process automation, websites and content production — end to end.",
+          "techStack": "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Multi-page brand site with team, services, contacts and SEO.",
+                  "label": "Corporate sites"
+                },
+                {
+                  "info": "Short-term campaign site to push a launch, event or offer.",
+                  "label": "Promo"
+                },
+                {
+                  "info": "Single-focus conversion page — one goal, one clear CTA.",
+                  "label": "Landing pages"
+                },
+                {
+                  "info": "Content-driven site with articles, categories, tags and RSS.",
+                  "label": "Media & blogs"
+                },
+                {
+                  "info": "Fast delivery via Webflow, Framer or Tilda — no heavy dev needed.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Websites"
+            },
+            {
+              "items": [
+                {
+                  "info": "Browser-based tools: dashboards, booking engines, marketplaces.",
+                  "label": "Web services"
+                },
+                {
+                  "info": "iOS & Android apps built with React Native or Flutter.",
+                  "label": "Mobile apps"
+                },
+                {
+                  "info": "Internal portals for teams: wikis, docs and announcements.",
+                  "label": "Intranets"
+                },
+                {
+                  "info": "Password-protected spaces for clients to track orders or projects.",
+                  "label": "Client portals"
+                },
+                {
+                  "info": "Automated chat flows for support, lead capture or onboarding.",
+                  "label": "Chatbots"
+                },
+                {
+                  "info": "Online stores with cart, checkout, payments and inventory.",
+                  "label": "E-commerce"
+                }
+              ],
+              "title": "Digital products"
+            },
+            {
+              "items": [
+                {
+                  "info": "Research-backed wireframes and pixel-perfect interface design.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Animated transitions, micro-interactions and sonic branding.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Logo, color palette, typography and full brand identity system.",
+                  "label": "Branding"
+                },
+                {
+                  "info": "User interviews, usability tests and data-driven design decisions.",
+                  "label": "UX Research"
+                }
+              ],
+              "title": "Design"
+            },
+            {
+              "items": [
+                {
+                  "info": "Requirements mapping, technical specs and architecture planning.",
+                  "label": "Systems analysis"
+                },
+                {
+                  "info": "React/Next.js interfaces — fast, accessible, production-ready.",
+                  "label": "Frontend dev"
+                },
+                {
+                  "info": "APIs, databases, auth and server logic built to scale.",
+                  "label": "Backend dev"
+                },
+                {
+                  "info": "Cross-platform native apps with smooth performance.",
+                  "label": "Mobile dev"
+                },
+                {
+                  "info": "Manual and automated testing across devices and browsers.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "CI/CD pipelines, cloud hosting, monitoring and zero-downtime deploys.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Development"
+            }
+          ],
+          "pricingNote": "Every project is quoted individually after the brief. Add-on modules are selected based on your needs."
+        }
+      }
+    },
+    "fr": {
+      "trust": {
+        "hash": "a0f5a53e",
+        "updatedAt": "2026-08-11T21:06:22.537+00:00",
+        "data": [
+          "Systemes digitaux qui connectent",
+          "Automatisation qui fait gagner du temps",
+          "Sites qui convertissent",
+          "Contenus qui construisent la confiance"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "d1eca1a9",
+        "updatedAt": "2026-08-11T21:06:22.774+00:00",
+        "data": "Ce que nous construisons"
+      },
+      "servicesLead": {
+        "hash": "0b64a6b4",
+        "updatedAt": "2026-08-11T21:06:22.872+00:00",
+        "data": "Systemes · Automatisation · Sites · Contenus"
+      },
+      "nav": {
+        "hash": "b6cdb559",
+        "updatedAt": "2026-08-11T21:06:22.285+00:00",
+        "data": {
+          "buy": "Commander",
+          "work": "Projets",
+          "about": "A propos",
+          "audit": "Audit gratuit",
+          "contact": "Contact",
+          "process": "Methode",
+          "services": "Services"
+        }
+      },
+      "hero": {
+        "hash": "1de0e072",
+        "updatedAt": "2026-08-11T21:06:22.407+00:00",
+        "data": {
+          "lead": "Systemes digitaux, automatisation des processus, sites web et production de contenus.",
+          "buyCta": "Commander des services",
+          "eyebrow": "Studio Digital",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "Voir les projets",
+          "buyCtaShort": "Commander",
+          "socialProof": "4 projets · Disponible pour nouveaux clients",
+          "secondaryCta": "Demander un audit",
+          "chipHighlight": "Cles en main",
+          "mockupCaption": "Votre meilleure carte de visite",
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "caseStudies": {
+        "hash": "897adec9",
+        "updatedAt": "2026-08-11T21:06:23.074+00:00",
+        "data": {
+          "label": "Projets selectionnes",
+          "fields": {
+            "problem": "Probleme",
+            "solution": "Solution",
+            "businessImpact": "Impact business"
+          },
+          "viewCaseStudy": "Voir le projet"
+        }
+      },
+      "audit": {
+        "hash": "e587c899",
+        "updatedAt": "2026-08-11T21:06:23.317+00:00",
+        "data": {
+          "cta": "Demander votre audit",
+          "body": "Nous analysons systemes, processus, site et contenus — et vous disons exactement quoi ameliorer.",
+          "meta": "Reponse sous 1h · Gratuit · Vous decidez des prochaines etapes",
+          "title": "Vous voulez savoir ce qui\nfreine votre business?",
+          "freeBadge": "FREE"
+        }
+      },
+      "processSection": {
+        "hash": "e491e3be",
+        "updatedAt": "2026-08-11T21:06:23.433+00:00",
+        "data": {
+          "title": "Comment nous transformons le chaos digital en actif business",
+          "eyebrow": "Processus",
+          "subtitle": "Systemes, automatisation, web et contenus dans une seule methode pilotee par le business — pas juste un beau site.",
+          "stepLabel": "Etape",
+          "footerNote": "Chaque projet est flexible : processus, design et fonctionnalites s adaptent aux besoins reels de chaque client."
+        }
+      },
+      "pricingAddons": {
+        "hash": "4a0d7160",
+        "updatedAt": "2026-08-11T21:06:23.949+00:00",
+        "data": {
+          "title": "Etendez votre projet",
+          "eyebrow": "Modules",
+          "footnote": "Le devis final de chaque module est etabli apres le brief.",
+          "subtitle": "Ajoutez des fonctionnalites au forfait de base."
+        }
+      },
+      "servicesPage": {
+        "hash": "1be51354",
+        "updatedAt": "2026-08-11T21:06:24.056+00:00",
+        "data": {
+          "title": "Ce que nous créons",
+          "eyebrow": "Services",
+          "viewAll": "Tous les services",
+          "subtitle": "Systemes digitaux, automatisation des processus, sites et production de contenus — de bout en bout.",
+          "techStack": "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Site institutionnel multi-pages avec équipe, services et SEO.",
+                  "label": "Sites d'entreprise"
+                },
+                {
+                  "info": "Site de courte durée pour lancer une offre, un événement ou une campagne.",
+                  "label": "Promo"
+                },
+                {
+                  "info": "Page unique à fort taux de conversion avec un seul objectif.",
+                  "label": "Landing pages"
+                },
+                {
+                  "info": "Site éditorial avec articles, catégories, tags et flux RSS.",
+                  "label": "Médias et blogs"
+                },
+                {
+                  "info": "Livraison rapide via Webflow, Framer ou Tilda — sans dev lourd.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Sites web"
+            },
+            {
+              "items": [
+                {
+                  "info": "Outils web interactifs : tableaux de bord, réservations, marketplaces.",
+                  "label": "Services web"
+                },
+                {
+                  "info": "Apps iOS et Android natives avec React Native ou Flutter.",
+                  "label": "Applications mobiles"
+                },
+                {
+                  "info": "Portails internes pour équipes : wikis, docs, annonces.",
+                  "label": "Intranets"
+                },
+                {
+                  "info": "Espace sécurisé pour suivre commandes, projets et documents.",
+                  "label": "Espaces clients"
+                },
+                {
+                  "info": "Flux automatisés pour support, capture de leads et onboarding.",
+                  "label": "Chatbots"
+                },
+                {
+                  "info": "Boutiques en ligne avec panier, paiements et gestion de stock.",
+                  "label": "E-commerce"
+                }
+              ],
+              "title": "Systemes digitaux"
+            },
+            {
+              "items": [
+                {
+                  "info": "Wireframes et design d'interface pixel-perfect basés sur la recherche.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Animations, micro-interactions et identité sonore de marque.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Logo, palette, typographie et système d'identité visuelle complet.",
+                  "label": "Branding"
+                },
+                {
+                  "info": "Interviews, tests d'utilisabilité et décisions basées sur les données.",
+                  "label": "UX Research"
+                }
+              ],
+              "title": "Design"
+            },
+            {
+              "items": [
+                {
+                  "info": "Cahier des charges, specs techniques et planification d'architecture.",
+                  "label": "Analyse système"
+                },
+                {
+                  "info": "Interfaces React/Next.js — rapides, accessibles, prêtes pour la prod.",
+                  "label": "Développement frontend"
+                },
+                {
+                  "info": "APIs, bases de données, auth et logique serveur scalable.",
+                  "label": "Développement backend"
+                },
+                {
+                  "info": "Apps cross-platform natives avec performances fluides.",
+                  "label": "Dev mobile"
+                },
+                {
+                  "info": "Tests manuels et automatisés sur appareils et navigateurs.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "CI/CD, hébergement cloud, monitoring et déploiement sans interruption.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Développement"
+            }
+          ],
+          "pricingNote": "Chaque projet fait l'objet d'un devis sur mesure apres le brief. Les modules complementaires s'ajoutent selon vos besoins."
+        }
+      },
+      "about": {
+        "hash": "6fe88edf",
+        "updatedAt": "2026-08-11T21:06:23.531+00:00",
+        "data": {
+          "bio": "Nous sommes un petit studio digital. Nous creons l'environnement digital dont le business a besoin : systemes et plateformes, automatisation des processus, sites et interfaces, plus contenus visuels et developpement continu du produit. Pas seulement beau — tout est pense pour des resultats business concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
+          "pills": [
+            "Disponible pour nouveaux projets"
+          ],
+          "title": "Qui sommes-nous?",
+          "eyebrow": "Qui sommes-nous"
+        }
+      },
+      "aboutPage": {
+        "hash": "a0f9a4a1",
+        "updatedAt": "2026-08-11T21:06:23.639+00:00",
+        "data": {
+          "backToHome": "Retour a l'accueil"
+        }
+      },
+      "servicePage": {
+        "hash": "04aef760",
+        "updatedAt": "2026-08-11T21:06:24.164+00:00",
+        "data": {
+          "orderCta": "Demander ce service",
+          "backToHome": "Retour a l'accueil",
+          "howItWorks": "Comment ca marche",
+          "viewService": "Decouvrir le service",
+          "deliverables": "Ce qui est inclus",
+          "popularLabel": "Le plus choisi",
+          "otherServices": "Autres services",
+          "pricingEyebrow": "Tarifs",
+          "sectionEyebrow": "Service"
+        }
+      },
+      "workPage": {
+        "hash": "cd7d4965",
+        "updatedAt": "2026-08-11T21:06:24.27+00:00",
+        "data": {
+          "title": "Tous les projets",
+          "eyebrow": "Projets",
+          "viewAll": "Voir tous les projets",
+          "overview": "Apercu",
+          "subtitle": "Une selection de concepts, prototypes et projets prets pour le client.",
+          "viewRepo": "Voir sur GitHub",
+          "techStack": "Stack technique",
+          "backToWork": "Retour aux projets",
+          "liveStatus": "En ligne",
+          "otherProjects": "Autres projets",
+          "visitLiveSite": "Visiter le site"
+        }
+      },
+      "orderPage": {
+        "hash": "6d9bf651",
+        "updatedAt": "2026-08-11T21:06:23.848+00:00",
+        "data": {
+          "title": "Choisissez vos services",
+          "trust": {
+            "deposit": "Acompte 30% au demarrage",
+            "timeline": "Delai typique : 4–8 semaines",
+            "processLink": "Notre methode",
+            "testimonial": "«Reponse rapide, scope clair — exactement le partenaire digital qu'il nous fallait.»"
+          },
+          "eyebrow": "Commande",
+          "footnote": "Apres votre demande vous recevez scope, delais et cout final. Aucun paiement automatique.",
+          "subtitle": "Selectionnez une ou plusieurs options — vous recevrez un devis personnalise sous 1 heure.",
+          "fromLabel": "a partir de",
+          "plusLabel": "+",
+          "proceedCta": "Demander un devis",
+          "selectHint": "Selectionnez au moins un service pour continuer, ou ecrivez-nous directement.",
+          "estimatedLabel": "Estimation indicative",
+          "aboutServiceCta": "A propos du service",
+          "addonsSectionTitle": "Modules additionnels"
+        }
+      },
+      "langSelector": {
+        "hash": "6abcf9ff",
+        "updatedAt": "2026-08-11T21:06:24.627+00:00",
+        "data": {
+          "label": "Langue"
+        }
+      },
+      "problem": {
+        "hash": "78ffb63f",
+        "updatedAt": "2026-08-11T21:06:22.969+00:00",
+        "data": {
+          "body": "Canaux eparpilles, processus manuels, presence web faible et contenus qui ne vendent pas — cela coute du temps et des clients.\n\nNous connectons les systemes, automatisons les processus, construisons des sites et produisons des contenus.",
+          "title": "La plupart des entreprises ont des outils.\nPresque aucune n'a un systeme digital qui fonctionne.",
+          "eyebrow": "01 — Pourquoi c'est important"
+        }
+      },
+      "footer": {
+        "hash": "1d237d6a",
+        "updatedAt": "2026-08-11T21:06:24.392+00:00",
+        "data": {
+          "built": "Built with intention.",
+          "links": "Liens rapides",
+          "status": "Disponible pour nouveaux clients",
+          "privacy": "Politique de confidentialite",
+          "location": "Digital Studio",
+          "description": "Studio digital pour systemes, automatisation, sites et contenus."
+        }
+      },
+      "privacyPage": {
+        "hash": "b8c672f9",
+        "updatedAt": "2026-08-11T21:06:24.508+00:00",
+        "data": {
+          "title": "Politique de confidentialite",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — contact : dormup.it@gmail.com.",
+              "heading": "Responsable du traitement"
+            },
+            {
+              "body": "Nous collectons les donnees que vous soumettez volontairement via les formulaires : nom, e-mail, business, type d'activite, URL du site (si fournie), brief et services selectionnes.",
+              "heading": "Donnees collectees"
+            },
+            {
+              "body": "Les donnees sont traitees pour repondre aux demandes, preparer des devis et audits gratuits. Base legale : mesures precontractuelles et consentement implicite (RGPD art. 6).",
+              "heading": "Finalite et base legale"
+            },
+            {
+              "body": "Conservation le temps necessaire pour traiter la demande, jusqu'a 24 mois sauf obligation legale contraire.",
+              "heading": "Conservation"
+            },
+            {
+              "body": "Vous pouvez demander acces, rectification, effacement, limitation ou opposition via dormup.it@gmail.com. Droit de reclamation aupres de la CNIL ou autorite competente.",
+              "heading": "Vos droits"
+            },
+            {
+              "body": "Ce site n'utilise pas de cookies de profilage tiers. Des cookies techniques peuvent servir au fonctionnement et a la langue.",
+              "heading": "Cookies"
+            }
+          ],
+          "backToHome": "Retour a l'accueil",
+          "lastUpdated": "Derniere mise a jour : juin 2026"
+        }
+      },
+      "impact": {
+        "hash": "72b8dcfc",
+        "updatedAt": "2026-08-11T21:06:23.175+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Portails, dashboards et surfaces produit qui sortent le travail des chats et des tableurs.",
+              "note": "Systemes digitaux",
+              "title": "Des systemes qui connectent les operations"
+            },
+            {
+              "body": "Reservations, demandes et workflows repetitifs geres par des flux clairs — moins de leads perdus, moins de suivi manuel.",
+              "note": "Automatisation des processus",
+              "title": "Une automatisation qui fait gagner des heures"
+            },
+            {
+              "body": "Une presence web solide construit encore la confiance. Nous creons et ameliorons des sites qui transforment l'attention en action.",
+              "note": "Sites web",
+              "title": "Des sites qui convertissent"
+            },
+            {
+              "body": "Photo, video et assets prets pour le web et les campagnes — pour que la marque paraisse aussi solide qu'elle opere.",
+              "note": "Production de contenus",
+              "title": "Des contenus qui construisent la confiance"
+            }
+          ],
+          "label": "Pourquoi c'est important"
+        }
+      },
+      "contact": {
+        "hash": "c2a4327b",
+        "updatedAt": "2026-08-11T21:06:23.744+00:00",
+        "data": {
+          "body": "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
+          "cart": {
+            "title": "Services choisis",
+            "eyebrow": "Votre selection",
+            "removeItem": "Retirer",
+            "addonsLabel": "Modules additionnels",
+            "continueSearch": "Continuer la selection"
+          },
+          "form": {
+            "name": "Nom et prenom",
+            "brief": "Decrivez brievement ce que vous cherchez",
+            "email": "E-mail",
+            "errors": {
+              "required": "Champ obligatoire",
+              "invalidUrl": "Entrez une URL valide (ex. https://votresite.fr)",
+              "invalidEmail": "Entrez une adresse e-mail valide"
+            },
+            "source": "Comment nous avez-vous trouves?",
+            "submit": "Envoyer le message",
+            "options": {
+              "bar": "Bar / lieu",
+              "hotel": "Hotel",
+              "other": "Autre / services",
+              "google": "Google",
+              "social": "Reseaux sociaux",
+              "referral": "Bouche a oreille",
+              "restaurant": "Restaurant / hospitality"
+            },
+            "siteUrl": "URL du site ou du produit",
+            "success": "Nous repondons sous 1 heure.",
+            "business": "Nom du business",
+            "optional": "facultatif",
+            "submitting": "Envoi en cours...",
+            "submitAudit": "Demander l'audit gratuit",
+            "submitError": "Envoi echoue. Ecrivez a {email} et nous repondrons rapidement.",
+            "businessType": "Type de business",
+            "successClose": "Fermer",
+            "successTitle": "Votre demande a ete envoyee",
+            "auditBriefPlaceholder": "Qu'est-ce qui ne fonctionne pas dans votre setup digital — systemes, processus, site ou contenus?"
+          },
+          "label": "Commencons",
+          "title": "Un environnement digital pour les business qui ne veulent pas ressembler a tout le monde.",
+          "emailLabel": "Email",
+          "availability": "Actuellement disponible pour nouveaux clients",
+          "compactTitle": "Demander votre audit gratuit",
+          "whatsappLabel": "WhatsApp · Reponse sous 1h"
+        }
+      }
+    },
+    "ru": {
+      "contact": {
+        "hash": "6a3cce7f",
+        "updatedAt": "2026-08-11T21:06:26.398+00:00",
+        "data": {
+          "body": "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
+          "cart": {
+            "title": "Выбранные услуги",
+            "eyebrow": "Ваш выбор",
+            "removeItem": "Убрать",
+            "addonsLabel": "Дополнительные модули",
+            "continueSearch": "Продолжить выбор услуг"
+          },
+          "form": {
+            "name": "Имя и фамилия",
+            "brief": "Коротко опишите, что ищете",
+            "email": "Email",
+            "errors": {
+              "required": "Обязательное поле",
+              "invalidUrl": "Введите корректный URL (например https://vashsite.ru)",
+              "invalidEmail": "Введите корректный email"
+            },
+            "source": "Как вы нас нашли?",
+            "submit": "Отправить сообщение",
+            "options": {
+              "bar": "Бар / площадка",
+              "hotel": "Отель",
+              "other": "Другое / услуги",
+              "google": "Google",
+              "social": "Соцсети",
+              "referral": "Сарафанное радио",
+              "restaurant": "Ресторан / hospitality"
+            },
+            "siteUrl": "URL сайта или продукта",
+            "success": "Ответим в течение 1 часа.",
+            "business": "Название бизнеса",
+            "optional": "необязательно",
+            "submitting": "Отправка...",
+            "submitAudit": "Запросить бесплатный аудит",
+            "submitError": "Не удалось отправить. Напишите на {email} — ответим в ближайшее время.",
+            "businessType": "Тип бизнеса",
+            "successClose": "Закрыть",
+            "successTitle": "Ваша заявка отправлена",
+            "auditBriefPlaceholder": "Что не работает в цифровом сетапе — системы, процессы, сайт или контент?"
+          },
+          "label": "Начнём",
+          "title": "Цифровая среда для бизнеса, который не хочет быть как все.",
+          "emailLabel": "Email",
+          "availability": "Сейчас открыты для новых клиентов",
+          "compactTitle": "Запросить бесплатный аудит",
+          "whatsappLabel": "WhatsApp · Ответ в течение 1ч"
+        }
+      },
+      "nav": {
+        "hash": "635ca5fa",
+        "updatedAt": "2026-08-11T21:06:24.855+00:00",
+        "data": {
+          "buy": "Купить",
+          "work": "Проекты",
+          "about": "О нас",
+          "audit": "Бесплатный аудит",
+          "contact": "Контакты",
+          "process": "Процесс",
+          "services": "Услуги"
+        }
+      },
+      "hero": {
+        "hash": "1709644e",
+        "updatedAt": "2026-08-11T21:06:24.955+00:00",
+        "data": {
+          "lead": "Цифровые системы, автоматизация процессов, сайты и производство контента.",
+          "buyCta": "Заказать услуги",
+          "eyebrow": "Digital Studio",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "Смотреть проекты",
+          "buyCtaShort": "Заказать",
+          "socialProof": "4 проекта · Открыты для новых клиентов",
+          "secondaryCta": "Запросить бесплатный аудит",
+          "chipHighlight": "Работа под ключ",
+          "mockupCaption": "Ваша лучшая визитная карточка",
+          "mockupCaptionSm": true,
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "caseStudies": {
+        "hash": "55e84e6a",
+        "updatedAt": "2026-08-11T21:06:25.603+00:00",
+        "data": {
+          "label": "Избранные работы",
+          "fields": {
+            "problem": "Проблема",
+            "solution": "Решение",
+            "businessImpact": "Бизнес-эффект"
+          },
+          "viewCaseStudy": "Смотреть проект"
+        }
+      },
+      "audit": {
+        "hash": "69b2e5bd",
+        "updatedAt": "2026-08-11T21:06:25.821+00:00",
+        "data": {
+          "cta": "Запросить свой аудит",
+          "body": "Разберём системы, процессы, сайт и контент — и скажем точно, что улучшить.",
+          "meta": "Отвечаем в течение 1 часа · Бесплатно · Решение за вами",
+          "title": "Хотите узнать, что тормозит\nваш бизнес?",
+          "freeBadge": "FREE"
+        }
+      },
+      "trust": {
+        "hash": "8d6dd18a",
+        "updatedAt": "2026-08-11T21:06:25.068+00:00",
+        "data": [
+          "Цифровые системы, которые связывают",
+          "Автоматизация процессов, которая экономит время",
+          "Сайты, которые конвертируют",
+          "Контент, который строит доверие"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "533b2f82",
+        "updatedAt": "2026-08-11T21:06:25.189+00:00",
+        "data": "Что мы делаем"
+      },
+      "processSection": {
+        "hash": "756c6631",
+        "updatedAt": "2026-08-11T21:06:26.066+00:00",
+        "data": {
+          "title": "Как мы превращаем цифровой хаос в бизнес-актив",
+          "eyebrow": "Процесс",
+          "subtitle": "Системы, автоматизация, web и контент в одном бизнес-методе — не просто красивый сайт.",
+          "stepLabel": "Этап",
+          "footerNote": "Каждый проект гибкий: процесс, дизайн и функциональность подстраиваются под реальные задачи клиента."
+        }
+      },
+      "servicesLead": {
+        "hash": "aa7340e4",
+        "updatedAt": "2026-08-11T21:06:25.293+00:00",
+        "data": "Системы · Автоматизация · Сайты · Контент"
+      },
+      "problem": {
+        "hash": "257060b2",
+        "updatedAt": "2026-08-11T21:06:25.418+00:00",
+        "data": {
+          "body": "Разрозненные каналы, ручные процессы, слабое веб-присутствие и контент, который не продаёт — это стоит времени и клиентов.\n\nМы связываем системы, автоматизируем процессы, делаем сайты и производим контент.",
+          "title": "У большинства бизнесов есть инструменты.\nПочти ни у кого нет цифровой системы, которая реально работает.",
+          "eyebrow": "01 — Почему это важно"
+        }
+      },
+      "aboutPage": {
+        "hash": "8280b697",
+        "updatedAt": "2026-08-11T21:06:26.297+00:00",
+        "data": {
+          "backToHome": "На главную"
+        }
+      },
+      "orderPage": {
+        "hash": "8f354483",
+        "updatedAt": "2026-08-11T21:06:26.533+00:00",
+        "data": {
+          "title": "Выберите услуги",
+          "trust": {
+            "deposit": "Предоплата 30% при старте",
+            "timeline": "Типичный срок: 4–8 недель",
+            "processLink": "Как мы работаем",
+            "testimonial": "«Быстрый ответ, понятный scope — именно такого digital-партнёра мы искали.»"
+          },
+          "eyebrow": "Заказ",
+          "footnote": "После заявки вы получите объём работ, сроки и итоговую стоимость. Автоматической оплаты нет.",
+          "subtitle": "Отметьте одну или несколько опций — персональный расчёт пришлём в течение 1 часа.",
+          "fromLabel": "от",
+          "plusLabel": "+",
+          "proceedCta": "Запросить расчёт",
+          "selectHint": "Выберите хотя бы одну услугу или напишите нам напрямую.",
+          "estimatedLabel": "Ориентировочная сумма",
+          "aboutServiceCta": "Об услуге",
+          "addonsSectionTitle": "Дополнительные модули"
+        }
+      },
+      "pricingAddons": {
+        "hash": "d49ec849",
+        "updatedAt": "2026-08-11T21:06:26.641+00:00",
+        "data": {
+          "title": "Расширьте проект",
+          "eyebrow": "Модули",
+          "footnote": "Итоговая цена модулей — после брифа.",
+          "subtitle": "Добавьте функции к базовому пакету. Стоимость каждого модуля рассчитываем после брифа."
+        }
+      },
+      "servicesPage": {
+        "hash": "19c12dea",
+        "updatedAt": "2026-08-11T21:06:26.743+00:00",
+        "data": {
+          "title": "Что мы создаём",
+          "eyebrow": "Услуги",
+          "viewAll": "Все услуги",
+          "subtitle": "Цифровые системы, автоматизация процессов, сайты и производство контента — под ключ.",
+          "techStack": "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Многостраничный сайт компании с командой, услугами и SEO.",
+                  "label": "Корпоративные"
+                },
+                {
+                  "info": "Краткосрочный сайт под запуск, акцию или мероприятие.",
+                  "label": "Промо"
+                },
+                {
+                  "info": "Одностраничник под конверсию — одна цель, один призыв к действию.",
+                  "label": "Лендинги"
+                },
+                {
+                  "info": "Редакционный сайт со статьями, категориями и RSS-лентой.",
+                  "label": "Медиа и блоги"
+                },
+                {
+                  "info": "Быстрая разработка на Webflow, Framer или Tilda.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Сайты"
+            },
+            {
+              "items": [
+                {
+                  "info": "Браузерные инструменты: дашборды, движки бронирования, маркетплейсы.",
+                  "label": "Веб-сервисы"
+                },
+                {
+                  "info": "iOS и Android приложения на React Native или Flutter.",
+                  "label": "Мобильные приложения"
+                },
+                {
+                  "info": "Внутренние порталы для команд: вики, документы, объявления.",
+                  "label": "Интранеты"
+                },
+                {
+                  "info": "Защищённые зоны для клиентов — заказы, проекты, документы.",
+                  "label": "Личные кабинеты"
+                },
+                {
+                  "info": "Автоматизированные сценарии для поддержки, лидов и онбординга.",
+                  "label": "Чат-боты"
+                },
+                {
+                  "info": "Магазины с корзиной, оплатой и управлением товарами.",
+                  "label": "Интернет-магазины"
+                }
+              ],
+              "title": "Цифровые системы"
+            },
+            {
+              "items": [
+                {
+                  "info": "Вайрфреймы и пиксельный дизайн интерфейсов на основе исследований.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Анимации, микро-взаимодействия и звуковой брендинг.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Логотип, палитра, типографика и полная система визуальной идентичности.",
+                  "label": "Брендинг"
+                },
+                {
+                  "info": "Интервью, тесты юзабилити и решения на основе данных.",
+                  "label": "UX-исследования"
+                }
+              ],
+              "title": "Дизайн"
+            },
+            {
+              "items": [
+                {
+                  "info": "Требования, технические спецификации и планирование архитектуры.",
+                  "label": "Системный анализ"
+                },
+                {
+                  "info": "React/Next.js интерфейсы — быстрые, доступные, готовые к продакшену.",
+                  "label": "Frontend-разработка"
+                },
+                {
+                  "info": "API, базы данных, авторизация и серверная логика с масштабируемостью.",
+                  "label": "Backend-разработка"
+                },
+                {
+                  "info": "Кросс-платформенные нативные приложения с плавной работой.",
+                  "label": "Мобильная разработка"
+                },
+                {
+                  "info": "Ручное и автоматическое тестирование на устройствах и браузерах.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "CI/CD, облачный хостинг, мониторинг и деплой без простоев.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Разработка"
+            }
+          ],
+          "pricingNote": "Каждый проект оценивается индивидуально после брифа. Дополнительные модули подбираются под ваши задачи."
+        }
+      },
+      "servicePage": {
+        "hash": "3c9c213a",
+        "updatedAt": "2026-08-11T21:06:26.867+00:00",
+        "data": {
+          "orderCta": "Запросить услугу",
+          "backToHome": "Вернуться на главную",
+          "howItWorks": "Как это работает",
+          "viewService": "Смотреть услугу",
+          "deliverables": "Что включено",
+          "popularLabel": "Популярный",
+          "otherServices": "Другие услуги",
+          "pricingEyebrow": "Тарифы",
+          "sectionEyebrow": "Услуга"
+        }
+      },
+      "workPage": {
+        "hash": "06c4b965",
+        "updatedAt": "2026-08-11T21:06:26.97+00:00",
+        "data": {
+          "title": "Все проекты",
+          "eyebrow": "Работы",
+          "viewAll": "Смотреть все работы",
+          "overview": "Обзор",
+          "subtitle": "Выборка концептов, прототипов и client-ready проектов.",
+          "viewRepo": "Смотреть на GitHub",
+          "techStack": "Стек технологий",
+          "backToWork": "Назад к проектам",
+          "liveStatus": "Live",
+          "otherProjects": "Другие проекты",
+          "visitLiveSite": "Перейти на сайт"
+        }
+      },
+      "footer": {
+        "hash": "4ed837f7",
+        "updatedAt": "2026-08-11T21:06:27.074+00:00",
+        "data": {
+          "built": "Built with intention.",
+          "links": "Быстрые ссылки",
+          "status": "Открыты для новых клиентов",
+          "privacy": "Политика конфиденциальности",
+          "location": "Digital Studio",
+          "description": "Цифровая студия для систем, автоматизации, сайтов и контента."
+        }
+      },
+      "langSelector": {
+        "hash": "cae1eb8e",
+        "updatedAt": "2026-08-11T21:06:27.282+00:00",
+        "data": {
+          "label": "Язык"
+        }
+      },
+      "about": {
+        "hash": "67225896",
+        "updatedAt": "2026-08-11T21:06:26.185+00:00",
+        "data": {
+          "bio": "Мы небольшая цифровая студия. Создаём цифровую среду, которая нужна бизнесу: системы и платформы, автоматизация процессов, сайты и интерфейсы, плюс визуальный контент и постоянное развитие продукта. Не просто красиво — всё заточено под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
+          "pills": [
+            "Открыты для новых проектов"
+          ],
+          "title": "Кто мы?",
+          "eyebrow": "О нас"
+        }
+      },
+      "privacyPage": {
+        "hash": "feb869dc",
+        "updatedAt": "2026-08-11T21:06:27.172+00:00",
+        "data": {
+          "title": "Политика конфиденциальности",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — контакт: dormup.it@gmail.com.",
+              "heading": "Оператор данных"
+            },
+            {
+              "body": "Данные, которые вы добровольно отправляете через формы: имя, email, название бизнеса, тип, URL сайта (если указан), описание проекта и выбранные услуги.",
+              "heading": "Какие данные собираем"
+            },
+            {
+              "body": "Обработка для ответа на запросы, подготовки расчётов и бесплатных аудитов. Основание: преддоговорные меры и согласие при отправке формы (GDPR ст. 6).",
+              "heading": "Цель и правовое основание"
+            },
+            {
+              "body": "Храним данные столько, сколько нужно для обработки запроса, до 24 месяцев, если иное не требует закон.",
+              "heading": "Хранение"
+            },
+            {
+              "body": "Вы можете запросить доступ, исправление, удаление, ограничение или возражение, написав на dormup.it@gmail.com. Право на жалобу в надзорный орган.",
+              "heading": "Ваши права"
+            },
+            {
+              "body": "Сайт не использует сторонние профилирующие cookies. Технические cookies могут использоваться для работы сайта и выбора языка.",
+              "heading": "Cookies"
+            }
+          ],
+          "backToHome": "На главную",
+          "lastUpdated": "Обновлено: июнь 2026"
+        }
+      },
+      "impact": {
+        "hash": "93e29098",
+        "updatedAt": "2026-08-11T21:06:25.712+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Порталы, дашборды и продуктовые поверхности — чтобы работа не жила в чатах и таблицах.",
+              "note": "Цифровые системы",
+              "title": "Системы, которые связывают операции"
+            },
+            {
+              "body": "Бронирования, заявки и повторяющиеся сценарии в понятных потоках — меньше потерянных лидов и ручного follow-up.",
+              "note": "Автоматизация процессов",
+              "title": "Автоматизация, которая экономит часы"
+            },
+            {
+              "body": "Сильное веб-присутствие по-прежнему закрывает доверие. Мы делаем и обновляем сайты, которые превращают внимание в действие.",
+              "note": "Сайты",
+              "title": "Сайты, которые конвертируют"
+            },
+            {
+              "body": "Фото, видео и материалы для сайта и кампаний — чтобы бренд выглядел так же уверенно, как работает.",
+              "note": "Производство контента",
+              "title": "Контент, который строит доверие"
+            }
+          ],
+          "label": "Почему это важно"
+        }
+      }
+    },
+    "de": {
+      "nav": {
+        "hash": "cd477944",
+        "updatedAt": "2026-08-11T21:06:27.473+00:00",
+        "data": {
+          "buy": "Bestellen",
+          "work": "Arbeiten",
+          "about": "Uber uns",
+          "audit": "Kostenloses Audit",
+          "contact": "Kontakt",
+          "process": "Prozess",
+          "services": "Leistungen"
+        }
+      },
+      "trust": {
+        "hash": "13903042",
+        "updatedAt": "2026-08-11T21:06:27.674+00:00",
+        "data": [
+          "Digitale Systeme, die verbinden",
+          "Prozessautomatisierung, die Zeit spart",
+          "Websites, die konvertieren",
+          "Content, der Vertrauen aufbaut"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "a8aa9877",
+        "updatedAt": "2026-08-11T21:06:27.863+00:00",
+        "data": "Was wir bauen"
+      },
+      "servicesLead": {
+        "hash": "fe7c0e54",
+        "updatedAt": "2026-08-11T21:06:27.968+00:00",
+        "data": "Systeme · Automatisierung · Websites · Content"
+      },
+      "problem": {
+        "hash": "af4c20ac",
+        "updatedAt": "2026-08-11T21:06:28.075+00:00",
+        "data": {
+          "body": "Verstreute Kanale, manuelle Prozesse, schwache Webprasenz und Content, der nicht verkauft — das kostet Zeit und Kunden.\n\nWir verbinden Systeme, automatisieren Prozesse, bauen Websites und produzieren Content.",
+          "title": "Die meisten Unternehmen haben Tools.\nFast keines hat ein digitales System, das wirklich funktioniert.",
+          "eyebrow": "01 — Warum es zahlt"
+        }
+      },
+      "caseStudies": {
+        "hash": "245c9d20",
+        "updatedAt": "2026-08-11T21:06:28.196+00:00",
+        "data": {
+          "label": "Ausgewahlte Arbeiten",
+          "fields": {
+            "problem": "Problem",
+            "solution": "Losung",
+            "businessImpact": "Business-Effekt"
+          },
+          "viewCaseStudy": "Projekt ansehen"
+        }
+      },
+      "audit": {
+        "hash": "a900888d",
+        "updatedAt": "2026-08-11T21:06:28.41+00:00",
+        "data": {
+          "cta": "Ihr Audit anfragen",
+          "body": "Wir prufen Systeme, Prozesse, Website und Content — und sagen Ihnen genau, was zu verbessern ist.",
+          "meta": "Antwort innerhalb einer Stunde · Kostenlos · Sie entscheiden uber die nachsten Schritte",
+          "title": "Wollen Sie wissen, was\nIhr Business bremst?",
+          "freeBadge": "FREE"
+        }
+      },
+      "processSection": {
+        "hash": "731a27bb",
+        "updatedAt": "2026-08-11T21:06:28.506+00:00",
+        "data": {
+          "title": "Wie wir digitales Chaos in ein Business-Asset verwandeln",
+          "eyebrow": "Prozess",
+          "subtitle": "Systeme, Automatisierung, Web und Content in einer business-getriebenen Methode — nicht nur eine schöne Site.",
+          "stepLabel": "Schritt",
+          "footerNote": "Jedes Projekt ist flexibel — Prozess, Design und Funktionalität orientieren sich an den realen Bedürfnissen des Kunden."
+        }
+      },
+      "aboutPage": {
+        "hash": "13c96eaf",
+        "updatedAt": "2026-08-11T21:06:28.711+00:00",
+        "data": {
+          "backToHome": "Zur Startseite"
+        }
+      },
+      "orderPage": {
+        "hash": "800ea543",
+        "updatedAt": "2026-08-11T21:06:28.913+00:00",
+        "data": {
+          "title": "Leistungen auswahlen",
+          "trust": {
+            "deposit": "30% Anzahlung zum Start",
+            "timeline": "Typische Dauer: 4–8 Wochen",
+            "processLink": "So arbeiten wir",
+            "testimonial": "«Schnelle Antwort, klarer Scope — genau der Digital-Partner, den wir gesucht haben.»"
+          },
+          "eyebrow": "Bestellung",
+          "footnote": "Nach Ihrer Anfrage erhalten Sie Umfang, Zeitplan und Endpreis. Keine automatische Zahlung.",
+          "subtitle": "Wahlen Sie eine oder mehrere Optionen — Sie erhalten innerhalb einer Stunde ein individuelles Angebot.",
+          "fromLabel": "ab",
+          "plusLabel": "+",
+          "proceedCta": "Angebot anfragen",
+          "selectHint": "Wahlen Sie mindestens eine Leistung oder schreiben Sie uns direkt.",
+          "estimatedLabel": "Richtwert",
+          "aboutServiceCta": "Zur Leistung",
+          "addonsSectionTitle": "Zusatzmodule"
+        }
+      },
+      "pricingAddons": {
+        "hash": "0f86eda5",
+        "updatedAt": "2026-08-11T21:06:29.027+00:00",
+        "data": {
+          "title": "Projekt erweitern",
+          "eyebrow": "Module",
+          "footnote": "Der Endpreis jedes Moduls wird nach dem Briefing festgelegt.",
+          "subtitle": "Funktionen zum Basispaket hinzufugen."
+        }
+      },
+      "servicesPage": {
+        "hash": "de286aa5",
+        "updatedAt": "2026-08-11T21:06:29.138+00:00",
+        "data": {
+          "title": "Was wir bauen",
+          "eyebrow": "Leistungen",
+          "viewAll": "Alle Leistungen",
+          "subtitle": "Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion — end to end.",
+          "techStack": "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Mehrseitige Unternehmenssite mit Team, Leistungen und SEO.",
+                  "label": "Unternehmenswebsites"
+                },
+                {
+                  "info": "Kurzfristige Kampagnensite für Launches, Events oder Angebote.",
+                  "label": "Promo"
+                },
+                {
+                  "info": "Einzelseite mit hoher Conversion — ein Ziel, ein klarer CTA.",
+                  "label": "Landingpages"
+                },
+                {
+                  "info": "Redaktionelle Site mit Artikeln, Kategorien und RSS-Feed.",
+                  "label": "Medien & Blogs"
+                },
+                {
+                  "info": "Schnelle Umsetzung mit Webflow, Framer oder Tilda.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Websites"
+            },
+            {
+              "items": [
+                {
+                  "info": "Browserbasierte Tools: Dashboards, Buchungstools, Marktplätze.",
+                  "label": "Web-Services"
+                },
+                {
+                  "info": "iOS- und Android-Apps mit React Native oder Flutter.",
+                  "label": "Mobile Apps"
+                },
+                {
+                  "info": "Interne Portale für Teams: Wikis, Dokumente, Ankündigungen.",
+                  "label": "Intranets"
+                },
+                {
+                  "info": "Passwortgeschützte Bereiche für Aufträge, Projekte und Dokumente.",
+                  "label": "Kundenportale"
+                },
+                {
+                  "info": "Automatisierte Chat-Flows für Support, Lead-Erfassung und Onboarding.",
+                  "label": "Chatbots"
+                },
+                {
+                  "info": "Online-Shops mit Warenkorb, Zahlung und Bestandsverwaltung.",
+                  "label": "E-Commerce"
+                }
+              ],
+              "title": "Digitale Systeme"
+            },
+            {
+              "items": [
+                {
+                  "info": "Forschungsbasierte Wireframes und pixelgenaues Interface-Design.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Animationen, Micro-Interactions und Sonic Branding.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Logo, Farbpalette, Typografie und vollständiges Corporate Design.",
+                  "label": "Branding"
+                },
+                {
+                  "info": "Nutzerinterviews, Usability-Tests und datengetriebene Entscheidungen.",
+                  "label": "UX-Forschung"
+                }
+              ],
+              "title": "Design"
+            },
+            {
+              "items": [
+                {
+                  "info": "Anforderungen, technische Spezifikationen und Architekturplanung.",
+                  "label": "Systemanalyse"
+                },
+                {
+                  "info": "React/Next.js-Interfaces — schnell, barrierefrei, produktionsreif.",
+                  "label": "Frontend-Entwicklung"
+                },
+                {
+                  "info": "APIs, Datenbanken, Auth und skalierbare Serverlogik.",
+                  "label": "Backend-Entwicklung"
+                },
+                {
+                  "info": "Cross-Platform-Apps mit flüssiger Performance auf iOS und Android.",
+                  "label": "Mobile-Entwicklung"
+                },
+                {
+                  "info": "Manuelle und automatisierte Tests auf Geräten und Browsern.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "CI/CD, Cloud-Hosting, Monitoring und Zero-Downtime-Deployments.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Entwicklung"
+            }
+          ],
+          "pricingNote": "Jedes Projekt wird nach dem Briefing individuell kalkuliert. Zusatzmodule wahlen Sie nach Bedarf."
+        }
+      },
+      "about": {
+        "hash": "b64d1b89",
+        "updatedAt": "2026-08-11T21:06:28.613+00:00",
+        "data": {
+          "bio": "Wir sind ein kleines Digital-Studio. Wir bauen die digitale Umgebung, die Ihr Business braucht: Systeme und Plattformen, Prozessautomatisierung, Websites und Interfaces sowie visuellen Content und laufende Produktentwicklung. Nicht nur schon — alles ist auf echte Business-Ergebnisse ausgelegt.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
+          "pills": [
+            "Verfugbar fur neue Projekte"
+          ],
+          "title": "Wer sind wir?",
+          "eyebrow": "Uber uns"
+        }
+      },
+      "workPage": {
+        "hash": "c5d79da0",
+        "updatedAt": "2026-08-11T21:06:29.372+00:00",
+        "data": {
+          "title": "Alle Projekte",
+          "eyebrow": "Arbeiten",
+          "viewAll": "Alle Arbeiten ansehen",
+          "overview": "Uberblick",
+          "subtitle": "Eine Auswahl an Konzepten, Prototypen und client-ready Projekten.",
+          "viewRepo": "Auf GitHub ansehen",
+          "techStack": "Tech-Stack",
+          "backToWork": "Zuruck zu Projekten",
+          "liveStatus": "Live",
+          "otherProjects": "Weitere Projekte",
+          "visitLiveSite": "Live-Site besuchen"
+        }
+      },
+      "footer": {
+        "hash": "73fd5922",
+        "updatedAt": "2026-08-11T21:06:29.486+00:00",
+        "data": {
+          "built": "Built with intention.",
+          "links": "Schnellzugriff",
+          "status": "Verfugbar fur neue Kunden",
+          "privacy": "Datenschutz",
+          "location": "Digital Studio",
+          "description": "Digitales Studio für Systeme, Automatisierung, Websites und Content."
+        }
+      },
+      "langSelector": {
+        "hash": "429ee009",
+        "updatedAt": "2026-08-11T21:06:29.689+00:00",
+        "data": {
+          "label": "Sprache"
+        }
+      },
+      "privacyPage": {
+        "hash": "404d9405",
+        "updatedAt": "2026-08-11T21:06:29.593+00:00",
+        "data": {
+          "title": "Datenschutzerklarung",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — Kontakt: dormup.it@gmail.com.",
+              "heading": "Verantwortlicher"
+            },
+            {
+              "body": "Daten, die Sie freiwillig uber Formulare senden: Name, E-Mail, Business-Name, Typ, Website-URL (falls angegeben), Brief und gewahlte Leistungen.",
+              "heading": "Erhobene Daten"
+            },
+            {
+              "body": "Verarbeitung zur Beantwortung von Anfragen, Angeboten und kostenlosen Audits. Rechtsgrundlage: vorvertragliche Massnahmen und implizite Einwilligung (DSGVO Art. 6).",
+              "heading": "Zweck und Rechtsgrundlage"
+            },
+            {
+              "body": "Speicherung so lange wie fur die Bearbeitung erforderlich, maximal 24 Monate, sofern gesetzlich nicht anders vorgeschrieben.",
+              "heading": "Speicherdauer"
+            },
+            {
+              "body": "Auskunft, Berichtigung, Loschung, Einschrankung oder Widerspruch per E-Mail an dormup.it@gmail.com. Beschwerderecht bei der Aufsichtsbehorde.",
+              "heading": "Ihre Rechte"
+            },
+            {
+              "body": "Diese Website verwendet keine Drittanbieter-Profiling-Cookies. Technische Cookies dienen dem Betrieb und der Sprachauswahl.",
+              "heading": "Cookies"
+            }
+          ],
+          "backToHome": "Zur Startseite",
+          "lastUpdated": "Stand: Juni 2026"
+        }
+      },
+      "hero": {
+        "hash": "fa5c993a",
+        "updatedAt": "2026-08-11T21:06:27.569+00:00",
+        "data": {
+          "lead": "Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion.",
+          "buyCta": "Leistungen bestellen",
+          "eyebrow": "Digitales Studio",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "Projekte ansehen",
+          "buyCtaShort": "Bestellen",
+          "socialProof": "4 Projekte · Verfugbar fur neue Kunden",
+          "secondaryCta": "Audit anfragen",
+          "chipHighlight": "Schlüsselfertig",
+          "mockupCaption": "Ihre beste Visitenkarte",
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "impact": {
+        "hash": "0ab0f302",
+        "updatedAt": "2026-08-11T21:06:28.307+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Portale, Dashboards und Produktflächen, die Arbeit aus Chats und Tabellen holen.",
+              "note": "Digitale Systeme",
+              "title": "Systeme, die Operationen verbinden"
+            },
+            {
+              "body": "Buchungen, Anfragen und wiederkehrende Workflows in klaren Flows — weniger verlorene Leads, weniger manuelles Follow-up.",
+              "note": "Prozessautomatisierung",
+              "title": "Automatisierung, die Stunden spart"
+            },
+            {
+              "body": "Eine starke Webprasenz schafft weiter Vertrauen. Wir bauen und verbessern Sites, die Aufmerksamkeit in Aktion verwandeln.",
+              "note": "Websites",
+              "title": "Websites, die konvertieren"
+            },
+            {
+              "body": "Foto, Video und Assets fur Web und Kampagnen — damit die Marke so solid wirkt, wie sie arbeitet.",
+              "note": "Content-Produktion",
+              "title": "Content, der Vertrauen aufbaut"
+            }
+          ],
+          "label": "Warum es zahlt"
+        }
+      },
+      "servicePage": {
+        "hash": "c51cd1d6",
+        "updatedAt": "2026-08-11T21:06:29.274+00:00",
+        "data": {
+          "orderCta": "Leistung anfragen",
+          "backToHome": "Zuruck zur Startseite",
+          "howItWorks": "Wie es funktioniert",
+          "viewService": "Service entdecken",
+          "deliverables": "Was enthalten ist",
+          "popularLabel": "Beliebteste",
+          "otherServices": "Weitere Leistungen",
+          "pricingEyebrow": "Preise",
+          "sectionEyebrow": "Leistung"
+        }
+      },
+      "contact": {
+        "hash": "11953d96",
+        "updatedAt": "2026-08-11T21:06:28.813+00:00",
+        "data": {
+          "body": "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
+          "cart": {
+            "title": "Gewahlte Leistungen",
+            "eyebrow": "Ihre Auswahl",
+            "removeItem": "Entfernen",
+            "addonsLabel": "Zusatzmodule",
+            "continueSearch": "Weiter auswahlen"
+          },
+          "form": {
+            "name": "Vor- und Nachname",
+            "brief": "Beschreiben Sie kurz, was Sie suchen",
+            "email": "E-Mail",
+            "errors": {
+              "required": "Pflichtfeld",
+              "invalidUrl": "Gültige URL eingeben (z. B. https://ihrewebsite.de)",
+              "invalidEmail": "Gültige E-Mail-Adresse eingeben"
+            },
+            "source": "Wie haben Sie uns gefunden?",
+            "submit": "Nachricht senden",
+            "options": {
+              "bar": "Bar / Location",
+              "hotel": "Hotel",
+              "other": "Sonstiges / Services",
+              "google": "Google",
+              "social": "Social Media",
+              "referral": "Empfehlung",
+              "restaurant": "Restaurant / Hospitality"
+            },
+            "siteUrl": "Website- oder Produkt-URL",
+            "success": "Wir antworten innerhalb einer Stunde.",
+            "business": "Name des Business",
+            "optional": "optional",
+            "submitting": "Wird gesendet...",
+            "submitAudit": "Kostenloses Audit anfragen",
+            "submitError": "Senden fehlgeschlagen. Schreiben Sie an {email} — wir melden uns schnell.",
+            "businessType": "Art des Business",
+            "successClose": "Schließen",
+            "successTitle": "Ihre Anfrage wurde gesendet",
+            "auditBriefPlaceholder": "Was funktioniert in Ihrem digitalen Setup nicht — Systeme, Prozesse, Website oder Content?"
+          },
+          "label": "Lass uns starten",
+          "title": "Eine digitale Umgebung fur Unternehmen, die nicht wie alle sein wollen.",
+          "emailLabel": "E-Mail",
+          "availability": "Derzeit verfugbar fur neue Kunden",
+          "compactTitle": "Kostenloses Audit anfragen",
+          "whatsappLabel": "WhatsApp · Antwort innerhalb 1h"
+        }
+      }
+    },
+    "es": {
+      "nav": {
+        "hash": "31f28dfc",
+        "updatedAt": "2026-08-11T21:06:29.924+00:00",
+        "data": {
+          "buy": "Pedir",
+          "work": "Proyectos",
+          "about": "Sobre nosotros",
+          "audit": "Auditoría gratis",
+          "contact": "Contacto",
+          "process": "Proceso",
+          "services": "Servicios"
+        }
+      },
+      "hero": {
+        "hash": "20d14f62",
+        "updatedAt": "2026-08-11T21:06:30.033+00:00",
+        "data": {
+          "lead": "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos.",
+          "buyCta": "Pedir servicios",
+          "eyebrow": "Digital Studio",
+          "headline": "Your business.\nBuilt to work.\nDesigned to impress.",
+          "subtitle": "",
+          "primaryCta": "Ver proyectos",
+          "buyCtaShort": "Pedir",
+          "socialProof": "4 proyectos · Disponibles para nuevos clientes",
+          "secondaryCta": "Solicitar auditoría gratis",
+          "chipHighlight": "Llave en mano",
+          "mockupCaption": "Tu mejor tarjeta de visita",
+          "chipAvailability": "Waiting for you",
+          "chipAvailabilitySub": "digital studio"
+        }
+      },
+      "trust": {
+        "hash": "61225aa0",
+        "updatedAt": "2026-08-11T21:06:30.15+00:00",
+        "data": [
+          "Sistemas digitales que conectan",
+          "Automatización que ahorra tiempo",
+          "Sitios que convierten",
+          "Contenido que genera confianza"
+        ]
+      },
+      "servicesLabel": {
+        "hash": "cbd33eee",
+        "updatedAt": "2026-08-11T21:06:30.25+00:00",
+        "data": "Qué construimos"
+      },
+      "servicesLead": {
+        "hash": "b71bc38f",
+        "updatedAt": "2026-08-11T21:06:30.364+00:00",
+        "data": "Sistemas · Automatización · Sitios · Contenido"
+      },
+      "problem": {
+        "hash": "13a6a7a8",
+        "updatedAt": "2026-08-11T21:06:30.469+00:00",
+        "data": {
+          "body": "Canales dispersos, procesos manuales, una presencia web débil y contenido que no vende: esa brecha cuesta tiempo y clientes.\n\nConectamos sistemas digitales, automatizamos procesos, construimos sitios y producimos contenido para que el negocio funcione mejor y se vea a la altura.",
+          "title": "La mayoría de los negocios tienen herramientas.\nCasi ninguno tiene un sistema digital que funcione de verdad.",
+          "eyebrow": "01 — Por qué importa"
+        }
+      },
+      "caseStudies": {
+        "hash": "f5397fde",
+        "updatedAt": "2026-08-11T21:06:30.563+00:00",
+        "data": {
+          "label": "Trabajo seleccionado",
+          "fields": {
+            "problem": "Problema",
+            "solution": "Solución",
+            "businessImpact": "Impacto en el negocio"
+          },
+          "viewCaseStudy": "Ver caso de estudio"
+        }
+      },
+      "audit": {
+        "hash": "49e64886",
+        "updatedAt": "2026-08-11T21:06:30.775+00:00",
+        "data": {
+          "cta": "Solicita tu auditoría",
+          "body": "Revisamos sistemas, procesos, sitio y contenido — y te decimos exactamente qué mejorar.",
+          "meta": "Respuesta en 1 hora · Gratis · Tú decides los siguientes pasos",
+          "title": "¿Quieres saber qué\nfrena tu negocio?",
+          "freeBadge": "FREE"
+        }
+      },
+      "processSection": {
+        "hash": "91bc2faa",
+        "updatedAt": "2026-08-11T21:06:30.886+00:00",
+        "data": {
+          "title": "Cómo convertimos el caos digital en un activo de negocio",
+          "eyebrow": "Proceso",
+          "subtitle": "Sistemas, automatización, web y contenido en un solo método orientado al negocio — no solo un sitio bonito.",
+          "stepLabel": "Paso",
+          "footerNote": "Cada proyecto es flexible: el proceso, el diseño y la funcionalidad se adaptan a las necesidades reales de cada cliente."
+        }
+      },
+      "about": {
+        "hash": "2e1b81b5",
+        "updatedAt": "2026-08-11T21:06:30.988+00:00",
+        "data": {
+          "bio": "Somos un pequeño estudio digital. Construimos el entorno digital que tu negocio necesita: sistemas y plataformas, automatización de procesos, sitios e interfaces, más contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
+          "pills": [
+            "Disponibles para nuevos proyectos"
+          ],
+          "title": "¿Quiénes somos?",
+          "eyebrow": "Sobre nosotros"
+        }
+      },
+      "aboutPage": {
+        "hash": "10543cca",
+        "updatedAt": "2026-08-11T21:06:31.185+00:00",
+        "data": {
+          "backToHome": "Volver al inicio"
+        }
+      },
+      "orderPage": {
+        "hash": "f0383203",
+        "updatedAt": "2026-08-11T21:06:31.39+00:00",
+        "data": {
+          "title": "Elige tus servicios",
+          "trust": {
+            "deposit": "Depósito del 30% al inicio",
+            "timeline": "Plazo típico: 4–8 semanas",
+            "processLink": "Cómo trabajamos",
+            "testimonial": "«Respuesta rápida, alcance claro — exactamente el partner digital que buscábamos.»"
+          },
+          "eyebrow": "Pedido",
+          "footnote": "Tras tu solicitud recibirás alcance, plazos y coste final. Sin pago automático.",
+          "subtitle": "Selecciona una o más opciones — recibirás un presupuesto a medida en 1 hora.",
+          "fromLabel": "desde",
+          "plusLabel": "+",
+          "proceedCta": "Solicitar presupuesto",
+          "selectHint": "Selecciona al menos un servicio para continuar, o escríbenos directamente.",
+          "estimatedLabel": "Estimación orientativa",
+          "aboutServiceCta": "Sobre este servicio",
+          "addonsSectionTitle": "Módulos adicionales"
+        }
+      },
+      "pricingAddons": {
+        "hash": "85b965e2",
+        "updatedAt": "2026-08-11T21:06:31.496+00:00",
+        "data": {
+          "title": "Amplía tu proyecto",
+          "eyebrow": "Módulos",
+          "footnote": "El presupuesto final de cada módulo se fija tras el brief.",
+          "subtitle": "Añade capacidades al paquete base. Cada módulo se valora tras el brief."
+        }
+      },
+      "servicesPage": {
+        "hash": "bd7208b3",
+        "updatedAt": "2026-08-11T21:06:31.601+00:00",
+        "data": {
+          "title": "Qué construimos",
+          "eyebrow": "Servicios",
+          "viewAll": "Todos los servicios",
+          "subtitle": "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos — de punta a punta.",
+          "techStack": "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
+          "categories": [
+            {
+              "items": [
+                {
+                  "info": "Sitio de marca multipágina con equipo, servicios, contacto y SEO.",
+                  "label": "Sitios corporativos"
+                },
+                {
+                  "info": "Sitio de campaña a corto plazo para impulsar un lanzamiento, evento u oferta.",
+                  "label": "Promo"
+                },
+                {
+                  "info": "Página de conversión con un solo foco — un objetivo, un CTA claro.",
+                  "label": "Landing pages"
+                },
+                {
+                  "info": "Sitio orientado a contenido con artículos, categorías, etiquetas y RSS.",
+                  "label": "Media y blogs"
+                },
+                {
+                  "info": "Entrega rápida con Webflow, Framer o Tilda — sin desarrollo pesado.",
+                  "label": "No/Low-code"
+                }
+              ],
+              "title": "Sitios web"
+            },
+            {
+              "items": [
+                {
+                  "info": "Herramientas en el navegador: dashboards, motores de reserva, marketplaces.",
+                  "label": "Servicios web"
+                },
+                {
+                  "info": "Apps iOS y Android con React Native o Flutter.",
+                  "label": "Apps móviles"
+                },
+                {
+                  "info": "Portales internos para equipos: wikis, documentos y anuncios.",
+                  "label": "Intranets"
+                },
+                {
+                  "info": "Espacios protegidos con contraseña para que los clientes sigan pedidos o proyectos.",
+                  "label": "Portales de clientes"
+                },
+                {
+                  "info": "Flujos de chat automatizados para soporte, captación de leads o onboarding.",
+                  "label": "Chatbots"
+                },
+                {
+                  "info": "Tiendas online con carrito, checkout, pagos e inventario.",
+                  "label": "E-commerce"
+                }
+              ],
+              "title": "Sistemas digitales"
+            },
+            {
+              "items": [
+                {
+                  "info": "Wireframes basados en investigación y diseño de interfaz pixel-perfect.",
+                  "label": "UX & UI"
+                },
+                {
+                  "info": "Transiciones animadas, microinteracciones y sonic branding.",
+                  "label": "Motion & Sound"
+                },
+                {
+                  "info": "Logo, paleta de color, tipografía y sistema completo de identidad de marca.",
+                  "label": "Branding"
+                },
+                {
+                  "info": "Entrevistas con usuarios, pruebas de usabilidad y decisiones de diseño basadas en datos.",
+                  "label": "UX Research"
+                }
+              ],
+              "title": "Diseño"
+            },
+            {
+              "items": [
+                {
+                  "info": "Mapeo de requisitos, especificaciones técnicas y planificación de arquitectura.",
+                  "label": "Análisis de sistemas"
+                },
+                {
+                  "info": "Interfaces React/Next.js — rápidas, accesibles y listas para producción.",
+                  "label": "Frontend dev"
+                },
+                {
+                  "info": "APIs, bases de datos, autenticación y lógica de servidor escalable.",
+                  "label": "Backend dev"
+                },
+                {
+                  "info": "Apps nativas multiplataforma con rendimiento fluido.",
+                  "label": "Mobile dev"
+                },
+                {
+                  "info": "Pruebas manuales y automatizadas en dispositivos y navegadores.",
+                  "label": "Quality Assurance"
+                },
+                {
+                  "info": "Pipelines CI/CD, hosting en la nube, monitorización y despliegues sin downtime.",
+                  "label": "DevOps"
+                }
+              ],
+              "title": "Desarrollo"
+            }
+          ],
+          "pricingNote": "Cada proyecto se presupuesta a medida tras el brief. Los módulos adicionales se eligen según las necesidades del proyecto."
+        }
+      },
+      "servicePage": {
+        "hash": "5a279efd",
+        "updatedAt": "2026-08-11T21:06:31.729+00:00",
+        "data": {
+          "orderCta": "Solicitar este servicio",
+          "backToHome": "Volver al inicio",
+          "howItWorks": "Cómo funciona",
+          "viewService": "Explorar servicio",
+          "deliverables": "Qué incluye",
+          "popularLabel": "Más popular",
+          "otherServices": "Otros servicios",
+          "pricingEyebrow": "Precios",
+          "sectionEyebrow": "Servicio"
+        }
+      },
+      "workPage": {
+        "hash": "abb1a63d",
+        "updatedAt": "2026-08-11T21:06:31.846+00:00",
+        "data": {
+          "title": "Todos los proyectos",
+          "eyebrow": "Proyectos",
+          "viewAll": "Ver todos los proyectos",
+          "overview": "Resumen",
+          "subtitle": "Una selección de conceptos, prototipos y proyectos listos para el cliente.",
+          "viewRepo": "Ver en GitHub",
+          "techStack": "Stack tecnológico",
+          "backToWork": "Volver a proyectos",
+          "liveStatus": "En vivo",
+          "otherProjects": "Otros proyectos",
+          "visitLiveSite": "Visitar sitio en vivo"
+        }
+      },
+      "footer": {
+        "hash": "52c7ff5e",
+        "updatedAt": "2026-08-11T21:06:31.944+00:00",
+        "data": {
+          "built": "Construido con intención.",
+          "links": "Enlaces rápidos",
+          "status": "Disponibles para nuevos clientes",
+          "privacy": "Política de privacidad",
+          "location": "Digital Studio",
+          "description": "Estudio digital para sistemas, automatización, sitios y contenido."
+        }
+      },
+      "privacyPage": {
+        "hash": "0232b996",
+        "updatedAt": "2026-08-11T21:06:32.269+00:00",
+        "data": {
+          "title": "Política de privacidad",
+          "sections": [
+            {
+              "body": "DormUp Studio digital studio — contacto: dormup.it@gmail.com.",
+              "heading": "Responsable del tratamiento"
+            },
+            {
+              "body": "Recopilamos los datos que envías voluntariamente mediante formularios: nombre, email, negocio, tipo de actividad, URL del sitio (si se indica), brief y servicios seleccionados.",
+              "heading": "Datos recopilados"
+            },
+            {
+              "body": "Los datos se procesan para responder consultas, preparar presupuestos y auditorías gratuitas. Base legal: medidas precontractuales y consentimiento implícito al enviar el formulario (RGPD art. 6).",
+              "heading": "Finalidad y base legal"
+            },
+            {
+              "body": "Conservamos los datos el tiempo necesario para gestionar la solicitud, hasta 24 meses salvo obligación legal distinta.",
+              "heading": "Conservación"
+            },
+            {
+              "body": "Puedes solicitar acceso, rectificación, supresión, limitación u oposición escribiendo a dormup.it@gmail.com. Tienes derecho a reclamar ante la autoridad de protección de datos.",
+              "heading": "Tus derechos"
+            },
+            {
+              "body": "Este sitio no utiliza cookies de perfilado de terceros. Las cookies técnicas pueden usarse para el funcionamiento y la selección de idioma.",
+              "heading": "Cookies"
+            }
+          ],
+          "backToHome": "Volver al inicio",
+          "lastUpdated": "Última actualización: junio 2026"
+        }
+      },
+      "langSelector": {
+        "hash": "eb95ee66",
+        "updatedAt": "2026-08-11T21:06:32.396+00:00",
+        "data": {
+          "label": "Idioma"
+        }
+      },
+      "impact": {
+        "hash": "d8359a54",
+        "updatedAt": "2026-08-11T21:06:30.667+00:00",
+        "data": {
+          "items": [
+            {
+              "body": "Portales, dashboards y superficies de producto que sacan el trabajo de chats y hojas de cálculo.",
+              "note": "Sistemas digitales",
+              "title": "Sistemas que conectan las operaciones"
+            },
+            {
+              "body": "Reservas, consultas y flujos repetitivos con caminos claros — menos leads perdidos, menos seguimiento manual.",
+              "note": "Automatización de procesos",
+              "title": "Automatización que ahorra horas"
+            },
+            {
+              "body": "Una presencia web sólida sigue generando confianza. Creamos y mejoramos sitios que convierten atención en acción.",
+              "note": "Sitios web",
+              "title": "Sitios que convierten"
+            },
+            {
+              "body": "Foto, vídeo y assets listos para web y campañas — para que la marca se vea tan sólida como opera.",
+              "note": "Producción de contenidos",
+              "title": "Contenido que genera confianza"
+            }
+          ],
+          "label": "Por qué importa"
+        }
+      },
+      "contact": {
+        "hash": "f159f3de",
+        "updatedAt": "2026-08-11T21:06:31.288+00:00",
+        "data": {
+          "body": "Tras tu mensaje recibirás una respuesta clara con los siguientes pasos, plazos y viabilidad.",
+          "cart": {
+            "title": "Servicios seleccionados",
+            "eyebrow": "Tu selección",
+            "removeItem": "Eliminar",
+            "addonsLabel": "Módulos adicionales",
+            "continueSearch": "Seguir explorando servicios"
+          },
+          "form": {
+            "name": "Nombre completo",
+            "brief": "Describe brevemente qué buscas",
+            "email": "Email",
+            "errors": {
+              "required": "Campo obligatorio",
+              "invalidUrl": "Introduce una URL válida (ej. https://tusitio.com)",
+              "invalidEmail": "Introduce una dirección de email válida"
+            },
+            "source": "¿Cómo nos encontraste?",
+            "submit": "Enviar mensaje",
+            "options": {
+              "bar": "Bar / local",
+              "hotel": "Hotel",
+              "other": "Otro / servicios",
+              "google": "Google",
+              "social": "Redes sociales",
+              "referral": "Boca a boca",
+              "restaurant": "Restaurante / hospitality"
+            },
+            "siteUrl": "URL del sitio o producto",
+            "success": "Responderemos en 1 hora.",
+            "business": "Nombre del negocio",
+            "optional": "opcional",
+            "submitting": "Enviando...",
+            "submitAudit": "Solicitar auditoría gratuita",
+            "submitError": "No se pudo enviar. Escríbenos a {email} y responderemos pronto.",
+            "businessType": "Tipo de negocio",
+            "successClose": "Cerrar",
+            "successTitle": "Tu solicitud ha sido enviada",
+            "auditBriefPlaceholder": "¿Qué no funciona en tu setup digital — sistemas, procesos, sitio o contenido?"
+          },
+          "label": "Empecemos",
+          "title": "Un entorno digital para negocios que no quieren ser como todos.",
+          "emailLabel": "Email",
+          "availability": "Actualmente disponibles para nuevos clientes",
+          "compactTitle": "Solicita tu auditoría gratuita",
+          "whatsappLabel": "WhatsApp · Respuesta en 1 h"
+        }
+      }
+    }
+  },
+  "services": [
+    {
+      "rowId": "83c93db9-7fa2-4186-982e-61f2627c6f12",
+      "serviceId": "booking-flow",
+      "slug": "booking-flow",
+      "sortOrder": 0,
+      "icon": "CalendarCheck",
+      "imagePath": "/images/service-booking-flow.png",
+      "basePrice": 599,
+      "isMonthly": false,
+      "published": true,
+      "i18n": {
+        "en": {
+          "hash": "afed9bf6",
+          "fields": {
+            "title": "Process automation",
+            "description": "We automate bookings, enquiries and repeat workflows so leads don't get lost in chats and calendars.",
+            "details": "Flows · Integrations · Smart forms · Reporting",
+            "what_you_get": [
+              "Analysis of your current booking funnel",
+              "Booking system integration",
+              "Smart conversion-oriented forms",
+              "A/B testing on CTAs and key flows",
+              "Monthly results report"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Booking & lead packages",
+            "pricing_footnote": "Works with existing or new sites. Price varies by integrations and funnel complexity."
+          }
+        },
+        "fr": {
+          "hash": "929c11e9",
+          "fields": {
+            "title": "Automatisation des processus",
+            "description": "Nous automatisons reservations, demandes et workflows repetitifs pour que les leads ne se perdent plus dans les chats et agendas.",
+            "details": "Flux · Integrations · Formulaires intelligents · Reporting",
+            "what_you_get": [
+              "Analyse du funnel de booking actuel",
+              "Integration du systeme de booking",
+              "Formulaires intelligents orientes conversion",
+              "A/B testing sur CTAs et flux cles",
+              "Rapport mensuel des resultats"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Forfaits booking & lead",
+            "pricing_footnote": "Compatible site existant ou nouveau projet."
+          }
+        },
+        "ru": {
+          "hash": "69264259",
+          "fields": {
+            "title": "Автоматизация процессов",
+            "description": "Автоматизируем бронирования, заявки и повторяющиеся сценарии — чтобы лиды не терялись в чатах и календарях.",
+            "details": "Потоки · Интеграции · Умные формы · Отчётность",
+            "what_you_get": [
+              "Анализ текущего booking-funnel",
+              "Интеграция booking-системы",
+              "Умные формы под конверсию",
+              "A/B-тесты CTA и ключевых flow",
+              "Ежемесячный отчёт по результатам"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Пакеты booking и lead",
+            "pricing_footnote": "Подходит для существующих и новых сайтов."
+          }
+        },
+        "de": {
+          "hash": "f75906d9",
+          "fields": {
+            "title": "Prozessautomatisierung",
+            "description": "Wir automatisieren Buchungen, Anfragen und wiederkehrende Workflows — damit Leads nicht in Chats und Kalendern verloren gehen.",
+            "details": "Flows · Integrationen · Smarte Formulare · Reporting",
+            "what_you_get": [
+              "Analyse des aktuellen Booking-Funnels",
+              "Integration des Buchungssystems",
+              "Smarte, conversion-orientierte Formulare",
+              "A/B-Tests auf CTAs und Key Flows",
+              "Monatlicher Ergebnisbericht"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Booking- und Lead-Pakete",
+            "pricing_footnote": "Fur bestehende oder neue Websites."
+          }
+        },
+        "es": {
+          "hash": "8022b0b3",
+          "fields": {
+            "title": "Automatización de procesos",
+            "description": "Automatizamos reservas, consultas y flujos repetitivos para que los leads no se pierdan en chats y calendarios.",
+            "details": "Flujos · Integraciones · Formularios inteligentes · Reporting",
+            "what_you_get": [
+              "Análisis de tu embudo de reservas actual",
+              "Integración del sistema de reservas",
+              "Formularios inteligentes orientados a la conversión",
+              "Pruebas A/B en CTAs y flujos clave",
+              "Informe mensual de resultados"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Paquetes de reservas y leads",
+            "pricing_footnote": "Funciona con sitios existentes o nuevos. El precio varía según integraciones y complejidad del embudo."
+          }
+        },
+        "it": {
+          "hash": "0ff3c10a",
+          "fields": {
+            "title": "Automazione dei processi",
+            "description": "Automatizziamo prenotazioni, richieste e workflow ripetitivi perche i lead non si perdano in chat e calendari.",
+            "details": "Flussi · Integrazioni · Form intelligenti · Report",
+            "what_you_get": [
+              "Analisi del funnel di prenotazione attuale",
+              "Integrazione del sistema di booking",
+              "Form intelligenti orientati alla conversione",
+              "Test A/B su CTA e flussi chiave",
+              "Report mensile sui risultati"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Pacchetti booking & lead",
+            "pricing_footnote": "Compatibile con siti esistenti o nuovi progetti. Il prezzo varia in base a integrazioni e complessità del funnel."
+          }
+        }
+      },
+      "tiers": [
+        {
+          "rowId": "5b783cce-3f0f-4316-a872-34853f273472",
+          "tierId": "single",
+          "price": 599,
+          "i18n": {
+            "de": {
+              "hash": "da4a9dfb",
+              "name": "Einzel-Flow",
+              "detail": "Buchung oder Anfrage · Formular + CTA."
+            },
+            "en": {
+              "hash": "654df6fa",
+              "name": "Single flow",
+              "detail": "One path — booking or enquiry · optimized form + CTA."
+            },
+            "fr": {
+              "hash": "f97b7018",
+              "name": "Flux unique",
+              "detail": "Reservation ou demande · formulaire + CTA optimises."
+            },
+            "ru": {
+              "hash": "ae9aa844",
+              "name": "Один поток",
+              "detail": "Бронь или заявка · форма + CTA."
+            },
+            "es": {
+              "hash": "6413eb5c",
+              "name": "Single flow",
+              "detail": "Un solo camino — reserva o consulta · formulario optimizado + CTA."
+            },
+            "it": {
+              "hash": "aa4a4a8e",
+              "name": "Singolo flusso",
+              "detail": "Un percorso — prenotazione o richiesta diretta · form + CTA ottimizzati."
+            }
+          }
+        },
+        {
+          "rowId": "edff414b-ce5b-4f36-b7ea-5af23f517b52",
+          "tierId": "multi",
+          "price": 999,
+          "i18n": {
+            "it": {
+              "hash": "515c6dbc",
+              "name": "Multi-flusso",
+              "detail": "Più percorsi · integrazione booking · ottimizzazione CTA su tutto il sito."
+            },
+            "en": {
+              "hash": "c9bf9a64",
+              "name": "Multi-flow",
+              "detail": "Multiple paths · booking integration · site-wide CTA optimization."
+            },
+            "fr": {
+              "hash": "8072a9ad",
+              "name": "Multi-flux",
+              "detail": "Plusieurs parcours · integration booking · CTA site-wide."
+            },
+            "ru": {
+              "hash": "d3612d0f",
+              "name": "Несколько потоков",
+              "detail": "Интеграция booking · оптимизация CTA."
+            },
+            "de": {
+              "hash": "f0fcc3ee",
+              "name": "Multi-Flow",
+              "detail": "Mehrere Pfade · Booking-Integration."
+            },
+            "es": {
+              "hash": "19b6167a",
+              "name": "Multi-flow",
+              "detail": "Varios caminos · integración de reservas · optimización de CTAs en todo el sitio."
+            }
+          }
+        },
+        {
+          "rowId": "0c9f4b36-04a6-4e4c-a48b-e597945e680b",
+          "tierId": "full",
+          "price": 1499,
+          "i18n": {
+            "it": {
+              "hash": "7d81a76c",
+              "name": "Completo",
+              "detail": "Funnel end-to-end · A/B test · report mensile sui risultati."
+            },
+            "en": {
+              "hash": "9cec199a",
+              "name": "Full",
+              "detail": "End-to-end funnel · A/B testing · monthly results report."
+            },
+            "fr": {
+              "hash": "fb9e1990",
+              "name": "Complet",
+              "detail": "Funnel complet · A/B test · rapport mensuel."
+            },
+            "ru": {
+              "hash": "63309e8b",
+              "name": "Полный",
+              "detail": "Весь funnel · A/B · ежемесячный отчёт."
+            },
+            "de": {
+              "hash": "c9c6577b",
+              "name": "Komplett",
+              "detail": "End-to-End-Funnel · A/B · Monatsreport."
+            },
+            "es": {
+              "hash": "782e25ac",
+              "name": "Full",
+              "detail": "Embudo de extremo a extremo · pruebas A/B · informe mensual de resultados."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rowId": "4cfe8d2f-6408-43c7-8f8e-9dfa633ba233",
+      "serviceId": "premium-site",
+      "slug": "premium-website",
+      "sortOrder": 1,
+      "icon": "Monitor",
+      "imagePath": "/images/service-premium-website.png",
+      "basePrice": 1299,
+      "isMonthly": false,
+      "published": true,
+      "i18n": {
+        "en": {
+          "hash": "3736a8c3",
+          "fields": {
+            "title": "Websites & web products",
+            "description": "Custom websites and web products — from brand sites to conversion-focused experiences. Mobile-first, fast, built to work.",
+            "details": "From wireframe to launch · Optional CMS · Base SEO included",
+            "what_you_get": [
+              "Premium design and visual identity",
+              "Fast, SEO-ready Next.js development",
+              "Mobile-first optimized for conversion",
+              "Optional CMS for content management",
+              "Launch and post-live support included"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Website packages",
+            "pricing_footnote": "Indicative starting prices. Final quote depends on pages, integrations and timeline."
+          }
+        },
+        "fr": {
+          "hash": "01a40763",
+          "fields": {
+            "title": "Sites web et produits digitaux",
+            "description": "Sites et produits web sur mesure — du site de marque aux experiences orientees conversion. Mobile-first, rapide, concu pour fonctionner.",
+            "details": "Du wireframe a la production · CMS optionnel · SEO de base inclus",
+            "what_you_get": [
+              "Design et identite visuelle premium",
+              "Developpement Next.js rapide et SEO-ready",
+              "Mobile-first optimise pour la conversion",
+              "CMS optionnel pour la gestion de contenu",
+              "Lancement et support post-live inclus"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Forfaits site web",
+            "pricing_footnote": "Montants indicatifs « a partir de ». Le devis final depend des pages, integrations et delais."
+          }
+        },
+        "de": {
+          "hash": "e267608b",
+          "fields": {
+            "title": "Websites & Webprodukte",
+            "description": "Individuelle Websites und Webprodukte — von Markenseiten bis conversion-starken Erlebnissen. Mobile-first, schnell, gebaut zum Funktionieren.",
+            "details": "Vom Wireframe bis zum Launch · Optionales CMS · Basis-SEO inklusive",
+            "what_you_get": [
+              "Premium-Design und visuelle Identitat",
+              "Schnelle, SEO-ready Next.js-Entwicklung",
+              "Mobile-first, conversion-optimiert",
+              "Optionales CMS fur Content-Management",
+              "Launch und Post-Live-Support inklusive"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Website-Pakete",
+            "pricing_footnote": "Indikative Startpreise. Endangebot hangt von Seiten und Integrationen ab."
+          }
+        },
+        "es": {
+          "hash": "1a5c425b",
+          "fields": {
+            "title": "Sitios web y productos digitales",
+            "description": "Sitios y productos web a medida — del site de marca a experiencias orientadas a conversión. Mobile-first, rápidos, hechos para funcionar.",
+            "details": "Del wireframe al lanzamiento · CMS opcional · SEO base incluido",
+            "what_you_get": [
+              "Diseño premium e identidad visual",
+              "Desarrollo Next.js rápido y preparado para SEO",
+              "Mobile-first optimizado para la conversión",
+              "CMS opcional para gestión de contenidos",
+              "Lanzamiento y soporte post-publicación incluidos"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Paquetes web",
+            "pricing_footnote": "Precios orientativos de partida. El presupuesto final depende de páginas, integraciones y plazos."
+          }
+        },
+        "it": {
+          "hash": "00e0e6f8",
+          "fields": {
+            "title": "Siti web e prodotti digitali",
+            "description": "Siti e prodotti web su misura — dal brand site alle esperienze orientate alla conversione. Mobile-first, veloci, costruiti per funzionare.",
+            "details": "Da wireframe a produzione · CMS opzionale · SEO base incluso",
+            "what_you_get": [
+              "Design e identita visiva premium",
+              "Sviluppo Next.js veloce e SEO-ready",
+              "Mobile-first ottimizzato per conversione",
+              "CMS opzionale per gestione contenuti",
+              "Lancio e supporto post-live incluso"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Pacchetti sito web",
+            "pricing_footnote": "Importi indicativi «da». Il preventivo finale dipende da pagine, integrazioni e tempistiche."
+          }
+        },
+        "ru": {
+          "hash": "2d3eff40",
+          "fields": {
+            "title": "Сайты и веб-продукты",
+            "description": "Кастомные сайты и веб-продукты — от бренд-сайтов до опытов под конверсию. Mobile-first, быстро, сделано чтобы работать.",
+            "details": "От wireframe до продукта · Опциональный CMS · Базовый SEO включён",
+            "what_you_get": [
+              "Премиум дизайн и визуальная идентичность",
+              "Быстрая разработка Next.js, готовая под SEO",
+              "Mobile-first под конверсию",
+              "Опциональный CMS для управления контентом",
+              "Запуск и поддержка после launch включены"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Пакеты сайта",
+            "pricing_footnote": "Цены указаны «от». Итоговая смета зависит от страниц, интеграций и сроков."
+          }
+        }
+      },
+      "tiers": [
+        {
+          "rowId": "500acdd6-c386-44f5-948a-f9e36d876335",
+          "tierId": "starter",
+          "price": 1299,
+          "i18n": {
+            "it": {
+              "hash": "1a5d943d",
+              "name": "Starter",
+              "detail": "Landing · 3–5 schermate · 1 lingua · SEO base incluso."
+            },
+            "en": {
+              "hash": "33dd82df",
+              "name": "Starter",
+              "detail": "Landing · 3–5 screens · 1 language · base SEO included."
+            },
+            "fr": {
+              "hash": "1d87d023",
+              "name": "Starter",
+              "detail": "Landing · 3–5 ecrans · 1 langue · SEO de base."
+            },
+            "ru": {
+              "hash": "53582f1c",
+              "name": "Starter",
+              "detail": "Лендинг · 3–5 экранов · 1 язык · базовый SEO."
+            },
+            "de": {
+              "hash": "b5736f5d",
+              "name": "Starter",
+              "detail": "Landing · 3–5 Screens · 1 Sprache · Basis-SEO."
+            },
+            "es": {
+              "hash": "04ac7e18",
+              "name": "Starter",
+              "detail": "Landing · 3–5 pantallas · 1 idioma · SEO base incluido."
+            }
+          }
+        },
+        {
+          "rowId": "7bae315f-9f68-4b33-be2e-1033e21f42bd",
+          "tierId": "business",
+          "price": 1999,
+          "i18n": {
+            "it": {
+              "hash": "4de2bf16",
+              "name": "Business",
+              "detail": "6–10 pagine · CMS · form · SEO base · ideale per PMI e hospitality."
+            },
+            "en": {
+              "hash": "f250e081",
+              "name": "Business",
+              "detail": "6–10 pages · CMS · forms · base SEO · ideal for SMBs and hospitality."
+            },
+            "fr": {
+              "hash": "ec1004db",
+              "name": "Business",
+              "detail": "6–10 pages · CMS · formulaires · SEO de base."
+            },
+            "ru": {
+              "hash": "63e55de8",
+              "name": "Business",
+              "detail": "6–10 страниц · CMS · формы · SEO · для SMB и hospitality."
+            },
+            "de": {
+              "hash": "77333e4c",
+              "name": "Business",
+              "detail": "6–10 Seiten · CMS · Formulare · Basis-SEO."
+            },
+            "es": {
+              "hash": "01b5cf64",
+              "name": "Business",
+              "detail": "6–10 páginas · CMS · formularios · SEO base · ideal para pymes y hostelería."
+            }
+          }
+        },
+        {
+          "rowId": "8c359adb-6696-4082-9f84-f7d72904e6c8",
+          "tierId": "premium",
+          "price": 2999,
+          "i18n": {
+            "it": {
+              "hash": "bd1246eb",
+              "name": "Premium",
+              "detail": "Sito completo · multilingua · booking · animazioni · massima conversione."
+            },
+            "en": {
+              "hash": "ebadbe1b",
+              "name": "Premium",
+              "detail": "Full site · multilingual · booking · animations · maximum conversion."
+            },
+            "fr": {
+              "hash": "4178a30d",
+              "name": "Premium",
+              "detail": "Site complet · multilingue · booking · animations."
+            },
+            "ru": {
+              "hash": "f683918a",
+              "name": "Premium",
+              "detail": "Полный сайт · мультиязычность · booking · анимации."
+            },
+            "de": {
+              "hash": "0eac6b8f",
+              "name": "Premium",
+              "detail": "Volle Website · mehrsprachig · Booking · Animationen."
+            },
+            "es": {
+              "hash": "43a5ff68",
+              "name": "Premium",
+              "detail": "Sitio completo · multilingüe · reservas · animaciones · máxima conversión."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rowId": "11477ba6-d0c1-4837-b316-dd24be0d4674",
+      "serviceId": "redesign",
+      "slug": "redesign",
+      "sortOrder": 2,
+      "icon": "RefreshCw",
+      "imagePath": "/images/service-redesign.png",
+      "basePrice": 899,
+      "isMonthly": false,
+      "published": true,
+      "i18n": {
+        "en": {
+          "hash": "607067f4",
+          "fields": {
+            "title": "Systems upgrade & redesign",
+            "description": "We upgrade existing digital presence into a clearer system — structure, UX, performance and conversion paths.",
+            "details": "Audit · Strategy · Implementation",
+            "what_you_get": [
+              "Full audit of your current site",
+              "New information architecture and UX",
+              "Updated, premium visual identity",
+              "Content migration without loss",
+              "Analytics and tracking setup"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Redesign packages",
+            "pricing_footnote": "Cost depends on current site state, page count and customization level."
+          }
+        },
+        "ru": {
+          "hash": "217e4b50",
+          "fields": {
+            "title": "Апгрейд систем и редизайн",
+            "description": "Усиливаем существующее цифровое присутствие: яснее система — структура, UX, производительность и пути конверсии.",
+            "details": "Аудит · Стратегия · Внедрение",
+            "what_you_get": [
+              "Полный аудит текущего сайта",
+              "Новая информационная архитектура и UX",
+              "Обновлённая премиум-идентичность",
+              "Миграция контента без потерь",
+              "Настройка аналитики и трекинга"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Пакеты редизайна",
+            "pricing_footnote": "Стоимость зависит от состояния сайта и количества страниц."
+          }
+        },
+        "de": {
+          "hash": "beb0dc52",
+          "fields": {
+            "title": "System-Upgrade & Redesign",
+            "description": "Wir entwickeln die bestehende digitale Präsenz zu einem klareren System weiter — Struktur, UX, Performance und Conversion-Pfade.",
+            "details": "Audit · Strategie · Umsetzung",
+            "what_you_get": [
+              "Vollstandiges Audit der aktuellen Website",
+              "Neue Informationsarchitektur und UX",
+              "Aktualisierte, premium visuelle Identitat",
+              "Content-Migration ohne Verlust",
+              "Analytics- und Tracking-Setup"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Redesign-Pakete",
+            "pricing_footnote": "Kosten hangen vom aktuellen Zustand und Seitenumfang ab."
+          }
+        },
+        "es": {
+          "hash": "1bd21df9",
+          "fields": {
+            "title": "Upgrade de sistemas y redesign",
+            "description": "Evolucionamos la presencia digital existente hacia un sistema más claro — estructura, UX, rendimiento y rutas de conversión.",
+            "details": "Auditoría · Estrategia · Implementación",
+            "what_you_get": [
+              "Auditoría completa de tu sitio actual",
+              "Nueva arquitectura de información y UX",
+              "Identidad visual actualizada y premium",
+              "Migración de contenidos sin pérdidas",
+              "Configuración de analítica y seguimiento"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Paquetes de rediseño",
+            "pricing_footnote": "El coste depende del estado actual del sitio, el número de páginas y el nivel de personalización."
+          }
+        },
+        "fr": {
+          "hash": "c5f17585",
+          "fields": {
+            "title": "Upgrade systemes et redesign",
+            "description": "Nous faisons evoluer la presence digitale existante en un systeme plus clair — structure, UX, performance et parcours de conversion.",
+            "details": "Audit · Strategie · Implementation",
+            "what_you_get": [
+              "Audit complet du site actuel",
+              "Nouvelle architecture de l'information",
+              "Identite visuelle mise a jour, premium",
+              "Migration de contenu sans perte",
+              "Configuration analytics et tracking"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Forfaits redesign",
+            "pricing_footnote": "Le cout depend de l etat actuel du site et du nombre de pages."
+          }
+        },
+        "it": {
+          "hash": "df7d246d",
+          "fields": {
+            "title": "Upgrade sistemi e redesign",
+            "description": "Portiamo la presenza digitale esistente a un sistema piu chiaro — struttura, UX, performance e percorsi di conversione.",
+            "details": "Audit · Strategia · Implementazione",
+            "what_you_get": [
+              "Audit completo del sito attuale",
+              "Nuova architettura informativa e UX",
+              "Identita visiva aggiornata e premium",
+              "Migrazione contenuti senza perdite",
+              "Setup analytics e tracking"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Pacchetti redesign",
+            "pricing_footnote": "Il costo dipende dallo stato attuale del sito, dal numero di pagine e dal livello di personalizzazione."
+          }
+        }
+      },
+      "tiers": [
+        {
+          "rowId": "4aeef192-91f7-4c0e-8ed3-11a2d1f73f16",
+          "tierId": "audit",
+          "price": 499,
+          "i18n": {
+            "it": {
+              "hash": "e08ab6aa",
+              "name": "Solo audit",
+              "detail": "Analisi completa · report con priorità · roadmap di miglioramento."
+            },
+            "en": {
+              "hash": "af9efd6b",
+              "name": "Audit only",
+              "detail": "Full analysis · priority report · improvement roadmap."
+            },
+            "fr": {
+              "hash": "e3cff39e",
+              "name": "Audit seul",
+              "detail": "Analyse complete · rapport priorise · feuille de route."
+            },
+            "de": {
+              "hash": "eaef486e",
+              "name": "Nur Audit",
+              "detail": "Vollanalyse · Prioritatenreport · Roadmap."
+            },
+            "es": {
+              "hash": "ba93a994",
+              "name": "Solo auditoría",
+              "detail": "Análisis completo · informe prioritario · hoja de ruta de mejoras."
+            },
+            "ru": {
+              "hash": "4f206d6c",
+              "name": "Только аудит",
+              "detail": "Полный анализ · отчёт с приоритетами · roadmap."
+            }
+          }
+        },
+        {
+          "rowId": "ee5945f4-bcfa-4134-afa0-e8f7d10627b2",
+          "tierId": "standard",
+          "price": 899,
+          "i18n": {
+            "it": {
+              "hash": "97cb6fd5",
+              "name": "Standard",
+              "detail": "Redesign schermate chiave + implementazione · nuova UX e visual."
+            },
+            "en": {
+              "hash": "78b2d137",
+              "name": "Standard",
+              "detail": "Key screens redesign + implementation · new UX and visual."
+            },
+            "fr": {
+              "hash": "ea6e0e45",
+              "name": "Standard",
+              "detail": "Redesign des ecrans cles + implementation."
+            },
+            "ru": {
+              "hash": "0f24cc5d",
+              "name": "Standard",
+              "detail": "Редизайн ключевых экранов + внедрение."
+            },
+            "de": {
+              "hash": "6b173dab",
+              "name": "Standard",
+              "detail": "Redesign Kernscreens + Umsetzung."
+            },
+            "es": {
+              "hash": "696f136c",
+              "name": "Standard",
+              "detail": "Rediseño de pantallas clave + implementación · nueva UX y visual."
+            }
+          }
+        },
+        {
+          "rowId": "0cbd5ec6-8927-437b-90b0-1f19f18f88d7",
+          "tierId": "full",
+          "price": 2299,
+          "i18n": {
+            "it": {
+              "hash": "3179503e",
+              "name": "Completo",
+              "detail": "Redesign totale · migrazione contenuti · analytics e tracking."
+            },
+            "en": {
+              "hash": "c42b775b",
+              "name": "Full",
+              "detail": "Complete redesign · content migration · analytics and tracking."
+            },
+            "fr": {
+              "hash": "266e5b08",
+              "name": "Complet",
+              "detail": "Redesign total · migration contenu · analytics."
+            },
+            "ru": {
+              "hash": "2ae96713",
+              "name": "Полный",
+              "detail": "Полный редизайн · миграция · аналитика."
+            },
+            "de": {
+              "hash": "ac11afdb",
+              "name": "Komplett",
+              "detail": "Volles Redesign · Migration · Analytics."
+            },
+            "es": {
+              "hash": "2644b6dd",
+              "name": "Full",
+              "detail": "Rediseño completo · migración de contenidos · analítica y seguimiento."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rowId": "441f1c39-1cd0-4a1e-9b11-5f5451d05c0b",
+      "serviceId": "photo-video",
+      "slug": "photo-video",
+      "sortOrder": 3,
+      "icon": "Video",
+      "imagePath": "/images/service-photo-video.png",
+      "basePrice": 499,
+      "isMonthly": false,
+      "published": true,
+      "i18n": {
+        "en": {
+          "hash": "4ff9f4bf",
+          "fields": {
+            "title": "Content production",
+            "description": "Photo and video production for web, campaigns and social — brief, shoot, edit and deliverables ready to use.",
+            "details": "On-location sessions · Audio when needed · Web & social deliverables",
+            "what_you_get": [
+              "Creative brief and shot list aligned with your goals",
+              "Professional photo and video capture",
+              "Editing (cut, grade, vertical and horizontal formats)",
+              "Files ready for hero sections, digital menus, and campaigns",
+              "Usage rights for digital marketing (per agreement)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Videographer portfolio",
+            "pricing_section_title": "Pricing tiers (standalone service)",
+            "pricing_footnote": "Figures are quoted per brief depending on location, duration, and usage rights."
+          }
+        },
+        "fr": {
+          "hash": "bc3a1a37",
+          "fields": {
+            "title": "Production de contenus",
+            "description": "Production photo et video pour le web, les campagnes et les reseaux — brief, shoot, montage et livrables prets a l'emploi.",
+            "details": "Seances sur site · Audio si besoin · Livrables web et social",
+            "what_you_get": [
+              "Brief créatif et liste de plans",
+              "Prises de vue photo et video professionnelles",
+              "Montage (decoupage, etalonnage, formats)",
+              "Fichiers prets pour hero, menus digitaux et campagnes",
+              "Droits d utilisation marketing digital (selon contrat)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Portfolio vidéaste",
+            "pricing_section_title": "Grilles tarifaires (service autonome)",
+            "pricing_footnote": "Montants indicatifs : devis selon lieu, duree et droits d exploitation."
+          }
+        },
+        "de": {
+          "hash": "f1dea1d4",
+          "fields": {
+            "title": "Content-Produktion",
+            "description": "Foto- und Videoproduktion für Web, Kampagnen und Social — Briefing, Dreh, Schnitt und einsatzbereite Deliverables.",
+            "details": "Location-Drehs · Audio bei Bedarf · Deliverables fur Web und Social",
+            "what_you_get": [
+              "Briefing und Shotliste mit klarem Zeitplan",
+              "Professionelle Foto- und Videoaufnahmen",
+              "Schnitt, Gradierung, Hoch- und Querformate",
+              "Lieferung fur Hero, digitale Speisekarten und Kampagnen",
+              "Nutzungsrechte fur Digital-Marketing (vertraglich)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Videograf-Portfolio",
+            "pricing_section_title": "Tarife (separate Leistung)",
+            "pricing_footnote": "Preise werden je nach Location, Dauer und Nutzungsrechten im Angebot festgelegt."
+          }
+        },
+        "it": {
+          "hash": "c5470b20",
+          "fields": {
+            "title": "Produzione contenuti",
+            "description": "Produzione foto e video per web, campagne e social — brief, riprese, editing e deliverable pronti all'uso.",
+            "details": "Sessioni in location · Audio dove serve · Export per web e social",
+            "what_you_get": [
+              "Brief con shot list e tempistiche chiare",
+              "Riprese foto e video con videografo professionista",
+              "Editing (taglio, colore, formati verticali/orizzontali)",
+              "Consegna file pronti per hero, menu digitali e campagne",
+              "Licenza d'uso per marketing online (come da contratto)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Portfolio videografo",
+            "pricing_section_title": "Piani tariffari (servizio dedicato)",
+            "pricing_footnote": "Importi indicativi: si definiscono in preventivo in base a location, durata e diritti di utilizzo."
+          }
+        },
+        "ru": {
+          "hash": "dc06c67d",
+          "fields": {
+            "title": "Производство контента",
+            "description": "Фото и видео для сайта, кампаний и соцсетей — бриф, съёмка, монтаж и готовые материалы к использованию.",
+            "details": "Выезд на объект · При необходимости звук · Файлы под сайт и соцсети",
+            "what_you_get": [
+              "Бриф и shot list под задачу",
+              "Съёмка фото и видео профессиональным оператором",
+              "Монтаж: монтажный ряд, цвет, форматы (вертикаль/горизонталь)",
+              "Готовые материалы для hero, меню и кампаний",
+              "Права использования для digital-маркетинга (по договору)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Работы оператора",
+            "pricing_section_title": "Тарифы (отдельная услуга)",
+            "pricing_footnote": "Итоговая стоимость — в смете: зависит от локации, времени съёмки и прав использования."
+          }
+        },
+        "es": {
+          "hash": "ebdcdbfe",
+          "fields": {
+            "title": "Producción de contenidos",
+            "description": "Producción de foto y vídeo para web, campañas y redes — brief, rodaje, edición y entregables listos para usar.",
+            "details": "Sesiones in situ · Audio cuando haga falta · Entregables para web y redes",
+            "what_you_get": [
+              "Brief creativo y lista de planos alineados con tus objetivos",
+              "Captura profesional de foto y vídeo",
+              "Edición (montaje, color, formatos vertical y horizontal)",
+              "Archivos listos para hero, menús digitales y campañas",
+              "Derechos de uso para marketing digital (según acuerdo)"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": "https://levkaplan-video.framer.website",
+            "portfolio_link_label_2": "Videographer portfolio",
+            "pricing_section_title": "Niveles de precio (servicio independiente)",
+            "pricing_footnote": "Las cifras se cotizan por brief según ubicación, duración y derechos de uso."
+          }
+        }
+      },
+      "tiers": [
+        {
+          "rowId": "bc1fc185-ff8b-4b3e-a6bf-1647f93afcc9",
+          "tierId": "half-day",
+          "price": 499,
+          "i18n": {
+            "it": {
+              "hash": "8bed6bee",
+              "name": "Half day",
+              "detail": "Fino a 4 ore · foto o video · selezione e editing base · ideale per menu e social."
+            },
+            "en": {
+              "hash": "0f66c4ef",
+              "name": "Half day",
+              "detail": "Up to 4 hours · photo or video · curated selects and base edit · ideal for menus and social."
+            },
+            "fr": {
+              "hash": "ea3f5188",
+              "name": "Demi-journee",
+              "detail": "Jusqu a 4h · photo ou video · montage de base."
+            },
+            "ru": {
+              "hash": "39c37b1c",
+              "name": "Полдня",
+              "detail": "До 4 часов · фото или видео · базовый монтаж."
+            },
+            "de": {
+              "hash": "028b4a02",
+              "name": "Halber Tag",
+              "detail": "Bis 4 Std. · Foto oder Video · Basis-Edit."
+            },
+            "es": {
+              "hash": "984bb015",
+              "name": "Half day",
+              "detail": "Hasta 4 horas · foto o vídeo · selección curada y edición base · ideal para menús y redes."
+            }
+          }
+        },
+        {
+          "rowId": "0f980cb2-cf59-4b9a-9dde-b5255c0c0cc9",
+          "tierId": "full-day",
+          "price": 899,
+          "i18n": {
+            "it": {
+              "hash": "3b0fb02b",
+              "name": "Full day",
+              "detail": "Giornata intera · foto + video · più varianti per campagne e sito."
+            },
+            "en": {
+              "hash": "d4c4dbd5",
+              "name": "Full day",
+              "detail": "Full shoot day · photo + video · more variants for site and campaigns."
+            },
+            "fr": {
+              "hash": "dc5615ff",
+              "name": "Journee complete",
+              "detail": "Journee pleine · photo + video · variantes campagnes."
+            },
+            "ru": {
+              "hash": "c06b3315",
+              "name": "Полный день",
+              "detail": "Целый день · фото + видео · варианты под сайт."
+            },
+            "de": {
+              "hash": "3088a53b",
+              "name": "Ganzer Tag",
+              "detail": "Voller Drehtag · Foto + Video · Varianten."
+            },
+            "es": {
+              "hash": "3e3a6636",
+              "name": "Full day",
+              "detail": "Jornada completa de rodaje · foto + vídeo · más variantes para sitio y campañas."
+            }
+          }
+        },
+        {
+          "rowId": "afeee6aa-6211-4c2b-bcf6-59fe2d5e0ff6",
+          "tierId": "retainer",
+          "price": 1499,
+          "i18n": {
+            "it": {
+              "hash": "097f9605",
+              "name": "Retainer / mensile",
+              "detail": "Sessioni ricorrenti e calendario contenuti · continuità per feed e ads."
+            },
+            "en": {
+              "hash": "cb84995e",
+              "name": "Monthly retainer",
+              "detail": "Recurring shoots and a content cadence · continuity for feed and ads."
+            },
+            "fr": {
+              "hash": "8b043a64",
+              "name": "Forfait mensuel",
+              "detail": "Seances recurrentes · planning contenus."
+            },
+            "ru": {
+              "hash": "b6dda8e3",
+              "name": "Ретейнер",
+              "detail": "Регулярные съёмки · календарь контента."
+            },
+            "de": {
+              "hash": "80c32423",
+              "name": "Monatlicher Retainer",
+              "detail": "Wiederkehrende Drehs · Content-Plan."
+            },
+            "es": {
+              "hash": "b3efc5bf",
+              "name": "Monthly retainer",
+              "detail": "Rodajes recurrentes y cadencia de contenido · continuidad para feed y anuncios."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rowId": "bb38c11c-47f8-4f85-bfea-cbe674167c79",
+      "serviceId": "monthly-support",
+      "slug": "monthly-support",
+      "sortOrder": 4,
+      "icon": "Wrench",
+      "imagePath": "/images/service-monthly-support.png",
+      "basePrice": 199,
+      "isMonthly": true,
+      "published": true,
+      "i18n": {
+        "ru": {
+          "hash": "1e77bf76",
+          "fields": {
+            "title": "Рост и сопровождение",
+            "description": "Обновления, оптимизация и приоритетная поддержка по всему цифровому стеку — чтобы системы не отставали от бизнеса.",
+            "details": "От 2ч/мес · Гарантированный приоритет · Месячный отчёт",
+            "what_you_get": [
+              "Технические и контентные обновления",
+              "Мониторинг производительности и uptime",
+              "Постоянные улучшения конверсии",
+              "Приоритет по новым запросам",
+              "Ясный ежемесячный отчёт"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Планы поддержки",
+            "pricing_footnote": "Ежемесячный абонемент. Неиспользованные часы не переносятся."
+          }
+        },
+        "de": {
+          "hash": "72c38021",
+          "fields": {
+            "title": "Laufendes Wachstum & Betreuung",
+            "description": "Updates, Optimierung und priorisierter Support uber Ihren digitalen Stack — damit Systeme mit dem Business mithalten.",
+            "details": "Ab 2h/Monat · Prioritat garantiert · Monatsreport",
+            "what_you_get": [
+              "Technische und Content-Updates",
+              "Performance- und Uptime-Monitoring",
+              "Kontinuierliche Conversion-Optimierung",
+              "Prioritat bei neuen Anfragen",
+              "Klarer monatlicher Bericht"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Support-Plane",
+            "pricing_footnote": "Monatlicher Retainer. Ungenutzte Stunden verfallen."
+          }
+        },
+        "es": {
+          "hash": "9eaf72ee",
+          "fields": {
+            "title": "Crecimiento continuo y cuidado",
+            "description": "Actualizaciones, optimización y soporte prioritario en todo tu stack digital — para que los sistemas sigan el ritmo del negocio.",
+            "details": "Desde 2 h/mes · Prioridad garantizada · Informe mensual",
+            "what_you_get": [
+              "Actualizaciones técnicas y de contenido",
+              "Monitorización de rendimiento y disponibilidad",
+              "Optimización continua de la conversión",
+              "Prioridad en nuevas solicitudes",
+              "Informe mensual claro"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Planes de soporte",
+            "pricing_footnote": "Retainer mensual. Las horas no utilizadas no se acumulan."
+          }
+        },
+        "it": {
+          "hash": "50a07bc5",
+          "fields": {
+            "title": "Crescita continua e cura",
+            "description": "Aggiornamenti, ottimizzazione e supporto prioritario su tutto lo stack digitale — cosi i sistemi restano al passo del business.",
+            "details": "Da 2h/mese · Priorita garantita · Report mensile",
+            "what_you_get": [
+              "Aggiornamenti tecnici e di contenuto",
+              "Monitoraggio performance e uptime",
+              "Ottimizzazioni continue di conversione",
+              "Priorita su nuove richieste",
+              "Report mensile chiaro"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Piani di supporto",
+            "pricing_footnote": "Canone mensile. Ore non utilizzate non si accumulano — si rinnovano ogni mese."
+          }
+        },
+        "en": {
+          "hash": "274ba102",
+          "fields": {
+            "title": "Ongoing growth & care",
+            "description": "Updates, optimization and priority support across your digital stack — so systems keep pace with the business.",
+            "details": "From 2h/month · Priority guaranteed · Monthly report",
+            "what_you_get": [
+              "Technical and content updates",
+              "Performance and uptime monitoring",
+              "Continuous conversion optimization",
+              "Priority on new requests",
+              "Clear monthly report"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Support plans",
+            "pricing_footnote": "Monthly retainer. Unused hours do not roll over."
+          }
+        },
+        "fr": {
+          "hash": "f0451c80",
+          "fields": {
+            "title": "Croissance continue et accompagnement",
+            "description": "Mises a jour, optimisation et support prioritaire sur votre stack digital — pour que les systemes suivent le rythme du business.",
+            "details": "A partir de 2h/mois · Priorite garantie · Rapport mensuel",
+            "what_you_get": [
+              "Mises a jour techniques et de contenu",
+              "Monitoring performance et uptime",
+              "Optimisations continues de conversion",
+              "Priorite sur les nouvelles demandes",
+              "Rapport mensuel clair"
+            ],
+            "portfolio_url": null,
+            "portfolio_link_label": null,
+            "portfolio_url_2": null,
+            "portfolio_link_label_2": null,
+            "pricing_section_title": "Plans de support",
+            "pricing_footnote": "Forfait mensuel. Les heures non utilisees ne sont pas reportees."
+          }
+        }
+      },
+      "tiers": [
+        {
+          "rowId": "c4aeb756-e13e-434d-8a5c-bbf615c5bec3",
+          "tierId": "essential",
+          "price": 199,
+          "i18n": {
+            "it": {
+              "hash": "9af4461b",
+              "name": "Essential",
+              "detail": "~2 ore/mese · aggiornamenti · monitoraggio base · risposta prioritaria."
+            },
+            "en": {
+              "hash": "07f9cd1c",
+              "name": "Essential",
+              "detail": "~2h/month · updates · basic monitoring · priority response."
+            },
+            "fr": {
+              "hash": "60a3918e",
+              "name": "Essential",
+              "detail": "~2h/mois · mises a jour · monitoring de base."
+            },
+            "ru": {
+              "hash": "b83c8c4a",
+              "name": "Essential",
+              "detail": "~2 ч/мес · обновления · базовый мониторинг."
+            },
+            "de": {
+              "hash": "b28c9fef",
+              "name": "Essential",
+              "detail": "~2h/Mon. · Updates · Basis-Monitoring."
+            },
+            "es": {
+              "hash": "a72faa3b",
+              "name": "Essential",
+              "detail": "~2 h/mes · actualizaciones · monitorización básica · respuesta prioritaria."
+            }
+          }
+        },
+        {
+          "rowId": "040177dc-cb90-4650-9f66-3d0bbe8a5475",
+          "tierId": "growth",
+          "price": 399,
+          "i18n": {
+            "it": {
+              "hash": "0333905e",
+              "name": "Growth",
+              "detail": "~5 ore/mese · ottimizzazione continua · report mensile."
+            },
+            "en": {
+              "hash": "d9382051",
+              "name": "Growth",
+              "detail": "~5h/month · continuous optimization · monthly report."
+            },
+            "fr": {
+              "hash": "f9c5838c",
+              "name": "Growth",
+              "detail": "~5h/mois · optimisation continue · rapport mensuel."
+            },
+            "ru": {
+              "hash": "545f9dd2",
+              "name": "Growth",
+              "detail": "~5 ч/мес · оптимизация · отчёт."
+            },
+            "de": {
+              "hash": "f12e8eef",
+              "name": "Growth",
+              "detail": "~5h/Mon. · laufende Optimierung · Report."
+            },
+            "es": {
+              "hash": "653c4ba9",
+              "name": "Growth",
+              "detail": "~5 h/mes · optimización continua · informe mensual."
+            }
+          }
+        },
+        {
+          "rowId": "1e98afb6-8cf3-4ba5-ba9d-dc4c0b30ef91",
+          "tierId": "priority",
+          "price": 699,
+          "i18n": {
+            "it": {
+              "hash": "a2fffa27",
+              "name": "Priority",
+              "detail": "~10 ore/mese · massima priorità · report dettagliato."
+            },
+            "en": {
+              "hash": "417029de",
+              "name": "Priority",
+              "detail": "~10h/month · top priority · detailed report."
+            },
+            "fr": {
+              "hash": "a9ce8a07",
+              "name": "Priority",
+              "detail": "~10h/mois · priorite maximale · rapport detaille."
+            },
+            "ru": {
+              "hash": "8a1d1562",
+              "name": "Priority",
+              "detail": "~10 ч/мес · максимальный приоритет."
+            },
+            "de": {
+              "hash": "3f6006c2",
+              "name": "Priority",
+              "detail": "~10h/Mon. · Top-Prioritat · Detailreport."
+            },
+            "es": {
+              "hash": "6cd7b485",
+              "name": "Priority",
+              "detail": "~10 h/mes · máxima prioridad · informe detallado."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

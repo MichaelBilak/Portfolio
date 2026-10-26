@@ -10,6 +10,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "studio:seed": "tsx --env-file=.env.local scripts/seed-studio.ts",
+    "cms:sync": "tsx --env-file=.env.local scripts/cms-content-sync.ts",
     "hq:seed": "tsx --env-file=.env.local scripts/seed-hq.ts",
     "hq:reconcile": "tsx --env-file=.env.local scripts/reconcile-legacy-cases.ts",
     "studio:check": "tsx --env-file=.env.local scripts/check-crm.ts",

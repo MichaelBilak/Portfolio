@@ -11,6 +11,7 @@ import {
   type ServiceId,
 } from "@/data/pricing";
 import { processStepsMeta } from "@/data/process";
+import { acceptServiceCopy, acceptSiteSection } from "@/lib/cms/approved-copy";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 
 export type CmsProject = ProjectMeta & {
@@ -19,11 +20,13 @@ export type CmsProject = ProjectMeta & {
 };
 
 const SERVICE_ICON_BY_ID: Record<string, string> = {
-  "booking-flow": "CalendarCheck",
+  visibility: "Search",
   "premium-site": "Monitor",
-  redesign: "RefreshCw",
   "photo-video": "Video",
+  "booking-flow": "CalendarCheck",
+  "digital-growth": "ChartColumnIncreasing",
   "monthly-support": "Wrench",
+  redesign: "RefreshCw",
 };
 
 const LOCALES: Locale[] = ["it", "en", "fr", "ru", "de", "es"];
@@ -136,64 +139,119 @@ export async function getServices(locale: Locale = "it"): Promise<{
 
     if (error || !rows?.length) return fallback;
 
-    const metas = rows.map((doc) => ({
-      id: String(doc.service_id),
-      slug: String(doc.slug),
-      image: String(doc.image_path || `/images/service-${doc.slug}.png`),
-      iconName: String(doc.icon || SERVICE_ICON_BY_ID[String(doc.service_id)] || "Monitor"),
-    }));
+    // CMS rows replace copy for IDs that exist in Supabase.
+    // Static services missing from CMS (new offers) stay visible, in catalog order.
+    // Extra CMS-only rows are appended. Nothing is written back to Supabase.
+    const cmsById = new Map(rows.map((doc) => [String(doc.service_id), doc]));
+    const staticIds = servicesMeta.map((meta) => meta.id);
+    const orderedIds = [
+      ...staticIds,
+      ...rows
+        .map((doc) => String(doc.service_id))
+        .filter((id) => !staticIds.includes(id)),
+    ];
 
-    const localized: LocalizedService[] = rows.map((doc) => {
+    const metas: Array<{ id: string; slug: string; image: string; iconName: string }> = [];
+    const localized: LocalizedService[] = [];
+    const basePrices: Record<string, number> = {};
+    const monthly: Record<string, boolean> = {};
+
+    for (const id of orderedIds) {
+      const doc = cmsById.get(id);
+      const staticMeta = servicesMeta.find((meta) => meta.id === id);
+      const staticCopy = translations[locale].services.find((service) => service.id === id);
+
+      if (!doc) {
+        if (!staticMeta || !staticCopy) continue;
+        metas.push({
+          id,
+          slug: staticMeta.slug,
+          image: staticMeta.image,
+          iconName: SERVICE_ICON_BY_ID[id] || "Monitor",
+        });
+        localized.push(staticCopy);
+        basePrices[id] = SERVICE_BASE_PRICES[id as ServiceId] ?? 0;
+        if (SERVICE_MONTHLY[id as ServiceId]) monthly[id] = true;
+        continue;
+      }
+
+      const localeCopy = (doc.service_i18n as Array<Record<string, unknown>> | null)?.find(
+        (r) => r.locale === locale,
+      );
+      const keepApprovedCopy =
+        Boolean(staticMeta && staticCopy) &&
+        (!localeCopy || !acceptServiceCopy(locale, id, localeCopy));
+      if (keepApprovedCopy && staticMeta && staticCopy) {
+        metas.push({
+          id,
+          slug: staticMeta.slug,
+          image: staticMeta.image,
+          iconName: SERVICE_ICON_BY_ID[id] || "Monitor",
+        });
+        localized.push(staticCopy);
+        basePrices[id] = Number(doc.base_price) || SERVICE_BASE_PRICES[id as ServiceId] || 0;
+        if (doc.is_monthly || SERVICE_MONTHLY[id as ServiceId]) monthly[id] = true;
+        continue;
+      }
+
       const i18n =
-        (doc.service_i18n as Array<Record<string, unknown>> | null)?.find(
-          (r) => r.locale === locale,
-        ) ||
+        localeCopy ||
         (doc.service_i18n as Array<Record<string, unknown>> | null)?.find(
           (r) => r.locale === "it",
         );
       const tiers = (doc.service_tiers as Array<Record<string, unknown>> | null) || [];
-      return {
-        id: String(doc.service_id),
-        title: String(i18n?.title || doc.service_id),
-        description: String(i18n?.description || ""),
-        details: String(i18n?.details || ""),
+      metas.push({
+        id,
+        slug: String(doc.slug),
+        image: String(doc.image_path || staticMeta?.image || `/images/service-${doc.slug}.png`),
+        iconName: String(doc.icon || SERVICE_ICON_BY_ID[id] || "Monitor"),
+      });
+      localized.push({
+        id,
+        title: String(i18n?.title || staticCopy?.title || id),
+        description: String(i18n?.description || staticCopy?.description || ""),
+        details: String(i18n?.details || staticCopy?.details || ""),
         whatYouGet: Array.isArray(i18n?.what_you_get)
           ? (i18n!.what_you_get as string[])
-          : [],
-        portfolioUrl: i18n?.portfolio_url ? String(i18n.portfolio_url) : undefined,
+          : staticCopy?.whatYouGet || [],
+        portfolioUrl: i18n?.portfolio_url
+          ? String(i18n.portfolio_url)
+          : staticCopy?.portfolioUrl,
         portfolioLinkLabel: i18n?.portfolio_link_label
           ? String(i18n.portfolio_link_label)
-          : undefined,
-        portfolioUrl2: i18n?.portfolio_url_2 ? String(i18n.portfolio_url_2) : undefined,
+          : staticCopy?.portfolioLinkLabel,
+        portfolioUrl2: i18n?.portfolio_url_2
+          ? String(i18n.portfolio_url_2)
+          : staticCopy?.portfolioUrl2,
         portfolioLinkLabel2: i18n?.portfolio_link_label_2
           ? String(i18n.portfolio_link_label_2)
-          : undefined,
+          : staticCopy?.portfolioLinkLabel2,
         pricingSectionTitle: i18n?.pricing_section_title
           ? String(i18n.pricing_section_title)
-          : undefined,
-        pricingFootnote: i18n?.pricing_footnote ? String(i18n.pricing_footnote) : undefined,
-        pricingTiers: tiers.map((tier) => {
-          const ti =
-            (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
-              (r) => r.locale === locale,
-            ) ||
-            (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
-              (r) => r.locale === "it",
-            );
-          return {
-            tierId: String(tier.tier_id),
-            name: String(ti?.name || tier.tier_id),
-            detail: String(ti?.detail || ""),
-          };
-        }),
-      };
-    });
-
-    const basePrices: Record<string, number> = {};
-    const monthly: Record<string, boolean> = {};
-    for (const doc of rows) {
-      basePrices[String(doc.service_id)] = Number(doc.base_price) || 0;
-      if (doc.is_monthly) monthly[String(doc.service_id)] = true;
+          : staticCopy?.pricingSectionTitle,
+        pricingFootnote: i18n?.pricing_footnote
+          ? String(i18n.pricing_footnote)
+          : staticCopy?.pricingFootnote,
+        pricingTiers: tiers.length
+          ? tiers.map((tier) => {
+              const ti =
+                (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
+                  (r) => r.locale === locale,
+                ) ||
+                (tier.service_tier_i18n as Array<Record<string, unknown>> | null)?.find(
+                  (r) => r.locale === "it",
+                );
+              return {
+                tierId: String(tier.tier_id),
+                name: String(ti?.name || tier.tier_id),
+                detail: String(ti?.detail || ""),
+              };
+            })
+          : staticCopy?.pricingTiers,
+        faq: staticCopy?.faq,
+      });
+      basePrices[id] = Number(doc.base_price) || SERVICE_BASE_PRICES[id as ServiceId] || 0;
+      if (doc.is_monthly || SERVICE_MONTHLY[id as ServiceId]) monthly[id] = true;
     }
 
     return { metas, localized, basePrices, monthly };
@@ -376,6 +434,7 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
 
     const mergeObj = <K extends keyof TranslationSet>(key: K, section = String(key)) => {
       const raw = bySection[section];
+      if (!acceptSiteSection(locale, section, raw)) return;
       if (raw && typeof raw === "object") {
         (overlay as Record<string, unknown>)[key] = {
           ...(translations[locale][key] as object),
@@ -386,6 +445,7 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
 
     const mergeContact = () => {
       const raw = bySection.contact;
+      if (!acceptSiteSection(locale, "contact", raw)) return;
       if (!raw || typeof raw !== "object") return;
       const baseContact = translations[locale].contact;
       const rawContact = raw as Partial<TranslationSet["contact"]> & {
@@ -425,18 +485,22 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
     mergeObj("servicesPage");
     mergeObj("servicePage");
 
-    if (Array.isArray(bySection.trust) && bySection.trust.length) {
+    if (
+      Array.isArray(bySection.trust) &&
+      bySection.trust.length &&
+      acceptSiteSection(locale, "trust", bySection.trust)
+    ) {
       overlay.trust = (bySection.trust as unknown[]).map((x) =>
         typeof x === "string" ? x : String((x as { item?: string })?.item || ""),
       );
     }
-    if (typeof bySection.servicesLabel === "string") {
+    if (typeof bySection.servicesLabel === "string" && acceptSiteSection(locale, "servicesLabel", bySection.servicesLabel)) {
       overlay.servicesLabel = bySection.servicesLabel;
     }
-    if (typeof bySection.servicesLead === "string") {
+    if (typeof bySection.servicesLead === "string" && acceptSiteSection(locale, "servicesLead", bySection.servicesLead)) {
       overlay.servicesLead = bySection.servicesLead;
     }
-    if (bySection.about && typeof bySection.about === "object") {
+    if (bySection.about && typeof bySection.about === "object" && acceptSiteSection(locale, "about", bySection.about)) {
       const about = bySection.about as {
         eyebrow?: string;
         title?: string;
@@ -451,13 +515,21 @@ async function getSiteCopyOverlay(locale: Locale): Promise<Partial<TranslationSe
           : translations[locale].about.pills,
       };
     }
-    if (bySection.pricingAddons && typeof bySection.pricingAddons === "object") {
+    if (
+      bySection.pricingAddons &&
+      typeof bySection.pricingAddons === "object" &&
+      acceptSiteSection(locale, "pricingAddons", bySection.pricingAddons)
+    ) {
       overlay.pricingAddons = {
         ...translations[locale].pricingAddons,
         ...(bySection.pricingAddons as object),
       } as TranslationSet["pricingAddons"];
     }
-    if (bySection.privacyPage && typeof bySection.privacyPage === "object") {
+    if (
+      bySection.privacyPage &&
+      typeof bySection.privacyPage === "object" &&
+      acceptSiteSection(locale, "privacyPage", bySection.privacyPage)
+    ) {
       const privacy = bySection.privacyPage as {
         title?: string;
         lastUpdated?: string;

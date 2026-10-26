@@ -1,11 +1,13 @@
 /** Central pricing data (EUR). Display strings are built per locale in format-price.ts */
 
 export type ServiceId =
+  | "visibility"
   | "premium-site"
-  | "redesign"
+  | "photo-video"
   | "booking-flow"
+  | "digital-growth"
   | "monthly-support"
-  | "photo-video";
+  | "redesign";
 
 export type AddonPriceType = "from" | "plus";
 
@@ -26,44 +28,57 @@ export interface AddonCategoryConfig {
   items: AddonModuleConfig[];
 }
 
-/** Starting prices for the 5 main services */
+/** Starting prices for catalog services (indicative “from”) */
 export const SERVICE_BASE_PRICES: Record<ServiceId, number> = {
+  visibility: 699,
   "premium-site": 1299,
-  redesign: 899,
-  "booking-flow": 599,
-  "monthly-support": 199,
   "photo-video": 499,
+  "booking-flow": 599,
+  "digital-growth": 499,
+  "monthly-support": 199,
+  redesign: 899,
 };
 
 export const SERVICE_MONTHLY: Partial<Record<ServiceId, boolean>> = {
   "monthly-support": true,
+  "digital-growth": true,
 };
 
 export const SERVICE_TIERS: Record<ServiceId, PricingTierConfig[]> = {
+  visibility: [
+    { tierId: "audit", price: 699 },
+    { tierId: "local", price: 1199, featured: true },
+    { tierId: "ongoing", price: 1499, monthly: true },
+  ],
   "premium-site": [
     { tierId: "starter", price: 1299 },
     { tierId: "business", price: 1999, featured: true },
     { tierId: "premium", price: 2999 },
   ],
-  redesign: [
-    { tierId: "audit", price: 499 },
-    { tierId: "standard", price: 899, featured: true },
-    { tierId: "full", price: 2299 },
+  "photo-video": [
+    { tierId: "half-day", price: 499 },
+    { tierId: "full-day", price: 899, featured: true },
+    { tierId: "retainer", price: 1499, monthly: true },
   ],
   "booking-flow": [
     { tierId: "single", price: 599 },
     { tierId: "multi", price: 999, featured: true },
     { tierId: "full", price: 1499 },
   ],
+  "digital-growth": [
+    { tierId: "setup", price: 499 },
+    { tierId: "monthly", price: 399, monthly: true, featured: true },
+    { tierId: "full", price: 699, monthly: true },
+  ],
   "monthly-support": [
     { tierId: "essential", price: 199, monthly: true },
     { tierId: "growth", price: 399, monthly: true, featured: true },
     { tierId: "priority", price: 699, monthly: true },
   ],
-  "photo-video": [
-    { tierId: "half-day", price: 499 },
-    { tierId: "full-day", price: 899, featured: true },
-    { tierId: "retainer", price: 1499, monthly: true },
+  redesign: [
+    { tierId: "audit", price: 499 },
+    { tierId: "standard", price: 899, featured: true },
+    { tierId: "full", price: 2299 },
   ],
 };
 

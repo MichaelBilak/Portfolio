@@ -11,10 +11,13 @@ import { ContactForm } from "./contact-form";
 
 interface ContactProps {
   t: TranslationSet;
+  auditMode?: boolean;
+  headingLevel?: "h1" | "h2";
 }
 
-export function Contact({ t }: ContactProps) {
+export function Contact({ t, auditMode, headingLevel = "h2" }: ContactProps) {
   const onMove = useSpotlight();
+  const Heading = headingLevel;
   return (
     <section id="contact" className="relative overflow-hidden py-14 md:py-32">
       <div
@@ -27,9 +30,9 @@ export function Contact({ t }: ContactProps) {
             <Eyebrow>{t.contact.label}</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
+            <Heading className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
               {t.contact.title}
-            </h2>
+            </Heading>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-6 max-w-xl text-lg text-textSecondary text-pretty">{t.contact.body}</p>
@@ -54,7 +57,7 @@ export function Contact({ t }: ContactProps) {
         <ContactErrorBoundary>
           <Suspense fallback={null}>
             <div className="order-1 lg:order-2">
-              <ContactForm t={t} variant="full" />
+              <ContactForm t={t} variant="full" auditMode={auditMode} />
             </div>
           </Suspense>
         </ContactErrorBoundary>

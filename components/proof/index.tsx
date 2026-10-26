@@ -1,15 +1,11 @@
 import { AnimatedCounter, Eyebrow, Reveal } from "@/components/ui";
-import { SERVICE_OFFER_COUNT } from "@/data/pricing";
 import { TranslationSet } from "@/lib/translations";
 
 interface ProofProps {
   t: TranslationSet;
 }
 
-const SERVICE_COUNT_STAT_INDEX = 3;
-const VISIBLE_STAT_COUNT = 4;
-
-/** Keep multi-part values like "2 нед." on one line */
+/** Keep multi-part values on one line */
 function proofValue(value: string) {
   return value.replace(/ /g, "\u00A0");
 }
@@ -34,15 +30,10 @@ function ProofLabel({ label }: { label: string }) {
 }
 
 export function Proof({ t }: ProofProps) {
-  const items = t.proof.items.map((item, index) =>
-    index === SERVICE_COUNT_STAT_INDEX
-      ? { ...item, value: String(SERVICE_OFFER_COUNT) }
-      : item,
+  const displayItems = [...t.proof.items, t.proof.footnote].filter(
+    (item) => item.value.trim() && item.label.trim(),
   );
-  const displayItems = [
-    ...items.slice(0, VISIBLE_STAT_COUNT),
-    { value: t.proof.footnote.value, label: t.proof.footnote.label },
-  ];
+  if (!displayItems.length) return null;
 
   return (
     <section className="relative overflow-x-clip py-14 md:py-20">

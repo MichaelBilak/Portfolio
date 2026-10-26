@@ -103,9 +103,11 @@ export function OrderServices({
                 </Link>
               </li>
             </ul>
-            <p className="mt-4 border-t border-borderCool pt-4 text-sm italic leading-relaxed text-textMuted">
-              {op.trust.testimonial}
-            </p>
+            {op.trust.testimonial.trim() ? (
+              <p className="mt-4 border-t border-borderCool pt-4 text-sm italic leading-relaxed text-textMuted">
+                {op.trust.testimonial}
+              </p>
+            ) : null}
           </aside>
 
           <div className="grid gap-5 md:grid-cols-2 lg:gap-6 lg:clear-none">

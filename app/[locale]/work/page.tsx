@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
@@ -21,10 +22,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const { t } = await getSiteContent(locale as Locale);
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/work",
     title: pageTitle(t.workPage.title),
     description: t.workPage.subtitle,
-  };
+  });
 }
 
 export default async function WorkPage({ params }: PageProps) {

@@ -58,9 +58,51 @@ async function checkRateLimit(ip: string): Promise<boolean> {
 
 const intlMiddleware = createMiddleware(routing);
 
+function isPreviewDeployment() {
+  return process.env.VERCEL_ENV === "preview";
+}
+
+function previewPasswordRejects(request: NextRequest): NextResponse | null {
+  const password = process.env.PREVIEW_PASSWORD;
+  if (!isPreviewDeployment() || !password) return null;
+  const expected = `Basic ${Buffer.from(`preview:${password}`).toString("base64")}`;
+  if (request.headers.get("authorization") === expected) return null;
+  return new NextResponse("Preview authentication required", {
+    status: 401,
+    headers: {
+      "WWW-Authenticate": 'Basic realm="DormUp preview"',
+      "X-Robots-Tag": "noindex, nofollow, noarchive",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const studioBase = getStudioBasePath();
+
+  if (isPreviewDeployment()) {
+    const blocksWrites =
+      pathname.startsWith("/api") ||
+      pathname.startsWith("/studio") ||
+      pathname === studioBase ||
+      pathname.startsWith(`${studioBase}/`);
+    if (blocksWrites) {
+      return new NextResponse("Preview is read-only", {
+        status: 403,
+        headers: { "X-Robots-Tag": "noindex, nofollow, noarchive", "Cache-Control": "no-store" },
+      });
+    }
+    const unauthorized = previewPasswordRejects(request);
+    if (unauthorized) return unauthorized;
+  }
+
+  // Default locale is unprefixed. Collapse /it and /it/ in one hop.
+  if (pathname === "/it" || pathname === "/it/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url, 308);
+  }
 
   // Obscure public path → internal /studio (rewrite, URL stays secret)
   if (pathname === studioBase || pathname.startsWith(`${studioBase}/`)) {

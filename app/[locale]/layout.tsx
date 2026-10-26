@@ -7,15 +7,18 @@ import { routing } from "@/i18n/routing";
 import { ClientProviders } from "@/components/client-providers";
 import { AnalyticsScripts } from "@/components/analytics";
 import { Locale } from "@/lib/translations";
-import { INSTAGRAM_URL, SITE_URL } from "@/lib/brand";
-import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
+import { SITE_URL } from "@/lib/brand";
 import { LITE_MODE_BOOTSTRAP_SCRIPT } from "@/lib/lite-mode";
 import { SPLASH_BOOTSTRAP_SCRIPT, SPLASH_GATE_ID } from "@/lib/splash-session";
 import { getSeoDefaults } from "@/lib/cms/catalog";
+import { localeMetaContent } from "@/lib/seo/locale-defaults";
+import {
+  jsonLdScript,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/json-ld";
 import "../globals.css";
 
-// Expressive display (hero + section accents + big numbers) — bold, modern,
-// Red Collar-style impact. Used sparingly. Supports Cyrillic.
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
   weight: ["500", "600"],
@@ -24,7 +27,6 @@ const display = Unbounded({
   preload: true,
 });
 
-// Brand wordmark only — neutral product grotesque (rest of UI unchanged).
 const brand = Inter({
   subsets: ["latin", "cyrillic"],
   weight: ["500", "600"],
@@ -33,7 +35,6 @@ const brand = Inter({
   preload: true,
 });
 
-// Body — premium geometric grotesque with Cyrillic coverage.
 const sans = Manrope({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600", "700"],
@@ -42,7 +43,6 @@ const sans = Manrope({
   preload: true,
 });
 
-// Mono labels / eyebrows — refined, Cyrillic-aware.
 const mono = IBM_Plex_Mono({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500"],
@@ -50,51 +50,6 @@ const mono = IBM_Plex_Mono({
   display: "swap",
   preload: false,
 });
-
-const siteUrl = SITE_URL;
-const logoUrl = "/images/logo-dm-group.png";
-
-const localeMetaContent: Record<
-  Locale,
-  { title: string; description: string; ogLocale: string }
-> = {
-  it: {
-    title: "DormUp Studio · Studio Digitale",
-    description:
-      "Studio digitale. Sistemi digitali, automazione dei processi, siti web e produzione contenuti per business che vogliono funzionare meglio e distinguersi.",
-    ogLocale: "it_IT",
-  },
-  en: {
-    title: "DormUp Studio · Digital Studio",
-    description:
-      "Digital studio. Digital systems, process automation, websites and content production for businesses that need to work better and stand out.",
-    ogLocale: "en_US",
-  },
-  fr: {
-    title: "DormUp Studio · Studio Digital",
-    description:
-      "Studio digital. Systemes digitaux, automatisation des processus, sites web et production de contenus pour les business qui doivent mieux fonctionner et se demarquer.",
-    ogLocale: "fr_FR",
-  },
-  ru: {
-    title: "DormUp Studio · Диджитал Студия",
-    description:
-      "Диджитал-студия. Цифровые системы, автоматизация процессов, сайты и производство контента — чтобы бизнес работал лучше и выделялся.",
-    ogLocale: "ru_RU",
-  },
-  de: {
-    title: "DormUp Studio · Digitalstudio",
-    description:
-      "Digitalstudio. Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion für Unternehmen, die besser funktionieren und herausstechen wollen.",
-    ogLocale: "de_DE",
-  },
-  es: {
-    title: "DormUp Studio · Estudio Digital",
-    description:
-      "Estudio digital. Sistemas digitales, automatización de procesos, sitios web y producción de contenidos para negocios que necesitan funcionar mejor y destacar.",
-    ogLocale: "es_ES",
-  },
-};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -114,11 +69,15 @@ export async function generateMetadata({
     : routing.defaultLocale;
 
   const meta = localeMetaContent[safeLocale];
-  const languages = localeAlternateLanguages();
 
+  // Defaults only — child pages must call buildPageMetadata with their path.
+  // Do not set homepage-only canonical here (would leak to all routes).
   return {
-    metadataBase: new URL(siteUrl),
-    title: meta.title,
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: meta.title,
+      template: `%s | DormUp Studio`,
+    },
     description: meta.description,
     icons: {
       icon: [
@@ -128,32 +87,10 @@ export async function generateMetadata({
       shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
       apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
-    alternates: {
-      canonical: absoluteUrl(safeLocale),
-      languages,
-    },
-    robots: { index: true, follow: true },
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      type: "website",
-      locale: meta.ogLocale,
-      url: absoluteUrl(safeLocale),
-      images: [
-        {
-          url: "/images/og-cover.svg",
-          width: 1200,
-          height: 630,
-          alt: meta.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: ["/images/og-cover.svg"],
-    },
+    robots:
+      process.env.VERCEL_ENV === "preview"
+        ? { index: false, follow: false }
+        : { index: true, follow: true },
   };
 }
 
@@ -170,31 +107,29 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   }
   setRequestLocale(locale);
   const messages = await getMessages();
+  const safeLocale = locale as Locale;
+  const meta = localeMetaContent[safeLocale];
 
   let gaId: string | undefined;
   let plausibleDomain: string | undefined;
   try {
-    const seo = await getSeoDefaults(locale as Locale);
+    const seo = await getSeoDefaults(safeLocale);
     gaId = seo.gaMeasurementId;
     plausibleDomain = seo.plausibleDomain;
   } catch {
     // CMS optional at first boot
   }
 
-  const organizationSchema = {
+  const schemaGraph = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "DormUp Studio",
-    email: "dormup.it@gmail.com",
-    image: `${siteUrl}${logoUrl}`,
-    logo: `${siteUrl}${logoUrl}`,
-    url: absoluteUrl(locale as Locale),
-    description: localeMetaContent[locale as Locale].description,
-    sameAs: [INSTAGRAM_URL],
+    "@graph": [
+      organizationJsonLd(safeLocale, meta.description),
+      websiteJsonLd(safeLocale, meta.description),
+    ],
   };
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <script
           // eslint-disable-next-line react/no-danger
@@ -205,7 +140,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           dangerouslySetInnerHTML={{ __html: LITE_MODE_BOOTSTRAP_SCRIPT }}
         />
       </head>
-      <body className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}>
+      <body
+        className={`${display.variable} ${brand.variable} ${sans.variable} ${mono.variable} font-sans bg-bgPrimary antialiased`}
+      >
         <div id={SPLASH_GATE_ID} aria-hidden="true" />
         <ClientProviders>
           <NextIntlClientProvider locale={locale} messages={messages}>
@@ -216,7 +153,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(schemaGraph) }}
         />
       </body>
     </html>

@@ -13,6 +13,8 @@ import { pageTitle } from "@/lib/brand";
 import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
 import { Locale } from "@/lib/translations";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+import { breadcrumbHomeLabel, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo/json-ld";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -30,15 +32,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!meta) return {};
   const project = meta.localized || t.projects.find((p) => p.id === meta.id);
   if (!project) return {};
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: `/work/${slug}`,
     title: pageTitle(project.name),
     description: project.subtitle,
-    openGraph: {
-      title: project.name,
-      description: project.subtitle,
-      images: [meta.image],
-    },
-  };
+    ogImage: meta.image,
+  });
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
@@ -63,11 +63,22 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     .filter((p) => p.meta.slug !== slug && p.copy)
     .slice(0, 3);
 
+  const schema = breadcrumbJsonLd(safeLocale, [
+    { name: breadcrumbHomeLabel(safeLocale), path: "" },
+    { name: t.nav.work, path: "/work" },
+    { name: project.name, path: `/work/${slug}` },
+  ]);
+
   return (
     <>
       <Navigation locale={safeLocale} t={t} />
 
       <main className="relative pt-page">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(schema) }}
+        />
         <section className="relative overflow-hidden py-12 md:py-20">
           <div aria-hidden className="ambient-glow" />
           <div className="container-lux relative">

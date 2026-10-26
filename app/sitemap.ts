@@ -6,18 +6,34 @@ import { localeOrder } from "@/lib/locale-meta";
 import { absoluteUrl, localeAlternateLanguages } from "@/lib/site-paths";
 import type { Locale } from "@/lib/translations";
 
-const staticPaths = ["", "/about", "/contact", "/order", "/privacy", "/services", "/work"];
+const RETIRED_WORK_SLUGS = new Set(["porto-sole", "rockisland-rimini"]);
 
-function sitemapEntry(pathname: string): MetadataRoute.Sitemap[number] {
+const staticPaths = [
+  "",
+  "/about",
+  "/contact",
+  "/order",
+  "/privacy",
+  "/services",
+  "/work",
+  "/audit-digitale",
+];
+
+function sitemapEntry(
+  pathname: string,
+  lastModified?: Date,
+): MetadataRoute.Sitemap[number] {
   const defaultLocale = localeOrder[0] as Locale;
   return {
     url: absoluteUrl(defaultLocale, pathname),
-    lastModified: new Date(),
+    lastModified: lastModified ?? new Date("2026-10-23"),
     changeFrequency: pathname === "" ? "weekly" : "monthly",
     priority:
       pathname === ""
         ? 1
-        : pathname.startsWith("/services") || pathname.startsWith("/work")
+        : pathname.startsWith("/services") ||
+            pathname.startsWith("/work") ||
+            pathname === "/audit-digitale"
           ? 0.8
           : 0.7,
     alternates: {
@@ -39,9 +55,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const serviceSlugs = services.metas.length
     ? services.metas.map((s) => s.slug)
     : servicesMeta.map((s) => s.slug);
-  const projectSlugs = projects.length
-    ? projects.map((p) => p.slug)
-    : projectsMeta.map((p) => p.slug);
+
+  const projectSlugs = (
+    projects.length ? projects.map((p) => p.slug) : projectsMeta.map((p) => p.slug)
+  ).filter((slug) => !RETIRED_WORK_SLUGS.has(slug));
 
   for (const slug of serviceSlugs) {
     entries.push(sitemapEntry(`/services/${slug}`));

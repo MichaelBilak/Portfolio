@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { routing } from "@/i18n/routing";
 import { Locale, translations } from "@/lib/translations";
 
@@ -19,10 +20,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = translations[locale as Locale];
-  return {
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/contact",
     title: pageTitle(t.contact.title),
     description: t.contact.body,
-  };
+  });
 }
 
 export default async function ContactPage({ params }: PageProps) {
@@ -48,7 +51,7 @@ export default async function ContactPage({ params }: PageProps) {
           </Link>
         </div>
 
-        <Contact t={t} />
+        <Contact t={t} headingLevel="h1" />
       </main>
 
       <Footer t={t} className="!pb-0 pb-safe lg:!pb-0" />

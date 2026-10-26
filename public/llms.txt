@@ -1,0 +1,33 @@
+# DormUp Studio
+
+> Digital Growth & Creative Studio based in Rimini, Italy.
+> Helps businesses get found online, convert visits into enquiries, and stand out with websites, professional video and smart digital solutions.
+> Does not guarantee Google rankings or ChatGPT mentions.
+
+## Primary
+
+- [Home](https://www.dormup-it.com/): Overview of services and approach
+- [Services](https://www.dormup-it.com/services): Full service catalog
+- [Google & AI Visibility](https://www.dormup-it.com/services/google-ai-visibility)
+- [Websites & e-commerce](https://www.dormup-it.com/services/premium-website)
+- [Video production](https://www.dormup-it.com/services/photo-video)
+- [Business automation](https://www.dormup-it.com/services/booking-flow)
+- [Digital growth & analytics](https://www.dormup-it.com/services/digital-growth)
+- [Website care](https://www.dormup-it.com/services/monthly-support)
+- [Digital audit](https://www.dormup-it.com/audit-digitale)
+- [Work](https://www.dormup-it.com/work): Selected projects
+- [About](https://www.dormup-it.com/about): Studio entity summary
+- [Contact](https://www.dormup-it.com/contact)
+- [Privacy](https://www.dormup-it.com/privacy)
+
+## English
+
+- [Home (EN)](https://www.dormup-it.com/en)
+- [Services (EN)](https://www.dormup-it.com/en/services)
+- [About (EN)](https://www.dormup-it.com/en/about)
+- [Contact (EN)](https://www.dormup-it.com/en/contact)
+
+## Contact
+
+- Email: dormup.it@gmail.com
+- Instagram: https://www.instagram.com/dormup.studio/

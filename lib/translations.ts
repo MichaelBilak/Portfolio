@@ -1,3 +1,6 @@
+import { deAuditLanding, frAuditLanding, ruAuditLanding } from "@/lib/content/audit-landings";
+import { localizedServices } from "@/lib/content/localized-services";
+
 export type Locale = "it" | "en" | "fr" | "ru" | "de" | "es";
 
 export interface LocalizedProject {
@@ -25,6 +28,8 @@ export interface LocalizedService {
   pricingSectionTitle?: string;
   pricingFootnote?: string;
   pricingTiers?: { tierId: string; name: string; detail: string }[];
+  /** Plain-language FAQ for crawlable answer-first content */
+  faq?: { question: string; answer: string }[];
 }
 
 export interface LocalizedProcessStep {
@@ -128,6 +133,28 @@ export interface TranslationSet {
     title: string;
     bio: string;
     pills: string[];
+    /** Visible entity summary for GEO / AI extraction */
+    entity?: {
+      title: string;
+      rows: { label: string; value: string }[];
+    };
+  };
+  auditLanding?: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    forWhoTitle: string;
+    forWho: string[];
+    checksTitle: string;
+    checks: string[];
+    receiveTitle: string;
+    receive: string[];
+    processTitle: string;
+    process: string[];
+    faqTitle: string;
+    faq: { question: string; answer: string }[];
+    cta: string;
+    privacyNote: string;
   };
   contact: {
     label: string;
@@ -165,6 +192,7 @@ export interface TranslationSet {
         hotel: string;
         bar: string;
         other: string;
+        sourceOther: string;
         google: string;
         referral: string;
         social: string;
@@ -313,180 +341,7 @@ const it: TranslationSet = {
         "Un sito live dove i clienti trovano e comprano con piu facilita — ordini piu chiari, catalogo sotto controllo e meno andirivieni in chat.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Siti web e prodotti digitali",
-      description:
-        "Siti e prodotti web su misura — dal brand site alle esperienze orientate alla conversione. Mobile-first, veloci, costruiti per funzionare.",
-      details: "Da wireframe a produzione · CMS opzionale · SEO base incluso",
-      whatYouGet: [
-        "Design e identita visiva premium",
-        "Sviluppo Next.js veloce e SEO-ready",
-        "Mobile-first ottimizzato per conversione",
-        "CMS opzionale per gestione contenuti",
-        "Lancio e supporto post-live incluso",
-      ],
-      pricingSectionTitle: "Pacchetti sito web",
-      pricingFootnote:
-        "Importi indicativi «da». Il preventivo finale dipende da pagine, integrazioni e tempistiche.",
-      pricingTiers: [
-        {
-          tierId: "starter",
-          name: "Starter",
-          detail: "Landing · 3–5 schermate · 1 lingua · SEO base incluso.",
-        },
-        {
-          tierId: "business",
-          name: "Business",
-          detail: "6–10 pagine · CMS · form · SEO base · ideale per PMI e hospitality.",
-        },
-        {
-          tierId: "premium",
-          name: "Premium",
-          detail: "Sito completo · multilingua · booking · animazioni · massima conversione.",
-        },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "Upgrade sistemi e redesign",
-      description:
-        "Portiamo la presenza digitale esistente a un sistema piu chiaro — struttura, UX, performance e percorsi di conversione.",
-      details: "Audit · Strategia · Implementazione",
-      whatYouGet: [
-        "Audit completo del sito attuale",
-        "Nuova architettura informativa e UX",
-        "Identita visiva aggiornata e premium",
-        "Migrazione contenuti senza perdite",
-        "Setup analytics e tracking",
-      ],
-      pricingSectionTitle: "Pacchetti redesign",
-      pricingFootnote:
-        "Il costo dipende dallo stato attuale del sito, dal numero di pagine e dal livello di personalizzazione.",
-      pricingTiers: [
-        {
-          tierId: "audit",
-          name: "Solo audit",
-          detail: "Analisi completa · report con priorità · roadmap di miglioramento.",
-        },
-        {
-          tierId: "standard",
-          name: "Standard",
-          detail: "Redesign schermate chiave + implementazione · nuova UX e visual.",
-        },
-        {
-          tierId: "full",
-          name: "Completo",
-          detail: "Redesign totale · migrazione contenuti · analytics e tracking.",
-        },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Automazione dei processi",
-      description:
-        "Automatizziamo prenotazioni, richieste e workflow ripetitivi perche i lead non si perdano in chat e calendari.",
-      details: "Flussi · Integrazioni · Form intelligenti · Report",
-      whatYouGet: [
-        "Analisi del funnel di prenotazione attuale",
-        "Integrazione del sistema di booking",
-        "Form intelligenti orientati alla conversione",
-        "Test A/B su CTA e flussi chiave",
-        "Report mensile sui risultati",
-      ],
-      pricingSectionTitle: "Pacchetti booking & lead",
-      pricingFootnote:
-        "Compatibile con siti esistenti o nuovi progetti. Il prezzo varia in base a integrazioni e complessità del funnel.",
-      pricingTiers: [
-        {
-          tierId: "single",
-          name: "Singolo flusso",
-          detail: "Un percorso — prenotazione o richiesta diretta · form + CTA ottimizzati.",
-        },
-        {
-          tierId: "multi",
-          name: "Multi-flusso",
-          detail: "Più percorsi · integrazione booking · ottimizzazione CTA su tutto il sito.",
-        },
-        {
-          tierId: "full",
-          name: "Completo",
-          detail: "Funnel end-to-end · A/B test · report mensile sui risultati.",
-        },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Crescita continua e cura",
-      description:
-        "Aggiornamenti, ottimizzazione e supporto prioritario su tutto lo stack digitale — cosi i sistemi restano al passo del business.",
-      details: "Da 2h/mese · Priorita garantita · Report mensile",
-      whatYouGet: [
-        "Aggiornamenti tecnici e di contenuto",
-        "Monitoraggio performance e uptime",
-        "Ottimizzazioni continue di conversione",
-        "Priorita su nuove richieste",
-        "Report mensile chiaro",
-      ],
-      pricingSectionTitle: "Piani di supporto",
-      pricingFootnote:
-        "Canone mensile. Ore non utilizzate non si accumulano — si rinnovano ogni mese.",
-      pricingTiers: [
-        {
-          tierId: "essential",
-          name: "Essential",
-          detail: "~2 ore/mese · aggiornamenti · monitoraggio base · risposta prioritaria.",
-        },
-        {
-          tierId: "growth",
-          name: "Growth",
-          detail: "~5 ore/mese · ottimizzazione continua · report mensile.",
-        },
-        {
-          tierId: "priority",
-          name: "Priority",
-          detail: "~10 ore/mese · massima priorità · report dettagliato.",
-        },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Produzione contenuti",
-      description:
-        "Produzione foto e video per web, campagne e social — brief, riprese, editing e deliverable pronti all'uso.",
-      details: "Sessioni in location · Audio dove serve · Export per web e social",
-      whatYouGet: [
-        "Brief con shot list e tempistiche chiare",
-        "Riprese foto e video con videografo professionista",
-        "Editing (taglio, colore, formati verticali/orizzontali)",
-        "Consegna file pronti per hero, menu digitali e campagne",
-        "Licenza d'uso per marketing online (come da contratto)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Portfolio videografo",
-      pricingSectionTitle: "Piani tariffari (servizio dedicato)",
-      pricingFootnote:
-        "Importi indicativi: si definiscono in preventivo in base a location, durata e diritti di utilizzo.",
-      pricingTiers: [
-        {
-          tierId: "half-day",
-          name: "Half day",
-          detail: "Fino a 4 ore · foto o video · selezione e editing base · ideale per menu e social.",
-        },
-        {
-          tierId: "full-day",
-          name: "Full day",
-          detail: "Giornata intera · foto + video · più varianti per campagne e sito.",
-        },
-        {
-          tierId: "retainer",
-          name: "Retainer / mensile",
-          detail: "Sessioni ricorrenti e calendario contenuti · continuità per feed e ads.",
-        },
-      ],
-    },
-  ],
+  services: localizedServices.it,
   process: [
     {
       id: "understand",
@@ -534,41 +389,36 @@ const it: TranslationSet = {
     about: "Chi siamo",
   },
   hero: {
-    eyebrow: "Studio Digitale",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Digital Growth & Creative Studio · Rimini",
+    headline: "Più visibilità.\nPiù clienti.\nUn'immagine che si fa notare.",
     subtitle: "",
-    lead: "Sistemi digitali, automazione dei processi, siti web e produzione di contenuti.",
+    lead: "Aiutiamo le aziende a farsi trovare online, trasformare le visite in contatti e distinguersi con siti web, video professionali e soluzioni digitali intelligenti.",
     primaryCta: "Vedi i progetti",
-    secondaryCta: "Richiedi audit gratuito",
+    secondaryCta: "Richiedi un'analisi iniziale",
     buyCta: "Ordina servizi",
     buyCtaShort: "Ordina",
-    socialProof: "4 progetti · Disponibile per nuovi clienti",
+    socialProof: "Rimini e Riviera · Disponibile per nuovi clienti",
     mockupCaption: "Il tuo miglior biglietto da visita",
     chipHighlight: "Chiavi in mano",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipAvailability: "Disponibile",
+    chipAvailabilitySub: "Rimini · Italia",
   },
   trust: [
-    "Sistemi digitali che collegano",
-    "Automazione che fa risparmiare tempo",
+    "Visibilità su Google e AI",
     "Siti che convertono",
-    "Contenuti che costruiscono fiducia",
+    "Video professionali",
+    "Automazione che fa risparmiare tempo",
   ],
   proof: {
-    eyebrow: "In numeri",
-    items: [
-      { value: "1h", label: "Tempo di risposta medio" },
-      { value: "100%", label: "approccio unico" },
-      { value: "4", label: "direzioni diverse\nsistemi · automazione · web · contenuti" },
-      { value: "26", label: "Servizi e moduli disponibili" },
-    ],
-    footnote: { value: "2 sett.", label: "Avvio medio progetto" },
+    eyebrow: "Tempi di risposta",
+    items: [{ value: "1 giorno", label: "Risposta entro un giorno lavorativo" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
-    eyebrow: "01 — Perche conta",
+    eyebrow: "01 — Perché conta",
     title:
-      "Quasi tutti i business hanno strumenti.\nQuasi nessuno ha un sistema digitale che funziona davvero.",
-    body: "Canali sparsi, processi manuali, una presenza web debole e contenuti che non vendono: questo gap costa tempo e clienti.\n\nColleghiamo sistemi digitali, automatizziamo i processi, costruiamo siti e produciamo contenuti perche il business funzioni meglio e comunichi al livello giusto.",
+      "Essere online non basta.\nServono visibilità, un sito che converte e un'immagine che convince.",
+    body: "Se i clienti non ti trovano su Google, il sito non genera richieste o le chat perdono lead, stai lasciando opportunità sul tavolo.\n\nUniamo visibilità locale, siti e e-commerce, video professionali e automazione — con misura di ciò che funziona — per aziende a Rimini e sulla Riviera.",
   },
   caseStudies: {
     label: "Lavori selezionati",
@@ -653,13 +503,13 @@ const it: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "Cosa costruiamo",
-  servicesLead: "Sistemi · Automazione · Siti · Contenuti",
+  servicesLabel: "Cosa offriamo",
+  servicesLead: "Visibilità · Siti · Video · Automazione · Crescita · Cura",
   processSection: {
     eyebrow: "Processo",
-    title: "Come trasformiamo il caos digitale in un asset di business",
+    title: "Dal primo contatto a un sistema digitale che lavora",
     subtitle:
-      "Sistemi, automazione, web e contenuti in un unico metodo guidato dal business — non solo un bel sito.",
+      "Visibilità, sito, video e automazione in un metodo guidato dal business — non solo un bel sito.",
     stepLabel: "Step",
     footerNote:
       "Ogni progetto è flessibile: processo, design e funzionalità si adattano alle esigenze reali di ogni cliente.",
@@ -668,47 +518,111 @@ const it: TranslationSet = {
     label: "Perche conta",
     items: [
       {
-        title: "Sistemi che collegano le operazioni",
-        body: "Portali, dashboard e prodotti digitali che tolgono il lavoro da chat e fogli di calcolo.",
-        note: "Sistemi digitali",
+        title: "Fatti trovare su Google e nelle ricerche con AI",
+        body: "Presenza chiara e contenuti utili, senza promesse di ranking garantiti.",
+        note: "Visibilità",
       },
       {
-        title: "Automazione che fa risparmiare ore",
-        body: "Prenotazioni, richieste e flussi ripetitivi gestiti in modo chiaro — meno lead persi, meno follow-up manuale.",
-        note: "Automazione dei processi",
-      },
-      {
-        title: "Siti che convertono",
-        body: "La presenza web costruisce ancora fiducia. Progettiamo e aggiorniamo siti che trasformano attenzione in azione.",
+        title: "Siti che trasformano visite in contatti",
+        body: "Percorsi mobili semplici, messaggi chiari e CTA evidenti.",
         note: "Siti web",
       },
       {
-        title: "Contenuti che costruiscono fiducia",
-        body: "Foto, video e asset pronti per web e campagne — cosi il brand appare solido quanto opera.",
-        note: "Produzione contenuti",
+        title: "Video che raccontano l’attività",
+        body: "Riprese e editing professionali per sito, social e campagne — anche come servizio standalone.",
+        note: "Produzione video",
+      },
+      {
+        title: "Meno lavoro manuale sulle richieste",
+        body: "Flussi e notifiche ordinati — meno lead persi in chat.",
+        note: "Automazione",
       },
     ],
   },
   audit: {
-    title: "Vuoi sapere cosa frena\nil tuo business?",
-    body: "Analizziamo sistemi, processi, sito e contenuti — e ti diciamo esattamente cosa migliorare.",
-    cta: "Richiedi il tuo audit",
-    meta: "Rispondiamo entro 1 ora · Gratuito · Decidi tu i prossimi passi",
-    freeBadge: "FREE",
+    title: "Vuoi capire cosa migliorare\nnel tuo digitale?",
+    body: "Analizziamo visibilità, sito, video e percorsi di contatto — e ti indichiamo priorità concrete. Nessuna garanzia di ranking.",
+    cta: "Richiedi un'analisi iniziale",
+    meta: "Risposta tipica entro 1 giorno lavorativo · Decidi tu i prossimi passi",
+    freeBadge: "Preliminare",
   },
   about: {
     eyebrow: "Chi siamo",
-    title: "Chi siamo?",
-    bio: "Siamo un piccolo studio digitale. Creiamo l'ambiente digitale di cui il business ha bisogno: sistemi e piattaforme, automazione dei processi, siti e interfacce, piu contenuti visivi e sviluppo continuo del prodotto. Non solo belli — tutto e costruito per risultati di business concreti.\n\nNon lavoriamo con 30 clienti alla volta. Seguiamo pochi progetti, trattando ogni business come se fosse il nostro.",
-    pills: ["Disponibile per nuovi progetti"],
+    title: "DormUp Studio — Digital Growth & Creative Studio",
+    bio: "Siamo uno studio digitale e creativo con focus su Rimini e la Riviera. Aiutiamo PMI, hotel, ristoranti e attività locali a farsi trovare online, convertire visite in contatti, distinguersi con siti e video professionali e semplificare la gestione delle richieste.\n\nNon siamo solo un’agenzia SEO, né solo uno studio di siti: combiniamo crescita digitale e produzione creativa. Lavoriamo su pochi progetti alla volta, con chiarezza su cosa possiamo misurare e senza promesse irrealistiche.",
+    pills: ["Rimini e Riviera", "Disponibile per nuovi progetti"],
+    entity: {
+      title: "DormUp Studio in sintesi",
+      rows: [
+        { label: "Nome", value: "DormUp Studio" },
+        { label: "Tipo", value: "Digital Growth & Creative Studio" },
+        { label: "Mercato principale", value: "Rimini, Italia" },
+        {
+          label: "Aree vicine",
+          value: "Riccione, Bellaria-Igea Marina, Misano Adriatico, Santarcangelo, Cattolica",
+        },
+        {
+          label: "Servizi",
+          value: "Visibilità Google & AI, siti web, video, automazione, analytics, cura del sito",
+        },
+        { label: "Clienti tipici", value: "PMI, hospitality, ristorazione, servizi locali" },
+        { label: "Contatto", value: "dormup.it@gmail.com · form sul sito" },
+      ],
+    },
+  },
+  auditLanding: {
+    eyebrow: "Analisi iniziale",
+    title: "Audit digitale per aziende a Rimini",
+    lead: "Una revisione preliminare di visibilità, sito, opportunità di contatto e scopribilità — per capire dove conviene intervenire prima di investire.",
+    forWhoTitle: "Per chi è",
+    forWho: [
+      "Hotel e attività hospitality che vogliono più richieste dirette",
+      "Ristoranti e locali che faticano a farsi trovare o a convertire",
+      "PMI e servizi locali con sito debole o processi manuali",
+    ],
+    checksTitle: "Cosa controlliamo",
+    checks: [
+      "Visibilità su Google e chiarezza dei contenuti (anche per ricerche con AI)",
+      "Usabilità mobile e percorsi di contatto",
+      "Opportunità di video e materiali che rafforzano fiducia",
+      "Gap di tracking e misurazione",
+      "Priorità realistiche — senza promesse di ranking",
+    ],
+    receiveTitle: "Cosa ricevi",
+    receive: [
+      "Sintesi dei punti deboli e delle opportunità",
+      "Priorità consigliate in linguaggio chiaro",
+      "Indicazione su cosa ha senso fare subito vs dopo",
+    ],
+    processTitle: "Come funziona",
+    process: [
+      "Invii una breve richiesta con contesto sul business",
+      "Rivediamo sito e presenza pubblica disponibile",
+      "Ti rispondiamo con una sintesi e i prossimi passi possibili",
+    ],
+    faqTitle: "Domande frequenti",
+    faq: [
+      {
+        question: "L’analisi iniziale è gratuita?",
+        answer:
+          "Offriamo una revisione preliminare per capire se ha senso collaborare. Un audit tecnico completo e i progetti di implementazione sono a preventivo.",
+      },
+      {
+        question: "Lavorate solo a Rimini?",
+        answer:
+          "Il mercato principale è Rimini e la Riviera. Valutiamo anche progetti altrove in Italia quando il fit è chiaro.",
+      },
+    ],
+    cta: "Richiedi l'analisi",
+    privacyNote: "I dati della richiesta sono usati solo per risponderti. Dettagli nella privacy policy.",
   },
   contact: {
     label: "Iniziamo",
-    title: "Un ambiente digitale per business che non vogliono essere come tutti.",
-    body: "Dopo il tuo messaggio ricevi una risposta chiara con prossimi passi, tempistiche e fattibilita.",
-    compactTitle: "Richiedi il tuo audit gratuito",
+    title: "Parliamo del tuo prossimo passo digitale.",
+    body: "Dopo il messaggio ricevi una risposta chiara con fattibilità, prossimi passi e tempistiche indicative. Tempi di risposta tipici: entro 1 giorno lavorativo.",
+    compactTitle: "Richiedi un'analisi iniziale",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Rispondiamo entro 1h",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "La tua selezione",
       title: "Servizi scelti",
@@ -727,10 +641,10 @@ const it: TranslationSet = {
       submit: "Invia messaggio",
       submitAudit: "Richiedi audit gratuito",
       submitting: "Invio in corso...",
-      success: "Ti rispondiamo entro 1 ora.",
+      success: "Ti rispondiamo entro un giorno lavorativo.",
       successTitle: "La tua richiesta è stata inviata",
       successClose: "Chiudi",
-      submitError: "Invio non riuscito. Scrivici a {email} e ti rispondiamo subito.",
+      submitError: "Invio non riuscito. Scrivici a {email} e ti rispondiamo entro un giorno lavorativo.",
       auditBriefPlaceholder: "Cosa non funziona nel tuo setup digitale — sistemi, processi, sito o contenuti?",
       optional: "facoltativo",
       options: {
@@ -738,6 +652,7 @@ const it: TranslationSet = {
         hotel: "Hotel",
         bar: "Bar / locale",
         other: "Altro / servizi",
+        sourceOther: "Altro",
         google: "Google",
         referral: "Passaparola",
         social: "Social",
@@ -753,7 +668,7 @@ const it: TranslationSet = {
     eyebrow: "Ordine",
     title: "Scegli i servizi",
     subtitle:
-      "Seleziona una o piu opzioni — riceverai un preventivo personalizzato entro 1 ora.",
+      "Seleziona una o più opzioni — riceverai un preventivo personalizzato entro un giorno lavorativo.",
     fromLabel: "da",
     plusLabel: "+",
     selectHint: "Seleziona almeno un servizio per continuare, oppure scrivici direttamente.",
@@ -764,11 +679,10 @@ const it: TranslationSet = {
     addonsSectionTitle: "Moduli aggiuntivi",
     aboutServiceCta: "Info sul servizio",
     trust: {
-      timeline: "Tempi tipici: 4–8 settimane",
-      deposit: "Acconto 30% all'avvio",
+      timeline: "Tempi e condizioni commerciali si confermano nel preventivo.",
+      deposit: "",
       processLink: "Come lavoriamo",
-      testimonial:
-        "«Risposta rapida, scope chiaro — esattamente il partner digitale che cercavamo.»",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -836,7 +750,7 @@ const it: TranslationSet = {
     sections: [
       {
         heading: "Titolare del trattamento",
-        body: "DormUp Studio digital studio — contatto: dormup.it@gmail.com.",
+        body: "DormUp Studio — Digital Growth & Creative Studio — contatto: dormup.it@gmail.com.",
       },
       {
         heading: "Dati raccolti",
@@ -844,7 +758,7 @@ const it: TranslationSet = {
       },
       {
         heading: "Finalità e base giuridica",
-        body: "I dati sono trattati per rispondere alle richieste, preparare preventivi e audit gratuiti. Base giuridica: esecuzione di misure precontrattuali e consenso implicito inviando il modulo (art. 6 GDPR).",
+        body: "I dati sono trattati per rispondere alle richieste, preparare preventivi e analisi iniziali. Base giuridica: esecuzione di misure precontrattuali e consenso implicito inviando il modulo (art. 6 GDPR).",
       },
       {
         heading: "Conservazione",
@@ -856,14 +770,15 @@ const it: TranslationSet = {
       },
       {
         heading: "Cookie e analytics",
-        body: "Questo sito non utilizza cookie di profilazione di terze parti. Eventuali cookie tecnici servono al funzionamento del sito e della selezione lingua.",
+        body: "Possono essere usati cookie tecnici per il funzionamento del sito e la selezione lingua. Se sono configurati Google Analytics (GA4) o Plausible, tali strumenti possono trattare dati di utilizzo secondo le rispettive informative. Un banner di consenso dedicato deve essere allineato alla configurazione reale (revisione legale del titolare).",
       },
     ],
   },
   footer: {
-    description: "Studio digitale per sistemi, automazione, siti e contenuti.",
+    description:
+      "Digital Growth & Creative Studio a Rimini: visibilità, siti, video e automazione per aziende.",
     links: "Link rapidi",
-    location: "Digital Studio",
+    location: "Rimini, Italia",
     status: "Disponibile per nuovi clienti",
     privacy: "Privacy Policy",
     built: "Built with intention.",
@@ -884,8 +799,9 @@ const it: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Servizi",
-    title: "Cosa costruiamo",
-    subtitle: "Sistemi digitali, automazione dei processi, siti web e produzione contenuti — end to end.",
+    title: "Crescita digitale e creatività, in un solo studio",
+    subtitle:
+      "Visibilità su Google e AI, siti e e-commerce, produzione video, automazione e cura continua — per PMI e hospitality a Rimini.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tutti i servizi",
     pricingNote:
@@ -1001,179 +917,7 @@ const en: TranslationSet = {
         "A live store people can find and shop from — clearer orders, better control of what's in stock, and less back-and-forth in chat.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Websites & web products",
-      description:
-        "Custom websites and web products — from brand sites to conversion-focused experiences. Mobile-first, fast, built to work.",
-      details: "From wireframe to launch · Optional CMS · Base SEO included",
-      whatYouGet: [
-        "Premium design and visual identity",
-        "Fast, SEO-ready Next.js development",
-        "Mobile-first optimized for conversion",
-        "Optional CMS for content management",
-        "Launch and post-live support included",
-      ],
-      pricingSectionTitle: "Website packages",
-      pricingFootnote:
-        "Indicative starting prices. Final quote depends on pages, integrations and timeline.",
-      pricingTiers: [
-        {
-          tierId: "starter",
-          name: "Starter",
-          detail: "Landing · 3–5 screens · 1 language · base SEO included.",
-        },
-        {
-          tierId: "business",
-          name: "Business",
-          detail: "6–10 pages · CMS · forms · base SEO · ideal for SMBs and hospitality.",
-        },
-        {
-          tierId: "premium",
-          name: "Premium",
-          detail: "Full site · multilingual · booking · animations · maximum conversion.",
-        },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "Systems upgrade & redesign",
-      description:
-        "We upgrade existing digital presence into a clearer system — structure, UX, performance and conversion paths.",
-      details: "Audit · Strategy · Implementation",
-      whatYouGet: [
-        "Full audit of your current site",
-        "New information architecture and UX",
-        "Updated, premium visual identity",
-        "Content migration without loss",
-        "Analytics and tracking setup",
-      ],
-      pricingSectionTitle: "Redesign packages",
-      pricingFootnote:
-        "Cost depends on current site state, page count and customization level.",
-      pricingTiers: [
-        {
-          tierId: "audit",
-          name: "Audit only",
-          detail: "Full analysis · priority report · improvement roadmap.",
-        },
-        {
-          tierId: "standard",
-          name: "Standard",
-          detail: "Key screens redesign + implementation · new UX and visual.",
-        },
-        {
-          tierId: "full",
-          name: "Full",
-          detail: "Complete redesign · content migration · analytics and tracking.",
-        },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Process automation",
-      description:
-        "We automate bookings, enquiries and repeat workflows so leads don't get lost in chats and calendars.",
-      details: "Flows · Integrations · Smart forms · Reporting",
-      whatYouGet: [
-        "Analysis of your current booking funnel",
-        "Booking system integration",
-        "Smart conversion-oriented forms",
-        "A/B testing on CTAs and key flows",
-        "Monthly results report",
-      ],
-      pricingSectionTitle: "Booking & lead packages",
-      pricingFootnote:
-        "Works with existing or new sites. Price varies by integrations and funnel complexity.",
-      pricingTiers: [
-        {
-          tierId: "single",
-          name: "Single flow",
-          detail: "One path — booking or enquiry · optimized form + CTA.",
-        },
-        {
-          tierId: "multi",
-          name: "Multi-flow",
-          detail: "Multiple paths · booking integration · site-wide CTA optimization.",
-        },
-        {
-          tierId: "full",
-          name: "Full",
-          detail: "End-to-end funnel · A/B testing · monthly results report.",
-        },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Ongoing growth & care",
-      description:
-        "Updates, optimization and priority support across your digital stack — so systems keep pace with the business.",
-      details: "From 2h/month · Priority guaranteed · Monthly report",
-      whatYouGet: [
-        "Technical and content updates",
-        "Performance and uptime monitoring",
-        "Continuous conversion optimization",
-        "Priority on new requests",
-        "Clear monthly report",
-      ],
-      pricingSectionTitle: "Support plans",
-      pricingFootnote: "Monthly retainer. Unused hours do not roll over.",
-      pricingTiers: [
-        {
-          tierId: "essential",
-          name: "Essential",
-          detail: "~2h/month · updates · basic monitoring · priority response.",
-        },
-        {
-          tierId: "growth",
-          name: "Growth",
-          detail: "~5h/month · continuous optimization · monthly report.",
-        },
-        {
-          tierId: "priority",
-          name: "Priority",
-          detail: "~10h/month · top priority · detailed report.",
-        },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Content production",
-      description:
-        "Photo and video production for web, campaigns and social — brief, shoot, edit and deliverables ready to use.",
-      details: "On-location sessions · Audio when needed · Web & social deliverables",
-      whatYouGet: [
-        "Creative brief and shot list aligned with your goals",
-        "Professional photo and video capture",
-        "Editing (cut, grade, vertical and horizontal formats)",
-        "Files ready for hero sections, digital menus, and campaigns",
-        "Usage rights for digital marketing (per agreement)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Videographer portfolio",
-      pricingSectionTitle: "Pricing tiers (standalone service)",
-      pricingFootnote:
-        "Figures are quoted per brief depending on location, duration, and usage rights.",
-      pricingTiers: [
-        {
-          tierId: "half-day",
-          name: "Half day",
-          detail: "Up to 4 hours · photo or video · curated selects and base edit · ideal for menus and social.",
-        },
-        {
-          tierId: "full-day",
-          name: "Full day",
-          detail: "Full shoot day · photo + video · more variants for site and campaigns.",
-        },
-        {
-          tierId: "retainer",
-          name: "Monthly retainer",
-          detail: "Recurring shoots and a content cadence · continuity for feed and ads.",
-        },
-      ],
-    },
-  ],
+  services: localizedServices.en,
   process: [
     {
       id: "understand",
@@ -1221,41 +965,36 @@ const en: TranslationSet = {
     about: "About us",
   },
   hero: {
-    eyebrow: "Digital Studio",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Digital Growth & Creative Studio · Rimini",
+    headline: "More visibility.\nMore customers.\nAn image that stands out.",
     subtitle: "",
-    lead: "Digital systems, process automation, websites and content production.",
+    lead: "We help businesses get found online, turn visits into enquiries, and stand out with websites, professional video and smart digital solutions.",
     primaryCta: "View projects",
-    secondaryCta: "Request free audit",
+    secondaryCta: "Request an initial review",
     buyCta: "Order services",
     buyCtaShort: "Order",
-    socialProof: "4 projects · Available for new clients",
+    socialProof: "Rimini & Riviera · Available for new clients",
     mockupCaption: "Your best business card",
     chipHighlight: "Turnkey work",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipAvailability: "Available",
+    chipAvailabilitySub: "for new projects",
   },
   trust: [
-    "Digital systems that connect",
-    "Process automation that saves time",
+    "Google & AI visibility",
     "Websites that convert",
-    "Content that builds trust",
+    "Professional video",
+    "Request automation",
   ],
   proof: {
-    eyebrow: "By the numbers",
-    items: [
-      { value: "1h", label: "Average response time" },
-      { value: "100%", label: "unique approach" },
-      { value: "4", label: "different directions\nsystems · automation · web · content" },
-      { value: "26", label: "Services & add-on modules" },
-    ],
-    footnote: { value: "2 wks", label: "Average project kickoff" },
+    eyebrow: "Response time",
+    items: [{ value: "1 day", label: "Reply within one business day" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Why it matters",
     title:
-      "Most businesses have tools.\nAlmost none have a digital system that works.",
-    body: "Scattered channels, manual processes, a weak web presence and content that doesn't sell — that gap costs time and customers.\n\nWe connect digital systems, automate processes, build websites and produce content so your business runs better and looks the part.",
+      "Being online is not enough.\nYou need to be found, convert and handle requests.",
+    body: "If customers cannot find you on Google, the site generates few enquiries, or leads get lost in chat, you leave revenue on the table.\n\nWe combine visibility, effective websites, professional video and automation — with clear measurement — for businesses in Rimini and the Riviera.",
   },
   caseStudies: {
     label: "Selected work",
@@ -1340,13 +1079,13 @@ const en: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "What we build",
-  servicesLead: "Systems · Automation · Websites · Content",
+  servicesLabel: "What we offer",
+  servicesLead: "Visibility · Websites · Video · Automation · Growth · Care",
   processSection: {
     eyebrow: "Process",
-    title: "How we turn digital chaos into a business asset",
+    title: "From first contact to a digital system that works",
     subtitle:
-      "Systems, automation, web and content in one business-driven method — not just a pretty site.",
+      "Visibility, website, video and automation in one business-driven method — not just a pretty site.",
     stepLabel: "Step",
     footerNote:
       "Every project is flexible — the process, design, and functionality are customized around the real needs of each client.",
@@ -1355,47 +1094,111 @@ const en: TranslationSet = {
     label: "Why it matters",
     items: [
       {
-        title: "Systems that connect operations",
-        body: "Portals, dashboards and product surfaces that stop work from living in chats and spreadsheets.",
-        note: "Digital systems",
+        title: "Get found on Google and AI search",
+        body: "Clear presence and useful content — without guaranteed ranking promises.",
+        note: "Visibility",
       },
       {
-        title: "Automation that saves hours",
-        body: "Booking, enquiries and repeat workflows handled by clear flows — fewer lost leads, less manual follow-up.",
-        note: "Process automation",
-      },
-      {
-        title: "Websites that convert",
-        body: "A strong web presence still closes trust. We build and upgrade sites that turn attention into action.",
+        title: "Websites that turn visits into enquiries",
+        body: "Simple mobile paths, clear messaging and obvious CTAs.",
         note: "Websites",
       },
       {
-        title: "Content that builds trust",
-        body: "Photo, video and assets ready for web and campaigns — so the brand looks as solid as it operates.",
-        note: "Content production",
+        title: "Video that tells your story",
+        body: "Professional filming and editing for site, social and campaigns — also as a standalone service.",
+        note: "Video production",
+      },
+      {
+        title: "Less manual work on requests",
+        body: "Ordered flows and notifications — fewer leads lost in chat.",
+        note: "Automation",
       },
     ],
   },
   audit: {
-    title: "Want to know what's\nholding your business back?",
-    body: "We review your systems, processes, website and content — and tell you exactly what to improve.",
-    cta: "Request your audit",
-    meta: "Reply within 1 hour · Free · You decide the next steps",
-    freeBadge: "FREE",
+    title: "Want to know what to improve\nin your digital setup?",
+    body: "We review visibility, website, video opportunities and contact paths — and share concrete priorities. No ranking guarantees.",
+    cta: "Request an initial review",
+    meta: "Typical reply within 1 business day · You decide next steps",
+    freeBadge: "Preliminary",
   },
   about: {
     eyebrow: "About us",
-    title: "Who are we?",
-    bio: "We're a small digital studio. We build the digital environment your business needs—systems and platforms, process automation, websites and interfaces, plus visual content and ongoing product development. Not just polished looks: everything is built for real business results.\n\nWe don't work with 30 clients at a time. We take a few projects and treat every business as if it were our own.",
-    pills: ["Available for new projects"],
+    title: "DormUp Studio — Digital Growth & Creative Studio",
+    bio: "We are a digital and creative studio focused on Rimini and the Riviera. We help SMEs, hotels, restaurants and local businesses get found online, turn visits into enquiries, stand out with websites and professional video, and simplify request handling.\n\nWe are not only an SEO agency and not only a web studio: we combine digital growth and creative production. We take few projects at a time, stay clear about what can be measured, and avoid unrealistic promises.",
+    pills: ["Rimini & Riviera", "Available for new projects"],
+    entity: {
+      title: "DormUp Studio at a glance",
+      rows: [
+        { label: "Name", value: "DormUp Studio" },
+        { label: "Type", value: "Digital Growth & Creative Studio" },
+        { label: "Primary market", value: "Rimini, Italy" },
+        {
+          label: "Nearby areas",
+          value: "Riccione, Bellaria-Igea Marina, Misano Adriatico, Santarcangelo, Cattolica",
+        },
+        {
+          label: "Services",
+          value: "Google & AI visibility, websites, video, automation, analytics, website care",
+        },
+        { label: "Typical clients", value: "SMEs, hospitality, restaurants, local services" },
+        { label: "Contact", value: "dormup.it@gmail.com · on-site form" },
+      ],
+    },
+  },
+  auditLanding: {
+    eyebrow: "Initial review",
+    title: "Digital audit for businesses in Rimini",
+    lead: "A preliminary review of visibility, website, contact opportunities and discoverability — to decide where to invest next.",
+    forWhoTitle: "Who it is for",
+    forWho: [
+      "Hotels and hospitality businesses seeking more direct enquiries",
+      "Restaurants and venues that struggle to get found or convert",
+      "SMEs and local services with a weak site or manual processes",
+    ],
+    checksTitle: "What we check",
+    checks: [
+      "Google visibility and content clarity (including AI search readiness)",
+      "Mobile usability and contact paths",
+      "Video and trust-building materials opportunities",
+      "Tracking and measurement gaps",
+      "Realistic priorities — no ranking promises",
+    ],
+    receiveTitle: "What you receive",
+    receive: [
+      "A short summary of weaknesses and opportunities",
+      "Clear recommended priorities",
+      "Guidance on what to do now vs later",
+    ],
+    processTitle: "How it works",
+    process: [
+      "You send a short request with business context",
+      "We review your site and available public presence",
+      "We reply with a summary and possible next steps",
+    ],
+    faqTitle: "FAQ",
+    faq: [
+      {
+        question: "Is the initial review free?",
+        answer:
+          "We offer a preliminary review to see if collaboration makes sense. A full technical audit and implementation projects are quoted separately.",
+      },
+      {
+        question: "Do you only work in Rimini?",
+        answer:
+          "Rimini and the Riviera are the primary market. We also consider projects elsewhere in Italy when the fit is clear.",
+      },
+    ],
+    cta: "Request the review",
+    privacyNote: "Request data is used only to reply. See the privacy policy for details.",
   },
   contact: {
     label: "Let's start",
-    title: "A digital environment for businesses that refuse to look generic.",
-    body: "After your message you get a clear reply with next steps, timeline and feasibility.",
-    compactTitle: "Request your free audit",
+    title: "Let's talk about your next digital step.",
+    body: "After your message you get a clear reply with feasibility, next steps and indicative timing. Typical response: within 1 business day.",
+    compactTitle: "Request an initial review",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Reply within 1h",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "Your selection",
       title: "Selected services",
@@ -1414,7 +1217,7 @@ const en: TranslationSet = {
       submit: "Send message",
       submitAudit: "Request free audit",
       submitting: "Sending...",
-      success: "We'll reply within 1 hour.",
+      success: "We'll reply within one business day.",
       successTitle: "Your request has been sent",
       successClose: "Close",
       submitError: "Could not send. Email us at {email} and we'll reply shortly.",
@@ -1425,6 +1228,7 @@ const en: TranslationSet = {
         hotel: "Hotel",
         bar: "Bar / venue",
         other: "Other / services",
+        sourceOther: "Other",
         google: "Google",
         referral: "Word of mouth",
         social: "Social",
@@ -1440,7 +1244,7 @@ const en: TranslationSet = {
     eyebrow: "Order",
     title: "Choose your services",
     subtitle:
-      "Select one or more options — you'll get a tailored quote within 1 hour.",
+      "Select one or more options — you'll get a tailored quote within one business day.",
     fromLabel: "from",
     plusLabel: "+",
     selectHint: "Select at least one service to continue, or message us directly.",
@@ -1451,11 +1255,10 @@ const en: TranslationSet = {
     addonsSectionTitle: "Add-on modules",
     aboutServiceCta: "About this service",
     trust: {
-      timeline: "Typical timeline: 4–8 weeks",
-      deposit: "30% deposit to start",
+      timeline: "Timing and commercial terms are confirmed in the quote.",
+      deposit: "",
       processLink: "How we work",
-      testimonial:
-        "«Fast reply, clear scope — exactly the digital partner we were looking for.»",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -1541,15 +1344,16 @@ const en: TranslationSet = {
         body: "You may request access, rectification, erasure, restriction or objection by emailing dormup.it@gmail.com. You may lodge a complaint with your local data protection authority.",
       },
       {
-        heading: "Cookies",
-        body: "This site does not use third-party profiling cookies. Technical cookies may be used for site operation and language selection.",
+        heading: "Cookies & analytics",
+        body: "Technical cookies may be used for site operation and language selection. If Google Analytics (GA4) or Plausible are configured, those tools may process usage data under their policies. A dedicated consent banner should match the live configuration (owner legal review).",
       },
     ],
   },
   footer: {
-    description: "Digital studio for systems, automation, websites and content.",
+    description:
+      "Digital Growth & Creative Studio in Rimini: visibility, websites, video and automation for businesses.",
     links: "Quick links",
-    location: "Digital Studio",
+    location: "Rimini, Italy",
     status: "Available for new clients",
     privacy: "Privacy Policy",
     built: "Built with intention.",
@@ -1570,8 +1374,9 @@ const en: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Services",
-    title: "What we build",
-    subtitle: "Digital systems, process automation, websites and content production — end to end.",
+    title: "What we offer",
+    subtitle:
+      "Google and AI visibility, websites and e-commerce, video production, automation and ongoing care — for SMEs and hospitality in Rimini.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "All services",
     pricingNote:
@@ -1687,117 +1492,7 @@ const fr: TranslationSet = {
         "Un site live ou les clients trouvent et achettent plus facilement — commandes plus claires, catalogue sous controle et moins d'allers-retours en chat.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Sites web et produits digitaux",
-      description:
-        "Sites et produits web sur mesure — du site de marque aux experiences orientees conversion. Mobile-first, rapide, concu pour fonctionner.",
-      details: "Du wireframe a la production · CMS optionnel · SEO de base inclus",
-      whatYouGet: [
-        "Design et identite visuelle premium",
-        "Developpement Next.js rapide et SEO-ready",
-        "Mobile-first optimise pour la conversion",
-        "CMS optionnel pour la gestion de contenu",
-        "Lancement et support post-live inclus",
-      ],
-      pricingSectionTitle: "Forfaits site web",
-      pricingFootnote:
-        "Montants indicatifs « a partir de ». Le devis final depend des pages, integrations et delais.",
-      pricingTiers: [
-        { tierId: "starter", name: "Starter", detail: "Landing · 3–5 ecrans · 1 langue · SEO de base." },
-        { tierId: "business", name: "Business", detail: "6–10 pages · CMS · formulaires · SEO de base." },
-        { tierId: "premium", name: "Premium", detail: "Site complet · multilingue · booking · animations." },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "Upgrade systemes et redesign",
-      description:
-        "Nous faisons evoluer la presence digitale existante en un systeme plus clair — structure, UX, performance et parcours de conversion.",
-      details: "Audit · Strategie · Implementation",
-      whatYouGet: [
-        "Audit complet du site actuel",
-        "Nouvelle architecture de l'information",
-        "Identite visuelle mise a jour, premium",
-        "Migration de contenu sans perte",
-        "Configuration analytics et tracking",
-      ],
-      pricingSectionTitle: "Forfaits redesign",
-      pricingFootnote: "Le cout depend de l etat actuel du site et du nombre de pages.",
-      pricingTiers: [
-        { tierId: "audit", name: "Audit seul", detail: "Analyse complete · rapport priorise · feuille de route." },
-        { tierId: "standard", name: "Standard", detail: "Redesign des ecrans cles + implementation." },
-        { tierId: "full", name: "Complet", detail: "Redesign total · migration contenu · analytics." },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Automatisation des processus",
-      description:
-        "Nous automatisons reservations, demandes et workflows repetitifs pour que les leads ne se perdent plus dans les chats et agendas.",
-      details: "Flux · Integrations · Formulaires intelligents · Reporting",
-      whatYouGet: [
-        "Analyse du funnel de booking actuel",
-        "Integration du systeme de booking",
-        "Formulaires intelligents orientes conversion",
-        "A/B testing sur CTAs et flux cles",
-        "Rapport mensuel des resultats",
-      ],
-      pricingSectionTitle: "Forfaits booking & lead",
-      pricingFootnote: "Compatible site existant ou nouveau projet.",
-      pricingTiers: [
-        { tierId: "single", name: "Flux unique", detail: "Reservation ou demande · formulaire + CTA optimises." },
-        { tierId: "multi", name: "Multi-flux", detail: "Plusieurs parcours · integration booking · CTA site-wide." },
-        { tierId: "full", name: "Complet", detail: "Funnel complet · A/B test · rapport mensuel." },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Croissance continue et accompagnement",
-      description:
-        "Mises a jour, optimisation et support prioritaire sur votre stack digital — pour que les systemes suivent le rythme du business.",
-      details: "A partir de 2h/mois · Priorite garantie · Rapport mensuel",
-      whatYouGet: [
-        "Mises a jour techniques et de contenu",
-        "Monitoring performance et uptime",
-        "Optimisations continues de conversion",
-        "Priorite sur les nouvelles demandes",
-        "Rapport mensuel clair",
-      ],
-      pricingSectionTitle: "Plans de support",
-      pricingFootnote: "Forfait mensuel. Les heures non utilisees ne sont pas reportees.",
-      pricingTiers: [
-        { tierId: "essential", name: "Essential", detail: "~2h/mois · mises a jour · monitoring de base." },
-        { tierId: "growth", name: "Growth", detail: "~5h/mois · optimisation continue · rapport mensuel." },
-        { tierId: "priority", name: "Priority", detail: "~10h/mois · priorite maximale · rapport detaille." },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Production de contenus",
-      description:
-        "Production photo et video pour le web, les campagnes et les reseaux — brief, shoot, montage et livrables prets a l'emploi.",
-      details: "Seances sur site · Audio si besoin · Livrables web et social",
-      whatYouGet: [
-        "Brief créatif et liste de plans",
-        "Prises de vue photo et video professionnelles",
-        "Montage (decoupage, etalonnage, formats)",
-        "Fichiers prets pour hero, menus digitaux et campagnes",
-        "Droits d utilisation marketing digital (selon contrat)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Portfolio vidéaste",
-      pricingSectionTitle: "Grilles tarifaires (service autonome)",
-      pricingFootnote:
-        "Montants indicatifs : devis selon lieu, duree et droits d exploitation.",
-      pricingTiers: [
-        { tierId: "half-day", name: "Demi-journee", detail: "Jusqu a 4h · photo ou video · montage de base." },
-        { tierId: "full-day", name: "Journee complete", detail: "Journee pleine · photo + video · variantes campagnes." },
-        { tierId: "retainer", name: "Forfait mensuel", detail: "Seances recurrentes · planning contenus." },
-      ],
-    },
-  ],
+  services: localizedServices.fr,
   process: [
     {
       id: "understand",
@@ -1845,35 +1540,30 @@ const fr: TranslationSet = {
     about: "A propos",
   },
   hero: {
-    eyebrow: "Studio Digital",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Studio digital · Rimini",
+    headline: "Plus de visibilité.\nPlus de clients.\nUne image qui se remarque.",
     subtitle: "",
-    lead: "Systemes digitaux, automatisation des processus, sites web et production de contenus.",
+    lead: "Nous aidons les entreprises à se faire trouver, à transformer les visites en demandes et à se distinguer avec des sites, de la vidéo professionnelle et des solutions digitales claires.",
     primaryCta: "Voir les projets",
-    secondaryCta: "Demander un audit",
+    secondaryCta: "Demander une analyse",
     buyCta: "Commander des services",
     buyCtaShort: "Commander",
-    socialProof: "4 projets · Disponible pour nouveaux clients",
+    socialProof: "Rimini et Riviera · Disponible pour de nouveaux clients",
     mockupCaption: "Votre meilleure carte de visite",
-    chipHighlight: "Cles en main",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipHighlight: "Clés en main",
+    chipAvailability: "Disponible",
+    chipAvailabilitySub: "Rimini · Italie",
   },
   trust: [
-    "Systemes digitaux qui connectent",
-    "Automatisation qui fait gagner du temps",
+    "Visibilité Google et IA",
     "Sites qui convertissent",
-    "Contenus qui construisent la confiance",
+    "Vidéo professionnelle",
+    "Automatisation des demandes",
   ],
   proof: {
-    eyebrow: "En chiffres",
-    items: [
-      { value: "1h", label: "Temps de reponse moyen" },
-      { value: "100%", label: "approche unique" },
-      { value: "4", label: "directions differentes\nsystemes · automatisation · web · contenus" },
-      { value: "26", label: "Services et modules disponibles" },
-    ],
-    footnote: { value: "2 sem.", label: "Demarrage moyen projet" },
+    eyebrow: "Délai de réponse",
+    items: [{ value: "1 jour", label: "Réponse sous un jour ouvré" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Pourquoi c'est important",
@@ -1964,8 +1654,8 @@ const fr: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "Ce que nous construisons",
-  servicesLead: "Systemes · Automatisation · Sites · Contenus",
+  servicesLabel: "Ce que nous proposons",
+  servicesLead: "Visibilité · Sites · Vidéo · Automatisation · Croissance · Suivi",
   processSection: {
     eyebrow: "Processus",
     title: "Comment nous transformons le chaos digital en actif business",
@@ -2004,8 +1694,8 @@ const fr: TranslationSet = {
     title: "Vous voulez savoir ce qui\nfreine votre business?",
     body: "Nous analysons systemes, processus, site et contenus — et vous disons exactement quoi ameliorer.",
     cta: "Demander votre audit",
-    meta: "Reponse sous 1h · Gratuit · Vous decidez des prochaines etapes",
-    freeBadge: "FREE",
+    meta: "Réponse habituelle sous un jour ouvré · Vous décidez de la suite",
+    freeBadge: "Préliminaire",
   },
   about: {
     eyebrow: "Qui sommes-nous",
@@ -2013,13 +1703,14 @@ const fr: TranslationSet = {
     bio: "Nous sommes un petit studio digital. Nous creons l'environnement digital dont le business a besoin : systemes et plateformes, automatisation des processus, sites et interfaces, plus contenus visuels et developpement continu du produit. Pas seulement beau — tout est pense pour des resultats business concrets.\n\nNous ne travaillons pas avec 30 clients en parallele. Nous suivons quelques projets, en traitant chaque business comme s'il etait le notre.",
     pills: ["Disponible pour nouveaux projets"],
   },
+  auditLanding: frAuditLanding,
   contact: {
     label: "Commencons",
     title: "Un environnement digital pour les business qui ne veulent pas ressembler a tout le monde.",
-    body: "Apres votre message vous recevez une reponse claire avec les prochaines etapes, le timing et la faisabilite.",
+    body: "Après votre message, vous recevez une réponse claire avec les prochaines étapes et la faisabilité. Réponse habituelle : sous un jour ouvré.",
     compactTitle: "Demander votre audit gratuit",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Reponse sous 1h",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "Votre selection",
       title: "Services choisis",
@@ -2038,7 +1729,7 @@ const fr: TranslationSet = {
       submit: "Envoyer le message",
       submitAudit: "Demander l'audit gratuit",
       submitting: "Envoi en cours...",
-      success: "Nous repondons sous 1 heure.",
+      success: "Nous répondons sous un jour ouvré.",
       successTitle: "Votre demande a ete envoyee",
       successClose: "Fermer",
       submitError: "Envoi echoue. Ecrivez a {email} et nous repondrons rapidement.",
@@ -2049,6 +1740,7 @@ const fr: TranslationSet = {
         hotel: "Hotel",
         bar: "Bar / lieu",
         other: "Autre / services",
+        sourceOther: "Autre",
         google: "Google",
         referral: "Bouche a oreille",
         social: "Reseaux sociaux",
@@ -2064,7 +1756,7 @@ const fr: TranslationSet = {
     eyebrow: "Commande",
     title: "Choisissez vos services",
     subtitle:
-      "Selectionnez une ou plusieurs options — vous recevrez un devis personnalise sous 1 heure.",
+      "Sélectionnez une ou plusieurs options — vous recevrez un devis personnalisé sous un jour ouvré.",
     fromLabel: "a partir de",
     selectHint: "Selectionnez au moins un service pour continuer, ou ecrivez-nous directement.",
     proceedCta: "Demander un devis",
@@ -2075,11 +1767,10 @@ const fr: TranslationSet = {
     addonsSectionTitle: "Modules additionnels",
     aboutServiceCta: "A propos du service",
     trust: {
-      timeline: "Delai typique : 4–8 semaines",
-      deposit: "Acompte 30% au demarrage",
-      processLink: "Notre methode",
-      testimonial:
-        "«Reponse rapide, scope clair — exactement le partenaire digital qu'il nous fallait.»",
+      timeline: "Les délais et les conditions commerciales se confirment dans le devis.",
+      deposit: "",
+      processLink: "Notre méthode",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -2172,7 +1863,7 @@ const fr: TranslationSet = {
   footer: {
     description: "Studio digital pour systemes, automatisation, sites et contenus.",
     links: "Liens rapides",
-    location: "Digital Studio",
+    location: "Rimini, Italy",
     status: "Disponible pour nouveaux clients",
     privacy: "Politique de confidentialite",
     built: "Built with intention.",
@@ -2193,8 +1884,9 @@ const fr: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Services",
-    title: "Ce que nous créons",
-    subtitle: "Systemes digitaux, automatisation des processus, sites et production de contenus — de bout en bout.",
+    title: "Ce que nous proposons",
+    subtitle:
+      "Visibilité Google et IA, sites et e-commerce, production vidéo, automatisation et suivi — pour les PME et l’hospitality à Rimini.",
     techStack: "Stack : Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Tous les services",
     pricingNote:
@@ -2310,117 +2002,7 @@ const ru: TranslationSet = {
         "Живой сайт, где клиенты находят магазин и покупают проще — заказы понятнее, каталог под контролем, меньше переписок туда-сюда.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Сайты и веб-продукты",
-      description:
-        "Кастомные сайты и веб-продукты — от бренд-сайтов до опытов под конверсию. Mobile-first, быстро, сделано чтобы работать.",
-      details: "От wireframe до продукта · Опциональный CMS · Базовый SEO включён",
-      whatYouGet: [
-        "Премиум дизайн и визуальная идентичность",
-        "Быстрая разработка Next.js, готовая под SEO",
-        "Mobile-first под конверсию",
-        "Опциональный CMS для управления контентом",
-        "Запуск и поддержка после launch включены",
-      ],
-      pricingSectionTitle: "Пакеты сайта",
-      pricingFootnote:
-        "Цены указаны «от». Итоговая смета зависит от страниц, интеграций и сроков.",
-      pricingTiers: [
-        { tierId: "starter", name: "Starter", detail: "Лендинг · 3–5 экранов · 1 язык · базовый SEO." },
-        { tierId: "business", name: "Business", detail: "6–10 страниц · CMS · формы · SEO · для SMB и hospitality." },
-        { tierId: "premium", name: "Premium", detail: "Полный сайт · мультиязычность · booking · анимации." },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "Апгрейд систем и редизайн",
-      description:
-        "Усиливаем существующее цифровое присутствие: яснее система — структура, UX, производительность и пути конверсии.",
-      details: "Аудит · Стратегия · Внедрение",
-      whatYouGet: [
-        "Полный аудит текущего сайта",
-        "Новая информационная архитектура и UX",
-        "Обновлённая премиум-идентичность",
-        "Миграция контента без потерь",
-        "Настройка аналитики и трекинга",
-      ],
-      pricingSectionTitle: "Пакеты редизайна",
-      pricingFootnote: "Стоимость зависит от состояния сайта и количества страниц.",
-      pricingTiers: [
-        { tierId: "audit", name: "Только аудит", detail: "Полный анализ · отчёт с приоритетами · roadmap." },
-        { tierId: "standard", name: "Standard", detail: "Редизайн ключевых экранов + внедрение." },
-        { tierId: "full", name: "Полный", detail: "Полный редизайн · миграция · аналитика." },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Автоматизация процессов",
-      description:
-        "Автоматизируем бронирования, заявки и повторяющиеся сценарии — чтобы лиды не терялись в чатах и календарях.",
-      details: "Потоки · Интеграции · Умные формы · Отчётность",
-      whatYouGet: [
-        "Анализ текущего booking-funnel",
-        "Интеграция booking-системы",
-        "Умные формы под конверсию",
-        "A/B-тесты CTA и ключевых flow",
-        "Ежемесячный отчёт по результатам",
-      ],
-      pricingSectionTitle: "Пакеты booking и lead",
-      pricingFootnote: "Подходит для существующих и новых сайтов.",
-      pricingTiers: [
-        { tierId: "single", name: "Один поток", detail: "Бронь или заявка · форма + CTA." },
-        { tierId: "multi", name: "Несколько потоков", detail: "Интеграция booking · оптимизация CTA." },
-        { tierId: "full", name: "Полный", detail: "Весь funnel · A/B · ежемесячный отчёт." },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Рост и сопровождение",
-      description:
-        "Обновления, оптимизация и приоритетная поддержка по всему цифровому стеку — чтобы системы не отставали от бизнеса.",
-      details: "От 2ч/мес · Гарантированный приоритет · Месячный отчёт",
-      whatYouGet: [
-        "Технические и контентные обновления",
-        "Мониторинг производительности и uptime",
-        "Постоянные улучшения конверсии",
-        "Приоритет по новым запросам",
-        "Ясный ежемесячный отчёт",
-      ],
-      pricingSectionTitle: "Планы поддержки",
-      pricingFootnote: "Ежемесячный абонемент. Неиспользованные часы не переносятся.",
-      pricingTiers: [
-        { tierId: "essential", name: "Essential", detail: "~2 ч/мес · обновления · базовый мониторинг." },
-        { tierId: "growth", name: "Growth", detail: "~5 ч/мес · оптимизация · отчёт." },
-        { tierId: "priority", name: "Priority", detail: "~10 ч/мес · максимальный приоритет." },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Производство контента",
-      description:
-        "Фото и видео для сайта, кампаний и соцсетей — бриф, съёмка, монтаж и готовые материалы к использованию.",
-      details: "Выезд на объект · При необходимости звук · Файлы под сайт и соцсети",
-      whatYouGet: [
-        "Бриф и shot list под задачу",
-        "Съёмка фото и видео профессиональным оператором",
-        "Монтаж: монтажный ряд, цвет, форматы (вертикаль/горизонталь)",
-        "Готовые материалы для hero, меню и кампаний",
-        "Права использования для digital-маркетинга (по договору)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Работы оператора",
-      pricingSectionTitle: "Тарифы (отдельная услуга)",
-      pricingFootnote:
-        "Итоговая стоимость — в смете: зависит от локации, времени съёмки и прав использования.",
-      pricingTiers: [
-        { tierId: "half-day", name: "Полдня", detail: "До 4 часов · фото или видео · базовый монтаж." },
-        { tierId: "full-day", name: "Полный день", detail: "Целый день · фото + видео · варианты под сайт." },
-        { tierId: "retainer", name: "Ретейнер", detail: "Регулярные съёмки · календарь контента." },
-      ],
-    },
-  ],
+  services: localizedServices.ru,
   process: [
     {
       id: "understand",
@@ -2468,36 +2050,31 @@ const ru: TranslationSet = {
     about: "О нас",
   },
   hero: {
-    eyebrow: "Digital Studio",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Digital Growth & Creative Studio · Римини",
+    headline: "Больше видимости.\nБольше клиентов.\nОбраз, который замечают.",
     subtitle: "",
-    lead: "Цифровые системы, автоматизация процессов, сайты и производство контента.",
+    lead: "Помогаем бизнесу находиться онлайн, превращать визиты в заявки и выделяться сайтами, профессиональным видео и умными цифровыми решениями.",
     primaryCta: "Смотреть проекты",
-    secondaryCta: "Запросить бесплатный аудит",
+    secondaryCta: "Запросить первичный разбор",
     buyCta: "Заказать услуги",
     buyCtaShort: "Заказать",
-    socialProof: "4 проекта · Открыты для новых клиентов",
+    socialProof: "Римини и Ривьера · Открыты для новых клиентов",
     mockupCaption: "Ваша лучшая визитная карточка",
     mockupCaptionSm: true,
     chipHighlight: "Работа под ключ",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipAvailability: "Доступны",
+    chipAvailabilitySub: "для новых проектов",
   },
   trust: [
-    "Цифровые системы, которые связывают",
-    "Автоматизация процессов, которая экономит время",
+    "Видимость в Google и AI",
     "Сайты, которые конвертируют",
-    "Контент, который строит доверие",
+    "Профессиональное видео",
+    "Автоматизация заявок",
   ],
   proof: {
-    eyebrow: "В цифрах",
-    items: [
-      { value: "1h", label: "Среднее время ответа" },
-      { value: "100%", label: "уникальный подход" },
-      { value: "4", label: "разных направления\nсистемы · автоматизация · web · контент" },
-      { value: "26", label: "Услуг и модулей на выбор" },
-    ],
-    footnote: { value: "2 нед.", label: "Средний старт проекта" },
+    eyebrow: "Срок ответа",
+    items: [{ value: "1 день", label: "Ответ в течение одного рабочего дня" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Почему это важно",
@@ -2588,8 +2165,8 @@ const ru: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "Что мы делаем",
-  servicesLead: "Системы · Автоматизация · Сайты · Контент",
+  servicesLabel: "Что мы предлагаем",
+  servicesLead: "Видимость · Сайты · Видео · Автоматизация · Рост · Сопровождение",
   processSection: {
     eyebrow: "Процесс",
     title: "Как мы превращаем цифровой хаос в бизнес-актив",
@@ -2628,8 +2205,8 @@ const ru: TranslationSet = {
     title: "Хотите узнать, что тормозит\nваш бизнес?",
     body: "Разберём системы, процессы, сайт и контент — и скажем точно, что улучшить.",
     cta: "Запросить свой аудит",
-    meta: "Отвечаем в течение 1 часа · Бесплатно · Решение за вами",
-    freeBadge: "FREE",
+    meta: "Обычный ответ в течение одного рабочего дня · Дальше решаете вы",
+    freeBadge: "Предварительно",
   },
   about: {
     eyebrow: "О нас",
@@ -2637,13 +2214,14 @@ const ru: TranslationSet = {
     bio: "Мы небольшая цифровая студия. Создаём цифровую среду, которая нужна бизнесу: системы и платформы, автоматизация процессов, сайты и интерфейсы, плюс визуальный контент и постоянное развитие продукта. Не просто красиво — всё заточено под реальные бизнес-результаты.\n\nМы не работаем с 30 клиентами одновременно. Берём несколько проектов и относимся к каждому бизнесу как к своему.",
     pills: ["Открыты для новых проектов"],
   },
+  auditLanding: ruAuditLanding,
   contact: {
     label: "Начнём",
     title: "Цифровая среда для бизнеса, который не хочет быть как все.",
-    body: "После вашего сообщения вы получите чёткий ответ со следующими шагами, сроками и оценкой реализуемости.",
+    body: "После сообщения вы получите ясный ответ со следующими шагами и оценкой реализуемости. Обычный срок ответа — один рабочий день.",
     compactTitle: "Запросить бесплатный аудит",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Ответ в течение 1ч",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "Ваш выбор",
       title: "Выбранные услуги",
@@ -2662,7 +2240,7 @@ const ru: TranslationSet = {
       submit: "Отправить сообщение",
       submitAudit: "Запросить бесплатный аудит",
       submitting: "Отправка...",
-      success: "Ответим в течение 1 часа.",
+      success: "Ответим в течение одного рабочего дня.",
       successTitle: "Ваша заявка отправлена",
       successClose: "Закрыть",
       submitError: "Не удалось отправить. Напишите на {email} — ответим в ближайшее время.",
@@ -2673,6 +2251,7 @@ const ru: TranslationSet = {
         hotel: "Отель",
         bar: "Бар / площадка",
         other: "Другое / услуги",
+        sourceOther: "Другое",
         google: "Google",
         referral: "Сарафанное радио",
         social: "Соцсети",
@@ -2688,7 +2267,7 @@ const ru: TranslationSet = {
     eyebrow: "Заказ",
     title: "Выберите услуги",
     subtitle:
-      "Отметьте одну или несколько опций — персональный расчёт пришлём в течение 1 часа.",
+      "Отметьте одну или несколько опций — персональный расчёт пришлём в течение одного рабочего дня.",
     fromLabel: "от",
     selectHint: "Выберите хотя бы одну услугу или напишите нам напрямую.",
     proceedCta: "Запросить расчёт",
@@ -2699,11 +2278,10 @@ const ru: TranslationSet = {
     addonsSectionTitle: "Дополнительные модули",
     aboutServiceCta: "Об услуге",
     trust: {
-      timeline: "Типичный срок: 4–8 недель",
-      deposit: "Предоплата 30% при старте",
+      timeline: "Сроки и коммерческие условия подтверждаются в расчёте.",
+      deposit: "",
       processLink: "Как мы работаем",
-      testimonial:
-        "«Быстрый ответ, понятный scope — именно такого digital-партнёра мы искали.»",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -2797,7 +2375,7 @@ const ru: TranslationSet = {
   footer: {
     description: "Цифровая студия для систем, автоматизации, сайтов и контента.",
     links: "Быстрые ссылки",
-    location: "Digital Studio",
+    location: "Rimini, Italy",
     status: "Открыты для новых клиентов",
     privacy: "Политика конфиденциальности",
     built: "Built with intention.",
@@ -2818,8 +2396,9 @@ const ru: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Услуги",
-    title: "Что мы создаём",
-    subtitle: "Цифровые системы, автоматизация процессов, сайты и производство контента — под ключ.",
+    title: "Что мы предлагаем",
+    subtitle:
+      "Видимость в Google и ИИ, сайты и e-commerce, видео, автоматизация и сопровождение — для малого бизнеса и hospitality в Римини.",
     techStack: "Стек: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Все услуги",
     pricingNote:
@@ -2935,116 +2514,7 @@ const de: TranslationSet = {
         "Ein live Shop, den Kunden finden und leichter bedienen konnen — klarere Bestellungen, besserer Uberblick uber den Bestand und weniger Hin und Her im Chat.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Websites & Webprodukte",
-      description:
-        "Individuelle Websites und Webprodukte — von Markenseiten bis conversion-starken Erlebnissen. Mobile-first, schnell, gebaut zum Funktionieren.",
-      details: "Vom Wireframe bis zum Launch · Optionales CMS · Basis-SEO inklusive",
-      whatYouGet: [
-        "Premium-Design und visuelle Identitat",
-        "Schnelle, SEO-ready Next.js-Entwicklung",
-        "Mobile-first, conversion-optimiert",
-        "Optionales CMS fur Content-Management",
-        "Launch und Post-Live-Support inklusive",
-      ],
-      pricingSectionTitle: "Website-Pakete",
-      pricingFootnote: "Indikative Startpreise. Endangebot hangt von Seiten und Integrationen ab.",
-      pricingTiers: [
-        { tierId: "starter", name: "Starter", detail: "Landing · 3–5 Screens · 1 Sprache · Basis-SEO." },
-        { tierId: "business", name: "Business", detail: "6–10 Seiten · CMS · Formulare · Basis-SEO." },
-        { tierId: "premium", name: "Premium", detail: "Volle Website · mehrsprachig · Booking · Animationen." },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "System-Upgrade & Redesign",
-      description:
-        "Wir entwickeln die bestehende digitale Präsenz zu einem klareren System weiter — Struktur, UX, Performance und Conversion-Pfade.",
-      details: "Audit · Strategie · Umsetzung",
-      whatYouGet: [
-        "Vollstandiges Audit der aktuellen Website",
-        "Neue Informationsarchitektur und UX",
-        "Aktualisierte, premium visuelle Identitat",
-        "Content-Migration ohne Verlust",
-        "Analytics- und Tracking-Setup",
-      ],
-      pricingSectionTitle: "Redesign-Pakete",
-      pricingFootnote: "Kosten hangen vom aktuellen Zustand und Seitenumfang ab.",
-      pricingTiers: [
-        { tierId: "audit", name: "Nur Audit", detail: "Vollanalyse · Prioritatenreport · Roadmap." },
-        { tierId: "standard", name: "Standard", detail: "Redesign Kernscreens + Umsetzung." },
-        { tierId: "full", name: "Komplett", detail: "Volles Redesign · Migration · Analytics." },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Prozessautomatisierung",
-      description:
-        "Wir automatisieren Buchungen, Anfragen und wiederkehrende Workflows — damit Leads nicht in Chats und Kalendern verloren gehen.",
-      details: "Flows · Integrationen · Smarte Formulare · Reporting",
-      whatYouGet: [
-        "Analyse des aktuellen Booking-Funnels",
-        "Integration des Buchungssystems",
-        "Smarte, conversion-orientierte Formulare",
-        "A/B-Tests auf CTAs und Key Flows",
-        "Monatlicher Ergebnisbericht",
-      ],
-      pricingSectionTitle: "Booking- und Lead-Pakete",
-      pricingFootnote: "Fur bestehende oder neue Websites.",
-      pricingTiers: [
-        { tierId: "single", name: "Einzel-Flow", detail: "Buchung oder Anfrage · Formular + CTA." },
-        { tierId: "multi", name: "Multi-Flow", detail: "Mehrere Pfade · Booking-Integration." },
-        { tierId: "full", name: "Komplett", detail: "End-to-End-Funnel · A/B · Monatsreport." },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Laufendes Wachstum & Betreuung",
-      description:
-        "Updates, Optimierung und priorisierter Support uber Ihren digitalen Stack — damit Systeme mit dem Business mithalten.",
-      details: "Ab 2h/Monat · Prioritat garantiert · Monatsreport",
-      whatYouGet: [
-        "Technische und Content-Updates",
-        "Performance- und Uptime-Monitoring",
-        "Kontinuierliche Conversion-Optimierung",
-        "Prioritat bei neuen Anfragen",
-        "Klarer monatlicher Bericht",
-      ],
-      pricingSectionTitle: "Support-Plane",
-      pricingFootnote: "Monatlicher Retainer. Ungenutzte Stunden verfallen.",
-      pricingTiers: [
-        { tierId: "essential", name: "Essential", detail: "~2h/Mon. · Updates · Basis-Monitoring." },
-        { tierId: "growth", name: "Growth", detail: "~5h/Mon. · laufende Optimierung · Report." },
-        { tierId: "priority", name: "Priority", detail: "~10h/Mon. · Top-Prioritat · Detailreport." },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Content-Produktion",
-      description:
-        "Foto- und Videoproduktion für Web, Kampagnen und Social — Briefing, Dreh, Schnitt und einsatzbereite Deliverables.",
-      details: "Location-Drehs · Audio bei Bedarf · Deliverables fur Web und Social",
-      whatYouGet: [
-        "Briefing und Shotliste mit klarem Zeitplan",
-        "Professionelle Foto- und Videoaufnahmen",
-        "Schnitt, Gradierung, Hoch- und Querformate",
-        "Lieferung fur Hero, digitale Speisekarten und Kampagnen",
-        "Nutzungsrechte fur Digital-Marketing (vertraglich)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Videograf-Portfolio",
-      pricingSectionTitle: "Tarife (separate Leistung)",
-      pricingFootnote:
-        "Preise werden je nach Location, Dauer und Nutzungsrechten im Angebot festgelegt.",
-      pricingTiers: [
-        { tierId: "half-day", name: "Halber Tag", detail: "Bis 4 Std. · Foto oder Video · Basis-Edit." },
-        { tierId: "full-day", name: "Ganzer Tag", detail: "Voller Drehtag · Foto + Video · Varianten." },
-        { tierId: "retainer", name: "Monatlicher Retainer", detail: "Wiederkehrende Drehs · Content-Plan." },
-      ],
-    },
-  ],
+  services: localizedServices.de,
   process: [
     {
       id: "understand",
@@ -3092,35 +2562,30 @@ const de: TranslationSet = {
     about: "Uber uns",
   },
   hero: {
-    eyebrow: "Digitales Studio",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Digitalstudio · Rimini",
+    headline: "Mehr Sichtbarkeit.\nMehr Kunden.\nEin Auftritt, der auffällt.",
     subtitle: "",
-    lead: "Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion.",
+    lead: "Wir helfen Unternehmen, gefunden zu werden, Besuche in Anfragen zu verwandeln und sich mit Websites, professionellem Video und klaren digitalen Lösungen abzuheben.",
     primaryCta: "Projekte ansehen",
-    secondaryCta: "Audit anfragen",
+    secondaryCta: "Erste Einschätzung anfragen",
     buyCta: "Leistungen bestellen",
     buyCtaShort: "Bestellen",
-    socialProof: "4 Projekte · Verfugbar fur neue Kunden",
+    socialProof: "Rimini und Riviera · Verfügbar für neue Kunden",
     mockupCaption: "Ihre beste Visitenkarte",
     chipHighlight: "Schlüsselfertig",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipAvailability: "Verfügbar",
+    chipAvailabilitySub: "Rimini · Italien",
   },
   trust: [
-    "Digitale Systeme, die verbinden",
-    "Prozessautomatisierung, die Zeit spart",
+    "Sichtbarkeit bei Google und KI",
     "Websites, die konvertieren",
-    "Content, der Vertrauen aufbaut",
+    "Professionelles Video",
+    "Automatisierte Anfragen",
   ],
   proof: {
-    eyebrow: "In Zahlen",
-    items: [
-      { value: "1h", label: "Durchschnittliche Reaktionszeit" },
-      { value: "100%", label: "einzigartiger Ansatz" },
-      { value: "4", label: "verschiedene Richtungen\nSysteme · Automatisierung · Web · Content" },
-      { value: "26", label: "Leistungen und Module zur Auswahl" },
-    ],
-    footnote: { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
+    eyebrow: "Antwortzeit",
+    items: [{ value: "1 Tag", label: "Antwort innerhalb eines Werktags" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Warum es zahlt",
@@ -3211,8 +2676,8 @@ const de: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "Was wir bauen",
-  servicesLead: "Systeme · Automatisierung · Websites · Content",
+  servicesLabel: "Was wir anbieten",
+  servicesLead: "Sichtbarkeit · Websites · Video · Automatisierung · Wachstum · Betreuung",
   processSection: {
     eyebrow: "Prozess",
     title: "Wie wir digitales Chaos in ein Business-Asset verwandeln",
@@ -3251,8 +2716,8 @@ const de: TranslationSet = {
     title: "Wollen Sie wissen, was\nIhr Business bremst?",
     body: "Wir prufen Systeme, Prozesse, Website und Content — und sagen Ihnen genau, was zu verbessern ist.",
     cta: "Ihr Audit anfragen",
-    meta: "Antwort innerhalb einer Stunde · Kostenlos · Sie entscheiden uber die nachsten Schritte",
-    freeBadge: "FREE",
+    meta: "Übliche Antwort innerhalb eines Werktags · Die nächsten Schritte entscheiden Sie",
+    freeBadge: "Vorab",
   },
   about: {
     eyebrow: "Uber uns",
@@ -3260,13 +2725,14 @@ const de: TranslationSet = {
     bio: "Wir sind ein kleines Digital-Studio. Wir bauen die digitale Umgebung, die Ihr Business braucht: Systeme und Plattformen, Prozessautomatisierung, Websites und Interfaces sowie visuellen Content und laufende Produktentwicklung. Nicht nur schon — alles ist auf echte Business-Ergebnisse ausgelegt.\n\nWir arbeiten nicht mit 30 Kunden gleichzeitig. Wir betreuen wenige Projekte und behandeln jedes Business, als ware es unser eigenes.",
     pills: ["Verfugbar fur neue Projekte"],
   },
+  auditLanding: deAuditLanding,
   contact: {
     label: "Lass uns starten",
     title: "Eine digitale Umgebung fur Unternehmen, die nicht wie alle sein wollen.",
-    body: "Nach Ihrer Nachricht bekommen Sie eine klare Antwort mit nachsten Schritten, Timing und Machbarkeit.",
+    body: "Nach Ihrer Nachricht erhalten Sie eine klare Antwort mit den nächsten Schritten und der Machbarkeit. Übliche Antwortzeit: ein Werktag.",
     compactTitle: "Kostenloses Audit anfragen",
     emailLabel: "E-Mail",
-    whatsappLabel: "WhatsApp · Antwort innerhalb 1h",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "Ihre Auswahl",
       title: "Gewahlte Leistungen",
@@ -3285,7 +2751,7 @@ const de: TranslationSet = {
       submit: "Nachricht senden",
       submitAudit: "Kostenloses Audit anfragen",
       submitting: "Wird gesendet...",
-      success: "Wir antworten innerhalb einer Stunde.",
+      success: "Wir antworten innerhalb eines Werktags.",
       successTitle: "Ihre Anfrage wurde gesendet",
       successClose: "Schließen",
       submitError: "Senden fehlgeschlagen. Schreiben Sie an {email} — wir melden uns schnell.",
@@ -3296,6 +2762,7 @@ const de: TranslationSet = {
         hotel: "Hotel",
         bar: "Bar / Location",
         other: "Sonstiges / Services",
+        sourceOther: "Sonstiges",
         google: "Google",
         referral: "Empfehlung",
         social: "Social Media",
@@ -3311,7 +2778,7 @@ const de: TranslationSet = {
     eyebrow: "Bestellung",
     title: "Leistungen auswahlen",
     subtitle:
-      "Wahlen Sie eine oder mehrere Optionen — Sie erhalten innerhalb einer Stunde ein individuelles Angebot.",
+      "Wählen Sie eine oder mehrere Optionen — Sie erhalten innerhalb eines Werktags ein individuelles Angebot.",
     fromLabel: "ab",
     selectHint: "Wahlen Sie mindestens eine Leistung oder schreiben Sie uns direkt.",
     proceedCta: "Angebot anfragen",
@@ -3322,11 +2789,10 @@ const de: TranslationSet = {
     addonsSectionTitle: "Zusatzmodule",
     aboutServiceCta: "Zur Leistung",
     trust: {
-      timeline: "Typische Dauer: 4–8 Wochen",
-      deposit: "30% Anzahlung zum Start",
+      timeline: "Zeiten und kommerzielle Bedingungen werden im Angebot bestätigt.",
+      deposit: "",
       processLink: "So arbeiten wir",
-      testimonial:
-        "«Schnelle Antwort, klarer Scope — genau der Digital-Partner, den wir gesucht haben.»",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -3419,7 +2885,7 @@ const de: TranslationSet = {
   footer: {
     description: "Digitales Studio für Systeme, Automatisierung, Websites und Content.",
     links: "Schnellzugriff",
-    location: "Digital Studio",
+    location: "Rimini, Italy",
     status: "Verfugbar fur neue Kunden",
     privacy: "Datenschutz",
     built: "Built with intention.",
@@ -3440,8 +2906,9 @@ const de: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Leistungen",
-    title: "Was wir bauen",
-    subtitle: "Digitale Systeme, Prozessautomatisierung, Websites und Content-Produktion — end to end.",
+    title: "Was wir anbieten",
+    subtitle:
+      "Sichtbarkeit bei Google und KI, Websites und E-Commerce, Videoproduktion, Automatisierung und Betreuung — für KMU und Hospitality in Rimini.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Alle Leistungen",
     pricingNote:

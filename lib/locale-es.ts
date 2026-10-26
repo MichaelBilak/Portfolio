@@ -1,4 +1,6 @@
 import type { TranslationSet } from "@/lib/translations";
+import { esAuditLanding } from "@/lib/content/audit-landings";
+import { localizedServices } from "@/lib/content/localized-services";
 
 export const es: TranslationSet = {
   langName: "Español",
@@ -53,179 +55,7 @@ export const es: TranslationSet = {
         "Un sitio en vivo donde los clientes encuentran y compran con mas facilidad — pedidos mas claros, catalogo bajo control y menos idas y vueltas en el chat.",
     },
   ],
-  services: [
-    {
-      id: "premium-site",
-      title: "Sitios web y productos digitales",
-      description:
-        "Sitios y productos web a medida — del site de marca a experiencias orientadas a conversión. Mobile-first, rápidos, hechos para funcionar.",
-      details: "Del wireframe al lanzamiento · CMS opcional · SEO base incluido",
-      whatYouGet: [
-        "Diseño premium e identidad visual",
-        "Desarrollo Next.js rápido y preparado para SEO",
-        "Mobile-first optimizado para la conversión",
-        "CMS opcional para gestión de contenidos",
-        "Lanzamiento y soporte post-publicación incluidos",
-      ],
-      pricingSectionTitle: "Paquetes web",
-      pricingFootnote:
-        "Precios orientativos de partida. El presupuesto final depende de páginas, integraciones y plazos.",
-      pricingTiers: [
-        {
-          tierId: "starter",
-          name: "Starter",
-          detail: "Landing · 3–5 pantallas · 1 idioma · SEO base incluido.",
-        },
-        {
-          tierId: "business",
-          name: "Business",
-          detail: "6–10 páginas · CMS · formularios · SEO base · ideal para pymes y hostelería.",
-        },
-        {
-          tierId: "premium",
-          name: "Premium",
-          detail: "Sitio completo · multilingüe · reservas · animaciones · máxima conversión.",
-        },
-      ],
-    },
-    {
-      id: "redesign",
-      title: "Upgrade de sistemas y redesign",
-      description:
-        "Evolucionamos la presencia digital existente hacia un sistema más claro — estructura, UX, rendimiento y rutas de conversión.",
-      details: "Auditoría · Estrategia · Implementación",
-      whatYouGet: [
-        "Auditoría completa de tu sitio actual",
-        "Nueva arquitectura de información y UX",
-        "Identidad visual actualizada y premium",
-        "Migración de contenidos sin pérdidas",
-        "Configuración de analítica y seguimiento",
-      ],
-      pricingSectionTitle: "Paquetes de rediseño",
-      pricingFootnote:
-        "El coste depende del estado actual del sitio, el número de páginas y el nivel de personalización.",
-      pricingTiers: [
-        {
-          tierId: "audit",
-          name: "Solo auditoría",
-          detail: "Análisis completo · informe prioritario · hoja de ruta de mejoras.",
-        },
-        {
-          tierId: "standard",
-          name: "Standard",
-          detail: "Rediseño de pantallas clave + implementación · nueva UX y visual.",
-        },
-        {
-          tierId: "full",
-          name: "Full",
-          detail: "Rediseño completo · migración de contenidos · analítica y seguimiento.",
-        },
-      ],
-    },
-    {
-      id: "booking-flow",
-      title: "Automatización de procesos",
-      description:
-        "Automatizamos reservas, consultas y flujos repetitivos para que los leads no se pierdan en chats y calendarios.",
-      details: "Flujos · Integraciones · Formularios inteligentes · Reporting",
-      whatYouGet: [
-        "Análisis de tu embudo de reservas actual",
-        "Integración del sistema de reservas",
-        "Formularios inteligentes orientados a la conversión",
-        "Pruebas A/B en CTAs y flujos clave",
-        "Informe mensual de resultados",
-      ],
-      pricingSectionTitle: "Paquetes de reservas y leads",
-      pricingFootnote:
-        "Funciona con sitios existentes o nuevos. El precio varía según integraciones y complejidad del embudo.",
-      pricingTiers: [
-        {
-          tierId: "single",
-          name: "Single flow",
-          detail: "Un solo camino — reserva o consulta · formulario optimizado + CTA.",
-        },
-        {
-          tierId: "multi",
-          name: "Multi-flow",
-          detail: "Varios caminos · integración de reservas · optimización de CTAs en todo el sitio.",
-        },
-        {
-          tierId: "full",
-          name: "Full",
-          detail: "Embudo de extremo a extremo · pruebas A/B · informe mensual de resultados.",
-        },
-      ],
-    },
-    {
-      id: "monthly-support",
-      title: "Crecimiento continuo y cuidado",
-      description:
-        "Actualizaciones, optimización y soporte prioritario en todo tu stack digital — para que los sistemas sigan el ritmo del negocio.",
-      details: "Desde 2 h/mes · Prioridad garantizada · Informe mensual",
-      whatYouGet: [
-        "Actualizaciones técnicas y de contenido",
-        "Monitorización de rendimiento y disponibilidad",
-        "Optimización continua de la conversión",
-        "Prioridad en nuevas solicitudes",
-        "Informe mensual claro",
-      ],
-      pricingSectionTitle: "Planes de soporte",
-      pricingFootnote: "Retainer mensual. Las horas no utilizadas no se acumulan.",
-      pricingTiers: [
-        {
-          tierId: "essential",
-          name: "Essential",
-          detail: "~2 h/mes · actualizaciones · monitorización básica · respuesta prioritaria.",
-        },
-        {
-          tierId: "growth",
-          name: "Growth",
-          detail: "~5 h/mes · optimización continua · informe mensual.",
-        },
-        {
-          tierId: "priority",
-          name: "Priority",
-          detail: "~10 h/mes · máxima prioridad · informe detallado.",
-        },
-      ],
-    },
-    {
-      id: "photo-video",
-      title: "Producción de contenidos",
-      description:
-        "Producción de foto y vídeo para web, campañas y redes — brief, rodaje, edición y entregables listos para usar.",
-      details: "Sesiones in situ · Audio cuando haga falta · Entregables para web y redes",
-      whatYouGet: [
-        "Brief creativo y lista de planos alineados con tus objetivos",
-        "Captura profesional de foto y vídeo",
-        "Edición (montaje, color, formatos vertical y horizontal)",
-        "Archivos listos para hero, menús digitales y campañas",
-        "Derechos de uso para marketing digital (según acuerdo)",
-      ],
-      portfolioUrl2: "https://levkaplan-video.framer.website",
-      portfolioLinkLabel2: "Videographer portfolio",
-      pricingSectionTitle: "Niveles de precio (servicio independiente)",
-      pricingFootnote:
-        "Las cifras se cotizan por brief según ubicación, duración y derechos de uso.",
-      pricingTiers: [
-        {
-          tierId: "half-day",
-          name: "Half day",
-          detail: "Hasta 4 horas · foto o vídeo · selección curada y edición base · ideal para menús y redes.",
-        },
-        {
-          tierId: "full-day",
-          name: "Full day",
-          detail: "Jornada completa de rodaje · foto + vídeo · más variantes para sitio y campañas.",
-        },
-        {
-          tierId: "retainer",
-          name: "Monthly retainer",
-          detail: "Rodajes recurrentes y cadencia de contenido · continuidad para feed y anuncios.",
-        },
-      ],
-    },
-  ],
+  services: localizedServices.es,
   process: [
     {
       id: "understand",
@@ -273,35 +103,30 @@ export const es: TranslationSet = {
     about: "Sobre nosotros",
   },
   hero: {
-    eyebrow: "Digital Studio",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    eyebrow: "Estudio digital · Rímini",
+    headline: "Más visibilidad.\nMás clientes.\nUna imagen que destaca.",
     subtitle: "",
-    lead: "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos.",
+    lead: "Ayudamos a las empresas a hacerse encontrar, convertir visitas en solicitudes y destacar con sitios, vídeo profesional y soluciones digitales claras.",
     primaryCta: "Ver proyectos",
-    secondaryCta: "Solicitar auditoría gratis",
+    secondaryCta: "Pedir una revisión inicial",
     buyCta: "Pedir servicios",
     buyCtaShort: "Pedir",
-    socialProof: "4 proyectos · Disponibles para nuevos clientes",
+    socialProof: "Rímini y la Riviera · Disponibles para nuevos clientes",
     mockupCaption: "Tu mejor tarjeta de visita",
     chipHighlight: "Llave en mano",
-    chipAvailability: "Waiting for you",
-    chipAvailabilitySub: "digital studio",
+    chipAvailability: "Disponible",
+    chipAvailabilitySub: "Rímini · Italia",
   },
   trust: [
-    "Sistemas digitales que conectan",
-    "Automatización que ahorra tiempo",
+    "Visibilidad en Google e IA",
     "Sitios que convierten",
-    "Contenido que genera confianza",
+    "Vídeo profesional",
+    "Automatización de solicitudes",
   ],
   proof: {
-    eyebrow: "En cifras",
-    items: [
-      { value: "1h", label: "Tiempo medio de respuesta" },
-      { value: "100%", label: "enfoque único" },
-      { value: "4", label: "direcciones distintas\nsistemas · automatización · web · contenido" },
-      { value: "26", label: "Servicios y módulos disponibles" },
-    ],
-    footnote: { value: "2 sem", label: "Inicio medio de proyecto" },
+    eyebrow: "Tiempo de respuesta",
+    items: [{ value: "1 día", label: "Respuesta en un día laborable" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Por qué importa",
@@ -392,8 +217,8 @@ export const es: TranslationSet = {
       },
     ],
   },
-  servicesLabel: "Qué construimos",
-  servicesLead: "Sistemas · Automatización · Sitios · Contenido",
+  servicesLabel: "Qué ofrecemos",
+  servicesLead: "Visibilidad · Sitios · Vídeo · Automatización · Crecimiento · Cuidado",
   processSection: {
     eyebrow: "Proceso",
     title: "Cómo convertimos el caos digital en un activo de negocio",
@@ -432,8 +257,8 @@ export const es: TranslationSet = {
     title: "¿Quieres saber qué\nfrena tu negocio?",
     body: "Revisamos sistemas, procesos, sitio y contenido — y te decimos exactamente qué mejorar.",
     cta: "Solicita tu auditoría",
-    meta: "Respuesta en 1 hora · Gratis · Tú decides los siguientes pasos",
-    freeBadge: "FREE",
+    meta: "Respuesta habitual en un día laborable · Tú decides los siguientes pasos",
+    freeBadge: "Preliminar",
   },
   about: {
     eyebrow: "Sobre nosotros",
@@ -441,13 +266,14 @@ export const es: TranslationSet = {
     bio: "Somos un pequeño estudio digital. Construimos el entorno digital que tu negocio necesita: sistemas y plataformas, automatización de procesos, sitios e interfaces, más contenido visual y desarrollo continuo del producto. No solo un aspecto pulido: todo está pensado para resultados reales de negocio.\n\nNo trabajamos con 30 clientes a la vez. Tomamos pocos proyectos y tratamos cada negocio como si fuera el nuestro.",
     pills: ["Disponibles para nuevos proyectos"],
   },
+  auditLanding: esAuditLanding,
   contact: {
     label: "Empecemos",
     title: "Un entorno digital para negocios que no quieren ser como todos.",
-    body: "Tras tu mensaje recibirás una respuesta clara con los siguientes pasos, plazos y viabilidad.",
+    body: "Tras tu mensaje recibirás una respuesta clara con los siguientes pasos y la viabilidad. Respuesta habitual: un día laborable.",
     compactTitle: "Solicita tu auditoría gratuita",
     emailLabel: "Email",
-    whatsappLabel: "WhatsApp · Respuesta en 1 h",
+    whatsappLabel: "WhatsApp",
     cart: {
       eyebrow: "Tu selección",
       title: "Servicios seleccionados",
@@ -466,7 +292,7 @@ export const es: TranslationSet = {
       submit: "Enviar mensaje",
       submitAudit: "Solicitar auditoría gratuita",
       submitting: "Enviando...",
-      success: "Responderemos en 1 hora.",
+      success: "Responderemos en un día laborable.",
       successTitle: "Tu solicitud ha sido enviada",
       successClose: "Cerrar",
       submitError: "No se pudo enviar. Escríbenos a {email} y responderemos pronto.",
@@ -477,6 +303,7 @@ export const es: TranslationSet = {
         hotel: "Hotel",
         bar: "Bar / local",
         other: "Otro / servicios",
+        sourceOther: "Otro",
         google: "Google",
         referral: "Boca a boca",
         social: "Redes sociales",
@@ -492,7 +319,7 @@ export const es: TranslationSet = {
     eyebrow: "Pedido",
     title: "Elige tus servicios",
     subtitle:
-      "Selecciona una o más opciones — recibirás un presupuesto a medida en 1 hora.",
+      "Selecciona una o más opciones — recibirás un presupuesto a medida en un día laborable.",
     fromLabel: "desde",
     plusLabel: "+",
     selectHint: "Selecciona al menos un servicio para continuar, o escríbenos directamente.",
@@ -503,11 +330,10 @@ export const es: TranslationSet = {
     addonsSectionTitle: "Módulos adicionales",
     aboutServiceCta: "Sobre este servicio",
     trust: {
-      timeline: "Plazo típico: 4–8 semanas",
-      deposit: "Depósito del 30% al inicio",
+      timeline: "Los plazos y las condiciones comerciales se confirman en el presupuesto.",
+      deposit: "",
       processLink: "Cómo trabajamos",
-      testimonial:
-        "«Respuesta rápida, alcance claro — exactamente el partner digital que buscábamos.»",
+      testimonial: "",
     },
   },
   pricingAddons: {
@@ -601,7 +427,7 @@ export const es: TranslationSet = {
   footer: {
     description: "Estudio digital para sistemas, automatización, sitios y contenido.",
     links: "Enlaces rápidos",
-    location: "Digital Studio",
+    location: "Rimini, Italy",
     status: "Disponibles para nuevos clientes",
     privacy: "Política de privacidad",
     built: "Construido con intención.",
@@ -622,8 +448,9 @@ export const es: TranslationSet = {
   },
   servicesPage: {
     eyebrow: "Servicios",
-    title: "Qué construimos",
-    subtitle: "Sistemas digitales, automatización de procesos, sitios web y producción de contenidos — de punta a punta.",
+    title: "Qué ofrecemos",
+    subtitle:
+      "Visibilidad en Google e IA, sitios y e-commerce, producción de vídeo, automatización y cuidado — para pymes y hospitality en Rímini.",
     techStack: "Stack: Next.js · React · TypeScript · Tailwind CSS · Framer Motion",
     viewAll: "Todos los servicios",
     pricingNote:
