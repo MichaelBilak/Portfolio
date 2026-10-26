@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { DeliverablesGrid } from "@/components/deliverables-grid";
+import { FaqList } from "@/components/faq-list";
 import { OtherServicesGrid } from "@/components/other-services-grid";
 import { ServiceHeroCrystal } from "@/components/service-hero-crystal";
 import { FitHeading } from "@/components/ui/fit-heading";
@@ -186,14 +187,12 @@ export default async function ServicePage({ params }: PageProps) {
           <section className="py-16 md:py-24">
             <div className="container-lux max-w-3xl">
               <FitHeading as="h2" text={faqHeading(safeLocale)} max="3.5rem" min="1rem" />
-              <div className="mt-8 space-y-6">
-                {service.faq.map((item) => (
-                  <div key={item.question}>
-                    <h3 className="text-lg font-medium text-textPrimary">{phraseText(item.question)}</h3>
-                    <p className="mt-2 whitespace-pre-line text-textSecondary leading-relaxed text-pretty">{phraseText(item.answer)}</p>
-                  </div>
-                ))}
-              </div>
+              <FaqList
+                items={service.faq.map((item) => ({
+                  question: phraseText(item.question),
+                  answer: phraseText(item.answer),
+                }))}
+              />
             </div>
           </section>
         ) : null}

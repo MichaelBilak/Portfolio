@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Contact } from "@/components/contact";
+import { FaqList } from "@/components/faq-list";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
@@ -129,14 +130,12 @@ export default async function AuditDigitalePage({ params }: PageProps) {
           {landing.faq.length ? (
             <div className="mt-14">
               <h2 className="font-display text-xl text-textPrimary">{landing.faqTitle}</h2>
-              <div className="mt-6 space-y-5">
-                {landing.faq.map((item) => (
-                  <div key={item.question}>
-                    <h3 className="font-medium text-textPrimary">{item.question}</h3>
-                    <p className="mt-2 text-textSecondary leading-relaxed">{item.answer}</p>
-                  </div>
-                ))}
-              </div>
+              <FaqList
+                items={landing.faq.map((item) => ({
+                  question: phraseText(item.question),
+                  answer: phraseText(item.answer),
+                }))}
+              />
             </div>
           ) : null}
 
