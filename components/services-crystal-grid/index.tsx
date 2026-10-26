@@ -38,19 +38,19 @@ function CrystalCard({
     >
       <motion.div
         {...tiltHandlers}
-        className="crystal-stage relative flex h-28 w-full touch-pan-y items-center justify-center sm:h-36 md:h-44"
+        className="crystal-stage relative flex h-20 w-full touch-pan-y items-center justify-center sm:h-24 md:h-28"
         style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 260 }}
       >
         <span
           aria-hidden
-          className="crystal-halo pointer-events-none absolute h-28 w-28 rounded-full bg-emerald-500/15 opacity-70 blur-[50px] transition-all duration-500 group-hover:bg-accentGold/15"
+          className="crystal-halo pointer-events-none absolute h-16 w-16 rounded-full bg-emerald-500/15 opacity-70 blur-[40px] transition-all duration-500 group-hover:bg-accentGold/15 sm:h-20 sm:w-20"
         />
         <Image
           src={meta.image}
           alt={title}
           width={420}
           height={420}
-          sizes="(max-width: 640px) 40vw, (max-width: 768px) 28vw, 200px"
+          sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 160px"
           className="crystal-figure relative h-full w-full object-contain"
         />
       </motion.div>
