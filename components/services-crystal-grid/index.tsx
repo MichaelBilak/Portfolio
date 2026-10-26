@@ -55,7 +55,7 @@ function CrystalCard({
         />
       </motion.div>
 
-      <h3 className="mt-3 text-base font-semibold leading-tight tracking-tight text-textPrimary md:text-lg">
+      <h3 className="mt-3 max-w-[16rem] text-balance text-base font-semibold leading-tight tracking-tight text-textPrimary md:text-lg">
         {title}
       </h3>
 
@@ -76,14 +76,18 @@ export function ServicesCrystalGrid({
   viewServiceLabel,
 }: ServicesCrystalGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 md:gap-x-6">
+    <div className="flex flex-wrap justify-center gap-x-4 gap-y-10 sm:gap-x-6 md:gap-y-14">
       {metas.map((meta, i) => (
-        <CrystalCard
+        <div
           key={meta.id}
-          meta={meta}
-          title={titles[i]}
-          viewServiceLabel={viewServiceLabel}
-        />
+          className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
+        >
+          <CrystalCard
+            meta={meta}
+            title={titles[i]}
+            viewServiceLabel={viewServiceLabel}
+          />
+        </div>
       ))}
     </div>
   );
