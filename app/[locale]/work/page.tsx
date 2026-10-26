@@ -49,7 +49,7 @@ export default async function WorkPage({ params }: PageProps) {
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bgPrimary to-transparent"
           />
-          <div className="container-lux relative max-w-4xl">
+          <div className="container-lux relative max-w-4xl [container-type:inline-size]">
             <Link
               href="/"
               className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted transition-colors hover:text-accentGold"
@@ -61,7 +61,7 @@ export default async function WorkPage({ params }: PageProps) {
             <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
               {t.workPage.eyebrow}
             </p>
-            <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
+            <h1 className="mt-3 whitespace-nowrap font-display font-light leading-[0.98] tracking-[-0.03em] text-textPrimary text-[clamp(1.35rem,6.6cqi,4.75rem)]">
               {t.workPage.title}
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-textSecondary">

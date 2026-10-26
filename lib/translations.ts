@@ -390,7 +390,7 @@ const it: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Growth & Creative Studio · Rimini",
-    headline: "Più visibilità.\nPiù clienti.\nUn'immagine che si fa notare.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
     lead: "Aiutiamo le aziende a farsi trovare online, trasformare le visite in contatti e distinguersi con siti web, video professionali e soluzioni digitali intelligenti.",
     primaryCta: "Vedi i progetti",
@@ -410,9 +410,14 @@ const it: TranslationSet = {
     "Automazione che fa risparmiare tempo",
   ],
   proof: {
-    eyebrow: "Tempi di risposta",
-    items: [{ value: "1 giorno", label: "Risposta entro un giorno lavorativo" }],
-    footnote: { value: "", label: "" },
+    eyebrow: "In numeri",
+    items: [
+      { value: "1h", label: "Tempo di risposta medio" },
+      { value: "100%", label: "approccio unico" },
+      { value: "4", label: "direzioni diverse\nsistemi · automazione · web · contenuti" },
+      { value: "26", label: "Servizi e moduli disponibili" },
+    ],
+    footnote: { value: "2 sett.", label: "Avvio medio progetto" },
   },
   problem: {
     eyebrow: "01 — Perché conta",
@@ -548,7 +553,7 @@ const it: TranslationSet = {
   },
   about: {
     eyebrow: "Chi siamo",
-    title: "DormUp Studio — Digital Growth & Creative Studio",
+    title: "DormUp Studio",
     bio: "Siamo uno studio digitale e creativo con focus su Rimini e la Riviera. Aiutiamo PMI, hotel, ristoranti e attività locali a farsi trovare online, convertire visite in contatti, distinguersi con siti e video professionali e semplificare la gestione delle richieste.\n\nNon siamo solo un’agenzia SEO, né solo uno studio di siti: combiniamo crescita digitale e produzione creativa. Lavoriamo su pochi progetti alla volta, con chiarezza su cosa possiamo misurare e senza promesse irrealistiche.",
     pills: ["Rimini e Riviera", "Disponibile per nuovi progetti"],
     entity: {
@@ -966,7 +971,7 @@ const en: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Growth & Creative Studio · Rimini",
-    headline: "More visibility.\nMore customers.\nAn image that stands out.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
     lead: "We help businesses get found online, turn visits into enquiries, and stand out with websites, professional video and smart digital solutions.",
     primaryCta: "View projects",
@@ -986,9 +991,14 @@ const en: TranslationSet = {
     "Request automation",
   ],
   proof: {
-    eyebrow: "Response time",
-    items: [{ value: "1 day", label: "Reply within one business day" }],
-    footnote: { value: "", label: "" },
+    eyebrow: "By the numbers",
+    items: [
+      { value: "1h", label: "Average response time" },
+      { value: "100%", label: "unique approach" },
+      { value: "4", label: "different directions\nsystems · automation · web · content" },
+      { value: "26", label: "Services & add-on modules" },
+    ],
+    footnote: { value: "2 wks", label: "Average project kickoff" },
   },
   problem: {
     eyebrow: "01 — Why it matters",
@@ -1124,7 +1134,7 @@ const en: TranslationSet = {
   },
   about: {
     eyebrow: "About us",
-    title: "DormUp Studio — Digital Growth & Creative Studio",
+    title: "DormUp Studio",
     bio: "We are a digital and creative studio focused on Rimini and the Riviera. We help SMEs, hotels, restaurants and local businesses get found online, turn visits into enquiries, stand out with websites and professional video, and simplify request handling.\n\nWe are not only an SEO agency and not only a web studio: we combine digital growth and creative production. We take few projects at a time, stay clear about what can be measured, and avoid unrealistic promises.",
     pills: ["Rimini & Riviera", "Available for new projects"],
     entity: {
@@ -1541,7 +1551,7 @@ const fr: TranslationSet = {
   },
   hero: {
     eyebrow: "Studio digital · Rimini",
-    headline: "Plus de visibilité.\nPlus de clients.\nUne image qui se remarque.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
     lead: "Nous aidons les entreprises à se faire trouver, à transformer les visites en demandes et à se distinguer avec des sites, de la vidéo professionnelle et des solutions digitales claires.",
     primaryCta: "Voir les projets",
@@ -1561,9 +1571,14 @@ const fr: TranslationSet = {
     "Automatisation des demandes",
   ],
   proof: {
-    eyebrow: "Délai de réponse",
-    items: [{ value: "1 jour", label: "Réponse sous un jour ouvré" }],
-    footnote: { value: "", label: "" },
+    eyebrow: "En chiffres",
+    items: [
+      { value: "1h", label: "Temps de reponse moyen" },
+      { value: "100%", label: "approche unique" },
+      { value: "4", label: "directions differentes\nsystemes · automatisation · web · contenus" },
+      { value: "26", label: "Services et modules disponibles" },
+    ],
+    footnote: { value: "2 sem.", label: "Demarrage moyen projet" },
   },
   problem: {
     eyebrow: "01 — Pourquoi c'est important",
@@ -2051,7 +2066,7 @@ const ru: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Growth & Creative Studio · Римини",
-    headline: "Больше видимости.\nБольше клиентов.\nОбраз, который замечают.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
     lead: "Помогаем бизнесу находиться онлайн, превращать визиты в заявки и выделяться сайтами, профессиональным видео и умными цифровыми решениями.",
     primaryCta: "Смотреть проекты",
@@ -2072,9 +2087,14 @@ const ru: TranslationSet = {
     "Автоматизация заявок",
   ],
   proof: {
-    eyebrow: "Срок ответа",
-    items: [{ value: "1 день", label: "Ответ в течение одного рабочего дня" }],
-    footnote: { value: "", label: "" },
+    eyebrow: "В цифрах",
+    items: [
+      { value: "1h", label: "Среднее время ответа" },
+      { value: "100%", label: "уникальный подход" },
+      { value: "4", label: "разных направления\nсистемы · автоматизация · web · контент" },
+      { value: "26", label: "Услуг и модулей на выбор" },
+    ],
+    footnote: { value: "2 нед.", label: "Средний старт проекта" },
   },
   problem: {
     eyebrow: "01 — Почему это важно",
@@ -2563,7 +2583,7 @@ const de: TranslationSet = {
   },
   hero: {
     eyebrow: "Digitalstudio · Rimini",
-    headline: "Mehr Sichtbarkeit.\nMehr Kunden.\nEin Auftritt, der auffällt.",
+    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
     subtitle: "",
     lead: "Wir helfen Unternehmen, gefunden zu werden, Besuche in Anfragen zu verwandeln und sich mit Websites, professionellem Video und klaren digitalen Lösungen abzuheben.",
     primaryCta: "Projekte ansehen",
@@ -2583,9 +2603,14 @@ const de: TranslationSet = {
     "Automatisierte Anfragen",
   ],
   proof: {
-    eyebrow: "Antwortzeit",
-    items: [{ value: "1 Tag", label: "Antwort innerhalb eines Werktags" }],
-    footnote: { value: "", label: "" },
+    eyebrow: "In Zahlen",
+    items: [
+      { value: "1h", label: "Durchschnittliche Reaktionszeit" },
+      { value: "100%", label: "einzigartiger Ansatz" },
+      { value: "4", label: "verschiedene Richtungen\nSysteme · Automatisierung · Web · Content" },
+      { value: "26", label: "Leistungen und Module zur Auswahl" },
+    ],
+    footnote: { value: "2 Wo.", label: "Durchschnittlicher Projektstart" },
   },
   problem: {
     eyebrow: "01 — Warum es zahlt",

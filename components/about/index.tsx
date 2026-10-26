@@ -29,25 +29,6 @@ export function About({ t, headingLevel = "h2" }: AboutProps) {
                 {t.about.bio}
               </p>
             </Reveal>
-            {t.about.entity ? (
-              <Reveal delay={0.15}>
-                <div className="mt-10 border-t border-white/10 pt-8">
-                  <h3 className="font-display text-xl font-medium text-textPrimary">
-                    {t.about.entity.title}
-                  </h3>
-                  <dl className="mt-5 space-y-3">
-                    {t.about.entity.rows.map((row) => (
-                      <div key={row.label} className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-4">
-                        <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-textMuted">
-                          {row.label}
-                        </dt>
-                        <dd className="text-sm leading-relaxed text-textSecondary">{row.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </Reveal>
-            ) : null}
           </div>
 
           <Reveal delay={0.1}>
