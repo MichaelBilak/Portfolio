@@ -9,7 +9,9 @@ import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { routing } from "@/i18n/routing";
+import { phraseText } from "@/lib/format-text";
 import { Locale, translations } from "@/lib/translations";
+import { FitHeading } from "@/components/ui/fit-heading";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -50,7 +52,7 @@ export default async function PrivacyPage({ params }: PageProps) {
             {pp.backToHome}
           </Link>
 
-          <h1 className="mt-10 text-fluid-title font-display font-light text-textPrimary">{pp.title}</h1>
+          <FitHeading text={pp.title} className="mt-10" max="4rem" min="1.6rem" />
           <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-textMuted">
             {pp.lastUpdated}
           </p>
@@ -58,8 +60,8 @@ export default async function PrivacyPage({ params }: PageProps) {
           <div className="mt-12 space-y-10">
             {pp.sections.map((section) => (
               <section key={section.heading}>
-                <h2 className="text-xl font-semibold tracking-tight text-textPrimary">{section.heading}</h2>
-                <p className="mt-3 leading-relaxed text-textSecondary text-pretty">{section.body}</p>
+                <h2 className="text-xl font-semibold tracking-tight text-textPrimary">{phraseText(section.heading)}</h2>
+                <p className="mt-3 whitespace-pre-line leading-relaxed text-textSecondary text-pretty">{phraseText(section.body)}</p>
               </section>
             ))}
           </div>

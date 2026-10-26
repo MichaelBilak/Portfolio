@@ -4,7 +4,7 @@ type AuditLanding = NonNullable<TranslationSet["auditLanding"]>;
 
 export const frAuditLanding: AuditLanding = {
   eyebrow: "Analyse initiale",
-  title: "Audit digital pour les entreprises à Rimini",
+  title: "Audit digital\npour les entreprises à Rimini",
   lead: "Une revue préliminaire de la visibilité, du site et des parcours de contact — pour savoir où intervenir avant d’investir.",
   forWhoTitle: "Pour qui",
   forWho: [
@@ -52,7 +52,7 @@ export const frAuditLanding: AuditLanding = {
 
 export const ruAuditLanding: AuditLanding = {
   eyebrow: "Первичный разбор",
-  title: "Цифровой аудит для компаний в Римини",
+  title: "Цифровой аудит\nдля компаний в Римини",
   lead: "Предварительный разбор видимости, сайта и путей заявки — чтобы понять, куда вкладываться в первую очередь.",
   forWhoTitle: "Для кого",
   forWho: [
@@ -100,7 +100,7 @@ export const ruAuditLanding: AuditLanding = {
 
 export const deAuditLanding: AuditLanding = {
   eyebrow: "Erste Einschätzung",
-  title: "Digitales Audit für Unternehmen in Rimini",
+  title: "Digitales Audit\nfür Unternehmen in Rimini",
   lead: "Eine vorläufige Prüfung von Sichtbarkeit, Website und Kontaktwegen — damit klar ist, wo sich ein Einsatz zuerst lohnt.",
   forWhoTitle: "Für wen",
   forWho: [
@@ -148,7 +148,7 @@ export const deAuditLanding: AuditLanding = {
 
 export const esAuditLanding: AuditLanding = {
   eyebrow: "Revisión inicial",
-  title: "Auditoría digital para empresas en Rímini",
+  title: "Auditoría digital\npara empresas en Rímini",
   lead: "Una revisión preliminar de visibilidad, sitio y caminos de contacto, para saber dónde conviene actuar antes de invertir.",
   forWhoTitle: "Para quién",
   forWho: [

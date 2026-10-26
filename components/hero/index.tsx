@@ -36,6 +36,8 @@ const item: Variants = {
 export function Hero({ t }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
   const headlineLines = t.hero.headline.split("\n");
+  const headlineChars = Math.max(...headlineLines.map((line) => line.length), 1);
+  const headlineCqi = Math.min(11, 100 / (headlineChars * 0.78)).toFixed(3);
 
   return (
     <section
@@ -73,9 +75,14 @@ export function Hero({ t }: HeroProps) {
             </span>
           </motion.div>
 
-          <h1 className="text-fluid-hero-headline max-w-full font-display font-semibold text-textPrimary text-safe-wrap">
+          <h1 className="max-w-full font-display font-semibold leading-[0.99] tracking-[-0.028em] text-textPrimary [container-type:inline-size]">
             {headlineLines.map((line, index) => (
-              <motion.span key={line} variants={item} className="block text-safe-wrap">
+              <motion.span
+                key={line}
+                variants={item}
+                className="block whitespace-nowrap"
+                style={{ fontSize: `clamp(1.35rem, ${headlineCqi}cqi, 4.85rem)` }}
+              >
                 {index === headlineLines.length - 1 ? (
                   <span className="text-gradient-sheen">{line}</span>
                 ) : (
@@ -96,9 +103,9 @@ export function Hero({ t }: HeroProps) {
 
           <motion.p
             variants={item}
-            className="max-w-xl text-sm leading-relaxed text-textSecondary text-pretty line-clamp-4 sm:line-clamp-none sm:text-lg"
+            className="max-w-xl whitespace-pre-line text-sm leading-relaxed text-textSecondary text-pretty line-clamp-4 sm:line-clamp-none sm:text-lg"
           >
-            {t.hero.lead}
+            {preventBrokenPhrases(t.hero.lead)}
           </motion.p>
 
           <motion.div variants={item} className="py-1">

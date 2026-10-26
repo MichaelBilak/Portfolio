@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { useCrystalTilt } from "@/lib/hooks/use-crystal-tilt";
+import { FitHeading } from "@/components/ui/fit-heading";
 
 interface ServiceItem {
   id: string;
@@ -55,9 +56,13 @@ function CrystalCard({
         />
       </motion.div>
 
-      <h3 className="mt-3 max-w-[16rem] text-balance text-base font-semibold leading-tight tracking-tight text-textPrimary md:text-lg">
-        {title}
-      </h3>
+      <FitHeading
+        as="h3"
+        text={title}
+        max="1.125rem"
+        min="0.8rem"
+        className="mt-3 font-semibold leading-tight tracking-tight"
+      />
 
       <span className="mt-2.5 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-textMuted transition-colors duration-300 group-hover:text-accentGold/80">
         {viewServiceLabel}
@@ -80,7 +85,7 @@ export function ServicesCrystalGrid({
       {metas.map((meta, i) => (
         <div
           key={meta.id}
-          className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
+          className="w-full sm:w-[calc(50%-0.75rem)] xl:w-[calc(25%-1.125rem)]"
         >
           <CrystalCard
             meta={meta}

@@ -13,7 +13,9 @@ import { pageTitle } from "@/lib/brand";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
+import { phraseText } from "@/lib/format-text";
 import { Locale } from "@/lib/translations";
+import { FitHeading } from "@/components/ui/fit-heading";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -59,10 +61,8 @@ export default async function OrderPage({ params }: PageProps) {
             <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
               {op.eyebrow}
             </p>
-            <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
-              {op.title}
-            </h1>
-            <p className="mt-5 max-w-2xl text-lg text-textSecondary">{op.subtitle}</p>
+            <FitHeading text={op.title} className="mt-3" max="4.75rem" />
+            <p className="mt-5 max-w-2xl whitespace-pre-line text-lg text-textSecondary text-pretty">{phraseText(op.subtitle)}</p>
           </div>
         </section>
 

@@ -17,5 +17,5 @@ export const INSTAGRAM_BIO_LINK =
   "https://www.dormup-it.com/contact?intent=audit&utm_source=instagram&utm_medium=social";
 
 export function pageTitle(segment: string): string {
-  return `${segment} | ${BRAND_NAME}`;
+  return `${segment.replace(/\s*\n\s*/g, " ")} | ${BRAND_NAME}`;
 }

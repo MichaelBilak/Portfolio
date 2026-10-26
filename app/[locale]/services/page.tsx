@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { PricingAddons } from "@/components/pricing-addons";
 import { ServiceCategories } from "@/components/service-categories";
 import { ServicesCrystalGrid } from "@/components/services-crystal-grid";
+import { FitHeading } from "@/components/ui/fit-heading";
 import type { Metadata } from "next";
 import { pageTitle } from "@/lib/brand";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -14,6 +15,7 @@ import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { getSiteContent } from "@/lib/cms/catalog";
+import { phraseText } from "@/lib/format-text";
 import { Locale } from "@/lib/translations";
 
 interface PageProps {
@@ -64,18 +66,9 @@ export default async function ServicesPage({ params }: PageProps) {
             <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
               {sp.eyebrow}
             </p>
-            <h1 className="mt-3 font-display font-light leading-[0.98] tracking-[-0.03em] text-textPrimary">
-              {sp.title.split("\n").map((line) => (
-                <span
-                  key={line}
-                  className="block whitespace-nowrap text-[clamp(1.65rem,8.4cqi,6rem)]"
-                >
-                  {line}
-                </span>
-              ))}
-            </h1>
-            <p className="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-textSecondary sm:text-lg">
-              {sp.subtitle}
+            <FitHeading text={sp.title} className="mt-3" />
+            <p className="mt-5 max-w-3xl whitespace-pre-line text-pretty text-base leading-relaxed text-textSecondary sm:text-lg">
+              {phraseText(sp.subtitle)}
             </p>
           </div>
         </section>

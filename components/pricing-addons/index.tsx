@@ -3,7 +3,9 @@
 import { Check } from "lucide-react";
 import { ADDON_CATEGORIES } from "@/data/pricing";
 import type { TranslationSet } from "@/lib/translations";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Reveal } from "@/components/ui";
+import { phraseText } from "@/lib/format-text";
 
 interface PricingAddonsProps {
   t: TranslationSet["pricingAddons"];
@@ -136,10 +138,8 @@ export function PricingAddons({
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
             {t.eyebrow}
           </p>
-          <h2 className="mt-3 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-            {t.title}
-          </h2>
-          <p className="mt-4 max-w-2xl text-base text-textSecondary">{t.subtitle}</p>
+          <FitHeading as="h2" text={t.title} max="4rem" min="1rem" className="mt-3" />
+          <p className="mt-4 max-w-2xl whitespace-pre-line text-base text-textSecondary text-pretty">{phraseText(t.subtitle)}</p>
         </Reveal>
 
         <div className="mt-12">

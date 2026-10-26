@@ -16,6 +16,8 @@ import { memo, useEffect, useMemo, useRef, useState, type PointerEvent as ReactP
 import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { FitHeading } from "@/components/ui/fit-heading";
+import { phraseText } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 
 interface ServicesProps {
@@ -134,11 +136,9 @@ function ServicesIntro({ t }: { t: TranslationSet }) {
   return (
     <div className="max-w-2xl">
       <Eyebrow>{t.nav.services}</Eyebrow>
-      <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-        {t.servicesLabel}
-      </h2>
+      <FitHeading as="h2" text={t.servicesLabel} max="3.25rem" min="1rem" className="mt-5" />
       <span className="mt-4 block max-w-full font-mono text-[11px] uppercase leading-relaxed tracking-[0.16em] text-textMuted text-pretty sm:tracking-[0.24em]">
-        {t.servicesLead}
+        {phraseText(t.servicesLead)}
       </span>
     </div>
   );

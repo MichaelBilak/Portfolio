@@ -1,5 +1,7 @@
 import { AboutLogoMark } from "@/components/about/about-logo-mark";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { phraseText } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 
 interface AboutProps {
@@ -20,13 +22,11 @@ export function About({ t, headingLevel = "h2" }: AboutProps) {
               <Eyebrow>{t.about.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <Heading className="mt-5 font-display text-fluid-title font-light text-textPrimary text-safe-wrap">
-                {t.about.title}
-              </Heading>
+              <FitHeading as={Heading} text={t.about.title} max="4.5rem" min="1.6rem" className="mt-5" />
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-6 whitespace-pre-line text-lg leading-relaxed text-textSecondary text-pretty">
-                {t.about.bio}
+                {phraseText(t.about.bio)}
               </p>
             </Reveal>
           </div>

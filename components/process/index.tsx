@@ -5,7 +5,9 @@ import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-moti
 import { type MouseEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ProcessStepMeta, processStepsMeta } from "@/data/process";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { phraseText } from "@/lib/format-text";
 import { LocalizedProcessStep, TranslationSet } from "@/lib/translations";
 
 interface ProcessProps {
@@ -30,13 +32,11 @@ export function Process({ t }: ProcessProps) {
               <Eyebrow>{t.processSection.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-                {t.processSection.title}
-              </h2>
+              <FitHeading as="h2" text={t.processSection.title} max="4rem" min="1rem" className="mt-5" />
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-2xl text-lg text-textSecondary text-pretty">
-                {t.processSection.subtitle}
+                {phraseText(t.processSection.subtitle)}
               </p>
             </Reveal>
           </header>

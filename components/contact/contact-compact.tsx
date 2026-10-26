@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { TranslationSet } from "@/lib/translations";
 import { ContactForm } from "./contact-form";
 import { ContactErrorBoundary } from "./contact-error-boundary";
@@ -19,9 +20,7 @@ export function ContactCompact({ t }: ContactCompactProps) {
           <Eyebrow>{t.audit.meta}</Eyebrow>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="mt-4 text-2xl font-display font-light text-textPrimary text-safe-wrap">
-            {t.contact.compactTitle}
-          </h2>
+          <FitHeading as="h2" text={t.contact.compactTitle} max="1.75rem" min="1rem" className="mt-4" />
         </Reveal>
         <ContactErrorBoundary>
           <Suspense fallback={null}>

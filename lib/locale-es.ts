@@ -136,7 +136,7 @@ export const es: TranslationSet = {
   problem: {
     eyebrow: "01 — Por qué importa",
     title:
-      "La mayoría de los negocios tienen herramientas.\nCasi ninguno tiene un sistema digital que funcione de verdad.",
+      "La mayoría de los negocios tienen herramientas.\nCasi ninguno tiene un sistema digital\nque funcione de verdad.",
     body: "Canales dispersos, procesos manuales, una presencia web débil y contenido que no vende: esa brecha cuesta tiempo y clientes.\n\nConectamos sistemas digitales, automatizamos procesos, construimos sitios y producimos contenido para que el negocio funcione mejor y se vea a la altura.",
   },
   caseStudies: {
@@ -226,7 +226,7 @@ export const es: TranslationSet = {
   servicesLead: "Visibilidad · Sitios · Vídeo · Automatización · Crecimiento · Cuidado",
   processSection: {
     eyebrow: "Proceso",
-    title: "Cómo convertimos el caos digital en un activo de negocio",
+    title: "Cómo convertimos el caos digital\nen un activo de negocio",
     subtitle:
       "Sistemas, automatización, web y contenido en un solo método orientado al negocio — no solo un sitio bonito.",
     stepLabel: "Paso",
@@ -274,7 +274,7 @@ export const es: TranslationSet = {
   auditLanding: esAuditLanding,
   contact: {
     label: "Empecemos",
-    title: "Un entorno digital para negocios que no quieren ser como todos.",
+    title: "Un entorno digital para negocios\nque no quieren ser como todos.",
     body: "Tras tu mensaje recibirás una respuesta clara con los siguientes pasos y la viabilidad. Respuesta habitual: un día laborable.",
     compactTitle: "Solicita tu auditoría gratuita",
     emailLabel: "Email",

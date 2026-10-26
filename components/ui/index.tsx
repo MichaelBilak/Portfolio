@@ -18,7 +18,9 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { phraseText } from "@/lib/format-text";
 import { cn } from "@/lib/ui";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { useLiteMode } from "@/lib/hooks/use-lite-mode";
 
 /* ── useTilt: pointer-driven 3D press-into-screen effect ───── */
@@ -223,9 +225,13 @@ export function SectionHeading({
         </Reveal>
       ) : null}
       <Reveal delay={0.05}>
-        <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-          {title}
-        </h2>
+        {typeof title === "string" ? (
+          <FitHeading as="h2" text={title} max="4rem" min="1rem" className="mt-5" />
+        ) : (
+          <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
+            {title}
+          </h2>
+        )}
       </Reveal>
       {description ? (
         <Reveal delay={0.1}>
@@ -235,7 +241,7 @@ export function SectionHeading({
               align === "center" && "mx-auto",
             )}
           >
-            {description}
+            {typeof description === "string" ? phraseText(description) : description}
           </p>
         </Reveal>
       ) : null}

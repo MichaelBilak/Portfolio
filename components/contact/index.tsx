@@ -3,7 +3,9 @@
 import { Mail } from "lucide-react";
 import { Suspense } from "react";
 import { MailtoLink } from "@/components/mailto-link";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Eyebrow, Reveal, useSpotlight } from "@/components/ui";
+import { phraseText } from "@/lib/format-text";
 import { CONTACT_EMAIL } from "@/lib/contact-email";
 import { TranslationSet } from "@/lib/translations";
 import { ContactErrorBoundary } from "./contact-error-boundary";
@@ -30,12 +32,10 @@ export function Contact({ t, auditMode, headingLevel = "h2" }: ContactProps) {
             <Eyebrow>{t.contact.label}</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
-            <Heading className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-              {t.contact.title}
-            </Heading>
+            <FitHeading as={Heading} text={t.contact.title} max="4rem" min="1rem" className="mt-5" />
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-6 max-w-xl text-lg text-textSecondary text-pretty">{t.contact.body}</p>
+            <p className="mt-6 max-w-xl whitespace-pre-line text-lg text-textSecondary text-pretty">{phraseText(t.contact.body)}</p>
           </Reveal>
 
           <div className="mt-9 space-y-3">

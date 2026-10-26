@@ -1049,6 +1049,13 @@ select option {
     word-break: normal;
   }
 
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+    hyphens: none;
+  }
+
   .mask-fade-x {
     -webkit-mask-image: linear-gradient(
       to right,

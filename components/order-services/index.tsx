@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { PricingAddons } from "@/components/pricing-addons";
+import { FitHeading } from "@/components/ui/fit-heading";
+import { phraseText } from "@/lib/format-text";
 import { ADDON_CATEGORIES, type AddonCategoryConfig } from "@/data/pricing";
 import { servicesMeta } from "@/data/services";
 import { Link } from "@/i18n/navigation";
@@ -152,11 +154,9 @@ export function OrderServices({
                       </span>
                     </div>
 
-                    <h2 className="mt-5 text-xl font-semibold tracking-tight text-textPrimary md:text-2xl">
-                      {copy.title}
-                    </h2>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-textSecondary">
-                      {copy.description}
+                    <FitHeading as="h2" text={copy.title} max="1.5rem" min="0.95rem" className="mt-5 font-semibold" />
+                    <p className="mt-2 flex-1 whitespace-pre-line text-sm leading-relaxed text-textSecondary text-pretty">
+                      {phraseText(copy.description)}
                     </p>
                   </button>
 

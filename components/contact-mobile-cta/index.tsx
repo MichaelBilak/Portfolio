@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { ContactLink } from "@/components/contact-link";
 import { Eyebrow, Reveal } from "@/components/ui";
+import { FitHeading } from "@/components/ui/fit-heading";
+import { phraseText } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
@@ -21,13 +23,11 @@ export function ContactMobileCta({ t }: ContactMobileCtaProps) {
           <Eyebrow>{t.contact.label}</Eyebrow>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="mt-4 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-            {t.contact.title}
-          </h2>
+          <FitHeading as="h2" text={t.contact.title} max="2.5rem" min="1rem" className="mt-4" />
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="mt-4 max-w-md text-base leading-relaxed text-textSecondary text-pretty">
-            {t.contact.body}
+          <p className="mt-4 max-w-md whitespace-pre-line text-base leading-relaxed text-textSecondary text-pretty">
+            {phraseText(t.contact.body)}
           </p>
         </Reveal>
         <Reveal delay={0.15}>

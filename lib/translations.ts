@@ -422,7 +422,7 @@ const it: TranslationSet = {
   problem: {
     eyebrow: "01 — Perché conta",
     title:
-      "Essere online non basta.\nServono visibilità, un sito che converte e un'immagine che convince.",
+      "Essere online non basta.\nServono visibilità,\nun sito che converte e un'immagine che convince.",
     body: "Se i clienti non ti trovano su Google, il sito non genera richieste o le chat perdono lead, stai lasciando opportunità sul tavolo.\n\nUniamo visibilità locale, siti e e-commerce, video professionali e automazione — con misura di ciò che funziona — per aziende a Rimini e sulla Riviera.",
   },
   caseStudies: {
@@ -512,7 +512,7 @@ const it: TranslationSet = {
   servicesLead: "Visibilità · Siti · Video · Automazione · Crescita · Cura",
   processSection: {
     eyebrow: "Processo",
-    title: "Dal primo contatto a un sistema digitale che lavora",
+    title: "Dal primo contatto\na un sistema digitale che lavora",
     subtitle:
       "Visibilità, sito, video e automazione in un metodo guidato dal business — non solo un bel sito.",
     stepLabel: "Step",
@@ -577,7 +577,7 @@ const it: TranslationSet = {
   },
   auditLanding: {
     eyebrow: "Analisi iniziale",
-    title: "Audit digitale per aziende a Rimini",
+    title: "Audit digitale\nper aziende a Rimini",
     lead: "Una revisione preliminare di visibilità, sito, opportunità di contatto e scopribilità — per capire dove conviene intervenire prima di investire.",
     forWhoTitle: "Per chi è",
     forWho: [
@@ -1003,7 +1003,7 @@ const en: TranslationSet = {
   problem: {
     eyebrow: "01 — Why it matters",
     title:
-      "Being online is not enough.\nYou need to be found, convert and handle requests.",
+      "Being online is not enough.\nYou need to be found,\nconvert and handle requests.",
     body: "If customers cannot find you on Google, the site generates few enquiries, or leads get lost in chat, you leave revenue on the table.\n\nWe combine visibility, effective websites, professional video and automation — with clear measurement — for businesses in Rimini and the Riviera.",
   },
   caseStudies: {
@@ -1093,7 +1093,7 @@ const en: TranslationSet = {
   servicesLead: "Visibility · Websites · Video · Automation · Growth · Care",
   processSection: {
     eyebrow: "Process",
-    title: "From first contact to a digital system that works",
+    title: "From first contact\nto a digital system that works",
     subtitle:
       "Visibility, website, video and automation in one business-driven method — not just a pretty site.",
     stepLabel: "Step",
@@ -1158,7 +1158,7 @@ const en: TranslationSet = {
   },
   auditLanding: {
     eyebrow: "Initial review",
-    title: "Digital audit for businesses in Rimini",
+    title: "Digital audit\nfor businesses in Rimini",
     lead: "A preliminary review of visibility, website, contact opportunities and discoverability — to decide where to invest next.",
     forWhoTitle: "Who it is for",
     forWho: [
@@ -1673,7 +1673,7 @@ const fr: TranslationSet = {
   servicesLead: "Visibilité · Sites · Vidéo · Automatisation · Croissance · Suivi",
   processSection: {
     eyebrow: "Processus",
-    title: "Comment nous transformons le chaos digital en actif business",
+    title: "Comment nous transformons\nle chaos digital en actif business",
     subtitle:
       "Systemes, automatisation, web et contenus dans une seule methode pilotee par le business — pas juste un beau site.",
     stepLabel: "Etape",
@@ -1721,7 +1721,7 @@ const fr: TranslationSet = {
   auditLanding: frAuditLanding,
   contact: {
     label: "Commencons",
-    title: "Un environnement digital pour les business qui ne veulent pas ressembler a tout le monde.",
+    title: "Un environnement digital\npour les business qui ne veulent pas ressembler à tout le monde.",
     body: "Après votre message, vous recevez une réponse claire avec les prochaines étapes et la faisabilité. Réponse habituelle : sous un jour ouvré.",
     compactTitle: "Demander votre audit gratuit",
     emailLabel: "Email",
@@ -2099,7 +2099,7 @@ const ru: TranslationSet = {
   problem: {
     eyebrow: "01 — Почему это важно",
     title:
-      "У большинства бизнесов есть инструменты.\nПочти ни у кого нет цифровой системы, которая реально работает.",
+      "У большинства бизнесов есть инструменты.\nПочти ни у кого нет цифровой системы,\nкоторая реально работает.",
     body: "Разрозненные каналы, ручные процессы, слабое веб-присутствие и контент, который не продаёт — это стоит времени и клиентов.\n\nМы связываем системы, автоматизируем процессы, делаем сайты и производим контент.",
   },
   caseStudies: {
@@ -2189,7 +2189,7 @@ const ru: TranslationSet = {
   servicesLead: "Видимость · Сайты · Видео · Автоматизация · Рост · Сопровождение",
   processSection: {
     eyebrow: "Процесс",
-    title: "Как мы превращаем цифровой хаос в бизнес-актив",
+    title: "Как мы превращаем\nцифровой хаос в бизнес-актив",
     subtitle:
       "Системы, автоматизация, web и контент в одном бизнес-методе — не просто красивый сайт.",
     stepLabel: "Этап",
@@ -2237,7 +2237,7 @@ const ru: TranslationSet = {
   auditLanding: ruAuditLanding,
   contact: {
     label: "Начнём",
-    title: "Цифровая среда для бизнеса, который не хочет быть как все.",
+    title: "Цифровая среда для бизнеса,\nкоторый не хочет быть как все.",
     body: "После сообщения вы получите ясный ответ со следующими шагами и оценкой реализуемости. Обычный срок ответа — один рабочий день.",
     compactTitle: "Запросить бесплатный аудит",
     emailLabel: "Email",
@@ -2615,7 +2615,7 @@ const de: TranslationSet = {
   problem: {
     eyebrow: "01 — Warum es zahlt",
     title:
-      "Die meisten Unternehmen haben Tools.\nFast keines hat ein digitales System, das wirklich funktioniert.",
+      "Die meisten Unternehmen haben Tools.\nFast keines hat ein digitales System,\ndas wirklich funktioniert.",
     body: "Verstreute Kanale, manuelle Prozesse, schwache Webprasenz und Content, der nicht verkauft — das kostet Zeit und Kunden.\n\nWir verbinden Systeme, automatisieren Prozesse, bauen Websites und produzieren Content.",
   },
   caseStudies: {
@@ -2705,7 +2705,7 @@ const de: TranslationSet = {
   servicesLead: "Sichtbarkeit · Websites · Video · Automatisierung · Wachstum · Betreuung",
   processSection: {
     eyebrow: "Prozess",
-    title: "Wie wir digitales Chaos in ein Business-Asset verwandeln",
+    title: "Wie wir digitales Chaos\nin ein Business-Asset verwandeln",
     subtitle:
       "Systeme, Automatisierung, Web und Content in einer business-getriebenen Methode — nicht nur eine schöne Site.",
     stepLabel: "Schritt",
@@ -2753,7 +2753,7 @@ const de: TranslationSet = {
   auditLanding: deAuditLanding,
   contact: {
     label: "Lass uns starten",
-    title: "Eine digitale Umgebung fur Unternehmen, die nicht wie alle sein wollen.",
+    title: "Eine digitale Umgebung für Unternehmen,\ndie nicht wie alle sein wollen.",
     body: "Nach Ihrer Nachricht erhalten Sie eine klare Antwort mit den nächsten Schritten und der Machbarkeit. Übliche Antwortzeit: ein Werktag.",
     compactTitle: "Kostenloses Audit anfragen",
     emailLabel: "E-Mail",

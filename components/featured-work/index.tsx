@@ -7,6 +7,7 @@ import { ProjectMeta, projectsMeta } from "@/data/projects";
 import { Link } from "@/i18n/navigation";
 import { fadeUp, sectionStagger } from "@/lib/animations";
 import { BrowserMockup } from "@/components/browser-mockup";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Eyebrow, Reveal, useSpotlight, useTilt } from "@/components/ui";
 import { LocalizedProject, TranslationSet } from "@/lib/translations";
 
@@ -55,9 +56,7 @@ export function FeaturedWork({
                 <Eyebrow>{t.workPage.eyebrow}</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 text-fluid-title font-display font-light text-textPrimary text-safe-wrap">
-                  {t.caseStudies.label}
-                </h2>
+                <FitHeading as="h2" text={t.caseStudies.label} max="4rem" min="1.5rem" className="mt-5" />
               </Reveal>
             </div>
             <Reveal delay={0.1} className="shrink-0">

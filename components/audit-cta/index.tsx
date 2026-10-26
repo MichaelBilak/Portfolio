@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { ContactLink } from "@/components/contact-link";
-import { preventBrokenPhrases } from "@/lib/format-text";
+import { FitHeading } from "@/components/ui/fit-heading";
+import { phraseText, preventBrokenPhrases } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 
@@ -30,15 +31,15 @@ export function AuditCta({ t }: AuditCtaProps) {
             <span className="liquid-glass-chip inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full px-3 py-2 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-accentGold hyphens-none text-safe-wrap sm:px-4 sm:text-[10px] sm:tracking-[0.22em]">
               {preventBrokenPhrases(t.audit.meta)}
             </span>
-            <h2 className="mt-7 max-w-full text-[clamp(1.45rem,5.8vw,2.75rem)] font-display font-semibold leading-[1.15] tracking-[-0.02em] text-textPrimary text-balance text-safe-wrap sm:text-fluid-title sm:leading-[1.12]">
-              {t.audit.title.split("\n").map((line) => (
-                <span key={line} className="block max-w-full text-safe-wrap">
-                  {line}
-                </span>
-              ))}
-            </h2>
+            <FitHeading
+              as="h2"
+              text={t.audit.title}
+              max="4rem"
+              min="1rem"
+              className="mt-7 text-center font-semibold leading-[1.12]"
+            />
             <p className="mx-auto mt-6 max-w-2xl text-lg text-textSecondary text-pretty">
-              {t.audit.body}
+              {phraseText(t.audit.body)}
             </p>
             <ContactLink
               audit

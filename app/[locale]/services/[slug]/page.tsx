@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { DeliverablesGrid } from "@/components/deliverables-grid";
 import { OtherServicesGrid } from "@/components/other-services-grid";
 import { ServiceHeroCrystal } from "@/components/service-hero-crystal";
+import { FitHeading } from "@/components/ui/fit-heading";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -14,6 +15,7 @@ import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
 import { getSiteContent } from "@/lib/cms/catalog";
 import { routing } from "@/i18n/routing";
+import { phraseText } from "@/lib/format-text";
 import { Locale } from "@/lib/translations";
 import { btn } from "@/lib/ui";
 import { servicesMeta } from "@/data/services";
@@ -113,14 +115,12 @@ export default async function ServicePage({ params }: PageProps) {
                 <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
                   {t.servicePage.sectionEyebrow}
                 </p>
-                <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
-                  {service.title}
-                </h1>
-                <p className="mt-6 max-w-2xl text-lg text-textSecondary">
-                  {service.description}
+                <FitHeading text={service.title} className="mt-3" max="4.75rem" />
+                <p className="mt-6 max-w-2xl whitespace-pre-line text-lg text-textSecondary text-pretty">
+                  {phraseText(service.description)}
                 </p>
-                <p className="mt-5 max-w-2xl text-sm font-normal leading-relaxed tracking-normal text-accentWarm/90">
-                  {service.details}
+                <p className="mt-5 max-w-2xl whitespace-pre-line text-sm font-normal leading-relaxed tracking-normal text-accentWarm/90">
+                  {phraseText(service.details)}
                 </p>
 
                 <div className="mt-8">
@@ -176,16 +176,7 @@ export default async function ServicePage({ params }: PageProps) {
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
                 {t.servicePage.deliverables}
               </p>
-              <h2
-                className="mt-3 font-display font-light text-safe-wrap"
-                style={{
-                  fontSize: "clamp(1.4rem, 3.2vw, 3.5rem)",
-                  lineHeight: 1.04,
-                  letterSpacing: "-0.022em",
-                }}
-              >
-                {service.title}
-              </h2>
+              <FitHeading as="h2" text={service.title} className="mt-3" max="3.5rem" min="1rem" />
             </header>
             <DeliverablesGrid items={service.whatYouGet} />
           </div>
@@ -194,14 +185,12 @@ export default async function ServicePage({ params }: PageProps) {
         {service.faq?.length ? (
           <section className="py-16 md:py-24">
             <div className="container-lux max-w-3xl">
-              <h2 className="font-display text-fluid-title font-light text-textPrimary">
-                {faqHeading(safeLocale)}
-              </h2>
+              <FitHeading as="h2" text={faqHeading(safeLocale)} max="3.5rem" min="1rem" />
               <div className="mt-8 space-y-6">
                 {service.faq.map((item) => (
                   <div key={item.question}>
-                    <h3 className="text-lg font-medium text-textPrimary">{item.question}</h3>
-                    <p className="mt-2 text-textSecondary leading-relaxed">{item.answer}</p>
+                    <h3 className="text-lg font-medium text-textPrimary">{phraseText(item.question)}</h3>
+                    <p className="mt-2 whitespace-pre-line text-textSecondary leading-relaxed text-pretty">{phraseText(item.answer)}</p>
                   </div>
                 ))}
               </div>

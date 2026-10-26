@@ -9,7 +9,9 @@ import { Navigation } from "@/components/navigation";
 import { Link } from "@/i18n/navigation";
 import { pageTitle } from "@/lib/brand";
 import { routing } from "@/i18n/routing";
+import { phraseText } from "@/lib/format-text";
 import { Locale, translations } from "@/lib/translations";
+import { FitHeading } from "@/components/ui/fit-heading";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { breadcrumbHomeLabel, breadcrumbJsonLd, jsonLdScript } from "@/lib/seo/json-ld";
 
@@ -59,7 +61,7 @@ export default async function AuditDigitalePage({ params }: PageProps) {
 
   const schema = breadcrumbJsonLd(safeLocale, [
     { name: breadcrumbHomeLabel(safeLocale), path: "" },
-    { name: landing.title, path: "/audit-digitale" },
+      { name: landing.title.replace(/\s*\n\s*/g, " "), path: "/audit-digitale" },
   ]);
 
   return (
@@ -86,10 +88,8 @@ export default async function AuditDigitalePage({ params }: PageProps) {
           <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
             {landing.eyebrow}
           </p>
-          <h1 className="mt-4 font-display text-fluid-hero font-light text-textPrimary">
-            {landing.title}
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-textSecondary">{landing.lead}</p>
+          <FitHeading text={landing.title} className="mt-4" max="4.5rem" />
+          <p className="mt-6 whitespace-pre-line text-lg leading-relaxed text-textSecondary text-pretty">{phraseText(landing.lead)}</p>
 
           <div className="mt-12 grid gap-10 md:grid-cols-2">
             <div>

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { AuditCta } from "@/components/audit-cta";
+import { FitHeading } from "@/components/ui/fit-heading";
+import { phraseText } from "@/lib/format-text";
 import { BrowserMockup } from "@/components/browser-mockup";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
@@ -92,17 +94,13 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
             <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr,0.95fr] lg:items-start lg:gap-10">
               <div className="space-y-6">
-                <h1 className="font-display font-light text-textPrimary">
-                  <span className="block whitespace-nowrap text-[clamp(1.55rem,3.6vw,3.25rem)] leading-[1.08] tracking-[-0.025em]">
-                    {project.name}
-                  </span>
-                  {project.nameTagline ? (
-                    <span className="mt-2 block text-xl font-light text-textSecondary md:text-2xl">
-                      {project.nameTagline}
-                    </span>
-                  ) : null}
-                </h1>
-                <p className="max-w-xl text-base text-textSecondary md:text-lg">{project.subtitle}</p>
+                <FitHeading as="h1" text={project.name} max="3.25rem" min="1.15rem" className="leading-[1.08]" />
+                {project.nameTagline ? (
+                  <p className="mt-2 text-xl font-light text-textSecondary md:text-2xl">
+                    {phraseText(project.nameTagline)}
+                  </p>
+                ) : null}
+                <p className="max-w-xl whitespace-pre-line text-base text-textSecondary text-pretty md:text-lg">{phraseText(project.subtitle)}</p>
                 <ul className="flex flex-wrap gap-2 pt-1">
                   {meta.tech.map((item) => (
                     <li
@@ -159,9 +157,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
                 {t.workPage.overview}
               </p>
-              <h2 className="mt-3 whitespace-nowrap text-[clamp(1.55rem,3.6vw,3.25rem)] font-display font-light leading-[1.08] tracking-[-0.025em]">
-                {project.name}
-              </h2>
+              <FitHeading as="h2" text={project.name} max="3.25rem" min="1.15rem" className="mt-3 leading-[1.08]" />
             </header>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">

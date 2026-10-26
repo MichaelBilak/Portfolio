@@ -1,4 +1,6 @@
+import { FitHeading } from "@/components/ui/fit-heading";
 import { Reveal } from "@/components/ui";
+import { phraseText } from "@/lib/format-text";
 import { TranslationSet } from "@/lib/translations";
 
 interface ProblemStatementProps {
@@ -31,9 +33,13 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
               </span>
             </Reveal>
             <Reveal delay={0.05}>
-              <h2 className="mt-6 whitespace-pre-line font-display text-[clamp(1.7rem,3.1vw,3.05rem)] font-light leading-[1.12] tracking-[-0.025em] text-[#0d130f] text-safe-wrap">
-                {t.problem.title}
-              </h2>
+              <FitHeading
+                as="h2"
+                text={t.problem.title}
+                max="3.05rem"
+                min="1rem"
+                className="mt-6 leading-[1.12] tracking-[-0.025em] text-[#0d130f]"
+              />
             </Reveal>
           </div>
 
@@ -48,7 +54,7 @@ export function ProblemStatement({ t }: ProblemStatementProps) {
             </Reveal>
             <Reveal delay={0.15}>
               <p className="mt-2 whitespace-pre-line text-base leading-relaxed text-[#0d130f]/75 text-pretty sm:text-xl md:text-2xl">
-                {t.problem.body}
+                {phraseText(t.problem.body)}
               </p>
             </Reveal>
             <Reveal delay={0.2}>
