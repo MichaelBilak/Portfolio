@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return buildPageMetadata({
     locale: locale as Locale,
     path: "/services",
-    title: pageTitle(t.servicesPage.title),
+    title: pageTitle(t.servicesPage.title.replaceAll("\n", " ")),
     description: t.servicesPage.subtitle,
   });
 }
@@ -52,7 +52,7 @@ export default async function ServicesPage({ params }: PageProps) {
             aria-hidden
             className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-bgPrimary to-transparent"
           />
-          <div className="container-lux relative max-w-5xl">
+          <div className="container-lux relative max-w-5xl [container-type:inline-size]">
             <Link
               href="/#services"
               className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.24em] text-textMuted transition-colors hover:text-accentGold"
@@ -64,8 +64,15 @@ export default async function ServicesPage({ params }: PageProps) {
             <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.28em] text-accentGold">
               {sp.eyebrow}
             </p>
-            <h1 className="mt-3 text-fluid-hero font-display font-light text-textPrimary">
-              {sp.title}
+            <h1 className="mt-3 font-display font-light leading-[0.98] tracking-[-0.03em] text-textPrimary">
+              {sp.title.split("\n").map((line) => (
+                <span
+                  key={line}
+                  className="block whitespace-nowrap text-[clamp(1.65rem,8.4cqi,6rem)]"
+                >
+                  {line}
+                </span>
+              ))}
             </h1>
             <p className="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-textSecondary sm:text-lg">
               {sp.subtitle}
