@@ -55,6 +55,7 @@ const nextConfig = {
     return [
       { source: "/it", destination: "/", permanent: true },
       { source: "/it/", destination: "/", permanent: true },
+      { source: "/it/:path+", destination: "/:path+", permanent: true },
       ...retiredWorkSlugs.flatMap((oldSlug) => [
         {
           source: `/work/${oldSlug}`,

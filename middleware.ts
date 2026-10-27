@@ -97,10 +97,11 @@ export default async function middleware(request: NextRequest) {
     if (unauthorized) return unauthorized;
   }
 
-  // Default locale is unprefixed. Collapse /it and /it/ in one hop.
-  if (pathname === "/it" || pathname === "/it/") {
+  // Default locale is unprefixed. Permanent redirect so Google drops /it copies.
+  if (pathname === "/it" || pathname === "/it/" || pathname.startsWith("/it/")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    const stripped = pathname.replace(/^\/it(?=\/|$)/, "") || "/";
+    url.pathname = stripped;
     return NextResponse.redirect(url, 308);
   }
 

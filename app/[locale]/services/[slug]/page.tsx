@@ -216,7 +216,27 @@ export default async function ServicePage({ params }: PageProps) {
           </div>
         </section>
 
-        <Process t={t} />
+        <Process
+          t={t}
+          override={
+            slug === "photo-video"
+              ? {
+                  title: service.title,
+                  subtitle: service.description,
+                  steps: service.whatYouGet.map((line, index) => {
+                    const splitAt = line.indexOf(":");
+                    const hasLabel = splitAt > 0 && splitAt < 48;
+                    return {
+                      id: `video-${index + 1}`,
+                      title: hasLabel ? line.slice(0, splitAt).trim() : line,
+                      summary: "",
+                      description: hasLabel ? line.slice(splitAt + 1).trim() : "",
+                    };
+                  }),
+                }
+              : undefined
+          }
+        />
 
         <AuditCta t={t} />
       </main>

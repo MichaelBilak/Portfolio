@@ -104,7 +104,7 @@ export const es: TranslationSet = {
   },
   hero: {
     eyebrow: "Estudio digital · Rímini",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    headline: "Más visibilidad.\nMás clientes.\nUna imagen que destaca.",
     subtitle: "",
     lead: "Ayudamos a las empresas a hacerse encontrar, convertir visitas en solicitudes y destacar con sitios, vídeo profesional y soluciones digitales claras.",
     primaryCta: "Ver proyectos",
@@ -124,14 +124,9 @@ export const es: TranslationSet = {
     "Automatización de solicitudes",
   ],
   proof: {
-    eyebrow: "En cifras",
-    items: [
-      { value: "1h", label: "Tiempo medio de respuesta" },
-      { value: "100%", label: "enfoque único" },
-      { value: "4", label: "direcciones distintas\nsistemas · automatización · web · contenido" },
-      { value: "26", label: "Servicios y módulos disponibles" },
-    ],
-    footnote: { value: "2 sem", label: "Inicio medio de proyecto" },
+    eyebrow: "Tiempo de respuesta",
+    items: [{ value: "1 día", label: "Respuesta en un día laborable" }],
+    footnote: { value: "", label: "" },
   },
   problem: {
     eyebrow: "01 — Por qué importa",

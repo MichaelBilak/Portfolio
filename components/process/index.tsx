@@ -3,18 +3,28 @@
 import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { type MouseEvent } from "react";
-import { LucideIcon } from "lucide-react";
+import { Camera, Clapperboard, Film, LucideIcon, Scissors, Send } from "lucide-react";
 import { ProcessStepMeta, processStepsMeta } from "@/data/process";
 import { FitHeading } from "@/components/ui/fit-heading";
 import { Eyebrow, Reveal } from "@/components/ui";
 import { phraseText } from "@/lib/format-text";
 import { LocalizedProcessStep, TranslationSet } from "@/lib/translations";
 
-interface ProcessProps {
-  t: TranslationSet;
+interface ProcessOverride {
+  title: string;
+  subtitle: string;
+  steps: LocalizedProcessStep[];
 }
 
-export function Process({ t }: ProcessProps) {
+interface ProcessProps {
+  t: TranslationSet;
+  /** Video pages pass production stages. Other pages keep the website method. */
+  override?: ProcessOverride;
+}
+
+const videoIcons = [Clapperboard, Camera, Scissors, Film, Send];
+
+export function Process({ t, override }: ProcessProps) {
   const shouldReduceMotion = useReducedMotion();
   const reduce = Boolean(shouldReduceMotion);
 
@@ -32,11 +42,11 @@ export function Process({ t }: ProcessProps) {
               <Eyebrow>{t.processSection.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.05}>
-              <FitHeading as="h2" text={t.processSection.title} max="4rem" min="1rem" className="mt-5" />
+              <FitHeading as="h2" text={override?.title ?? t.processSection.title} max="4rem" min="1rem" className="mt-5" />
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-2xl text-lg text-textSecondary text-pretty">
-                {phraseText(t.processSection.subtitle)}
+                {phraseText(override?.subtitle ?? t.processSection.subtitle)}
               </p>
             </Reveal>
           </header>
@@ -53,23 +63,35 @@ export function Process({ t }: ProcessProps) {
           />
 
           <ol className="space-y-5 md:space-y-6">
-            {processStepsMeta.map((meta, index) => (
-              <Step
-                key={meta.id}
-                meta={meta}
-                copy={t.process[index]}
-                stepLabel={t.processSection.stepLabel}
-                reduce={reduce}
-                position={index}
-              />
-            ))}
+            {(override ? override.steps : t.process).map((copy, index) => {
+              const meta = override
+                ? {
+                    id: copy.id,
+                    number: String(index + 1).padStart(2, "0"),
+                    icon: videoIcons[index % videoIcons.length],
+                  }
+                : processStepsMeta[index];
+              if (!meta) return null;
+              return (
+                <Step
+                  key={meta.id}
+                  meta={meta}
+                  copy={copy}
+                  stepLabel={t.processSection.stepLabel}
+                  reduce={reduce}
+                  position={index}
+                />
+              );
+            })}
           </ol>
 
+          {override ? null : (
           <Reveal delay={0.1}>
             <p className="mt-14 max-w-3xl text-base leading-relaxed text-textSecondary md:mt-16">
               {t.processSection.footerNote}
             </p>
           </Reveal>
+          )}
         </div>
       </div>
     </section>
@@ -121,10 +143,14 @@ function Step({ meta, copy, stepLabel, reduce, position }: StepProps) {
         <h3 className="relative mt-3 text-2xl font-semibold tracking-tight text-textPrimary md:text-[1.6rem]">
           {copy.title}
         </h3>
+        {copy.summary ? (
         <p className="relative mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-textMuted">
           {copy.summary}
         </p>
+        ) : null}
+        {copy.description ? (
         <p className="relative mt-4 pr-20 leading-relaxed text-textSecondary sm:pr-24 md:pr-0">{copy.description}</p>
+        ) : null}
       </article>
     </motion.li>
   );

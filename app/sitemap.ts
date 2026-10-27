@@ -19,14 +19,24 @@ const staticPaths = [
   "/audit-digitale",
 ];
 
+/** Fixed content dates. A deploy must not call `new Date()` here. */
+const PRIOR_CONTENT_REVISION = new Date("2026-10-23");
+const RELEASE_CONTENT_REVISION = new Date("2026-10-26");
+
+function lastModifiedFor(pathname: string): Date {
+  if (pathname === "" || pathname === "/services/photo-video") {
+    return RELEASE_CONTENT_REVISION;
+  }
+  return PRIOR_CONTENT_REVISION;
+}
+
 function sitemapEntry(
   pathname: string,
-  lastModified?: Date,
+  locale: Locale,
 ): MetadataRoute.Sitemap[number] {
-  const defaultLocale = localeOrder[0] as Locale;
   return {
-    url: absoluteUrl(defaultLocale, pathname),
-    lastModified: lastModified ?? new Date("2026-10-23"),
+    url: absoluteUrl(locale, pathname),
+    lastModified: lastModifiedFor(pathname),
     changeFrequency: pathname === "" ? "weekly" : "monthly",
     priority:
       pathname === ""
@@ -42,9 +52,13 @@ function sitemapEntry(
   };
 }
 
+function entriesFor(pathname: string): MetadataRoute.Sitemap {
+  return localeOrder.map((locale) => sitemapEntry(pathname, locale as Locale));
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const entries: MetadataRoute.Sitemap = staticPaths.map((path) =>
-    sitemapEntry(path === "" ? "" : path),
+  const entries: MetadataRoute.Sitemap = staticPaths.flatMap((path) =>
+    entriesFor(path === "" ? "" : path),
   );
 
   const [services, projects] = await Promise.all([
@@ -61,11 +75,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ).filter((slug) => !RETIRED_WORK_SLUGS.has(slug));
 
   for (const slug of serviceSlugs) {
-    entries.push(sitemapEntry(`/services/${slug}`));
+    entries.push(...entriesFor(`/services/${slug}`));
   }
 
   for (const slug of projectSlugs) {
-    entries.push(sitemapEntry(`/work/${slug}`));
+    entries.push(...entriesFor(`/work/${slug}`));
   }
 
   return entries;
