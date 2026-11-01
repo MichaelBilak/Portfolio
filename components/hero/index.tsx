@@ -37,7 +37,7 @@ export function Hero({ t }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
   const headlineLines = t.hero.headline.split("\n");
   const headlineChars = Math.max(...headlineLines.map((line) => line.length), 1);
-  const headlineCqi = Math.min(11, 100 / (headlineChars * 0.78)).toFixed(3);
+  const headlineCqi = Math.min(12, 100 / (headlineChars * 0.66)).toFixed(3);
 
   return (
     <section
@@ -81,7 +81,7 @@ export function Hero({ t }: HeroProps) {
                 key={line}
                 variants={item}
                 className="block whitespace-nowrap"
-                style={{ fontSize: `clamp(1.35rem, ${headlineCqi}cqi, 4.85rem)` }}
+                style={{ fontSize: `clamp(1.35rem, ${headlineCqi}cqi, 6.5rem)` }}
               >
                 {index === headlineLines.length - 1 ? (
                   <span className="text-gradient-sheen">{line}</span>
