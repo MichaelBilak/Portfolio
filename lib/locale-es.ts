@@ -104,7 +104,7 @@ export const es: TranslationSet = {
   },
   hero: {
     eyebrow: "Estudio digital · Rímini",
-    headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+    headline: "Tu negocio.\nMás visibilidad.\nUna imagen que destaca.",
     subtitle: "",
     lead: "Ayudamos a las empresas a hacerse encontrar, convertir visitas en solicitudes y destacar con sitios, vídeo profesional y soluciones digitales claras.",
     primaryCta: "Ver proyectos",
