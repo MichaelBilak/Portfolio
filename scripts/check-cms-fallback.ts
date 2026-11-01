@@ -30,7 +30,7 @@ if (!acceptSiteSection("it", "hero", approved)) failures.push("approved hero was
 if (acceptSiteSection("it", "hero", obsolete)) failures.push("obsolete hero was accepted");
 if (acceptSiteSection("it", "hero", editedObsolete)) failures.push("edited obsolete hero was accepted");
 if (visibleHero(editedObsolete).includes("Built to work")) failures.push("edited CMS restored a replaced headline");
-if (!visibleHero(editedObsolete).includes("Il tuo business")) failures.push("approved headline was not kept");
+if (!visibleHero(editedObsolete).includes("More visibility")) failures.push("approved headline was not kept");
 
 const video = translations.it.services.find((service) => service.id === "photo-video");
 const videoPayload = video ? approvedServicePayload(video) : null;

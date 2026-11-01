@@ -390,7 +390,7 @@ const it: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Growth & Creative Studio · Rimini",
-    headline: "Il tuo business.\nPiù visibilità.\nUn'immagine che si fa notare.",
+    headline: "Your business.\nMore visibility.\nAn image that stands out.",
     subtitle: "",
     lead: "Aiutiamo le aziende a farsi trovare online, trasformare le visite in contatti e distinguersi con siti web, video professionali e soluzioni digitali intelligenti.",
     primaryCta: "Vedi i progetti",
@@ -1551,7 +1551,7 @@ const fr: TranslationSet = {
   },
   hero: {
     eyebrow: "Studio digital · Rimini",
-    headline: "Votre business.\nPlus de visibilité.\nUne image qui se remarque.",
+    headline: "Your business.\nMore visibility.\nAn image that stands out.",
     subtitle: "",
     lead: "Nous aidons les entreprises à se faire trouver, à transformer les visites en demandes et à se distinguer avec des sites, de la vidéo professionnelle et des solutions digitales claires.",
     primaryCta: "Voir les projets",
@@ -2066,7 +2066,7 @@ const ru: TranslationSet = {
   },
   hero: {
     eyebrow: "Digital Growth & Creative Studio · Римини",
-    headline: "Ваш бизнес.\nБольше видимости.\nОбраз, который замечают.",
+    headline: "Your business.\nMore visibility.\nAn image that stands out.",
     subtitle: "",
     lead: "Помогаем бизнесу находиться онлайн, превращать визиты в заявки и выделяться сайтами, профессиональным видео и умными цифровыми решениями.",
     primaryCta: "Смотреть проекты",
@@ -2583,7 +2583,7 @@ const de: TranslationSet = {
   },
   hero: {
     eyebrow: "Digitalstudio · Rimini",
-    headline: "Ihr Business.\nMehr Sichtbarkeit.\nEin Auftritt, der auffällt.",
+    headline: "Your business.\nMore visibility.\nAn image that stands out.",
     subtitle: "",
     lead: "Wir helfen Unternehmen, gefunden zu werden, Besuche in Anfragen zu verwandeln und sich mit Websites, professionellem Video und klaren digitalen Lösungen abzuheben.",
     primaryCta: "Projekte ansehen",
