@@ -18,7 +18,7 @@ function visibleHero(cms: unknown): string {
 const approved = approvedSectionData("it", "hero");
 const obsolete = {
   ...(approved as object),
-  headline: "Your business.\nBuilt to work.\nDesigned to impress.",
+  headline: "Più visibilità.\nPiù clienti.\nUn'immagine che si fa notare.",
 };
 const editedObsolete = {
   ...obsolete,
@@ -29,8 +29,8 @@ const failures: string[] = [];
 if (!acceptSiteSection("it", "hero", approved)) failures.push("approved hero was rejected");
 if (acceptSiteSection("it", "hero", obsolete)) failures.push("obsolete hero was accepted");
 if (acceptSiteSection("it", "hero", editedObsolete)) failures.push("edited obsolete hero was accepted");
-if (visibleHero(editedObsolete).includes("Built to work")) failures.push("edited CMS restored the old headline");
-if (!visibleHero(editedObsolete).includes("Più visibilità")) failures.push("approved headline was not kept");
+if (visibleHero(editedObsolete).includes("Più visibilità")) failures.push("edited CMS restored a replaced headline");
+if (!visibleHero(editedObsolete).includes("Built to work")) failures.push("approved headline was not kept");
 
 const video = translations.it.services.find((service) => service.id === "photo-video");
 const videoPayload = video ? approvedServicePayload(video) : null;
